@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HappyUserMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HappyUserEntity">
+		<result column="happy_user_id" property="happyUserId"/>
+		<result column="happy_company_id" property="happyCompanyId"/>
+		<result column="user_name" property="userName"/>
+		<result column="password" property="password"/>
+		<result column="gender" property="gender"/>
+		<result column="phone_no" property="phoneNo"/>
+		<result column="born_year" property="bornYear"/>
+		<result column="real_name" property="realName"/>
+		<result column="user_on" property="userOn"/>
+		<result column="approve_on" property="approveOn"/>
+		<result column="header_pic" property="headerPic"/>
+		<result column="id_num" property="idNum"/>
+		<result column="id_front_pic" property="idFrontPic"/>
+		<result column="id_back_pic" property="idBackPic"/>
+		<result column="id_person_pic" property="idPersonPic"/>
+		<result column="create_time" property="createTime"/>
+		<result column="regist_resource" property="registResource"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="happyUserId" parameterType="com.happy.entity.HappyUserEntity">
+		insert into happy_user(happy_company_id,user_name,password,gender,phone_no,born_year,real_name,user_on,approve_on,header_pic,id_num,id_front_pic,id_back_pic,id_person_pic,create_time,regist_resource)
+		 values (#{happyCompanyId},#{userName},#{password},#{gender},#{phoneNo},#{bornYear},#{realName},#{userOn},#{approveOn},#{headerPic},#{idNum},#{idFrontPic},#{idBackPic},#{idPersonPic},#{createTime},#{registResource});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from happy_user where happy_user_id=#{happyUserId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from happy_user
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from happy_user
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HappyUserEntity">
+		update happy_user
+		<set>
+			<if test="happyCompanyId!=null ">
+				happy_company_id=#{happyCompanyId},
+			</if>
+			<if test="userName!=null">
+				user_name=#{userName},
+			</if>
+			<if test="password!=null">
+				password=#{password},
+			</if>
+			<if test="gender!=null ">
+				gender=#{gender},
+			</if>
+			<if test="phoneNo!=null">
+				phone_no=#{phoneNo},
+			</if>
+			<if test="bornYear!=null">
+				born_year=#{bornYear},
+			</if>
+			<if test="realName!=null">
+				real_name=#{realName},
+			</if>
+			<if test="userOn!=null ">
+				user_on=#{userOn},
+			</if>
+			<if test="approveOn!=null ">
+				approve_on=#{approveOn},
+			</if>
+			<if test="headerPic!=null">
+				header_pic=#{headerPic},
+			</if>
+			<if test="idNum!=null">
+				id_num=#{idNum},
+			</if>
+			<if test="idFrontPic!=null">
+				id_front_pic=#{idFrontPic},
+			</if>
+			<if test="idBackPic!=null">
+				id_back_pic=#{idBackPic},
+			</if>
+			<if test="idPersonPic!=null">
+				id_person_pic=#{idPersonPic},
+			</if>
+			<if test="createTime!=null ">
+				create_time=#{createTime},
+			</if>
+			<if test="registResource!=null ">
+				regist_resource=#{registResource},
+			</if>
+		</set>
+		 where happy_user_id=#{happyUserId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from happy_user where happy_user_id=#{happyUserId}
+	</delete>
+</mapper>

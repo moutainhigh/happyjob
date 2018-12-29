@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HappyCompanyTypeMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HappyCompanyTypeEntity">
+		<result column="happ_company_type_id" property="happCompanyTypeId"/>
+		<result column="type_name" property="typeName"/>
+		<result column="use_on" property="useOn"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="happCompanyTypeId" parameterType="com.happy.entity.HappyCompanyTypeEntity">
+		insert into happy_company_type(type_name,use_on)
+		 values (#{typeName},#{useOn});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from happy_company_type where happ_company_type_id=#{happCompanyTypeId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from happy_company_type
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from happy_company_type
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HappyCompanyTypeEntity">
+		update happy_company_type
+		<set>
+			<if test="typeName!=null">
+				type_name=#{typeName},
+			</if>
+			<if test="useOn!=null ">
+				use_on=#{useOn},
+			</if>
+		</set>
+		 where happ_company_type_id=#{happCompanyTypeId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from happy_company_type where happ_company_type_id=#{happCompanyTypeId}
+	</delete>
+</mapper>

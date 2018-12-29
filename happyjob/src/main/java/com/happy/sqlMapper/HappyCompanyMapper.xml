@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HappyCompanyMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HappyCompanyEntity">
+		<result column="happy_company_id" property="happyCompanyId"/>
+		<result column="happ_company_type_id" property="happCompanyTypeId"/>
+		<result column="happy_company_scale_id" property="happyCompanyScaleId"/>
+		<result column="com_name" property="comName"/>
+		<result column="com_type" property="comType"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="happyCompanyId" parameterType="com.happy.entity.HappyCompanyEntity">
+		insert into happy_company(happ_company_type_id,happy_company_scale_id,com_name,com_type)
+		 values (#{happCompanyTypeId},#{happyCompanyScaleId},#{comName},#{comType});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from happy_company where happy_company_id=#{happyCompanyId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from happy_company
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from happy_company
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HappyCompanyEntity">
+		update happy_company
+		<set>
+			<if test="happCompanyTypeId!=null ">
+				happ_company_type_id=#{happCompanyTypeId},
+			</if>
+			<if test="happyCompanyScaleId!=null ">
+				happy_company_scale_id=#{happyCompanyScaleId},
+			</if>
+			<if test="comName!=null">
+				com_name=#{comName},
+			</if>
+			<if test="comType!=null ">
+				com_type=#{comType},
+			</if>
+		</set>
+		 where happy_company_id=#{happyCompanyId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from happy_company where happy_company_id=#{happyCompanyId}
+	</delete>
+</mapper>
