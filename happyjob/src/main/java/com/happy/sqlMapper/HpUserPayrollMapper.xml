@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpUserPayrollMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpUserPayrollEntity">
+		<result column="hp_user_payroll_id" property="hpUserPayrollId"/>
+		<result column="pay_name" property="payName"/>
+		<result column="pay_id_num" property="payIdNum"/>
+		<result column="work_num" property="workNum"/>
+		<result column="pay_com_name" property="payComName"/>
+		<result column="pay_time" property="payTime"/>
+		<result column="should_money" property="shouldMoney"/>
+		<result column="deduction_money" property="deductionMoney"/>
+		<result column="real_money" property="realMoney"/>
+		<result column="pay_detail" property="payDetail"/>
+		<result column="create_time" property="createTime"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserPayrollId" parameterType="com.happy.entity.HpUserPayrollEntity">
+		insert into hp_user_payroll(pay_name,pay_id_num,work_num,pay_com_name,pay_time,should_money,deduction_money,real_money,pay_detail,create_time)
+		 values (#{payName},#{payIdNum},#{workNum},#{payComName},#{payTime},#{shouldMoney},#{deductionMoney},#{realMoney},#{payDetail},#{createTime});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_user_payroll where hp_user_payroll_id=#{hpUserPayrollId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_user_payroll
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_user_payroll
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpUserPayrollEntity">
+		update hp_user_payroll
+		<set>
+			<if test="payName!=null">
+				pay_name=#{payName},
+			</if>
+			<if test="payIdNum!=null">
+				pay_id_num=#{payIdNum},
+			</if>
+			<if test="workNum!=null">
+				work_num=#{workNum},
+			</if>
+			<if test="payComName!=null">
+				pay_com_name=#{payComName},
+			</if>
+			<if test="payTime!=null ">
+				pay_time=#{payTime},
+			</if>
+			<if test="shouldMoney!=null ">
+				should_money=#{shouldMoney},
+			</if>
+			<if test="deductionMoney!=null ">
+				deduction_money=#{deductionMoney},
+			</if>
+			<if test="realMoney!=null ">
+				real_money=#{realMoney},
+			</if>
+			<if test="payDetail!=null">
+				pay_detail=#{payDetail},
+			</if>
+			<if test="createTime!=null ">
+				create_time=#{createTime},
+			</if>
+		</set>
+		 where hp_user_payroll_id=#{hpUserPayrollId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_user_payroll where hp_user_payroll_id=#{hpUserPayrollId}
+	</delete>
+</mapper>
