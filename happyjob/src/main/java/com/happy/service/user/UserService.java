@@ -10,7 +10,7 @@ public interface UserService {
      *
      * @TODO:     验证用户是否存在、是否注册、是否是微信用户
      */
-    OtherUserData confirmUser(String sid,String userToken,String oid,String resource,int isUser, int isOther);
+    OtherUserData confirmUser(String sid,String oid,int isUser, int isOther);
     
     /**
     *

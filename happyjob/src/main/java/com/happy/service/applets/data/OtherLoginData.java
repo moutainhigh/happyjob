@@ -3,10 +3,8 @@
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@ApiModel(value="OtherLoginData",description="登录信息封装类")
 public class OtherLoginData {
 
-    private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(name="oid",value="第三方登录通行证")
     private String oid;

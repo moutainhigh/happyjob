@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpUserMoneyMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpUserMoneyEntity">
+		<result column="hp_user_money_id" property="hpUserMoneyId"/>
+		<result column="hp_user_id" property="hpUserId"/>
+		<result column="state" property="state"/>
+		<result column="create_time" property="createTime"/>
+		<result column="opt_desc" property="optDesc"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserMoneyId" parameterType="com.happy.entity.HpUserMoneyEntity">
+		insert into hp_user_money(hp_user_id,state,create_time,opt_desc)
+		 values (#{hpUserId},#{state},#{createTime},#{optDesc});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_user_money where hp_user_money_id=#{hpUserMoneyId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_user_money
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_user_money
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpUserMoneyEntity">
+		update hp_user_money
+		<set>
+			<if test="hpUserId!=null ">
+				hp_user_id=#{hpUserId},
+			</if>
+			<if test="state!=null ">
+				state=#{state},
+			</if>
+			<if test="createTime!=null ">
+				create_time=#{createTime},
+			</if>
+			<if test="optDesc!=null">
+				opt_desc=#{optDesc},
+			</if>
+		</set>
+		 where hp_user_money_id=#{hpUserMoneyId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_user_money where hp_user_money_id=#{hpUserMoneyId}
+	</delete>
+</mapper>

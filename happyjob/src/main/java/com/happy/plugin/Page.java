@@ -1,13 +1,22 @@
 package com.happy.plugin;
 
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class Page {
 	
-	private int showCount; //每页显示记录数
-	private int totalPage;		//总页数
-	private int totalResult;	//总记录数
-	private int currentPage;	//当前页
-	private int currentResult;	//当前记录起始索引
+    @ApiModelProperty(name="showCount",value="每页显示记录数",dataType="java.lang.Integer")
+    private int showCount; //每页显示记录数
+    @ApiModelProperty(name="totalPage",value="总页数",dataType="java.lang.Integer")
+    private int totalPage;      //总页数
+    @ApiModelProperty(name="totalResult",value="总记录数",dataType="java.lang.Integer")
+    private int totalResult;    //总记录数
+    @ApiModelProperty(name="currentPage",value="当前页",dataType="java.lang.Integer")
+    private int currentPage;    //当前页
+    @ApiModelProperty(name="currentResult",value="当前记录起始索引",dataType="java.lang.Integer")
+    private int currentResult;  //当前记录起始索引
+    @ApiModelProperty(name="entityOrField",value="true:需要分页的地方，传入的参数就是Page实体；false:需要分页的地方，传入的参数所代表的实体拥有Page属性",dataType="java.lang.Boolean")
+    private boolean entityOrField;  //true:需要分页的地方，传入的参数就是Page实体；false:需要分页的地方，传入的参数所代表的实体拥有Page属性
 	
 
 	
@@ -66,6 +75,14 @@ public class Page {
 	public void setCurrentResult(int currentResult) {
 		this.currentResult = currentResult;
 	}
+
+    public boolean isEntityOrField() {
+        return entityOrField;
+    }
+
+    public void setEntityOrField(boolean entityOrField) {
+        this.entityOrField = entityOrField;
+    }
 	
 	
 }

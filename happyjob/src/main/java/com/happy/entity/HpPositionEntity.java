@@ -36,14 +36,14 @@ public class HpPositionEntity implements  Serializable  {
 	@ApiModelProperty(name="posName",value="职位名称",dataType="String")
 	private String posName;
 	//入职返现金额男
-	@ApiModelProperty(name="reManMoney",value="入职返现金额男",dataType="Double")
-	private Double reManMoney;
+	@ApiModelProperty(name="retManMoney",value="入职返现金额男",dataType="Double")
+	private Double retManMoney;
 	//多少天后入职返现男
 	@ApiModelProperty(name="manDayNum",value="多少天后入职返现男",dataType="java.lang.Integer")
 	private java.lang.Integer manDayNum;
 	//入职返现金额女
-	@ApiModelProperty(name="reWomanMoney",value="入职返现金额女",dataType="java.lang.Integer")
-	private java.lang.Integer reWomanMoney;
+	@ApiModelProperty(name="retWomanMoney",value="入职返现金额女",dataType="java.lang.Integer")
+	private java.lang.Integer retWomanMoney;
 	//多少天后入职返现女
 	@ApiModelProperty(name="womenDayNum",value="多少天后入职返现女",dataType="java.lang.Integer")
 	private java.lang.Integer womenDayNum;
@@ -59,12 +59,12 @@ public class HpPositionEntity implements  Serializable  {
 	//三人团奖励金额
 	@ApiModelProperty(name="threeMoney",value="三人团奖励金额",dataType="java.lang.Integer")
 	private java.lang.Integer threeMoney;
-	//无人团及以上奖励金额
-	@ApiModelProperty(name="fiveMoney",value="无人团及以上奖励金额",dataType="java.lang.Integer")
+	//五人团及以上奖励金额
+	@ApiModelProperty(name="fiveMoney",value="五人团及以上奖励金额",dataType="java.lang.Integer")
 	private java.lang.Integer fiveMoney;
 	//是否是福利岗位
-	@ApiModelProperty(name="isWelfare",value="是否是福利岗位",dataType="java.lang.Integer")
-	private java.lang.Integer isWelfare;
+	@ApiModelProperty(name="welfareOn",value="是否是福利岗位",dataType="java.lang.Integer")
+	private java.lang.Integer welfareOn;
 	//福利岗位详情
 	@ApiModelProperty(name="welfareDetail",value="福利岗位详情",dataType="String")
 	private String welfareDetail;
@@ -119,6 +119,15 @@ public class HpPositionEntity implements  Serializable  {
 	//是否热门
 	@ApiModelProperty(name="hotOn",value="是否热门",dataType="java.lang.Integer")
 	private java.lang.Integer hotOn;
+	//是否开启入职返现
+	@ApiModelProperty(name="retOn",value="是否开启入职返现",dataType="java.lang.Integer")
+	private java.lang.Integer retOn;
+	//发布时间
+	@ApiModelProperty(name="applyTime",value="发布时间",dataType="java.lang.Long")
+	private java.lang.Long applyTime;
+	//是否通过认证
+	@ApiModelProperty(name="posState",value="是否通过认证",dataType="java.lang.Integer")
+	private java.lang.Integer posState;
 
 	public java.lang.Long getHpPositionId() {
 		return hpPositionId;
@@ -200,13 +209,13 @@ public class HpPositionEntity implements  Serializable  {
 	}
 
 
-	public Double getReManMoney() {
-		return reManMoney;
+	public Double getRetManMoney() {
+		return retManMoney;
 	}
 
 
-	public void setReManMoney(Double reManMoney) {
-		this.reManMoney = reManMoney;
+	public void setRetManMoney(Double retManMoney) {
+		this.retManMoney = retManMoney;
 	}
 
 
@@ -220,13 +229,13 @@ public class HpPositionEntity implements  Serializable  {
 	}
 
 
-	public java.lang.Integer getReWomanMoney() {
-		return reWomanMoney;
+	public java.lang.Integer getRetWomanMoney() {
+		return retWomanMoney;
 	}
 
 
-	public void setReWomanMoney(java.lang.Integer reWomanMoney) {
-		this.reWomanMoney = reWomanMoney;
+	public void setRetWomanMoney(java.lang.Integer retWomanMoney) {
+		this.retWomanMoney = retWomanMoney;
 	}
 
 
@@ -290,13 +299,13 @@ public class HpPositionEntity implements  Serializable  {
 	}
 
 
-	public java.lang.Integer getIsWelfare() {
-		return isWelfare;
+	public java.lang.Integer getWelfareOn() {
+		return welfareOn;
 	}
 
 
-	public void setIsWelfare(java.lang.Integer isWelfare) {
-		this.isWelfare = isWelfare;
+	public void setWelfareOn(java.lang.Integer welfareOn) {
+		this.welfareOn = welfareOn;
 	}
 
 
@@ -477,6 +486,36 @@ public class HpPositionEntity implements  Serializable  {
 
 	public void setHotOn(java.lang.Integer hotOn) {
 		this.hotOn = hotOn;
+	}
+
+
+	public java.lang.Integer getRetOn() {
+		return retOn;
+	}
+
+
+	public void setRetOn(java.lang.Integer retOn) {
+		this.retOn = retOn;
+	}
+
+
+	public java.lang.Long getApplyTime() {
+		return applyTime;
+	}
+
+
+	public void setApplyTime(java.lang.Long applyTime) {
+		this.applyTime = applyTime;
+	}
+
+
+	public java.lang.Integer getPosState() {
+		return posState;
+	}
+
+
+	public void setPosState(java.lang.Integer posState) {
+		this.posState = posState;
 	}
 
 }

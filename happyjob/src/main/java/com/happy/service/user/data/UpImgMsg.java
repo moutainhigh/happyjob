@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
  *   TODO: 图片上传信息返回类
  *
  */
-@ApiModel(value="图片上传信息返回类")
+@ApiModel(value="图片上传信息返回类",description="图片上传信息返回类")
 public class UpImgMsg extends BaseMsg {
 
     @ApiModelProperty(name="imgUrl",value="图片访问地址")

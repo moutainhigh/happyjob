@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.TimeZone;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -506,18 +507,24 @@ public class Util {
         return matcher.matches();
     }
 
-    // 获取淘宝北京时间
+    /**
+    *
+    * @TODO:     北京时间
+    */
     public static Date getCurrentDate() {
-        String webUrl3 = "http://www.taobao.com";
-        String str = getWebsiteDatetime(webUrl3);
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = null;
-        try {
-            date = format.parse(str);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        Calendar cal = Calendar.getInstance(
+            TimeZone.getTimeZone("Asia/Urumqi"), Locale.CHINA);
+        return cal.getTime();
+    }
+    /**
+     *
+     * @TODO:     时间对应的秒数
+     */
+    public static long getDateSecond(Date d) {
+        if(d == null ) {
+            return 0;
         }
-        return date;
+        return d.getTime()/1000;
     }
 
     // 获取北京时间

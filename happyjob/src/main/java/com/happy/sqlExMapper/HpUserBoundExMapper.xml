@@ -8,4 +8,18 @@
 		SELECT ub.* FROM hp_user_bound ub WHERE ub.bound_token=#{oid};
 	</select>
 	
+	<select id="getBoundByOpenId" resultType="com.happy.entity.HpUserBoundEntity" >
+		SELECT ub.* FROM hp_user_bound ub WHERE ub.openid=#{openId};
+	</select>
+	
+	<select id="getTokenByUserId" resultType="String" >
+		SELECT u.user_token FROM hp_user u WHERE u.hp_user_id=#{hpUserId};
+	</select>
+	
+	<select id="getUserByToken" resultType="com.happy.entity.HpUserEntity" >
+		SELECT u.* FROM hp_user u WHERE u.user_token=#{sid};
+	</select>
+	
+	
+	
 </mapper>

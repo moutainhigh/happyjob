@@ -9,11 +9,11 @@ public interface HpPositionGroupUserMapper{
 
 	void insert(HpPositionGroupUserEntity hpPositionGroupUser);
 
-	HpPositionGroupUserEntity selectByPK(long hpPositionGroupUserId);
+	HpPositionGroupUserEntity selectByPK(long hpPositionRefUserId);
 
 	void updateByPK(HpPositionGroupUserEntity hpPositionGroupUser);
 
-	void deleteByPK(long hpPositionGroupUserId);
+	void deleteByPK(long hpPositionRefUserId);
 
 	List< HpPositionGroupUserEntity> selectAll();
 

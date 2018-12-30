@@ -45,9 +45,6 @@ public class WxAppletsLoginController {
     @ApiOperation(value="投票活动小程序，根据微信CODE获取微信用户信息",notes="投票活动小程序，根据微信CODE获取微信用户信息")
     @ApiImplicitParams({
         @ApiImplicitParam(name="code",value="微信登录CODE",dataType="String",paramType="query",required=true),
-        @ApiImplicitParam(name="headerUrl",value="用户微信头像地址",dataType="String",paramType="query",required=true),
-        @ApiImplicitParam(name="nickName",value="用户微信昵称",dataType="String",paramType="query",required=true),
-        @ApiImplicitParam(name="gender",value="用户微信性别,1、男，2、女，3、保密",dataType="int",paramType="query",required=true),
     })
     @GetMapping(value="wxVoteLogin")
     public OtherLoginData wxVoteLogin(HttpServletRequest request){
@@ -80,7 +77,7 @@ public class WxAppletsLoginController {
             return data;
         }
         
-//        data = this.userService.insertWxLogin(openid, unionid, null, null, 0);
+        data = this.userService.insertWxLogin(openid, unionid);
         data.setSessionKey(sessionKey);
         return data;
     }
@@ -90,10 +87,6 @@ public class WxAppletsLoginController {
     /**
     *
     * @TODO:     微信小程序，微信头像、昵称、性别信息存入数据库
-    * @CreateTime:  2018年12月10日下午7:46:45 
-    * @CreateAuthor: chenwei
-    * @param request
-    * @return
     */
    @ApiOperation(value="用户微信信息存入",notes="用户微信信息存入")
    @ApiImplicitParams({

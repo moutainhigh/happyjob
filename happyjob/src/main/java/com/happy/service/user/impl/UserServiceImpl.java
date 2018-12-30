@@ -1,22 +1,19 @@
  package com.happy.service.user.impl;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.happy.entity.HpUserBoundEntity;
+import com.happy.entity.HpUserEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.applets.data.OtherLoginData;
 import com.happy.service.user.UserService;
 import com.happy.service.user.data.OtherUserData;
-import com.happy.service.user.data.WxPrePayData;
 import com.happy.sqlExMapper.HpUserBoundExMapper;
 import com.happy.sqlMapper.HpUserBoundMapper;
 import com.happy.util.Util;
@@ -24,6 +21,7 @@ import com.happy.util.pubConst.Const;
 import com.happy.util.pubConst.ResultMsg;
 import com.happy.util.pubConst.WxAppletsConst;
 
+@Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
@@ -32,62 +30,50 @@ public class UserServiceImpl implements UserService {
     private HpUserBoundExMapper hpUserBoundExMapper;
 
     @Override
-    public OtherUserData confirmUser(String sid, String userToken, String oid, String resource, int isUser, int isOther) {
+    public OtherUserData confirmUser(String sid, String oid, int isUser, int isOther) {
         OtherUserData msg = new OtherUserData();
-//        Long ygfUserId = null;
-//        if(isUser == 1) { // 需要验证手机号用户身份
-//            if(Util.isEmpty(sid) || Util.isEmpty(userToken)) {
-//                msg.setErrorCode(1);
-//                msg.setMessage("缺少用户认证参数");
-//                return msg;
-//            }
-//            YgfUserBaseEntity user = null;
-//            try {
-//                user = this.ygfUserBaseExMapper.selectUserBySid(sid);
-//            } catch (Exception e) {
-//                logger.error("用户查询出现异常sid====={}",sid,e);
-//                msg.setErrorCode(2);
-//                msg.setMessage("用户信息异常");
-//                return msg;
-//            }
-//            if(user == null || user.getYgfUserId() == null) {
-//                msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_2);
-//                msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_2);
-//                return msg;
-//            }
-//            if (!userToken.equals(user.getUserToken())) {// TOKEN验证不通过，密码已被修改
-//                msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_4);
-//                msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_4);
-//                return msg;
-//            }
-//            if ("1".equals(user.getIsBlack() + "")) { // 判断用户是否处于黑名单
-//                msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_3);
-//                msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_3 + "原因："+user.getBlackDes());
-//                return msg;
-//            }
-//            ygfUserId = user.getYgfUserId();
-//            
-//        }
-//        if(isOther == 1) { // 需要验证用户第三方登录信息
-//            if(Util.isEmpty(oid) || Util.isEmpty(resource)) {
-//                msg.setErrorCode(1);
-//                msg.setMessage("缺少第三方参数");
-//                return msg;
-//            }
-//            YgfUserLoginBoundEntity userBound = this.ygfUserLoginBoundExMapper.getUserBoundByOidRes(oid, resource);
-//            if(Util.isEmpty(userBound)) {
-//                msg.setErrorCode(1);
-//                msg.setMessage("第三方登录参数错误");
-//                return msg;
-//            }
-//            if(ygfUserId !=null && !ygfUserId.equals(userBound.getYgfUserId())) {
-//                msg.setErrorCode(2);
-//                msg.setMessage("第三方登录信息和用户商城信息不符");
-//                return msg;
-//            }
-//            msg.setOpenId(userBound.getOpenId());
-//        }
-//        msg.setYgfUserId(ygfUserId);
+        Long ygfUserId = null;
+        if(isUser == 1) { // 需要验证手机号用户身份
+            if(Util.isEmpty(sid) ) {
+                msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_1);
+                msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_1);
+                return msg;
+            }
+            HpUserEntity user = this.hpUserBoundExMapper.getUserByToken(sid);
+            if(user == null || user.getHpUserId() == null) {
+                msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_3);
+                msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_3);
+                return msg;
+            }
+            Integer userOn = user.getUserOn();
+            if (userOn == 0) { // 判断用户是否处于黑名单
+                msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_4);
+                msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_4);
+                return msg;
+            }
+            ygfUserId = user.getHpUserId();
+            
+        }
+        if(isOther == 1) { // 需要验证用户第三方登录信息
+            if(Util.isEmpty(oid)) {
+                msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_2);
+                msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_2);                
+                return msg;
+            }
+            HpUserBoundEntity userBound = this.hpUserBoundExMapper.getBoundByToken(oid);
+            if(userBound == null) {
+                msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_2);
+                msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_2);                
+                return msg;
+            }
+            if(ygfUserId !=null && userBound.getHpUserId()!= null && !ygfUserId.equals(userBound.getHpUserId())) {
+                msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_5);
+                msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_5);                
+                return msg;
+            }
+            msg.setOpenId(userBound.getOpenid());
+        }
+        msg.setYgfUserId(ygfUserId);
         
          return msg;
     }
@@ -96,10 +82,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public OtherLoginData insertWxLogin(String openId,String unionid) {
         OtherLoginData data = new OtherLoginData();
-        int errorCode = 0;
-        String message = "success";
-        if(!Util.isEmpty(openId)){//openId不为空,根据openId查询用户是否绑定
-            HpUserBoundEntity bound = this.hpUserBoundExMapper.getBoundByToken(openId);
+        
+        HpUserBoundEntity bound = this.hpUserBoundExMapper.getBoundByToken(openId);
+        Date curDate = Util.getCurrentDate();
+        long curTime = Util.getDateSecond(curDate);
+        if(bound == null) { // 未写入过
+            bound = new HpUserBoundEntity();
+            String boundToken = Util.getUuidRd();
+            bound.setBoundToken(boundToken);
+            bound.setOpenid(openId);
+            bound.setUnionid(unionid);
+            bound.setCreateTime(curTime);
+            this.hpUserBoundMapper.insert(bound);
+            data.setOid(openId);
+        }
+        Long userId = bound.getHpUserId();
+        if(userId != null) {
+            String sid = this.hpUserBoundExMapper.getTokenByUserId(userId);
+            data.setSid(sid);
         }
         return data;
     }

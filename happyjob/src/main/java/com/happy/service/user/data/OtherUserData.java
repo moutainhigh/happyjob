@@ -2,11 +2,14 @@
 
 import com.happy.plugin.BaseMsg;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  *
  *   TODO: 第三方登录信息返回类
  *
  */
+@ApiModel(value="OtherUserData",description="登录信息封装类")
 public class OtherUserData extends BaseMsg {
 
     private Long ygfUserId;
