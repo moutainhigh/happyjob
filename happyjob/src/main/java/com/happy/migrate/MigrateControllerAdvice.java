@@ -13,8 +13,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.alibaba.fastjson.JSONObject;
 import com.happy.HappySpringBoot;
-import com.happy.util.Const;
-import com.happy.util.ResultMsgConfig;
+import com.happy.util.pubConst.Const;
+import com.happy.util.pubConst.ResultMsg;
 /**
  * @TODO: 全局异常处理
  *
@@ -29,8 +29,8 @@ public class MigrateControllerAdvice extends ResponseEntityExceptionHandler {
     ResponseEntity<?> handleControllerException(HttpServletRequest request, Throwable ex) {
         HttpStatus status = getStatus(request);
         JSONObject json = new JSONObject();
-        json.put(Const.RESUTL_MESSAGE_ERRORCODE, ResultMsgConfig.PUBLIC_RESULT_CODE_5);
-        json.put(Const.RESUTL_MESSAGE_MESSAGE, ResultMsgConfig.PUBLIC_RESULT_CONTENT_5);
+        json.put(Const.RESUTL_MESSAGE_ERRORCODE, ResultMsg.PUBLIC_RESULT_CODE_5);
+        json.put(Const.RESUTL_MESSAGE_MESSAGE, ResultMsg.PUBLIC_RESULT_CONTENT_5);
         json.put(Const.RESUTL_MESSAGE_ERROR_DESC, ex.getMessage());
         logger.error("接口产生异常==",ex);
         return new ResponseEntity<>(json, status);

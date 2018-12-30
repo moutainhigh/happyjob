@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpPositionRefWelfareMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpPositionRefWelfareEntity">
+		<result column="hp_position_ref_welfare_id" property="hpPositionRefWelfareId"/>
+		<result column="hp_company_position_id" property="hpCompanyPositionId"/>
+		<result column="hp_position_welfare_id" property="hpPositionWelfareId"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpPositionRefWelfareId" parameterType="com.happy.entity.HpPositionRefWelfareEntity">
+		insert into hp_position_ref_welfare(hp_company_position_id,hp_position_welfare_id)
+		 values (#{hpCompanyPositionId},#{hpPositionWelfareId});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_position_ref_welfare where hp_position_ref_welfare_id=#{hpPositionRefWelfareId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_position_ref_welfare
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_position_ref_welfare
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpPositionRefWelfareEntity">
+		update hp_position_ref_welfare
+		<set>
+			<if test="hpCompanyPositionId!=null ">
+				hp_company_position_id=#{hpCompanyPositionId},
+			</if>
+			<if test="hpPositionWelfareId!=null ">
+				hp_position_welfare_id=#{hpPositionWelfareId},
+			</if>
+		</set>
+		 where hp_position_ref_welfare_id=#{hpPositionRefWelfareId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_position_ref_welfare where hp_position_ref_welfare_id=#{hpPositionRefWelfareId}
+	</delete>
+</mapper>

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
@@ -13,6 +14,7 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.sql.Time;
@@ -37,6 +39,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.happy.util.pubConst.Const;
 
 /**
  * 
@@ -837,7 +841,7 @@ public class Util {
     /**
      * @TODO: get请求
      */
-    public static String sendRequestGetPlus(String url) {
+    public static String sendRequestGet(String url) {
         URL realUrl;
         StringBuffer bs = new StringBuffer();
         InputStream is = null;
@@ -855,15 +859,15 @@ public class Util {
             }
             logger.info("sendRequestGetPlus 返回信息=={}", bs.toString());
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            logger.error("sendRequestGetPlus 请求异常", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("sendRequestGetPlus 请求异常", e);
         }finally {
             if (is != null) {
                 try {
                     is.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error("sendRequestGetPlus 请求关闭异常", e);
                 }
             }
         }
@@ -927,5 +931,33 @@ public class Util {
         return result;
     };
     
-    
+    /**
+     *
+     * @TODO:     urlEncode字符串编码
+     */
+    public static String urlEncodeStr(String str,String enc) {
+        
+        if(!Util.isEmpty(str)) {
+            try {
+               return URLEncoder.encode(str, enc);
+           } catch (UnsupportedEncodingException e) {
+                logger.error("urlEncodeStr编码异常==",e);
+           }
+        }
+        return null;
+    }
+    /**
+     *
+     * @TODO:     urlEncode字符串解码
+     */
+    public static String urlDecodeStr(String str,String enc) {
+        if(!Util.isEmpty(str)) {
+            try {
+               return URLEncoder.encode(str, enc);
+           } catch (UnsupportedEncodingException e) {
+                logger.error("urlDecodeStr解码异常==",e);
+           }
+        }
+        return null;
+    }
 }

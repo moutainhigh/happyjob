@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpPositionTypeMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpPositionTypeEntity">
+		<result column="hp_position_type_id" property="hpPositionTypeId"/>
+		<result column="type_name" property="typeName"/>
+		<result column="use_on" property="useOn"/>
+		<result column="parent_id" property="parentId"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpPositionTypeId" parameterType="com.happy.entity.HpPositionTypeEntity">
+		insert into hp_position_type(type_name,use_on,parent_id)
+		 values (#{typeName},#{useOn},#{parentId});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_position_type where hp_position_type_id=#{hpPositionTypeId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_position_type
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_position_type
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpPositionTypeEntity">
+		update hp_position_type
+		<set>
+			<if test="typeName!=null">
+				type_name=#{typeName},
+			</if>
+			<if test="useOn!=null ">
+				use_on=#{useOn},
+			</if>
+			<if test="parentId!=null ">
+				parent_id=#{parentId},
+			</if>
+		</set>
+		 where hp_position_type_id=#{hpPositionTypeId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_position_type where hp_position_type_id=#{hpPositionTypeId}
+	</delete>
+</mapper>

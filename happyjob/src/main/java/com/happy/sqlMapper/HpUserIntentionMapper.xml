@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpUserIntentionMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpUserIntentionEntity">
+		<result column="hp_user_intention_id" property="hpUserIntentionId"/>
+		<result column="hp_position_salary_id" property="hpPositionSalaryId"/>
+		<result column="county_id" property="countyId"/>
+		<result column="hp_user_id" property="hpUserId"/>
+		<result column="pos_type" property="posType"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserIntentionId" parameterType="com.happy.entity.HpUserIntentionEntity">
+		insert into hp_user_intention(hp_position_salary_id,county_id,hp_user_id,pos_type)
+		 values (#{hpPositionSalaryId},#{countyId},#{hpUserId},#{posType});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_user_intention where hp_user_intention_id=#{hpUserIntentionId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_user_intention
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_user_intention
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpUserIntentionEntity">
+		update hp_user_intention
+		<set>
+			<if test="hpPositionSalaryId!=null ">
+				hp_position_salary_id=#{hpPositionSalaryId},
+			</if>
+			<if test="countyId!=null ">
+				county_id=#{countyId},
+			</if>
+			<if test="hpUserId!=null ">
+				hp_user_id=#{hpUserId},
+			</if>
+			<if test="posType!=null">
+				pos_type=#{posType},
+			</if>
+		</set>
+		 where hp_user_intention_id=#{hpUserIntentionId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_user_intention where hp_user_intention_id=#{hpUserIntentionId}
+	</delete>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpAreaCityMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpAreaCityEntity">
+		<result column="city_id" property="cityId"/>
+		<result column="province_id" property="provinceId"/>
+		<result column="city_code" property="cityCode"/>
+		<result column="city_name" property="cityName"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="cityId" parameterType="com.happy.entity.HpAreaCityEntity">
+		insert into hp_area_city(province_id,city_code,city_name)
+		 values (#{provinceId},#{cityCode},#{cityName});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_area_city where city_id=#{cityId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_area_city
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_area_city
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpAreaCityEntity">
+		update hp_area_city
+		<set>
+			<if test="provinceId!=null ">
+				province_id=#{provinceId},
+			</if>
+			<if test="cityCode!=null">
+				city_code=#{cityCode},
+			</if>
+			<if test="cityName!=null">
+				city_name=#{cityName},
+			</if>
+		</set>
+		 where city_id=#{cityId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_area_city where city_id=#{cityId}
+	</delete>
+</mapper>

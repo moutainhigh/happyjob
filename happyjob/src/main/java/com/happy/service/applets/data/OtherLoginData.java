@@ -1,0 +1,44 @@
+ package com.happy.service.applets.data;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value="OtherLoginData",description="登录信息封装类")
+public class OtherLoginData {
+
+    private static final long serialVersionUID = 1L;
+    
+    @ApiModelProperty(name="oid",value="第三方登录通行证")
+    private String oid;
+    
+    @ApiModelProperty(name="sid",value="商城用户通行证")
+    private String sid;
+    
+    @ApiModelProperty(name="sessionKey",value="微信小程序登录会话密钥sessionKey")
+    private String sessionKey;
+
+    public String getOid() {
+        return oid;
+    }
+
+    public void setOid(String oid) {
+        this.oid = oid;
+    }
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid;
+    }
+
+    public String getSessionKey() {
+        return sessionKey;
+    }
+
+    public void setSessionKey(String sessionKey) {
+        this.sessionKey = sessionKey;
+    }
+    
+}

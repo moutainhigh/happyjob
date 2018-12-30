@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpPositionRequireMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpPositionRequireEntity">
+		<result column="hp_position_require_id" property="hpPositionRequireId"/>
+		<result column="req_gender" property="reqGender"/>
+		<result column="req_age" property="reqAge"/>
+		<result column="req_education" property="reqEducation"/>
+		<result column="req_skill" property="reqSkill"/>
+		<result column="req_exp" property="reqExp"/>
+		<result column="req_work_years" property="reqWorkYears"/>
+		<result column="req_other" property="reqOther"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpPositionRequireId" parameterType="com.happy.entity.HpPositionRequireEntity">
+		insert into hp_position_require(req_gender,req_age,req_education,req_skill,req_exp,req_work_years,req_other)
+		 values (#{reqGender},#{reqAge},#{reqEducation},#{reqSkill},#{reqExp},#{reqWorkYears},#{reqOther});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_position_require where hp_position_require_id=#{hpPositionRequireId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_position_require
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_position_require
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpPositionRequireEntity">
+		update hp_position_require
+		<set>
+			<if test="reqGender!=null">
+				req_gender=#{reqGender},
+			</if>
+			<if test="reqAge!=null">
+				req_age=#{reqAge},
+			</if>
+			<if test="reqEducation!=null">
+				req_education=#{reqEducation},
+			</if>
+			<if test="reqSkill!=null">
+				req_skill=#{reqSkill},
+			</if>
+			<if test="reqExp!=null">
+				req_exp=#{reqExp},
+			</if>
+			<if test="reqWorkYears!=null">
+				req_work_years=#{reqWorkYears},
+			</if>
+			<if test="reqOther!=null">
+				req_other=#{reqOther},
+			</if>
+		</set>
+		 where hp_position_require_id=#{hpPositionRequireId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_position_require where hp_position_require_id=#{hpPositionRequireId}
+	</delete>
+</mapper>

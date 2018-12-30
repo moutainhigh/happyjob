@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpAreaProvinceMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpAreaProvinceEntity">
+		<result column="province_id" property="provinceId"/>
+		<result column="province_code" property="provinceCode"/>
+		<result column="province_name" property="provinceName"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="provinceId" parameterType="com.happy.entity.HpAreaProvinceEntity">
+		insert into hp_area_province(province_code,province_name)
+		 values (#{provinceCode},#{provinceName});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_area_province where province_id=#{provinceId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_area_province
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_area_province
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpAreaProvinceEntity">
+		update hp_area_province
+		<set>
+			<if test="provinceCode!=null">
+				province_code=#{provinceCode},
+			</if>
+			<if test="provinceName!=null">
+				province_name=#{provinceName},
+			</if>
+		</set>
+		 where province_id=#{provinceId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_area_province where province_id=#{provinceId}
+	</delete>
+</mapper>

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.happy.util.BaseMsg;
+import com.happy.plugin.BaseMsg;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

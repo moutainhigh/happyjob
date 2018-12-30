@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpWxInfoMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpWxInfoEntity">
+		<result column="hp_wx_info_id" property="hpWxInfoId"/>
+		<result column="access_token" property="accessToken"/>
+		<result column="token_time" property="tokenTime"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpWxInfoId" parameterType="com.happy.entity.HpWxInfoEntity">
+		insert into hp_wx_info(access_token,token_time)
+		 values (#{accessToken},#{tokenTime});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_wx_info where hp_wx_info_id=#{hpWxInfoId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_wx_info
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_wx_info
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpWxInfoEntity">
+		update hp_wx_info
+		<set>
+			<if test="accessToken!=null">
+				access_token=#{accessToken},
+			</if>
+			<if test="tokenTime!=null ">
+				token_time=#{tokenTime},
+			</if>
+		</set>
+		 where hp_wx_info_id=#{hpWxInfoId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_wx_info where hp_wx_info_id=#{hpWxInfoId}
+	</delete>
+</mapper>

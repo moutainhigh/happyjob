@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlExMapper.HpUserBoundExMapper">
+	
+	<select id="getBoundByToken" resultType="com.happy.entity.HpUserBoundEntity" >
+		SELECT ub.* FROM hp_user_bound ub WHERE ub.bound_token=#{oid};
+	</select>
+	
+</mapper>

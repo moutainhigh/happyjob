@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpUserMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpUserEntity">
+		<result column="hp_user_id" property="hpUserId"/>
+		<result column="hp_company_id" property="hpCompanyId"/>
+		<result column="user_type" property="userType"/>
+		<result column="user_name" property="userName"/>
+		<result column="password" property="password"/>
+		<result column="salt" property="salt"/>
+		<result column="gender" property="gender"/>
+		<result column="phone_no" property="phoneNo"/>
+		<result column="born_year" property="bornYear"/>
+		<result column="real_name" property="realName"/>
+		<result column="user_on" property="userOn"/>
+		<result column="approve_state" property="approveState"/>
+		<result column="header_pic" property="headerPic"/>
+		<result column="id_num" property="idNum"/>
+		<result column="id_front_pic" property="idFrontPic"/>
+		<result column="id_back_pic" property="idBackPic"/>
+		<result column="id_person_pic" property="idPersonPic"/>
+		<result column="create_time" property="createTime"/>
+		<result column="regist_resource" property="registResource"/>
+		<result column="invite_user_id" property="inviteUserId"/>
+		<result column="user_money" property="userMoney"/>
+		<result column="approve_num" property="approveNum"/>
+		<result column="vip_on" property="vipOn"/>
+		<result column="user_token" property="userToken"/>
+		<result column="token_time" property="tokenTime"/>
+		<result column="login_time" property="loginTime"/>
+		<result column="login_ip" property="loginIp"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserId" parameterType="com.happy.entity.HpUserEntity">
+		insert into hp_user(hp_company_id,user_type,user_name,password,salt,gender,phone_no,born_year,real_name,user_on,approve_state,header_pic,id_num,id_front_pic,id_back_pic,id_person_pic,create_time,regist_resource,invite_user_id,user_money,approve_num,vip_on,user_token,token_time,login_time,login_ip)
+		 values (#{hpCompanyId},#{userType},#{userName},#{password},#{salt},#{gender},#{phoneNo},#{bornYear},#{realName},#{userOn},#{approveState},#{headerPic},#{idNum},#{idFrontPic},#{idBackPic},#{idPersonPic},#{createTime},#{registResource},#{inviteUserId},#{userMoney},#{approveNum},#{vipOn},#{userToken},#{tokenTime},#{loginTime},#{loginIp});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_user where hp_user_id=#{hpUserId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_user
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_user
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpUserEntity">
+		update hp_user
+		<set>
+			<if test="hpCompanyId!=null ">
+				hp_company_id=#{hpCompanyId},
+			</if>
+			<if test="userType!=null ">
+				user_type=#{userType},
+			</if>
+			<if test="userName!=null">
+				user_name=#{userName},
+			</if>
+			<if test="password!=null">
+				password=#{password},
+			</if>
+			<if test="salt!=null">
+				salt=#{salt},
+			</if>
+			<if test="gender!=null ">
+				gender=#{gender},
+			</if>
+			<if test="phoneNo!=null">
+				phone_no=#{phoneNo},
+			</if>
+			<if test="bornYear!=null">
+				born_year=#{bornYear},
+			</if>
+			<if test="realName!=null">
+				real_name=#{realName},
+			</if>
+			<if test="userOn!=null ">
+				user_on=#{userOn},
+			</if>
+			<if test="approveState!=null ">
+				approve_state=#{approveState},
+			</if>
+			<if test="headerPic!=null">
+				header_pic=#{headerPic},
+			</if>
+			<if test="idNum!=null">
+				id_num=#{idNum},
+			</if>
+			<if test="idFrontPic!=null">
+				id_front_pic=#{idFrontPic},
+			</if>
+			<if test="idBackPic!=null">
+				id_back_pic=#{idBackPic},
+			</if>
+			<if test="idPersonPic!=null">
+				id_person_pic=#{idPersonPic},
+			</if>
+			<if test="createTime!=null ">
+				create_time=#{createTime},
+			</if>
+			<if test="registResource!=null ">
+				regist_resource=#{registResource},
+			</if>
+			<if test="inviteUserId!=null ">
+				invite_user_id=#{inviteUserId},
+			</if>
+			<if test="userMoney!=null ">
+				user_money=#{userMoney},
+			</if>
+			<if test="approveNum!=null ">
+				approve_num=#{approveNum},
+			</if>
+			<if test="vipOn!=null ">
+				vip_on=#{vipOn},
+			</if>
+			<if test="userToken!=null">
+				user_token=#{userToken},
+			</if>
+			<if test="tokenTime!=null ">
+				token_time=#{tokenTime},
+			</if>
+			<if test="loginTime!=null ">
+				login_time=#{loginTime},
+			</if>
+			<if test="loginIp!=null">
+				login_ip=#{loginIp},
+			</if>
+		</set>
+		 where hp_user_id=#{hpUserId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_user where hp_user_id=#{hpUserId}
+	</delete>
+</mapper>

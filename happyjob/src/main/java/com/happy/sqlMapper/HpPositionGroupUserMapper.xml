@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpPositionGroupUserMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpPositionGroupUserEntity">
+		<result column="hp_position_group_user_id" property="hpPositionGroupUserId"/>
+		<result column="hp_position_group_id" property="hpPositionGroupId"/>
+		<result column="leader_on" property="leaderOn"/>
+		<result column="part_time" property="partTime"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpPositionGroupUserId" parameterType="com.happy.entity.HpPositionGroupUserEntity">
+		insert into hp_position_group_user(hp_position_group_id,leader_on,part_time)
+		 values (#{hpPositionGroupId},#{leaderOn},#{partTime});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_position_group_user where hp_position_group_user_id=#{hpPositionGroupUserId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_position_group_user
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_position_group_user
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpPositionGroupUserEntity">
+		update hp_position_group_user
+		<set>
+			<if test="hpPositionGroupId!=null ">
+				hp_position_group_id=#{hpPositionGroupId},
+			</if>
+			<if test="leaderOn!=null ">
+				leader_on=#{leaderOn},
+			</if>
+			<if test="partTime!=null ">
+				part_time=#{partTime},
+			</if>
+		</set>
+		 where hp_position_group_user_id=#{hpPositionGroupUserId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_position_group_user where hp_position_group_user_id=#{hpPositionGroupUserId}
+	</delete>
+</mapper>

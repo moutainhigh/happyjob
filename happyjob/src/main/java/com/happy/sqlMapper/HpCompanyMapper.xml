@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpCompanyMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpCompanyEntity">
+		<result column="hp_company_id" property="hpCompanyId"/>
+		<result column="com_name" property="comName"/>
+		<result column="com_desc" property="comDesc"/>
+		<result column="county_id" property="countyId"/>
+		<result column="hp_company_type_id" property="hpCompanyTypeId"/>
+		<result column="hp_company_scale_id" property="hpCompanyScaleId"/>
+		<result column="addr_detail" property="addrDetail"/>
+		<result column="comt_person" property="comtPerson"/>
+		<result column="com_phone" property="comPhone"/>
+		<result column="com_email" property="comEmail"/>
+		<result column="com_logo" property="comLogo"/>
+		<result column="com_license" property="comLicense"/>
+		<result column="create_time" property="createTime"/>
+		<result column="approve_state" property="approveState"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpCompanyId" parameterType="com.happy.entity.HpCompanyEntity">
+		insert into hp_company(com_name,com_desc,county_id,hp_company_type_id,hp_company_scale_id,addr_detail,comt_person,com_phone,com_email,com_logo,com_license,create_time,approve_state)
+		 values (#{comName},#{comDesc},#{countyId},#{hpCompanyTypeId},#{hpCompanyScaleId},#{addrDetail},#{comtPerson},#{comPhone},#{comEmail},#{comLogo},#{comLicense},#{createTime},#{approveState});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_company where hp_company_id=#{hpCompanyId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_company
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_company
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpCompanyEntity">
+		update hp_company
+		<set>
+			<if test="comName!=null">
+				com_name=#{comName},
+			</if>
+			<if test="comDesc!=null">
+				com_desc=#{comDesc},
+			</if>
+			<if test="countyId!=null ">
+				county_id=#{countyId},
+			</if>
+			<if test="hpCompanyTypeId!=null ">
+				hp_company_type_id=#{hpCompanyTypeId},
+			</if>
+			<if test="hpCompanyScaleId!=null ">
+				hp_company_scale_id=#{hpCompanyScaleId},
+			</if>
+			<if test="addrDetail!=null">
+				addr_detail=#{addrDetail},
+			</if>
+			<if test="comtPerson!=null">
+				comt_person=#{comtPerson},
+			</if>
+			<if test="comPhone!=null">
+				com_phone=#{comPhone},
+			</if>
+			<if test="comEmail!=null">
+				com_email=#{comEmail},
+			</if>
+			<if test="comLogo!=null">
+				com_logo=#{comLogo},
+			</if>
+			<if test="comLicense!=null">
+				com_license=#{comLicense},
+			</if>
+			<if test="createTime!=null ">
+				create_time=#{createTime},
+			</if>
+			<if test="approveState!=null">
+				approve_state=#{approveState},
+			</if>
+		</set>
+		 where hp_company_id=#{hpCompanyId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_company where hp_company_id=#{hpCompanyId}
+	</delete>
+</mapper>

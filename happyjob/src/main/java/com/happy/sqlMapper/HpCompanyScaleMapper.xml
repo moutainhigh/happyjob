@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpCompanyScaleMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpCompanyScaleEntity">
+		<result column="hp_company_scale_id" property="hpCompanyScaleId"/>
+		<result column="lower_num" property="lowerNum"/>
+		<result column="hight_num" property="hightNum"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpCompanyScaleId" parameterType="com.happy.entity.HpCompanyScaleEntity">
+		insert into hp_company_scale(lower_num,hight_num)
+		 values (#{lowerNum},#{hightNum});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_company_scale where hp_company_scale_id=#{hpCompanyScaleId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_company_scale
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_company_scale
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpCompanyScaleEntity">
+		update hp_company_scale
+		<set>
+			<if test="lowerNum!=null ">
+				lower_num=#{lowerNum},
+			</if>
+			<if test="hightNum!=null ">
+				hight_num=#{hightNum},
+			</if>
+		</set>
+		 where hp_company_scale_id=#{hpCompanyScaleId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_company_scale where hp_company_scale_id=#{hpCompanyScaleId}
+	</delete>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpUserExpMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpUserExpEntity">
+		<result column="hp_user_exp_id" property="hpUserExpId"/>
+		<result column="hp_user_id" property="hpUserId"/>
+		<result column="com_name" property="comName"/>
+		<result column="pos_type" property="posType"/>
+		<result column="start_time" property="startTime"/>
+		<result column="end_time" property="endTime"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserExpId" parameterType="com.happy.entity.HpUserExpEntity">
+		insert into hp_user_exp(hp_user_id,com_name,pos_type,start_time,end_time)
+		 values (#{hpUserId},#{comName},#{posType},#{startTime},#{endTime});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_user_exp where hp_user_exp_id=#{hpUserExpId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_user_exp
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_user_exp
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpUserExpEntity">
+		update hp_user_exp
+		<set>
+			<if test="hpUserId!=null ">
+				hp_user_id=#{hpUserId},
+			</if>
+			<if test="comName!=null">
+				com_name=#{comName},
+			</if>
+			<if test="posType!=null">
+				pos_type=#{posType},
+			</if>
+			<if test="startTime!=null ">
+				start_time=#{startTime},
+			</if>
+			<if test="endTime!=null ">
+				end_time=#{endTime},
+			</if>
+		</set>
+		 where hp_user_exp_id=#{hpUserExpId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_user_exp where hp_user_exp_id=#{hpUserExpId}
+	</delete>
+</mapper>

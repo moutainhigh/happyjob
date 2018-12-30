@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpUserBoundMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpUserBoundEntity">
+		<result column="hp_user_bound_id" property="hpUserBoundId"/>
+		<result column="hp_user_id" property="hpUserId"/>
+		<result column="nick_name" property="nickName"/>
+		<result column="header_pic" property="headerPic"/>
+		<result column="openid" property="openid"/>
+		<result column="unionid" property="unionid"/>
+		<result column="gender" property="gender"/>
+		<result column="create_time" property="createTime"/>
+		<result column="bound_token" property="boundToken"/>
+		<result column="token_time" property="tokenTime"/>
+		<result column="bound_phone" property="boundPhone"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserBoundId" parameterType="com.happy.entity.HpUserBoundEntity">
+		insert into hp_user_bound(hp_user_id,nick_name,header_pic,openid,unionid,gender,create_time,bound_token,token_time,bound_phone)
+		 values (#{hpUserId},#{nickName},#{headerPic},#{openid},#{unionid},#{gender},#{createTime},#{boundToken},#{tokenTime},#{boundPhone});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_user_bound where hp_user_bound_id=#{hpUserBoundId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_user_bound
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_user_bound
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpUserBoundEntity">
+		update hp_user_bound
+		<set>
+			<if test="hpUserId!=null ">
+				hp_user_id=#{hpUserId},
+			</if>
+			<if test="nickName!=null">
+				nick_name=#{nickName},
+			</if>
+			<if test="headerPic!=null">
+				header_pic=#{headerPic},
+			</if>
+			<if test="openid!=null">
+				openid=#{openid},
+			</if>
+			<if test="unionid!=null">
+				unionid=#{unionid},
+			</if>
+			<if test="gender!=null ">
+				gender=#{gender},
+			</if>
+			<if test="createTime!=null ">
+				create_time=#{createTime},
+			</if>
+			<if test="boundToken!=null">
+				bound_token=#{boundToken},
+			</if>
+			<if test="tokenTime!=null ">
+				token_time=#{tokenTime},
+			</if>
+			<if test="boundPhone!=null">
+				bound_phone=#{boundPhone},
+			</if>
+		</set>
+		 where hp_user_bound_id=#{hpUserBoundId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_user_bound where hp_user_bound_id=#{hpUserBoundId}
+	</delete>
+</mapper>
