@@ -235,9 +235,8 @@ public class Util {
             return false;
         } else if (!phone.matches(regex)) {
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
 
@@ -968,9 +967,25 @@ public class Util {
         }
         return null;
     }
+    private static final String URL_REGEX ="(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]"; 
+    
+    /**
+     *
+     * @TODO:     url验证合法性
+     */
+    public static boolean checkUrl(String url) {
+        
+        if(!Util.isEmpty(url)) {
+            return url.matches(URL_REGEX);
+        }
+        return false;
+    }
+    
+    
     
     @Test
     public void test1() {
-        System.out.println(Util.getUuidRd());
+        String a = "2018-11";
+        System.out.println(Util.getDateFromStr(a, "yyyy-MM"));
     }
 }

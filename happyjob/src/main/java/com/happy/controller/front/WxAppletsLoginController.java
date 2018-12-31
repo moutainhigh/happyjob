@@ -6,12 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
-import com.happy.plugin.BaseMsg;
 import com.happy.service.user.UserService;
 import com.happy.service.user.data.OtherLoginData;
 import com.happy.service.user.data.OtherLoginMsg;
@@ -84,27 +82,5 @@ public class WxAppletsLoginController {
     }
     
     
-    
-    /**
-    *
-    * @TODO:     微信小程序，微信头像、昵称、性别信息存入数据库
-    */
-   @ApiOperation(value="用户微信信息存入",notes="用户微信信息存入")
-   @ApiImplicitParams({
-       @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
-       @ApiImplicitParam(name="headerUrl",value="用户微信头像地址",dataType="String",paramType="query",required=true),
-       @ApiImplicitParam(name="nickName",value="用户微信昵称",dataType="String",paramType="query",required=true),
-       @ApiImplicitParam(name="gender",value="用户微信性别,1、男，2、女，3、保密",dataType="int",paramType="query",required=true),
-   })
-   @PostMapping(value="wxLogin")
-    public BaseMsg wxUserInfo(HttpServletRequest request) {
-        String oid = request.getHeader("oid");
-        String headerUrl = request.getParameter("headerUrl");
-        String nickName = request.getParameter("nickName");
-        Integer gender = (Integer)Util.typeChange(request.getParameter("gender"), Integer.class);
-        gender = gender == null?3:gender;
-        
-        return this.userService.updateLoginBound(oid, headerUrl, nickName, gender);
-    }
     
 }

@@ -41,11 +41,11 @@ public class HpUserEntity implements  Serializable  {
 	//真实姓名
 	@ApiModelProperty(name="realName",value="真实姓名",dataType="String")
 	private String realName;
-	//是否启用
-	@ApiModelProperty(name="userOn",value="是否启用",dataType="java.lang.Integer")
-	private java.lang.Integer userOn;
-	//认证状态（0、未认证，1、认证通过，2、认证不通过）
-	@ApiModelProperty(name="approveState",value="认证状态（0、未认证，1、认证通过，2、认证不通过）",dataType="java.lang.Integer")
+	//是否被禁用
+	@ApiModelProperty(name="blackOn",value="是否被禁用",dataType="java.lang.Integer")
+	private java.lang.Integer blackOn;
+	//认证状态（0、未申请认证，1、认证通过，2、认证不通过，3、认证待审核）
+	@ApiModelProperty(name="approveState",value="认证状态（0、未申请认证，1、认证通过，2、认证不通过，3、认证待审核）",dataType="java.lang.Integer")
 	private java.lang.Integer approveState;
 	//头像
 	@ApiModelProperty(name="headerPic",value="头像",dataType="String")
@@ -77,6 +77,9 @@ public class HpUserEntity implements  Serializable  {
 	//认证申请次数
 	@ApiModelProperty(name="approveNum",value="认证申请次数",dataType="java.lang.Integer")
 	private java.lang.Integer approveNum;
+	//认证申请时间
+	@ApiModelProperty(name="applyTime",value="认证申请时间",dataType="java.lang.Long")
+	private java.lang.Long applyTime;
 	//是否会员
 	@ApiModelProperty(name="vipOn",value="是否会员",dataType="java.lang.Integer")
 	private java.lang.Integer vipOn;
@@ -92,6 +95,9 @@ public class HpUserEntity implements  Serializable  {
 	//登录ip
 	@ApiModelProperty(name="loginIp",value="登录ip",dataType="String")
 	private String loginIp;
+	//分享身份识别码
+	@ApiModelProperty(name="shareToken",value="分享身份识别码",dataType="String")
+	private String shareToken;
 
 	public java.lang.Long getHpUserId() {
 		return hpUserId;
@@ -193,13 +199,13 @@ public class HpUserEntity implements  Serializable  {
 	}
 
 
-	public java.lang.Integer getUserOn() {
-		return userOn;
+	public java.lang.Integer getBlackOn() {
+		return blackOn;
 	}
 
 
-	public void setUserOn(java.lang.Integer userOn) {
-		this.userOn = userOn;
+	public void setBlackOn(java.lang.Integer blackOn) {
+		this.blackOn = blackOn;
 	}
 
 
@@ -313,6 +319,16 @@ public class HpUserEntity implements  Serializable  {
 	}
 
 
+	public java.lang.Long getApplyTime() {
+		return applyTime;
+	}
+
+
+	public void setApplyTime(java.lang.Long applyTime) {
+		this.applyTime = applyTime;
+	}
+
+
 	public java.lang.Integer getVipOn() {
 		return vipOn;
 	}
@@ -360,6 +376,16 @@ public class HpUserEntity implements  Serializable  {
 
 	public void setLoginIp(String loginIp) {
 		this.loginIp = loginIp;
+	}
+
+
+	public String getShareToken() {
+		return shareToken;
+	}
+
+
+	public void setShareToken(String shareToken) {
+		this.shareToken = shareToken;
 	}
 
 }

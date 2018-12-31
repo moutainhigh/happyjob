@@ -71,7 +71,7 @@
 			<if test="createTime!=null ">
 				create_time=#{createTime},
 			</if>
-			<if test="approveState!=null">
+			<if test="approveState!=null ">
 				approve_state=#{approveState},
 			</if>
 		</set>

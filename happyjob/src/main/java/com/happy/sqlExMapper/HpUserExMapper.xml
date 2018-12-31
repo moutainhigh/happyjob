@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlExMapper.HpUserExMapper">
+	
+	<sql id="getIdBySid">(SELECT u.hp_user_id FROM hp_user u WHERE u.user_token=#{sid})</sql>
+	
+	<select id="getTokenByUserId" resultType="String" >
+		SELECT u.user_token FROM hp_user u WHERE u.hp_user_id=#{hpUserId};
+	</select>
+	
+	<select id="getUserByToken" resultType="com.happy.service.user.data.UserSimpleData" >
+		SELECT u.* FROM hp_user u WHERE u.user_token=#{sid};
+	</select>
+	
+	<select id="getSimpleUserByKey" resultType="com.happy.service.user.data.UserSimpleData" >
+		SELECT u.hp_user_id,u.user_token,u.share_token,u.phone_no,u.approve_state,u.black_on,u.user_name,u.header_pic,u.gender,u.approve_num 
+		FROM hp_user u WHERE 1=1 
+		<if test="hpUserId !=null and hpUserId !=0"> AND u.hp_user_id=#{hpUserId}</if>
+		<if test="sid !=null and sid !=''"> AND u.user_token=#{sid}</if>
+	</select>
+	
+	<select id="getIdByShareToken" resultType="Long" >
+		SELECT u.hp_user_id FROM hp_user u WHERE u.share_token=#{shareToken};
+	</select>
+</mapper>

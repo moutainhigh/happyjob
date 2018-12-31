@@ -41,5 +41,11 @@ public class Const {
 	// 编码类型
 	/**UTF-8*/
     public static final String CODE_TYPE_STR = "utf-8";
+    
+    // session 中参数名称
+    /**手机号码*/
+    public static final String SESSION_ATTR_NAME_PHONE = "phoneno";
+    /**短信验证码*/
+    public static final String SESSION_ATTR_NAME_MSGCODE = "msgcode";
 }
 

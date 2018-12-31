@@ -15,8 +15,8 @@ public class HpPositionOfferEntity implements  Serializable  {
 	@ApiModelProperty(name="hpPositionOfferId",value="公司职位招聘形式表",dataType="java.lang.Long")
 	private java.lang.Long hpPositionOfferId;
 	//所少天后返现
-	@ApiModelProperty(name="dayNum",value="所少天后返现",dataType="String")
-	private String dayNum;
+	@ApiModelProperty(name="typeName",value="所少天后返现",dataType="String")
+	private String typeName;
 	//是否启用
 	@ApiModelProperty(name="useOn",value="是否启用",dataType="java.lang.Integer")
 	private java.lang.Integer useOn;
@@ -31,13 +31,13 @@ public class HpPositionOfferEntity implements  Serializable  {
 	}
 
 
-	public String getDayNum() {
-		return dayNum;
+	public String getTypeName() {
+		return typeName;
 	}
 
 
-	public void setDayNum(String dayNum) {
-		this.dayNum = dayNum;
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
 	}
 
 

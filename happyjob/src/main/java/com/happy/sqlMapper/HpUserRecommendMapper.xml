@@ -5,13 +5,13 @@
 <mapper namespace="com.happy.sqlMapper.HpUserRecommendMapper">
 	<resultMap id="BaseResultMap" type="com.happy.entity.HpUserRecommendEntity">
 		<result column="hp_user_recommend_id" property="hpUserRecommendId"/>
-		<result column="hp_user_id" property="hpUserId"/>
+		<result column="hp_user_bound_id" property="hpUserBoundId"/>
 		<result column="rec_phone_no" property="recPhoneNo"/>
 		<result column="rec_time" property="recTime"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserRecommendId" parameterType="com.happy.entity.HpUserRecommendEntity">
-		insert into hp_user_recommend(hp_user_id,rec_phone_no,rec_time)
-		 values (#{hpUserId},#{recPhoneNo},#{recTime});
+		insert into hp_user_recommend(hp_user_bound_id,rec_phone_no,rec_time)
+		 values (#{hpUserBoundId},#{recPhoneNo},#{recTime});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_user_recommend where hp_user_recommend_id=#{hpUserRecommendId}
@@ -25,8 +25,8 @@
 	<update id="updateByPK" parameterType="com.happy.entity.HpUserRecommendEntity">
 		update hp_user_recommend
 		<set>
-			<if test="hpUserId!=null ">
-				hp_user_id=#{hpUserId},
+			<if test="hpUserBoundId!=null ">
+				hp_user_bound_id=#{hpUserBoundId},
 			</if>
 			<if test="recPhoneNo!=null">
 				rec_phone_no=#{recPhoneNo},

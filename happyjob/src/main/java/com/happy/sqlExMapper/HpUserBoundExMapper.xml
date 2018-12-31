@@ -18,14 +18,6 @@
 		SELECT ub.* FROM hp_user_bound ub WHERE ub.openid=#{openId};
 	</select>
 	
-	<select id="getTokenByUserId" resultType="String" >
-		SELECT u.user_token FROM hp_user u WHERE u.hp_user_id=#{hpUserId};
-	</select>
-	
-	<select id="getUserByToken" resultType="com.happy.entity.HpUserEntity" >
-		SELECT u.* FROM hp_user u WHERE u.user_token=#{sid};
-	</select>
-	
 	<select id="getUserSearchList" parameterType="com.happy.service.user.data.UserSearch" resultType="com.happy.entity.HpUserSearchEntity" >
 		SELECT us.* FROM hp_user_search us 
 		WHERE 1=1
@@ -46,6 +38,14 @@
 		<if test="keyWord !=null and keyWord !='' ">AND us.content=#{keyWord} </if>
 	</select>
 	
+	<update id="updateUserSearchDel" >
+		UPDATE hp_user_search us SET us.del_on=1 
+		WHERE us.hp_user_bound_id=<include refid="getIdByOid"></include> 
+		<if test="hpUserSearchId !=null and hpUserSearchId !=0 ">AND us.hp_user_search_id=#{hpUserSearchId}</if>
+	</update>
 	
+	<select id="getRecdByOid" resultType="com.happy.entity.HpUserRecommendEntity" >
+		SELECT ur.* FROM hp_user_recommend ur WHERE ur.hp_user_bound_id=<include refid="getIdByOid"></include>
+	</select>
 	
 </mapper>

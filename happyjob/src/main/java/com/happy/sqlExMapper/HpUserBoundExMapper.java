@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.happy.entity.HpUserBoundEntity;
-import com.happy.entity.HpUserEntity;
+import com.happy.entity.HpUserRecommendEntity;
 import com.happy.entity.HpUserSearchEntity;
 import com.happy.service.user.data.UserSearch;
 
@@ -32,20 +32,20 @@ public interface HpUserBoundExMapper{
      *
      * @TODO:     描述一下这个方法是干什么的
      */
-    String getTokenByUserId(@Param("hpUserId") Long hpUserId);
-    /**
-     *
-     * @TODO:     描述一下这个方法是干什么的
-     */
-    HpUserEntity getUserByToken(@Param("sid") String sid);
-    /**
-     *
-     * @TODO:     描述一下这个方法是干什么的
-     */
     List<HpUserSearchEntity> getUserSearchList(UserSearch page);
     /**
      *
      * @TODO:     描述一下这个方法是干什么的
      */
     int getUserSearchNum(UserSearch page);
+    /**
+     *
+     * @TODO:     描述一下这个方法是干什么的
+     */
+    int updateUserSearchDel(@Param("oid")String oid, @Param("hpUserSearchId")Long hpUserSearchId);
+    /**
+     *
+     * @TODO:     描述一下这个方法是干什么的
+     */
+    HpUserRecommendEntity getRecdByOid(@Param("oid")String oid);
 }

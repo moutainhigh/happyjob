@@ -36,8 +36,8 @@ public class HpPositionEntity implements  Serializable  {
 	@ApiModelProperty(name="posName",value="职位名称",dataType="String")
 	private String posName;
 	//入职返现金额男
-	@ApiModelProperty(name="retManMoney",value="入职返现金额男",dataType="Double")
-	private Double retManMoney;
+	@ApiModelProperty(name="retManMoney",value="入职返现金额男",dataType="java.lang.Integer")
+	private java.lang.Integer retManMoney;
 	//多少天后入职返现男
 	@ApiModelProperty(name="manDayNum",value="多少天后入职返现男",dataType="java.lang.Integer")
 	private java.lang.Integer manDayNum;
@@ -209,12 +209,12 @@ public class HpPositionEntity implements  Serializable  {
 	}
 
 
-	public Double getRetManMoney() {
+	public java.lang.Integer getRetManMoney() {
 		return retManMoney;
 	}
 
 
-	public void setRetManMoney(Double retManMoney) {
+	public void setRetManMoney(java.lang.Integer retManMoney) {
 		this.retManMoney = retManMoney;
 	}
 

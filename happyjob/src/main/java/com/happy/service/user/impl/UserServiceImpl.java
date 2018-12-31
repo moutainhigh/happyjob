@@ -11,15 +11,21 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONObject;
 import com.happy.entity.HpUserBoundEntity;
 import com.happy.entity.HpUserEntity;
+import com.happy.entity.HpUserRecommendEntity;
 import com.happy.entity.HpUserSearchEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.user.UserService;
 import com.happy.service.user.data.OtherLoginData;
 import com.happy.service.user.data.OtherUserData;
+import com.happy.service.user.data.UserSimpleData;
+import com.happy.service.user.data.UserDataMsg;
 import com.happy.service.user.data.UserSearch;
 import com.happy.service.user.data.UserSerachListMsg;
 import com.happy.sqlExMapper.HpUserBoundExMapper;
+import com.happy.sqlExMapper.HpUserExMapper;
 import com.happy.sqlMapper.HpUserBoundMapper;
+import com.happy.sqlMapper.HpUserMapper;
+import com.happy.sqlMapper.HpUserRecommendMapper;
 import com.happy.sqlMapper.HpUserSearchMapper;
 import com.happy.util.Util;
 import com.happy.util.pubConst.Const;
@@ -30,11 +36,17 @@ import com.happy.util.pubConst.WxAppletsConst;
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
+    private HpUserExMapper hpUserExMapper;
+    @Autowired
+    private HpUserMapper hpUserMapper;
+    @Autowired
     private HpUserBoundMapper hpUserBoundMapper;
     @Autowired
     private HpUserBoundExMapper hpUserBoundExMapper;
     @Autowired
     private HpUserSearchMapper hpUserSearchMapper;
+    @Autowired
+    private HpUserRecommendMapper hpUserRecommendMapper;
 
     @Override
     public OtherUserData confirmUser(String sid, String oid, int isUser, int isOther) {
@@ -46,14 +58,14 @@ public class UserServiceImpl implements UserService {
                 msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_1);
                 return msg;
             }
-            HpUserEntity user = this.hpUserBoundExMapper.getUserByToken(sid);
+            HpUserEntity user = this.hpUserExMapper.getUserByToken(sid);
             if(user == null || user.getHpUserId() == null) {
                 msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_3);
                 msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_3);
                 return msg;
             }
-            Integer userOn = user.getUserOn();
-            if (userOn == 0) { // 判断用户是否处于黑名单
+            Integer blackOn = user.getBlackOn();
+            if (blackOn == 0) { // 判断用户是否处于黑名单
                 msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_4);
                 msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_4);
                 return msg;
@@ -105,8 +117,9 @@ public class UserServiceImpl implements UserService {
         }
         Long userId = bound.getHpUserId();
         if(userId != null) {
-            String sid = this.hpUserBoundExMapper.getTokenByUserId(userId);
-            data.setSid(sid);
+            UserSimpleData user = this.hpUserExMapper.getSimpleUserByKey(userId,null);
+            data.setSid(user.getUserToken());
+            data.setShareToken(user.getShareToken());
         }
         return data;
     }
@@ -199,6 +212,111 @@ public class UserServiceImpl implements UserService {
             userSearch.setNum(userSearch.getNum()+1);
             this.hpUserSearchMapper.updateByPK(userSearch);
         }
+    }
+
+
+    @Override
+    public BaseMsg updateUserSearchDel(String oid, Long hpUserSearchId) {
+        BaseMsg msg = new BaseMsg();
+        this.hpUserBoundExMapper.updateUserSearchDel(oid, hpUserSearchId);
+        
+        return msg;
+    }
+
+
+    @Override
+    public BaseMsg insertShareRecom(String oid, String shareToken, String phone) {
+        BaseMsg msg = new BaseMsg();
+        if(Util.isEmpty(shareToken)) {
+            msg.setErrorCode(1);
+            msg.setMessage("缺少推荐人参数");
+            return msg;
+        } 
+        if(!Util.checkPhone(phone)) {
+            msg.setErrorCode(1);
+            msg.setMessage("手机号格式不正确");
+            return msg;
+        }
+        Long recommenUserId = this.hpUserExMapper.getIdByShareToken(shareToken);
+        if(recommenUserId == null) {
+            msg.setErrorCode(1);
+            msg.setMessage("推荐人识别码错误");
+            return msg;
+        }
+        HpUserRecommendEntity userRecd = this.hpUserBoundExMapper.getRecdByOid(oid);
+        if(userRecd != null) {
+            msg.setErrorCode(1);
+            msg.setMessage("您已绑定过推荐人");
+            return msg;
+        }
+        Long boundId = this.hpUserBoundExMapper.getBoundIdByToken(oid);
+        userRecd = new HpUserRecommendEntity();
+        userRecd.setHpUserBoundId(boundId);
+        userRecd.setHpUserRecommendId(recommenUserId);
+        userRecd.setRecPhoneNo(phone);
+        userRecd.setRecTime(Util.getDateSecond(Util.getCurrentDate()));
+        this.hpUserRecommendMapper.insert(userRecd);
+        
+        return msg;
+    }
+
+
+    @Override
+    public UserDataMsg getUserCenterDate(String oid, String sid) {
+        UserDataMsg msg = new UserDataMsg();
+        UserSimpleData data = this.hpUserExMapper.getSimpleUserByKey(null,sid);
+        
+        msg.setData(data);
+        
+        return msg;
+    }
+
+
+    @Override
+    public BaseMsg updateUserIdApply(String sid, String realName, String idNum, String idFrontPic, String idBackPic,
+        String idPersonPic) {
+         BaseMsg msg = new BaseMsg();
+         if(Util.isEmpty(realName)) {
+             msg.setErrorCode(1);
+             msg.setMessage("缺少参数：真实姓名");
+             return msg;
+         }
+         realName = realName.trim();
+         if(Util.isEmpty(idNum) || idNum.length()>=20) {
+             msg.setErrorCode(1);
+             msg.setMessage("身份证号格式错误");
+             return msg;
+         }
+         if(!Util.checkUrl(idFrontPic)) {
+             msg.setErrorCode(1);
+             msg.setMessage("身份证正面照地址格式错误");
+             return msg;
+         }
+         if(!Util.checkUrl(idBackPic)) {
+             msg.setErrorCode(1);
+             msg.setMessage("身份证反面照地址格式错误");
+             return msg;
+         }
+         if(!Util.checkUrl(idPersonPic)) {
+             msg.setErrorCode(1);
+             msg.setMessage("身份证手持图片地址格式错误");
+             return msg;
+         }
+         idNum = idNum.trim();
+         UserSimpleData user = this.hpUserExMapper.getSimpleUserByKey(null, sid);
+         Long curTime = Util.getDateSecond(Util.getCurrentDate());
+         HpUserEntity newUser = new HpUserEntity();
+         newUser.setHpUserId(user.getHpUserId());
+         newUser.setApplyTime(curTime);
+         newUser.setApproveNum(user.getApproveNum()+1);
+         newUser.setApproveState(3);
+         newUser.setRealName(realName);
+         newUser.setIdBackPic(idBackPic);
+         newUser.setIdFrontPic(idFrontPic);
+         newUser.setIdNum(idNum);
+         newUser.setIdPersonPic(idPersonPic);
+         this.hpUserMapper.updateByPK(newUser);
+         return msg;
     }
 
     

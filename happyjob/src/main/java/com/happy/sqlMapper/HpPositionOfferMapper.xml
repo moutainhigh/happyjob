@@ -5,12 +5,12 @@
 <mapper namespace="com.happy.sqlMapper.HpPositionOfferMapper">
 	<resultMap id="BaseResultMap" type="com.happy.entity.HpPositionOfferEntity">
 		<result column="hp_position_offer_id" property="hpPositionOfferId"/>
-		<result column="day_num" property="dayNum"/>
+		<result column="type_name" property="typeName"/>
 		<result column="use_on" property="useOn"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpPositionOfferId" parameterType="com.happy.entity.HpPositionOfferEntity">
-		insert into hp_position_offer(day_num,use_on)
-		 values (#{dayNum},#{useOn});
+		insert into hp_position_offer(type_name,use_on)
+		 values (#{typeName},#{useOn});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_position_offer where hp_position_offer_id=#{hpPositionOfferId}
@@ -24,8 +24,8 @@
 	<update id="updateByPK" parameterType="com.happy.entity.HpPositionOfferEntity">
 		update hp_position_offer
 		<set>
-			<if test="dayNum!=null">
-				day_num=#{dayNum},
+			<if test="typeName!=null">
+				type_name=#{typeName},
 			</if>
 			<if test="useOn!=null ">
 				use_on=#{useOn},

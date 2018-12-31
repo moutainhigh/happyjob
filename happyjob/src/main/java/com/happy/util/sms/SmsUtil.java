@@ -30,6 +30,8 @@ public class SmsUtil {
     private static final OkHttpClient client = new OkHttpClient();
 
     public static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
+    
+    public static final String MSG_MODEL = "【开心工作】尊敬的用户： 您的验证码为${msgCode}，如非本人操作，请忽略此短信。";
 
     /**
      * @param msg 短信内容

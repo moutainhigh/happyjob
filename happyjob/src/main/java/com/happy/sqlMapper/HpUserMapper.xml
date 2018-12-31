@@ -14,7 +14,7 @@
 		<result column="phone_no" property="phoneNo"/>
 		<result column="born_year" property="bornYear"/>
 		<result column="real_name" property="realName"/>
-		<result column="user_on" property="userOn"/>
+		<result column="black_on" property="blackOn"/>
 		<result column="approve_state" property="approveState"/>
 		<result column="header_pic" property="headerPic"/>
 		<result column="id_num" property="idNum"/>
@@ -26,15 +26,17 @@
 		<result column="invite_user_id" property="inviteUserId"/>
 		<result column="user_money" property="userMoney"/>
 		<result column="approve_num" property="approveNum"/>
+		<result column="apply_time" property="applyTime"/>
 		<result column="vip_on" property="vipOn"/>
 		<result column="user_token" property="userToken"/>
 		<result column="token_time" property="tokenTime"/>
 		<result column="login_time" property="loginTime"/>
 		<result column="login_ip" property="loginIp"/>
+		<result column="share_token" property="shareToken"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserId" parameterType="com.happy.entity.HpUserEntity">
-		insert into hp_user(hp_company_id,user_type,user_name,password,salt,gender,phone_no,born_year,real_name,user_on,approve_state,header_pic,id_num,id_front_pic,id_back_pic,id_person_pic,create_time,regist_resource,invite_user_id,user_money,approve_num,vip_on,user_token,token_time,login_time,login_ip)
-		 values (#{hpCompanyId},#{userType},#{userName},#{password},#{salt},#{gender},#{phoneNo},#{bornYear},#{realName},#{userOn},#{approveState},#{headerPic},#{idNum},#{idFrontPic},#{idBackPic},#{idPersonPic},#{createTime},#{registResource},#{inviteUserId},#{userMoney},#{approveNum},#{vipOn},#{userToken},#{tokenTime},#{loginTime},#{loginIp});
+		insert into hp_user(hp_company_id,user_type,user_name,password,salt,gender,phone_no,born_year,real_name,black_on,approve_state,header_pic,id_num,id_front_pic,id_back_pic,id_person_pic,create_time,regist_resource,invite_user_id,user_money,approve_num,apply_time,vip_on,user_token,token_time,login_time,login_ip,share_token)
+		 values (#{hpCompanyId},#{userType},#{userName},#{password},#{salt},#{gender},#{phoneNo},#{bornYear},#{realName},#{blackOn},#{approveState},#{headerPic},#{idNum},#{idFrontPic},#{idBackPic},#{idPersonPic},#{createTime},#{registResource},#{inviteUserId},#{userMoney},#{approveNum},#{applyTime},#{vipOn},#{userToken},#{tokenTime},#{loginTime},#{loginIp},#{shareToken});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_user where hp_user_id=#{hpUserId}
@@ -75,8 +77,8 @@
 			<if test="realName!=null">
 				real_name=#{realName},
 			</if>
-			<if test="userOn!=null ">
-				user_on=#{userOn},
+			<if test="blackOn!=null ">
+				black_on=#{blackOn},
 			</if>
 			<if test="approveState!=null ">
 				approve_state=#{approveState},
@@ -111,6 +113,9 @@
 			<if test="approveNum!=null ">
 				approve_num=#{approveNum},
 			</if>
+			<if test="applyTime!=null ">
+				apply_time=#{applyTime},
+			</if>
 			<if test="vipOn!=null ">
 				vip_on=#{vipOn},
 			</if>
@@ -125,6 +130,9 @@
 			</if>
 			<if test="loginIp!=null">
 				login_ip=#{loginIp},
+			</if>
+			<if test="shareToken!=null">
+				share_token=#{shareToken},
 			</if>
 		</set>
 		 where hp_user_id=#{hpUserId}

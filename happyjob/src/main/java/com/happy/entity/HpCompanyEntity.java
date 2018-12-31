@@ -51,8 +51,8 @@ public class HpCompanyEntity implements  Serializable  {
 	@ApiModelProperty(name="createTime",value="添加时间",dataType="java.lang.Long")
 	private java.lang.Long createTime;
 	//认证状态（0、未认证，1、已认证）
-	@ApiModelProperty(name="approveState",value="认证状态（0、未认证，1、已认证）",dataType="String")
-	private String approveState;
+	@ApiModelProperty(name="approveState",value="认证状态（0、未认证，1、已认证）",dataType="java.lang.Integer")
+	private java.lang.Integer approveState;
 
 	public java.lang.Long getHpCompanyId() {
 		return hpCompanyId;
@@ -184,12 +184,12 @@ public class HpCompanyEntity implements  Serializable  {
 	}
 
 
-	public String getApproveState() {
+	public java.lang.Integer getApproveState() {
 		return approveState;
 	}
 
 
-	public void setApproveState(String approveState) {
+	public void setApproveState(java.lang.Integer approveState) {
 		this.approveState = approveState;
 	}
 
