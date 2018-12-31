@@ -57,7 +57,7 @@ import io.swagger.annotations.ApiOperation;
         @ApiImplicitParam(name="currentPage",value="当前分页",dataType="int",paramType="path",required=false),
         @ApiImplicitParam(name="showCount",value="单页展示记录数",dataType="int",paramType="path",required=false),
     })
-    @GetMapping(value="position/{cityName}/{keyWord}/{posNature}/{retOn}/{hotOn}/{welfareOn}/{currentPage}/{showCount}")
+    @GetMapping(value="position")
     public PositionListMsg position(HttpServletRequest request){
         String oid = request.getHeader("oid");
 //        String sid = request.getHeader("sid");
