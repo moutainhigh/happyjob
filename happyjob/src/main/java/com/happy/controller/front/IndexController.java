@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.happy.service.banner.BannerService;
+import com.happy.service.banner.data.BannerListMsg;
 import com.happy.service.position.PositionService;
 import com.happy.service.position.data.PositionListMsg;
 import com.happy.service.position.data.PositionMsg;
@@ -17,13 +19,15 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
-@Api(value="首页相关请求API",tags="首页相关请求API")
+@Api(value="前台首页相关请求API",tags="前台首页相关请求API")
 @RestController
 @RequestMapping("frontIndex")
  public class IndexController {
 
     @Resource
     private PositionService positionService;
+    @Resource
+    private BannerService bannerService;
     
     /**
      * @TODO:     岗位列表分页获取
@@ -75,6 +79,32 @@ import io.swagger.annotations.ApiOperation;
         
         
         return this.positionService.getPostion(sid, oid, hpPositionId);
+    }
+    
+    /**
+     * @TODO:     首页轮播图
+     */
+    @ApiOperation(value="首页轮播图列表获取",notes="首页轮播图列表获取")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name="useOn",value="是否开启",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="delOn",value="是否删除",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="state",value="广告时效，1、有效，2、过期，其他全部",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="isPage",value="是否分页",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="currentPage",value="分页当前页",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="showCount",value="单页展示数",dataType="int",paramType="query",required=false),
+    })
+    @GetMapping(value="banner")
+    public BannerListMsg banner(HttpServletRequest request){
+        Integer useOn = (Integer)Util.typeChange(request.getParameter("useOn"), Integer.class);
+        Integer delOn = (Integer)Util.typeChange(request.getParameter("delOn"), Integer.class);
+        Integer state = (Integer)Util.typeChange(request.getParameter("state"), Integer.class);
+        Integer isPage = (Integer)Util.typeChange(request.getParameter("isPage"), Integer.class);
+        isPage = isPage==null || isPage!=1 ?0:isPage;
+        Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
+        Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
+        
+        
+        return this.bannerService.getBannerList(useOn, delOn, state, isPage, currentPage, showCount);
     }
     
     

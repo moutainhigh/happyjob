@@ -22,6 +22,12 @@ public class PositionSearch extends Page {
     private Integer urgentOn;
     @ApiModelProperty(name="curTime",value="当前时间秒")
     private Long curTime;
+    @ApiModelProperty(name="hpPositionId",value="岗位ID")
+    private Long hpPositionId;
+    @ApiModelProperty(name="state",value="用户岗位申请状态0、所有，1、进行中，2、已成功入职，3、拼团成功，4、已过期")
+    private int state;
+    @ApiModelProperty(name="sid",value="用户通行证")
+    private String sid;
     
     
     
@@ -67,4 +73,23 @@ public class PositionSearch extends Page {
     public void setCurTime(Long curTime) {
         this.curTime = curTime;
     }
+    public Long getHpPositionId() {
+        return hpPositionId;
+    }
+    public void setHpPositionId(Long hpPositionId) {
+        this.hpPositionId = hpPositionId;
+    }
+    public int getState() {
+        return state;
+    }
+    public void setState(int state) {
+        this.state = state;
+    }
+    public String getSid() {
+        return sid;
+    }
+    public void setSid(String sid) {
+        this.sid = sid;
+    }
+    
 }

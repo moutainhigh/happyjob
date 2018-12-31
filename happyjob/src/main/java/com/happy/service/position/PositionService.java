@@ -18,5 +18,5 @@ public interface PositionService {
      */
     PositionMsg getPostion(String sid,String oid,Long hpPositionId);
     
-     
+    
 }

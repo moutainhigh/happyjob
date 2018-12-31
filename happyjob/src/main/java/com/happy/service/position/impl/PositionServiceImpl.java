@@ -39,7 +39,7 @@ public class PositionServiceImpl implements PositionService {
         search.setWelfareOn(welfareOn);
         search.setCurTime(curTime);
         
-        List<PositionData> posList = this.hpPositionExMapper.getFrontPosBySearch(search);
+        List<PositionData> posList = this.hpPositionExMapper.getFrontPoslistPage(search);
         msg.setList(posList);
         msg.setPage(search);
         return msg;
@@ -54,10 +54,22 @@ public class PositionServiceImpl implements PositionService {
              return msg;
          }
          PositionData data = this.hpPositionExMapper.getFrontPosByKey(hpPositionId);
-         msg.setData(data);
+         
          if(data !=null) {
-             this.hpPositionExMapper.
+             // 是否正在投递该岗位:普通方式
+             PositionSearch search = new PositionSearch();
+             search.setSid(sid);
+             search.setHpPositionId(hpPositionId);
+             search.setState(1);
+             long curTime = Util.getDateSecond(Util.getCurrentDate());
+             search.setCurTime(curTime);
+             int comNum = this.hpPositionExMapper.getGroupPosNumBySearch(search);
+             // 拼团
+             int groupNum = this.hpPositionExMapper.getGroupPosNumBySearch(search);
+             data.setComApplyNum(comNum);
+             data.setGroupApplyNum(groupNum);
          }
+         msg.setData(data);
          return msg;
     }
     

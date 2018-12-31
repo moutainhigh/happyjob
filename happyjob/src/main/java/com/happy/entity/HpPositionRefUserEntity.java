@@ -20,6 +20,9 @@ public class HpPositionRefUserEntity implements  Serializable  {
 	//公司招聘岗位表id
 	@ApiModelProperty(name="hpPositionId",value="公司招聘岗位表id",dataType="java.lang.Long")
 	private java.lang.Long hpPositionId;
+	//申请人id
+	@ApiModelProperty(name="hpUserId",value="申请人id",dataType="java.lang.Long")
+	private java.lang.Long hpUserId;
 	//是否是发起人
 	@ApiModelProperty(name="leaderOn",value="是否是发起人",dataType="java.lang.Integer")
 	private java.lang.Integer leaderOn;
@@ -29,6 +32,18 @@ public class HpPositionRefUserEntity implements  Serializable  {
 	//申请类型（1、普通申请，2、拼团申请）
 	@ApiModelProperty(name="partType",value="申请类型（1、普通申请，2、拼团申请）",dataType="java.lang.Integer")
 	private java.lang.Integer partType;
+	//是否入职
+	@ApiModelProperty(name="workOn",value="是否入职",dataType="java.lang.Integer")
+	private java.lang.Integer workOn;
+	//入职时间
+	@ApiModelProperty(name="workTime",value="入职时间",dataType="java.lang.Long")
+	private java.lang.Long workTime;
+	//操作联系人ID
+	@ApiModelProperty(name="optionId",value="操作联系人ID",dataType="java.lang.Long")
+	private java.lang.Long optionId;
+	//操作联系时间
+	@ApiModelProperty(name="optionTime",value="操作联系时间",dataType="java.lang.Long")
+	private java.lang.Long optionTime;
 
 	public java.lang.Long getHpPositionRefUserId() {
 		return hpPositionRefUserId;
@@ -60,6 +75,16 @@ public class HpPositionRefUserEntity implements  Serializable  {
 	}
 
 
+	public java.lang.Long getHpUserId() {
+		return hpUserId;
+	}
+
+
+	public void setHpUserId(java.lang.Long hpUserId) {
+		this.hpUserId = hpUserId;
+	}
+
+
 	public java.lang.Integer getLeaderOn() {
 		return leaderOn;
 	}
@@ -87,6 +112,46 @@ public class HpPositionRefUserEntity implements  Serializable  {
 
 	public void setPartType(java.lang.Integer partType) {
 		this.partType = partType;
+	}
+
+
+	public java.lang.Integer getWorkOn() {
+		return workOn;
+	}
+
+
+	public void setWorkOn(java.lang.Integer workOn) {
+		this.workOn = workOn;
+	}
+
+
+	public java.lang.Long getWorkTime() {
+		return workTime;
+	}
+
+
+	public void setWorkTime(java.lang.Long workTime) {
+		this.workTime = workTime;
+	}
+
+
+	public java.lang.Long getOptionId() {
+		return optionId;
+	}
+
+
+	public void setOptionId(java.lang.Long optionId) {
+		this.optionId = optionId;
+	}
+
+
+	public java.lang.Long getOptionTime() {
+		return optionTime;
+	}
+
+
+	public void setOptionTime(java.lang.Long optionTime) {
+		this.optionTime = optionTime;
 	}
 
 }

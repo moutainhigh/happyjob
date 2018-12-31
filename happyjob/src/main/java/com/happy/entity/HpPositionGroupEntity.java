@@ -14,9 +14,6 @@ public class HpPositionGroupEntity implements  Serializable  {
 	//公司职位招聘拼团表ID
 	@ApiModelProperty(name="hpPositionGroupId",value="公司职位招聘拼团表ID",dataType="java.lang.Long")
 	private java.lang.Long hpPositionGroupId;
-	//活动背景图id
-	@ApiModelProperty(name="hpUserId",value="活动背景图id",dataType="java.lang.Long")
-	private java.lang.Long hpUserId;
 	//公司招聘岗位表id
 	@ApiModelProperty(name="hpPositionId",value="公司招聘岗位表id",dataType="java.lang.Long")
 	private java.lang.Long hpPositionId;
@@ -37,16 +34,6 @@ public class HpPositionGroupEntity implements  Serializable  {
 
 	public void setHpPositionGroupId(java.lang.Long hpPositionGroupId) {
 		this.hpPositionGroupId = hpPositionGroupId;
-	}
-
-
-	public java.lang.Long getHpUserId() {
-		return hpUserId;
-	}
-
-
-	public void setHpUserId(java.lang.Long hpUserId) {
-		this.hpUserId = hpUserId;
 	}
 
 

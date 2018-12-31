@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlExMapper.HpAdvBannerExMapper">
+	<select id="getBannerListBySearch" parameterType="com.happy.service.banner.data.BannerSearch" resultType="com.happy.entity.HpAdvBannerEntity" >
+		select ab.* from hp_adv_banner ab 
+		where 1=1 
+		<if test="useOn!=null ">AND ab.use_on=#{useOn}</if>
+		<if test="delOn!=null ">AND del_on=#{delOn}</if>
+		<choose>
+			<when test="state == 1"> AND ab.end_time &gt;=#{curTime} </when>
+			<when test="state == 2"> AND ab.end_time &lt;#{curTime} </when>
+		</choose>
+		ORDER BY ab.del_on,ab.use_on desc,ab.sort_num 
+		<if test="isPage == 1">LIMIT #{currentResult},#{showCount}</if>
+	</select>
+	
+	<select id="getBannerNumBySearch" parameterType="com.happy.service.banner.data.BannerSearch" resultType="int" >
+		select COUNT(*) from hp_adv_banner ab 
+		where 1=1 
+		<if test="useOn!=null ">AND ab.use_on=#{useOn}</if>
+		<if test="delOn!=null ">AND del_on=#{delOn}</if>
+		<choose>
+			<when test="state == 1"> AND ab.end_time &gt;=#{curTime} </when>
+			<when test="state == 2"> AND ab.end_time &lt;#{curTime} </when>
+		</choose>
+	</select>
+</mapper>

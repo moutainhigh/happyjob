@@ -11,9 +11,17 @@ import com.happy.service.position.data.PositionSearch;
 @Repository("hpPositionExMapper")
 public interface HpPositionExMapper{
 
-    List<PositionData> getFrontPosBySearch(PositionSearch search);
+    List<PositionData> getFrontPoslistPage(PositionSearch search);
     
     PositionData getFrontPosByKey(@Param("hpPositionId") Long hpPositionId);
-    
-    int getFrontUserPosNum(@Param("hpPositionId") Long hpPositionId,@Param("sid") String sid,@Param("curTime") long curTime);
+    /**
+     *
+     * @TODO:     普通申请数量
+     */
+    int getPosNumBySearch(PositionSearch search);
+    /**
+     *
+     * @TODO:     拼团申请数量
+     */
+    int getGroupPosNumBySearch(PositionSearch search);
 }

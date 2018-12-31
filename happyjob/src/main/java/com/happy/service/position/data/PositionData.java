@@ -37,6 +37,10 @@ import io.swagger.annotations.ApiModelProperty;
     private String reqWorkYears;
     @ApiModelProperty(name="reqOther",value="其他要求")
     private String reqOther;
+    @ApiModelProperty(name="comApplyNum",value="正在进行的非拼团申请数")
+    private int comApplyNum;
+    @ApiModelProperty(name="groupApplyNum",value="正在进行的拼团申请数")
+    private int groupApplyNum;
     
     public String getComName() {
         return comName;
@@ -121,6 +125,18 @@ import io.swagger.annotations.ApiModelProperty;
     }
     public void setProvinceName(String provinceName) {
         this.provinceName = provinceName;
+    }
+    public int getComApplyNum() {
+        return comApplyNum;
+    }
+    public void setComApplyNum(int comApplyNum) {
+        this.comApplyNum = comApplyNum;
+    }
+    public int getGroupApplyNum() {
+        return groupApplyNum;
+    }
+    public void setGroupApplyNum(int groupApplyNum) {
+        this.groupApplyNum = groupApplyNum;
     }
     
 }
