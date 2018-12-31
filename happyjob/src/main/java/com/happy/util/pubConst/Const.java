@@ -35,6 +35,8 @@ public class Const {
 	public static final String DATE_FORMAT_STR_4 = "yyyyMMddHHmmsss";
 	/**HH:mm:ss*/
 	public static final String DATE_FORMAT_STR_5 = "HH:mm:ss";
+	/**yyyy-MM*/
+	public static final String DATE_FORMAT_STR_6 = "yyyy-MM";
 	/**时间格式字符串*/
 	public static final String TIME_MATCH_REGEX = "^(0+\\d|1\\d|2[0-3])\\:([0-5]+\\d)\\:([0-5]+\\d)$";
 	
