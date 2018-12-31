@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-  <title>AdminLTE 2 | Starter</title>
+  <title>开心工作后台管理系统</title>
 
 <!-- Bootstrap 的样式表 -->
 <link rel="stylesheet" href="/static/adminlet/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -19,35 +19,271 @@
 <link rel="stylesheet" href="/static/adminlet/dist/css/skins/skin-blue.min.css">
 <!-- 兼容的处理和谷歌字体库 -->
 <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+		<!-- 日期选择器 -->
+<link rel="stylesheet" href="/static/adminlet/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+
 
   
 </head>
-	<body class="hold-transition skin-blue sidebar-mini">
-		<div class="wrapper">
-			 <header class="main-header">
-			    ...
-			 </header>
-			 <aside class="main-sidebar">
-  			 </aside>
-  			 <div class="content-wrapper">
-  			 </div>
-  			 <aside class="control-sidebar control-sidebar-dark">
-  			 </aside>
-  			 
-  			 
-  			 <!-- Main Footer -->
-			  <footer class="main-footer">
-			  </footer>
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+
+		<!-- Main Header -->
+		<header class="main-header">
+		
+			<!-- Logo -->
+			<a href="index2.html" class="logo">
+			<!-- mini logo for sidebar mini 50x50 pixels -->
+			<span class="logo-mini">开心</span>
+			<!-- logo for regular state and mobile devices -->
+			<span class="logo-lg">开心工作后台管理系统</span>
+			</a>
+		
+			<!-- Header Navbar -->
+			<nav class="navbar navbar-static-top" role="navigation">
+			<!-- Sidebar toggle button-->
+			<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+				<span class="sr-only">Toggle navigation</span>
+			</a>
+			<!-- Navbar Right Menu -->
+			<div class="navbar-custom-menu">
+				<ul class="nav navbar-nav">
+					<!-- User Account Menu -->
+					<li class="dropdown user user-menu">
+						<!-- Menu Toggle Button -->
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<!-- hidden-xs hides the username on small devices so only the image appears. -->
+						<span class="hidden-xs">Alexander Pierce</span>
+						</a>
+						<ul class="dropdown-menu">
+						<!-- The user image in the menu -->
+						<li class="user-header">
+							<p>
+							Alexander Pierce - Web Developer
+							<small>Member since Nov. 2012</small>
+							</p>
+						</li>
+						<!-- Menu Footer-->
+						<li class="user-footer">
+							<div class="pull-right">
+							<a href="#" class="btn btn-default btn-flat">Sign out</a>
+							</div>
+						</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			</nav>
+		</header>
+		<!-- Left side column. contains the logo and sidebar -->
+		<aside class="main-sidebar">
+		
+			<!-- sidebar: style can be found in sidebar.less -->
+			<section class="sidebar">
+		
+			<!-- Sidebar Menu -->
+			<ul class="sidebar-menu" data-widget="tree">
+				<li class="header">HEADER</li>
+				<li class="treeview active">
+					<a href="#"><i class="fa fa-user"></i> <span>用户管理</span>
+						<span class="pull-right-container">
+						<i class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu">
+						<li class="active"><a href="#"><i class="fa fa-circle-o"></i>用户列表</a></li>
+						<li><a href="#"><i class="fa fa-circle-o"></i>工资查询</a></li>
+						<li><a href="#"><i class="fa fa-circle-o"></i>用户投递</a></li>
+					</ul>
+				</li>
+				<li class="treeview">
+					<a href="#"><i class="fa fa-laptop"></i> <span>企业管理</span>
+						<span class="pull-right-container">
+						<i class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu">
+						<li><a href="#"><i class="fa fa-circle-o"></i>企业列表</a></li>
+						<li><a href="#"><i class="fa fa-circle-o"></i>招聘列表</a></li>
+					</ul>
+				</li>
+				<li class="treeview">
+					<a href="#"><i class="fa fa-link"></i> <span>广告位</span>
+						<span class="pull-right-container">
+						<i class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+					<ul class="treeview-menu">
+						<li><a href="#"><i class="fa fa-circle-o"></i>广告列表</a></li>
+						<li><a href="#"><i class="fa fa-circle-o"></i>添加广告</a></li>
+					</ul>
+				</li>
+			</ul>
+			<!-- /.sidebar-menu -->
+			</section>
+			<!-- /.sidebar -->
+		</aside>
+		
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+			<h1>
+				用户列表
+				<small>Optional description</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> 用户管理</a></li>
+				<li class="active">用户列表</li>
+			</ol>
+			</section>
+		
+			<!-- Main content -->
+			<section class="content">
+		
+				<!-- /.row -->
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="box">
+						<div class="box-header" style="overflow-y: auto">
+							
+							<form class="form-inline" style="display: flex;justify-content: space-between">
+								<div class="form-group">
+									<label for="exampleInputName2">手机号：</label>
+									<input type="text" class="form-control" id="exampleInputName2" placeholder="186******">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail2">注册途径：</label>
+									<select class="form-control">
+										<option value="app">app</option>
+										<option value="小程序">小程序</option>
+										<option value="微信">微信</option>
+										<option value="门店">门店</option>
+										<option value="邀请注册">邀请注册</option>
+										<option selected="" value="请选择">请选择</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail2">注册时间：</label>
+									<input type="text" class="datepicker" placeholder="请选择日期" />
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail2">状态：</label>
+									<select class="form-control">
+										<option value="已禁用">已禁用</option>
+										<option value="未禁用">未禁用</option>
+										<option selected="" value="全部">全部</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail2">用户类型：</label>
+									<select class="form-control">
+										<option selected="" value="求职者">求职者</option>
+										<option value="超级管理员">超级管理员</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary">查询</button>
+									<button type="submit" class="btn btn-primary">添加用户</button>
+								</div>
+							</form>
+
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body table-responsive no-padding">
+							<table class="table table-hover">
+							<tr>
+								<th>手机号</th>
+								<th>姓名</th>
+								<th>性别</th>
+								<th>年龄</th>
+								<th>用户类型</th>
+								<th>注册时间</th>
+								<th>注册途径</th>
+								<th>来源</th>
+								<th>认证</th>
+								<th>操作</th>
+							</tr>
+							<tr>
+								<th>15868516891</th>
+								<th>蒋依依</th>
+								<th>女</th>
+								<th>25</th>
+								<th>求职者</th>
+								<th>2018-12-07 13:29:25</th>
+								<th>app</th>
+								<th>NO.008开心工作长江店</th>
+								<th>未认证</th>
+								<th>
+									<button type="button" class="btn btn-default btn-sm">查看</button>
+									<button type="button" class="btn btn-primary btn-sm">认证</button>
+									<button type="button" class="btn btn-danger btn-sm">禁用</button>
+								</th>
+							</tr>
+							<tr>
+								<th>15868516891</th>
+								<th>蒋依依</th>
+								<th>女</th>
+								<th>25</th>
+								<th>求职者</th>
+								<th>2018-12-07 13:29:25</th>
+								<th>app</th>
+								<th>NO.008开心工作长江店</th>
+								<th>未认证</th>
+								<th>
+									<button type="button" class="btn btn-default btn-sm">查看</button>
+									<button type="button" class="btn btn-primary btn-sm">认证</button>
+									<button type="button" class="btn btn-danger btn-sm">禁用</button>
+								</th>
+							</tr>
+							</table>
+						</div>
+						<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
+					</div>
+				</div>
+		
+			</section>
+			<!-- /.content -->
 		</div>
-	</body>
+		<!-- /.content-wrapper -->
+		
+		<!-- Main Footer -->
+		<footer class="main-footer">
+			<!-- To the right -->
+			<div class="pull-right hidden-xs">
+			Anything you want
+			</div>
+			<!-- Default to the left -->
+			<strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+		</footer>
+		
+		<!-- Add the sidebar's background. This div must be placed
+				immediately after the control sidebar -->
+		<div class="control-sidebar-bg"></div>
+	</div>
 	
-	<!-- jQuery 3 -->
+<!-- jQuery 3 -->
 <script src="/static/adminlet/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="/static/adminlet/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/static/adminlet/dist/js/adminlte.min.js"></script>
 
+<!-- 日期选择器 -->
+<script src="/static/adminlet/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
+
+
+<script type="text/javascript">
+    $(".datepicker").datepicker({
+            language: "cn",
+            autoclose: true,//选中之后自动隐藏日期选择框
+            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+        });
+</script> 
+</body>
 </html>
 
