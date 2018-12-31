@@ -60,6 +60,9 @@
 		<if test="welfareOn != null ">AND p.welfare_on=#{welfareOn}</if>
 		<if test="urgentOn != null ">AND p.urgent_on=#{urgentOn}</if>
 		<if test="cityName != null and cityName != '' ">AND aci.city_name==#{cityName}</if>
+		<if test="keyWord !=null and keyWord !=''">
+			AND (p.pos_type LIKE CONCAT('%',#{keyWord},'%') OR p.pos_name LIKE CONCAT('%',#{keyWord},'%') OR c.com_name LIKE CONCAT('%',#{keyWord},'%') )
+		</if>
 		ORDER BY p.apply_time desc
 	</select>
 	

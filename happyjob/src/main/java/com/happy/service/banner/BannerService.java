@@ -2,8 +2,6 @@
 
 import com.happy.service.banner.data.BannerDataMsg;
 import com.happy.service.banner.data.BannerListMsg;
-import com.happy.service.position.data.PositionListMsg;
-import com.happy.service.position.data.PositionMsg;
 
 public interface BannerService {
      

@@ -5,13 +5,15 @@
 <mapper namespace="com.happy.sqlMapper.HpUserSearchMapper">
 	<resultMap id="BaseResultMap" type="com.happy.entity.HpUserSearchEntity">
 		<result column="hp_user_search_id" property="hpUserSearchId"/>
-		<result column="hp_user_id" property="hpUserId"/>
+		<result column="hp_user_bound_id" property="hpUserBoundId"/>
 		<result column="content" property="content"/>
 		<result column="time" property="time"/>
+		<result column="del_on" property="delOn"/>
+		<result column="num" property="num"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserSearchId" parameterType="com.happy.entity.HpUserSearchEntity">
-		insert into hp_user_search(hp_user_id,content,time)
-		 values (#{hpUserId},#{content},#{time});
+		insert into hp_user_search(hp_user_bound_id,content,time,del_on,num)
+		 values (#{hpUserBoundId},#{content},#{time},#{delOn},#{num});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_user_search where hp_user_search_id=#{hpUserSearchId}
@@ -25,14 +27,20 @@
 	<update id="updateByPK" parameterType="com.happy.entity.HpUserSearchEntity">
 		update hp_user_search
 		<set>
-			<if test="hpUserId!=null ">
-				hp_user_id=#{hpUserId},
+			<if test="hpUserBoundId!=null ">
+				hp_user_bound_id=#{hpUserBoundId},
 			</if>
 			<if test="content!=null">
 				content=#{content},
 			</if>
 			<if test="time!=null ">
 				time=#{time},
+			</if>
+			<if test="delOn!=null ">
+				del_on=#{delOn},
+			</if>
+			<if test="num!=null ">
+				num=#{num},
 			</if>
 		</set>
 		 where hp_user_search_id=#{hpUserSearchId}

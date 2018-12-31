@@ -15,14 +15,20 @@ public class HpUserSearchEntity implements  Serializable  {
 	@ApiModelProperty(name="hpUserSearchId",value="求职者搜索历史表ID",dataType="java.lang.Long")
 	private java.lang.Long hpUserSearchId;
 	//员工信息表id
-	@ApiModelProperty(name="hpUserId",value="员工信息表id",dataType="java.lang.Long")
-	private java.lang.Long hpUserId;
+	@ApiModelProperty(name="hpUserBoundId",value="员工信息表id",dataType="java.lang.Long")
+	private java.lang.Long hpUserBoundId;
 	//搜索内容
 	@ApiModelProperty(name="content",value="搜索内容",dataType="String")
 	private String content;
 	//搜索时间
 	@ApiModelProperty(name="time",value="搜索时间",dataType="java.lang.Long")
 	private java.lang.Long time;
+	//是否删除
+	@ApiModelProperty(name="delOn",value="是否删除",dataType="java.lang.Integer")
+	private java.lang.Integer delOn;
+	//内容搜索次数
+	@ApiModelProperty(name="num",value="内容搜索次数",dataType="java.lang.Integer")
+	private java.lang.Integer num;
 
 	public java.lang.Long getHpUserSearchId() {
 		return hpUserSearchId;
@@ -34,13 +40,13 @@ public class HpUserSearchEntity implements  Serializable  {
 	}
 
 
-	public java.lang.Long getHpUserId() {
-		return hpUserId;
+	public java.lang.Long getHpUserBoundId() {
+		return hpUserBoundId;
 	}
 
 
-	public void setHpUserId(java.lang.Long hpUserId) {
-		this.hpUserId = hpUserId;
+	public void setHpUserBoundId(java.lang.Long hpUserBoundId) {
+		this.hpUserBoundId = hpUserBoundId;
 	}
 
 
@@ -61,6 +67,26 @@ public class HpUserSearchEntity implements  Serializable  {
 
 	public void setTime(java.lang.Long time) {
 		this.time = time;
+	}
+
+
+	public java.lang.Integer getDelOn() {
+		return delOn;
+	}
+
+
+	public void setDelOn(java.lang.Integer delOn) {
+		this.delOn = delOn;
+	}
+
+
+	public java.lang.Integer getNum() {
+		return num;
+	}
+
+
+	public void setNum(java.lang.Integer num) {
+		this.num = num;
 	}
 
 }

@@ -1,6 +1,5 @@
  package com.happy.service.banner.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,7 @@ import com.happy.service.banner.BannerService;
 import com.happy.service.banner.data.BannerDataMsg;
 import com.happy.service.banner.data.BannerListMsg;
 import com.happy.service.banner.data.BannerSearch;
-import com.happy.service.position.data.PositionData;
-import com.happy.service.position.data.PositionListMsg;
-import com.happy.service.position.data.PositionMsg;
-import com.happy.service.position.data.PositionSearch;
 import com.happy.sqlExMapper.HpAdvBannerExMapper;
-import com.happy.sqlExMapper.HpPositionExMapper;
 import com.happy.sqlMapper.HpAdvBannerMapper;
 import com.happy.util.Util;
 
@@ -40,6 +34,7 @@ public class BannerServiceImpl implements BannerService {
         }
         page.setUseOn(useOn);
         if(isPage == 1) {
+            page.setIsPage(isPage);
             page.setCurrentPage(currentPage);
             page.setShowCount(showCount);
             int totalCount = this.hpAdvBannerExMapper.getBannerNumBySearch(page);

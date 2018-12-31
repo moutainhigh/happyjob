@@ -1,6 +1,7 @@
  package com.happy.service.user.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,12 +11,16 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONObject;
 import com.happy.entity.HpUserBoundEntity;
 import com.happy.entity.HpUserEntity;
+import com.happy.entity.HpUserSearchEntity;
 import com.happy.plugin.BaseMsg;
-import com.happy.service.applets.data.OtherLoginData;
 import com.happy.service.user.UserService;
+import com.happy.service.user.data.OtherLoginData;
 import com.happy.service.user.data.OtherUserData;
+import com.happy.service.user.data.UserSearch;
+import com.happy.service.user.data.UserSerachListMsg;
 import com.happy.sqlExMapper.HpUserBoundExMapper;
 import com.happy.sqlMapper.HpUserBoundMapper;
+import com.happy.sqlMapper.HpUserSearchMapper;
 import com.happy.util.Util;
 import com.happy.util.pubConst.Const;
 import com.happy.util.pubConst.ResultMsg;
@@ -28,6 +33,8 @@ public class UserServiceImpl implements UserService {
     private HpUserBoundMapper hpUserBoundMapper;
     @Autowired
     private HpUserBoundExMapper hpUserBoundExMapper;
+    @Autowired
+    private HpUserSearchMapper hpUserSearchMapper;
 
     @Override
     public OtherUserData confirmUser(String sid, String oid, int isUser, int isOther) {
@@ -133,6 +140,65 @@ public class UserServiceImpl implements UserService {
         String result = Util.sendRequestGet(url);
         logger.info("微信code获取openId请求返回信息===={}",result);
         return JSONObject.parseObject(result);
+    }
+
+
+    @Override
+    public UserSerachListMsg getUserSearchList(String oid, Integer delOn, int isPage, Integer currentPage, Integer showCount) {
+        
+        UserSerachListMsg msg = new UserSerachListMsg();
+        UserSearch page = new UserSearch();
+        page.setOid(oid);
+        page.setDelOn(delOn);
+        if(isPage == 1) { // 分页
+            page.setIsPage(isPage);
+            page.setCurrentPage(currentPage);
+            page.setShowCount(showCount);
+            int totalCount = this.hpUserBoundExMapper.getUserSearchNum(page);
+            page.setTotalResult(totalCount);
+            msg.setPage(page);
+        }
+        List<HpUserSearchEntity> list = this.hpUserBoundExMapper.getUserSearchList(page);
+        msg.setList(list);
+        return msg;
+    }
+
+
+    @Override
+    public void insertUserSearch(String oid, String keyWord) {
+        
+        if(Util.isEmpty(keyWord)) {
+            return;
+        }
+        keyWord = keyWord.trim();
+        Long boundId = this.hpUserBoundExMapper.getBoundIdByToken(oid);
+        if(boundId==null) {
+            return;
+        }
+        
+        UserSearch page = new UserSearch();
+        page.setKeyWord(keyWord);
+        page.setOid(oid);
+        page.setDelOn(0);
+        List<HpUserSearchEntity> list = this.hpUserBoundExMapper.getUserSearchList(page);
+        Long curTime = Util.getDateSecond(Util.getCurrentDate());
+        HpUserSearchEntity userSearch = null;
+        if(Util.isEmptyList(list)) { // 需要新增
+            userSearch = new HpUserSearchEntity();
+            userSearch.setContent(keyWord);
+            userSearch.setHpUserBoundId(boundId);
+            userSearch.setTime(curTime);
+            userSearch.setDelOn(0);
+            userSearch.setNum(1);
+            this.hpUserSearchMapper.insert(userSearch);
+        }else {
+            userSearch = list.get(0);
+            userSearch.setContent(null);
+            userSearch.setHpUserBoundId(null);
+            userSearch.setTime(curTime);
+            userSearch.setNum(userSearch.getNum()+1);
+            this.hpUserSearchMapper.updateByPK(userSearch);
+        }
     }
 
     

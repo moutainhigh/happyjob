@@ -17,8 +17,8 @@ public class Page {
     private int currentResult;  //当前记录起始索引
     @ApiModelProperty(name="entityOrField",value="true:需要分页的地方，传入的参数就是Page实体；false:需要分页的地方，传入的参数所代表的实体拥有Page属性",dataType="java.lang.Boolean")
     private boolean entityOrField;  //true:需要分页的地方，传入的参数就是Page实体；false:需要分页的地方，传入的参数所代表的实体拥有Page属性
-	
-
+    @ApiModelProperty(name="isPage",value="是否分页")
+    private int isPage;
 	
 	public Page(){
 			this.showCount = 10;
@@ -83,6 +83,13 @@ public class Page {
     public void setEntityOrField(boolean entityOrField) {
         this.entityOrField = entityOrField;
     }
-	
+
+    public int getIsPage() {
+        return isPage;
+    }
+
+    public void setIsPage(int isPage) {
+        this.isPage = isPage;
+    }
 	
 }

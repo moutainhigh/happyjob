@@ -9,7 +9,7 @@ public interface PositionService {
       * 
       * @TODO:   分页获取招聘列表
       */
-    PositionListMsg getPostionlistPage(String cityName,Integer posNature,Integer retOn,
+    PositionListMsg getPostionlistPage(String oid,String keyWord,String cityName,Integer posNature,Integer retOn,
          Integer hotOn,Integer welfareOn,Integer currentPage,Integer showCount);
      
     /**

@@ -12,6 +12,8 @@ import com.happy.service.banner.data.BannerListMsg;
 import com.happy.service.position.PositionService;
 import com.happy.service.position.data.PositionListMsg;
 import com.happy.service.position.data.PositionMsg;
+import com.happy.service.user.UserService;
+import com.happy.service.user.data.UserSerachListMsg;
 import com.happy.util.Util;
 
 import io.swagger.annotations.Api;
@@ -28,6 +30,8 @@ import io.swagger.annotations.ApiOperation;
     private PositionService positionService;
     @Resource
     private BannerService bannerService;
+    @Resource
+    private UserService userService;
     
     /**
      * @TODO:     岗位列表分页获取
@@ -37,6 +41,7 @@ import io.swagger.annotations.ApiOperation;
         @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
         @ApiImplicitParam(name="sid",value="用户登录凭证",dataType="String",paramType="header",required=false),
         @ApiImplicitParam(name="cityName",value="城市名称",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="keyWord",value="关键字，模糊匹配公司名称、职位名称",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="posNature",value="职位性质（1、实习，2、兼职，3、全职）",dataType="int",paramType="query",required=false),
         @ApiImplicitParam(name="retOn",value="是否入职返现",dataType="int",paramType="query",required=false),
         @ApiImplicitParam(name="hotOn",value="是否热门",dataType="int",paramType="query",required=false),
@@ -49,6 +54,7 @@ import io.swagger.annotations.ApiOperation;
         String oid = request.getHeader("oid");
         String sid = request.getHeader("sid");
         String cityName = request.getParameter("cityName");
+        String keyWord = request.getParameter("keyWord");
         Integer posNature = (Integer)Util.typeChange(request.getParameter("posNature"), Integer.class);
         Integer retOn = (Integer)Util.typeChange(request.getParameter("retOn"), Integer.class);
         Integer hotOn = (Integer)Util.typeChange(request.getParameter("hotOn"), Integer.class);
@@ -58,7 +64,11 @@ import io.swagger.annotations.ApiOperation;
         Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
         showCount = showCount==null||showCount<=0?1:showCount;
         
-        return this.positionService.getPostionlistPage(cityName, posNature, retOn, hotOn, welfareOn, currentPage, showCount);
+        if(!Util.isEmpty(keyWord)) { // 添加搜索记录
+            this.userService.insertUserSearch(oid, keyWord);
+        }
+        
+        return this.positionService.getPostionlistPage(oid,keyWord,cityName, posNature, retOn, hotOn, welfareOn, currentPage, showCount);
     }
     
     /**
@@ -106,6 +116,31 @@ import io.swagger.annotations.ApiOperation;
         
         return this.bannerService.getBannerList(useOn, delOn, state, isPage, currentPage, showCount);
     }
+    /**
+     * @TODO:     搜索记录查询
+     */
+    @ApiOperation(value="搜索记录查询",notes="搜索记录查询")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
+        @ApiImplicitParam(name="delOn",value="是否删除",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="isPage",value="是否分页",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="currentPage",value="分页当前页",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="showCount",value="单页展示数",dataType="int",paramType="query",required=false),
+    })
+    @GetMapping(value="searchHistory")
+    public UserSerachListMsg searchHistory(HttpServletRequest request){
+        String oid = request.getHeader("oid");
+        Integer delOn = (Integer)Util.typeChange(request.getParameter("delOn"), Integer.class);
+        Integer isPage = (Integer)Util.typeChange(request.getParameter("isPage"), Integer.class);
+        isPage = isPage==null || isPage!=1 ?0:isPage;
+        Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
+        Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
+        
+        
+        return this.userService.getUserSearchList(oid, delOn, isPage, currentPage, showCount);
+    }
+    
+    
     
     
 }

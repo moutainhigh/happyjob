@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.happy.plugin.BaseMsg;
-import com.happy.service.applets.data.OtherLoginData;
-import com.happy.service.applets.data.OtherLoginMsg;
 import com.happy.service.user.UserService;
+import com.happy.service.user.data.OtherLoginData;
+import com.happy.service.user.data.OtherLoginMsg;
 import com.happy.util.Util;
 import com.happy.util.pubConst.WxAppletsConst;
 
@@ -47,7 +47,7 @@ public class WxAppletsLoginController {
         @ApiImplicitParam(name="code",value="微信登录CODE",dataType="String",paramType="query",required=true),
     })
     @GetMapping(value="wxVoteLogin")
-    public OtherLoginData wxVoteLogin(HttpServletRequest request){
+    public OtherLoginMsg wxVoteLogin(HttpServletRequest request){
         OtherLoginMsg msg = new OtherLoginMsg();
         OtherLoginData data = new OtherLoginData();
         //微信端登录code值
@@ -56,7 +56,7 @@ public class WxAppletsLoginController {
         if(Util.isEmpty(wxJson)) { // 未获取到微信信息
             msg.setErrorCode(1);
             msg.setMessage("未获取到用户微信信息");
-            return data;
+            return msg;
         }
         String openid = wxJson.getString("openid");
         String unionid = wxJson.getString("unionid");
@@ -64,22 +64,23 @@ public class WxAppletsLoginController {
         if(Util.isEmpty(openid)) {
             msg.setErrorCode(1);
             msg.setMessage("未获取到openid");
-            return data;
+            return msg;
         }
         if(Util.isEmpty(unionid)) {
             msg.setErrorCode(1);
             msg.setMessage("未获取到unionid");
-            return data;
+            return msg;
         }
         if(Util.isEmpty(sessionKey)) {
             msg.setErrorCode(1);
             msg.setMessage("未获取到sessionKey");
-            return data;
+            return msg;
         }
         
         data = this.userService.insertWxLogin(openid, unionid);
         data.setSessionKey(sessionKey);
-        return data;
+        msg.setData(data);
+        return msg;
     }
     
     

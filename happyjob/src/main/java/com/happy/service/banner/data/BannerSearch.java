@@ -16,8 +16,6 @@ public class BannerSearch extends Page {
     private Integer state;
     @ApiModelProperty(name="curTime",value="当前时间（s）")
     private Long curTime;
-    @ApiModelProperty(name="isPage",value="是否分页")
-    private int isPage;
     
     
     public Integer getUseOn() {
@@ -43,11 +41,5 @@ public class BannerSearch extends Page {
     }
     public void setCurTime(Long curTime) {
         this.curTime = curTime;
-    }
-    public int getIsPage() {
-        return isPage;
-    }
-    public void setIsPage(int isPage) {
-        this.isPage = isPage;
     }
 }

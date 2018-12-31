@@ -21,14 +21,13 @@ public class PositionServiceImpl implements PositionService {
     private HpPositionExMapper hpPositionExMapper;
     
     @Override
-    public PositionListMsg getPostionlistPage(String cityName, Integer posNature, Integer retOn, Integer hotOn,
+    public PositionListMsg getPostionlistPage(String oid, String keyWord, String cityName, Integer posNature, Integer retOn, Integer hotOn,
         Integer welfareOn, Integer currentPage, Integer showCount) {
         
         Date curDate = Util.getCurrentDate();
         Long curTime = Util.getDateSecond(curDate);
         
         PositionListMsg msg = new PositionListMsg();
-        
         PositionSearch search = new PositionSearch();
         search.setCurrentPage(currentPage);
         search.setShowCount(showCount);
@@ -38,6 +37,10 @@ public class PositionServiceImpl implements PositionService {
         search.setRetOn(retOn);
         search.setWelfareOn(welfareOn);
         search.setCurTime(curTime);
+        if(!Util.isEmpty(keyWord)) { // 首页搜索
+            keyWord = keyWord.trim();
+            search.setKeyWord(keyWord);
+        }
         
         List<PositionData> posList = this.hpPositionExMapper.getFrontPoslistPage(search);
         msg.setList(posList);

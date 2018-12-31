@@ -1,6 +1,5 @@
- package com.happy.service.applets.data;
+ package com.happy.service.user.data;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 public class OtherLoginData {

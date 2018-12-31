@@ -1,4 +1,4 @@
- package com.happy.service.applets.data;
+ package com.happy.service.user.data;
 
 import com.happy.plugin.BaseMsg;
 

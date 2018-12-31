@@ -28,6 +28,8 @@ public class PositionSearch extends Page {
     private int state;
     @ApiModelProperty(name="sid",value="用户通行证")
     private String sid;
+    @ApiModelProperty(name="keyWord",value="关键字，模糊匹配公司名称、职位")
+    private String keyWord;
     
     
     
@@ -91,5 +93,10 @@ public class PositionSearch extends Page {
     public void setSid(String sid) {
         this.sid = sid;
     }
-    
+    public String getKeyWord() {
+        return keyWord;
+    }
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
 }
