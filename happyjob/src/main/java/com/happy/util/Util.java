@@ -44,6 +44,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.happy.util.pubConst.Const;
+import com.happy.util.sms.SmsUtil;
 
 /**
  * 
@@ -1035,6 +1036,18 @@ public class Util {
         return false;
     }
     
+    /**
+     * @TODO 手机短信验证码发送，成功后返回验证码
+     */
+    public static String sendPhoneCode(String phoneNo,int codeNum) {
+        String msgCode = Util.getRandomStringByLength(codeNum, "0"); // 四位数字
+        String content = SmsUtil.MSG_MODEL.replace("${msgCode}", msgCode);
+        if(SmsUtil.sendSms(content, phoneNo)) { // 发送成功
+            return msgCode;
+        }
+        logger.info("短信验证码发送失败！");
+        return null;
+    }
     
     
     @Test

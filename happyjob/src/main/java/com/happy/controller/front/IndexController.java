@@ -22,7 +22,6 @@ import com.happy.service.user.data.PhoneCodeMsg;
 import com.happy.service.user.data.UserSerachListMsg;
 import com.happy.util.Util;
 import com.happy.util.pubConst.Const;
-import com.happy.util.sms.SmsUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -226,10 +225,9 @@ import io.swagger.annotations.ApiOperation;
            msg.setMessage("手机号码格式不正确");
            return msg;
        }
-       String msgCode = Util.getRandomStringByLength(4, "0"); // 四位数字
-       String content = SmsUtil.MSG_MODEL.replace("${msgCode}", msgCode);
-       // TODO 发短信
-       if(SmsUtil.sendSms(content, phoneNo)) { // 发送成功
+       //发短信
+       String msgCode = Util.sendPhoneCode(phoneNo, Const.PHONE_MSGCODE_NUM);
+       if(Util.isEmpty(msgCode)) { // 发送成功
            HttpSession session = request.getSession(false);
            session.setAttribute(Const.SESSION_ATTR_NAME_PHONE, phoneNo);
            session.setAttribute(Const.SESSION_ATTR_NAME_MSGCODE, msgCode);
@@ -237,7 +235,6 @@ import io.swagger.annotations.ApiOperation;
            data.setMsgCode(msgCode);
            msg.setData(data);
        }
-       
        
        return msg;
    }

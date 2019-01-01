@@ -49,5 +49,23 @@ public class Const {
     public static final String SESSION_ATTR_NAME_PHONE = "phoneno";
     /**短信验证码*/
     public static final String SESSION_ATTR_NAME_MSGCODE = "msgcode";
+    /**短信验证码位数*/
+    public static final int PHONE_MSGCODE_NUM = 4;
+    
+    
+    // 各功能图片上传物理地址
+    /** 用户图片存储位置*/
+    public static final String HP_UP_IMG_USER_PATH = "/imgs/user";
+    /** 公司图片存储位置*/
+    public static final String HP_UP_IMG_COM_PATH = "/imgs/company";
+    /** 岗位图片存储位置*/
+    public static final String HP_UP_IMG_POS_PATH = "/imgs/position";
+    /** BANNER岗位图片存储位置*/
+    public static final String HP_UP_IMG_BANNER_PATH = "/imgs/banner";
+    
+    // 文件类型正则表达式
+    /**图片文件上传保存文件夹*/
+    public static final String HP_UP_IMG_FORMAT = ".*\\.(jpg|png|jpeg|gif)";
+
 }
 

@@ -21,7 +21,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.happy.util.ServiceConfig;
 import com.happy.util.Util;
 import com.happy.util.pubConst.Const;
-
+/**
+ *
+ *   TODO: request/response公共方法、文件上传
+ */
 public class BaseController {
     private final static Logger logger = LoggerFactory.getLogger(BaseController.class);
     
@@ -31,7 +34,7 @@ public class BaseController {
 
 
     /**
-     * 根据名字获取cookie
+     * @TODO 根据名字获取cookie
      * 
      * @param request
      * @param name
@@ -49,7 +52,7 @@ public class BaseController {
     }
 
     /**
-     * 将cookie封装到Map里面
+     *@TODO  将cookie封装到Map里面
      * 
      * @param request
      * @return
@@ -66,7 +69,7 @@ public class BaseController {
     }
 
     /**
-     * 设置cookie
+     * @TODO  设置cookie
      * 
      * @param name
      *            cookie名字
@@ -87,7 +90,7 @@ public class BaseController {
 
 
     /**
-     * @Description: 清除指定名称的cookie
+     * @TODO 清除指定名称的cookie
      */
     public static void removeCookieByName(HttpServletResponse response,String name) {
         Cookie newCookie = new Cookie(name, null);
@@ -246,4 +249,5 @@ public class BaseController {
            
            return json;
        }
+       
 }

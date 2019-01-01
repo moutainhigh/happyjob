@@ -6,14 +6,21 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
+import com.happy.controller.base.BaseController;
 import com.happy.service.user.UserService;
 import com.happy.service.user.data.OtherLoginData;
 import com.happy.service.user.data.OtherLoginMsg;
+import com.happy.service.user.data.UpImgData;
+import com.happy.service.user.data.UpImgMsg;
 import com.happy.util.Util;
+import com.happy.util.pubConst.Const;
 import com.happy.util.pubConst.WxAppletsConst;
 
 import io.swagger.annotations.Api;
@@ -80,7 +87,63 @@ public class WxAppletsLoginController {
         msg.setData(data);
         return msg;
     }
-    
+    /**
+    *
+    * @TODO:     商城小程序单张图片上传接口
+    * @CreateTime:  2018年12月27日下午5:43:41 
+    * @CreateAuthor: chenwei
+    * @param request
+    * @return
+    */
+   @ApiOperation(value="单张图片上传接口",notes="单张图片上传接口,文件流形式上传,文件参数名file")
+   @ApiImplicitParams({
+       @ApiImplicitParam(name="oid",value="用户微信登录凭证",dataType="String",paramType="header",required=false),
+       @ApiImplicitParam(name="code",value="上传类型：user、用户图片上传，company、公司图片上传，position、岗位图片上传，banner、轮播图片上传",dataType="String",paramType="query",required=true),
+       @ApiImplicitParam(name="file",value="图片文件流",dataType="form提交",paramType="query",required=true),
+   })
+   
+   @PostMapping(value = "/imgUpOne")
+   public UpImgMsg mallImgUpOne(HttpServletRequest request) {
+       UpImgMsg msg=new UpImgMsg();
+       String oid = request.getHeader("oid");
+       String code = request.getParameter("code");
+       logger.info("OrderPayController.WxMallPrePay params==oid={},",oid);
+       
+       MultipartHttpServletRequest multiRequest = BaseController.getMultiReq(request);
+       if(multiRequest == null) {
+           msg.setErrorCode(1);
+           msg.setMessage("上传文件为空");
+           return msg;
+       }
+       MultipartFile file_member = multiRequest.getFile("file");
+       String leftPath  = null;
+       String fileRegex = null;
+       long maxSize = 0;
+       if("user".equals(code)) {
+           leftPath = Const.HP_UP_IMG_USER_PATH;
+           fileRegex = Const.HP_UP_IMG_FORMAT;
+       }else if("company".equals(code)) {
+           leftPath = Const.HP_UP_IMG_COM_PATH;
+           fileRegex = Const.HP_UP_IMG_FORMAT;
+       }else if("position".equals(code)) {
+           leftPath = Const.HP_UP_IMG_POS_PATH;
+           fileRegex = Const.HP_UP_IMG_FORMAT;
+       }else if("banner".equals(code)) {
+           leftPath = Const.HP_UP_IMG_BANNER_PATH;
+           fileRegex = Const.HP_UP_IMG_FORMAT;
+       }else {
+           msg.setErrorCode(1);
+           msg.setMessage("上传类型不符");
+           return msg;
+       }
+       JSONObject json = BaseController.UploadFiles(file_member, leftPath, fileRegex, maxSize, 0);
+       msg.setErrorCode(json.getIntValue(Const.RESUTL_MESSAGE_ERRORCODE));
+       msg.setMessage(json.getString(Const.RESUTL_MESSAGE_MESSAGE));
+       UpImgData data = new UpImgData();
+       data.setImgUrl(json.getString(Const.RESUTL_MESSAGE_UP_IMG_URL));
+       msg.setData(data);
+       return msg;
+   }
     
     
 }
