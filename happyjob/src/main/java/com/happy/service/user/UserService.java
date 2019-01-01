@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.user.data.OtherLoginData;
 import com.happy.service.user.data.OtherUserData;
-import com.happy.service.user.data.UserDataMsg;
+import com.happy.service.user.data.UserAddData;
 import com.happy.service.user.data.UserSerachListMsg;
+import com.happy.service.user.data.UserSimpleDataMsg;
+import com.happy.service.user.data.UserSimpleListMsg;
 
 public interface UserService {
      /**
@@ -48,10 +50,30 @@ public interface UserService {
     *
     * @TODO:     获取用户中心用户数据
     */
-   UserDataMsg getUserCenterDate(String oid ,String sid);
+   UserSimpleDataMsg getUserCenterDate(String oid ,String sid);
    /**
    *
    * @TODO:     用户提交认证信息，申请认证
    */
    BaseMsg updateUserIdApply(String sid,String realName,String idNum,String idFrontPic,String idBackPic,String idPersonPic);
+   
+   
+   
+   ////////////////////////////////////////后台用户////////////////////////////////////////
+   /**
+   *
+   * @TODO:     分页获取用户信息
+   */ 
+   UserSimpleListMsg getUserListPage(String phoneNo,Integer resource,Long startTime,
+       Long endTime,Integer blackOn,Integer userType,Integer currentPage,Integer showCount);
+   /**
+   *
+   * @TODO:     后台添加员工基本信息
+   */ 
+   BaseMsg insertUserBase(UserAddData data);
+   /**
+    *
+    * @TODO:     用户认证、禁用
+    */ 
+   BaseMsg updateUserState(Long hpUserId,Integer approve,Integer blackOn);
 }

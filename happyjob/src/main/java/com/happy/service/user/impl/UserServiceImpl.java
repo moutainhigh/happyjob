@@ -17,10 +17,13 @@ import com.happy.plugin.BaseMsg;
 import com.happy.service.user.UserService;
 import com.happy.service.user.data.OtherLoginData;
 import com.happy.service.user.data.OtherUserData;
-import com.happy.service.user.data.UserSimpleData;
-import com.happy.service.user.data.UserDataMsg;
+import com.happy.service.user.data.UserAddData;
+import com.happy.service.user.data.UserManageSearch;
 import com.happy.service.user.data.UserSearch;
 import com.happy.service.user.data.UserSerachListMsg;
+import com.happy.service.user.data.UserSimpleData;
+import com.happy.service.user.data.UserSimpleDataMsg;
+import com.happy.service.user.data.UserSimpleListMsg;
 import com.happy.sqlExMapper.HpUserBoundExMapper;
 import com.happy.sqlExMapper.HpUserExMapper;
 import com.happy.sqlMapper.HpUserBoundMapper;
@@ -262,8 +265,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserDataMsg getUserCenterDate(String oid, String sid) {
-        UserDataMsg msg = new UserDataMsg();
+    public UserSimpleDataMsg getUserCenterDate(String oid, String sid) {
+        UserSimpleDataMsg msg = new UserSimpleDataMsg();
         UserSimpleData data = this.hpUserExMapper.getSimpleUserByKey(null,sid);
         
         msg.setData(data);
@@ -319,5 +322,144 @@ public class UserServiceImpl implements UserService {
          return msg;
     }
 
-    
+
+    @Override
+    public UserSimpleListMsg getUserListPage(String phoneNo, Integer resource, Long startTime, Long endTime,
+        Integer blackOn,Integer userType, Integer currentPage, Integer showCount) {
+         UserSimpleListMsg msg = new UserSimpleListMsg();
+         UserManageSearch page = new UserManageSearch();
+         currentPage = currentPage==null||currentPage<1?1:currentPage;
+         showCount = showCount==null||showCount<1?10:showCount;
+         page.setCurrentPage(currentPage);
+         page.setShowCount(showCount);
+         page.setPhoneNo(phoneNo);
+         page.setBlackOn(blackOn);
+         page.setStartTime(startTime);
+         page.setEndTime(endTime);
+         page.setResource(resource);
+         page.setUserType(userType);
+         
+         List<UserSimpleData> list = this.hpUserExMapper.getUserlistPage(page);
+         msg.setList(list);
+         msg.setPage(page);
+         return msg;
+    }
+
+    private static final String REGEX_USERNAME = "[0-9a-zA-Z_]{1,50}";
+    private static final String REGEX_PASSWORD = "\\d{6}";
+    @Override
+    public BaseMsg insertUserBase(UserAddData data) {
+        BaseMsg msg = new BaseMsg();
+        if(data == null ) {
+            msg.setErrorCode(1);
+            msg.setMessage("信息为空");
+            return msg;
+        }
+        String phoneNo = data.getPhoneNo();
+        if(!Util.checkPhone(phoneNo)) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数格式错误：phoneNo");
+            return msg;
+        }
+        // 验证手机号唯一
+        Integer userType = data.getUserType();
+        if(userType ==null || (userType!=1 && userType !=2)) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数错误：userType");
+            return msg;
+        }
+        int num = this.hpUserExMapper.getUserCountByPhone(phoneNo);
+        if(num >0) {
+            msg.setErrorCode(1);
+            msg.setMessage("手机号码已经被注册，请更换手机号");
+            return msg;
+        }
+        String userName = data.getUserName();
+        if(userName ==null || !userName.matches(REGEX_USERNAME)) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数格式错误：userName");
+            return msg;
+        }
+        String password1 = data.getPassword1();
+        if(password1 ==null || !password1.matches(REGEX_PASSWORD)) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数格式错误：password1");
+            return msg;
+        }
+        String password2 = data.getPassword1();
+        if(password2 ==null || !password2.matches(REGEX_PASSWORD)) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数格式错误：password2");
+            return msg;
+        }
+        if(!password2.equals(password1)) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数错误：password2、password1不等");
+            return msg;
+        }
+        Integer gender = data.getGender();
+        if(gender ==null || (gender!=1 && gender !=2)) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数错误：gender");
+        }
+        Integer blackOn = data.getBlackOn();
+        if(blackOn ==null || (blackOn!=0 && blackOn !=1)) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数错误：blackOn");
+        }
+        String passwMD5 = Util.MD5(password1);
+        String salt = Util.getRandomStringByLength(4, "az");
+        String passwSaltMD5 = Util.generate(password1,salt);
+        logger.info("salt=={},passwMD5=={},passwSaltMD5=={},isEqual=={}",salt,passwMD5,passwSaltMD5,Util.verify(password1, passwSaltMD5));
+        Long bornYear = data.getBornTime();
+        String realName = data.getRealName();
+        Long curTime = Util.getDateSecond(Util.getCurrentDate());
+        HpUserEntity user = new HpUserEntity();
+        user.setApproveNum(0);
+        user.setApproveState(0);
+        user.setBlackOn(blackOn);
+        user.setBornYear(bornYear);
+        user.setCreateTime(curTime);
+        user.setGender(gender);
+        user.setPhoneNo(phoneNo);
+        user.setRealName(realName);
+        user.setShareToken(Util.getUuidRd());
+        user.setUserMoney(0d);
+        user.setUserName(userName);
+        user.setUserToken(Util.getUuidRd());
+        user.setUserType(userType);
+        user.setVipOn(0);
+        user.setRegistResource(0);
+        user.setPassword(passwSaltMD5);
+        user.setSalt(salt);
+        this.hpUserMapper.insert(user);
+        if(user.getHpUserId() == null) {
+            msg.setErrorCode(1);
+            msg.setMessage("添加失败，稍后再试");
+        }
+        return msg;
+    }
+
+
+    @Override
+    public BaseMsg updateUserState(Long hpUserId, Integer approve, Integer blackOn) {
+        BaseMsg msg = new BaseMsg();
+        if(hpUserId == null) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数错误：hpUserId");
+            return msg;
+        }
+        if(approve == null && blackOn==null) {
+            msg.setErrorCode(1);
+            msg.setMessage("操作类型错误");
+            return msg;
+        }
+        HpUserEntity user = new HpUserEntity();
+        user.setHpUserId(hpUserId);
+        user.setApproveState(approve == 1?1:2);
+        user.setBlackOn(blackOn==1?1:0);
+        this.hpUserMapper.updateByPK(user);
+        return msg;
+    }
+
 }

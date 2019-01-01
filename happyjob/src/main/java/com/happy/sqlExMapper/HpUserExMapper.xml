@@ -24,4 +24,24 @@
 	<select id="getIdByShareToken" resultType="Long" >
 		SELECT u.hp_user_id FROM hp_user u WHERE u.share_token=#{shareToken};
 	</select>
+	
+	
+	<select id="getUserlistPage" parameterType="com.happy.service.user.data.UserManageSearch" resultType="com.happy.service.user.data.UserSimpleData" >
+		SELECT u.hp_user_id,u.hp_company_id,u.user_type,u.user_name,u.gender,u.phone_no,u.born_year,u.real_name,u.black_on,
+		u.approve_state,u.header_pic,u.id_num,u.id_front_pic,u.id_back_pic,u.id_person_pic,u.create_time,u.regist_resource,
+		u.invite_user_id,u.user_money,u.approve_num,u.vip_on,u.login_time,u.login_ip,c.com_name 
+		FROM hp_user u LEFT JOIN hp_company c ON u.hp_company_id=c.hp_company_id 
+		WHERE 1=1 
+		<if test="phoneNo !=null and phoneNo !='' ">AND u.phone_no LIKE CONCAT('%',#{phoneNo},'%')</if>
+		<if test="resource !=null and resource !=0 ">AND u.regist_resource=#{resource}</if>
+		<if test="startTime !=null and startTime !=0 ">AND u.create_time &gt;=#{startTime}</if>
+		<if test="endTime !=null and endTime !=0 ">AND u.create_time &lt;=#{endTime}</if>
+		<if test="blackOn !=null ">AND u.black_on=#{blackOn}</if>
+		<if test="userType !=null ">AND u.user_type=#{userType}</if>
+		ORDER BY create_time desc
+	</select>
+	
+	<select id="getUserCountByPhone" resultType="int" >
+		SELECT COUNT(*) FROM hp_user u WHERE u.phone_no=#{phoneNo};
+	</select>
 </mapper>

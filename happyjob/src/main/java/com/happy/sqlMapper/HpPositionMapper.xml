@@ -25,7 +25,7 @@
 		<result column="welfare_detail" property="welfareDetail"/>
 		<result column="job_hours" property="jobHours"/>
 		<result column="com_cust_phone" property="comCustPhone"/>
-		<result column="pos_type" property="posType"/>
+		<result column="hp_position_type_id" property="hpPositionTypeId"/>
 		<result column="pos_detail" property="posDetail"/>
 		<result column="car_on" property="carOn"/>
 		<result column="car_desc" property="carDesc"/>
@@ -45,8 +45,8 @@
 		<result column="pos_state" property="posState"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpPositionId" parameterType="com.happy.entity.HpPositionEntity">
-		insert into hp_position(hp_company_id,hp_position_offer_id,hp_position_require_id,county_id,hp_position_salary_id,hp_education_id,pos_name,ret_man_money,man_day_num,ret_woman_money,women_day_num,urgent_on,urgent_money,group_on,three_money,five_money,welfare_on,welfare_detail,job_hours,com_cust_phone,pos_type,pos_detail,car_on,car_desc,pos_com_desc,other_welfare,pos_nature,pos_work_year,start_time,end_time,pos_num,pos_person,pos_phone,pos_email,hot_on,ret_on,apply_time,pos_state)
-		 values (#{hpCompanyId},#{hpPositionOfferId},#{hpPositionRequireId},#{countyId},#{hpPositionSalaryId},#{hpEducationId},#{posName},#{retManMoney},#{manDayNum},#{retWomanMoney},#{womenDayNum},#{urgentOn},#{urgentMoney},#{groupOn},#{threeMoney},#{fiveMoney},#{welfareOn},#{welfareDetail},#{jobHours},#{comCustPhone},#{posType},#{posDetail},#{carOn},#{carDesc},#{posComDesc},#{otherWelfare},#{posNature},#{posWorkYear},#{startTime},#{endTime},#{posNum},#{posPerson},#{posPhone},#{posEmail},#{hotOn},#{retOn},#{applyTime},#{posState});
+		insert into hp_position(hp_company_id,hp_position_offer_id,hp_position_require_id,county_id,hp_position_salary_id,hp_education_id,pos_name,ret_man_money,man_day_num,ret_woman_money,women_day_num,urgent_on,urgent_money,group_on,three_money,five_money,welfare_on,welfare_detail,job_hours,com_cust_phone,hp_position_type_id,pos_detail,car_on,car_desc,pos_com_desc,other_welfare,pos_nature,pos_work_year,start_time,end_time,pos_num,pos_person,pos_phone,pos_email,hot_on,ret_on,apply_time,pos_state)
+		 values (#{hpCompanyId},#{hpPositionOfferId},#{hpPositionRequireId},#{countyId},#{hpPositionSalaryId},#{hpEducationId},#{posName},#{retManMoney},#{manDayNum},#{retWomanMoney},#{womenDayNum},#{urgentOn},#{urgentMoney},#{groupOn},#{threeMoney},#{fiveMoney},#{welfareOn},#{welfareDetail},#{jobHours},#{comCustPhone},#{hpPositionTypeId},#{posDetail},#{carOn},#{carDesc},#{posComDesc},#{otherWelfare},#{posNature},#{posWorkYear},#{startTime},#{endTime},#{posNum},#{posPerson},#{posPhone},#{posEmail},#{hotOn},#{retOn},#{applyTime},#{posState});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_position where hp_position_id=#{hpPositionId}
@@ -120,8 +120,8 @@
 			<if test="comCustPhone!=null">
 				com_cust_phone=#{comCustPhone},
 			</if>
-			<if test="posType!=null">
-				pos_type=#{posType},
+			<if test="hpPositionTypeId!=null ">
+				hp_position_type_id=#{hpPositionTypeId},
 			</if>
 			<if test="posDetail!=null">
 				pos_detail=#{posDetail},

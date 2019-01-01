@@ -11,8 +11,8 @@ import io.swagger.annotations.ApiModelProperty;
 public class HpUserEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
-	//活动背景图id
-	@ApiModelProperty(name="hpUserId",value="活动背景图id",dataType="java.lang.Long")
+	//用户ID
+	@ApiModelProperty(name="hpUserId",value="用户ID",dataType="java.lang.Long")
 	private java.lang.Long hpUserId;
 	//企业id
 	@ApiModelProperty(name="hpCompanyId",value="企业id",dataType="java.lang.Long")
@@ -35,9 +35,9 @@ public class HpUserEntity implements  Serializable  {
 	//手机号码
 	@ApiModelProperty(name="phoneNo",value="手机号码",dataType="String")
 	private String phoneNo;
-	//出生年份
-	@ApiModelProperty(name="bornYear",value="出生年份",dataType="String")
-	private String bornYear;
+	//出生年份（时间戳s），计算年龄
+	@ApiModelProperty(name="bornYear",value="出生年份（时间戳s），计算年龄",dataType="java.lang.Long")
+	private java.lang.Long bornYear;
 	//真实姓名
 	@ApiModelProperty(name="realName",value="真实姓名",dataType="String")
 	private String realName;
@@ -179,12 +179,12 @@ public class HpUserEntity implements  Serializable  {
 	}
 
 
-	public String getBornYear() {
+	public java.lang.Long getBornYear() {
 		return bornYear;
 	}
 
 
-	public void setBornYear(String bornYear) {
+	public void setBornYear(java.lang.Long bornYear) {
 		this.bornYear = bornYear;
 	}
 

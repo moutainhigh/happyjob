@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.happy.plugin.BaseMsg;
 import com.happy.service.user.UserService;
-import com.happy.util.Util;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

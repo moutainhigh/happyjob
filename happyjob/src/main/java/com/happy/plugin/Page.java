@@ -17,7 +17,7 @@ public class Page {
     private int currentResult;  //当前记录起始索引
     @ApiModelProperty(name="entityOrField",value="true:需要分页的地方，传入的参数就是Page实体；false:需要分页的地方，传入的参数所代表的实体拥有Page属性",dataType="java.lang.Boolean")
     private boolean entityOrField;  //true:需要分页的地方，传入的参数就是Page实体；false:需要分页的地方，传入的参数所代表的实体拥有Page属性
-    @ApiModelProperty(name="isPage",value="是否分页")
+    @ApiModelProperty(name="isPage",value="是否分页:自定义分页时使用，插件分页不需要赋值")
     private int isPage;
 	
 	public Page(){

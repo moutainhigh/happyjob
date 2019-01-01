@@ -74,9 +74,9 @@ public class HpPositionEntity implements  Serializable  {
 	//公司客服
 	@ApiModelProperty(name="comCustPhone",value="公司客服",dataType="String")
 	private String comCustPhone;
-	//职位行业类型
-	@ApiModelProperty(name="posType",value="职位行业类型",dataType="String")
-	private String posType;
+	//职位行业类型ID
+	@ApiModelProperty(name="hpPositionTypeId",value="职位行业类型ID",dataType="java.lang.Long")
+	private java.lang.Long hpPositionTypeId;
 	//基本信息
 	@ApiModelProperty(name="posDetail",value="基本信息",dataType="String")
 	private String posDetail;
@@ -339,13 +339,13 @@ public class HpPositionEntity implements  Serializable  {
 	}
 
 
-	public String getPosType() {
-		return posType;
+	public java.lang.Long getHpPositionTypeId() {
+		return hpPositionTypeId;
 	}
 
 
-	public void setPosType(String posType) {
-		this.posType = posType;
+	public void setHpPositionTypeId(java.lang.Long hpPositionTypeId) {
+		this.hpPositionTypeId = hpPositionTypeId;
 	}
 
 

@@ -71,7 +71,7 @@
 			<if test="phoneNo!=null">
 				phone_no=#{phoneNo},
 			</if>
-			<if test="bornYear!=null">
+			<if test="bornYear!=null ">
 				born_year=#{bornYear},
 			</if>
 			<if test="realName!=null">
