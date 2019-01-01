@@ -199,12 +199,13 @@ function fetchList(){
     })    
 }
 // 认证、禁用、复用请求
+//hpUserId approve blackOn
 function postAuth(data){
     fetchPost({
         url:"/backUser/userInfoUp",
         params: data,
         callback:function(data){
-            window.location.reload();
+            console.log(data)
         }
     })
 }
@@ -240,6 +241,7 @@ function addTableList(list){
                 <button type="button" class="btn btn-danger btn-sm forbidden">禁用</button>\
             </th>\
         </tr>';
+                // <button type="button" class="btn btn-danger btn-sm restart">复用</button>\
     })
     $tBody.html(templeteTr)    
 }
