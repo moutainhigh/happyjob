@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.banner.BannerService;
 import com.happy.service.banner.data.BannerListMsg;
+import com.happy.service.config.ConfigService;
+import com.happy.service.config.data.EduListMsg;
+import com.happy.service.config.data.SalaryListMsg;
 import com.happy.service.position.PositionService;
 import com.happy.service.position.data.PositionListMsg;
 import com.happy.service.position.data.PositionMsg;
@@ -39,6 +42,8 @@ import io.swagger.annotations.ApiOperation;
     private BannerService bannerService;
     @Resource
     private UserService userService;
+    @Resource
+    private ConfigService configService;
     
     /**
      * @TODO:     岗位列表分页获取
@@ -239,6 +244,24 @@ import io.swagger.annotations.ApiOperation;
        return msg;
    }
    
+   /**
+   *
+   * @TODO:     获取薪资水平选项
+   */
+   @ApiOperation(value="获取薪资水平选项列表",notes="获取薪资水平选项列表")
+   @GetMapping("salaryList")
+   public SalaryListMsg salaryList() {
+       return this.configService.getSalaryList();
+   }
    
+   /**
+    *
+    * @TODO:     获取教育水平选项
+    */
+   @ApiOperation(value="获取教育水平选项",notes="获取教育水平选项")
+   @GetMapping("eduList")
+   public EduListMsg eduList() {
+       return this.configService.getEduList(1);
+   }
    
 }

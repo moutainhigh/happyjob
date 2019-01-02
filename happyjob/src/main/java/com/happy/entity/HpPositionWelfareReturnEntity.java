@@ -12,10 +12,10 @@ public class HpPositionWelfareReturnEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//公司福利入职返现时间表
-	@ApiModelProperty(name="hpPositionWelfareReturnId",value="公司福利入职返现时间表",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpPositionWelfareReturnId",value="公司福利入职返现时间表")
 	private java.lang.Long hpPositionWelfareReturnId;
 	//所少天后返现
-	@ApiModelProperty(name="dayNum",value="所少天后返现",dataType="java.lang.Integer")
+	@ApiModelProperty(name="dayNum",value="所少天后返现")
 	private java.lang.Integer dayNum;
 
 	public java.lang.Long getHpPositionWelfareReturnId() {

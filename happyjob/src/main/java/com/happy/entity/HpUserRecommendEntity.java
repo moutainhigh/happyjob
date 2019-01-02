@@ -12,16 +12,16 @@ public class HpUserRecommendEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//求职者推荐关系表ID
-	@ApiModelProperty(name="hpUserRecommendId",value="求职者推荐关系表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpUserRecommendId",value="求职者推荐关系表ID")
 	private java.lang.Long hpUserRecommendId;
 	//员工微信绑定表ID
-	@ApiModelProperty(name="hpUserBoundId",value="员工微信绑定表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpUserBoundId",value="员工微信绑定表ID")
 	private java.lang.Long hpUserBoundId;
 	//被推荐者手机号
-	@ApiModelProperty(name="recPhoneNo",value="被推荐者手机号",dataType="String")
+	@ApiModelProperty(name="recPhoneNo",value="被推荐者手机号")
 	private String recPhoneNo;
 	//记录时间
-	@ApiModelProperty(name="recTime",value="记录时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="recTime",value="记录时间")
 	private java.lang.Long recTime;
 
 	public java.lang.Long getHpUserRecommendId() {

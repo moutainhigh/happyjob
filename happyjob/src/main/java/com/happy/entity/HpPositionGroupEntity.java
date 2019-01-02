@@ -12,19 +12,19 @@ public class HpPositionGroupEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//公司职位招聘拼团表ID
-	@ApiModelProperty(name="hpPositionGroupId",value="公司职位招聘拼团表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpPositionGroupId",value="公司职位招聘拼团表ID")
 	private java.lang.Long hpPositionGroupId;
 	//公司招聘岗位表id
-	@ApiModelProperty(name="hpPositionId",value="公司招聘岗位表id",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpPositionId",value="公司招聘岗位表id")
 	private java.lang.Long hpPositionId;
 	//拼团开始时间
-	@ApiModelProperty(name="startTime",value="拼团开始时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="startTime",value="拼团开始时间")
 	private java.lang.Long startTime;
 	//拼团结束时间
-	@ApiModelProperty(name="endTime",value="拼团结束时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="endTime",value="拼团结束时间")
 	private java.lang.Long endTime;
 	//拼团状态（0、未成团，1、已成团）
-	@ApiModelProperty(name="groupState",value="拼团状态（0、未成团，1、已成团）",dataType="java.lang.Integer")
+	@ApiModelProperty(name="groupState",value="拼团状态（0、未成团，1、已成团）")
 	private java.lang.Integer groupState;
 
 	public java.lang.Long getHpPositionGroupId() {

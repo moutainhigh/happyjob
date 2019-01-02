@@ -12,22 +12,22 @@ public class HpUserSearchEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//求职者搜索历史表ID
-	@ApiModelProperty(name="hpUserSearchId",value="求职者搜索历史表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpUserSearchId",value="求职者搜索历史表ID")
 	private java.lang.Long hpUserSearchId;
 	//员工信息表id
-	@ApiModelProperty(name="hpUserBoundId",value="员工信息表id",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpUserBoundId",value="员工信息表id")
 	private java.lang.Long hpUserBoundId;
 	//搜索内容
-	@ApiModelProperty(name="content",value="搜索内容",dataType="String")
+	@ApiModelProperty(name="content",value="搜索内容")
 	private String content;
 	//搜索时间
-	@ApiModelProperty(name="time",value="搜索时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="time",value="搜索时间")
 	private java.lang.Long time;
 	//是否删除
-	@ApiModelProperty(name="delOn",value="是否删除",dataType="java.lang.Integer")
+	@ApiModelProperty(name="delOn",value="是否删除")
 	private java.lang.Integer delOn;
 	//内容搜索次数
-	@ApiModelProperty(name="num",value="内容搜索次数",dataType="java.lang.Integer")
+	@ApiModelProperty(name="num",value="内容搜索次数")
 	private java.lang.Integer num;
 
 	public java.lang.Long getHpUserSearchId() {

@@ -12,19 +12,19 @@ public class HpCompanyApplyEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//企业招聘合作申请表ID
-	@ApiModelProperty(name="hpCompanyApplyId",value="企业招聘合作申请表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpCompanyApplyId",value="企业招聘合作申请表ID")
 	private java.lang.Long hpCompanyApplyId;
 	//姓名
-	@ApiModelProperty(name="name",value="姓名",dataType="String")
+	@ApiModelProperty(name="name",value="姓名")
 	private String name;
 	//公司名称
-	@ApiModelProperty(name="comName",value="公司名称",dataType="String")
+	@ApiModelProperty(name="comName",value="公司名称")
 	private String comName;
 	//联系方式（固话、手机）
-	@ApiModelProperty(name="contactNum",value="联系方式（固话、手机）",dataType="String")
+	@ApiModelProperty(name="contactNum",value="联系方式（固话、手机）")
 	private String contactNum;
 	//职务
-	@ApiModelProperty(name="position",value="职务",dataType="String")
+	@ApiModelProperty(name="position",value="职务")
 	private String position;
 
 	public java.lang.Long getHpCompanyApplyId() {

@@ -12,37 +12,37 @@ public class HpUserBoundEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//员工小程序登录信息表ID
-	@ApiModelProperty(name="hpUserBoundId",value="员工小程序登录信息表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpUserBoundId",value="员工小程序登录信息表ID")
 	private java.lang.Long hpUserBoundId;
 	//活动背景图id
-	@ApiModelProperty(name="hpUserId",value="活动背景图id",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpUserId",value="活动背景图id")
 	private java.lang.Long hpUserId;
 	//昵称
-	@ApiModelProperty(name="nickName",value="昵称",dataType="String")
+	@ApiModelProperty(name="nickName",value="昵称")
 	private String nickName;
 	//头像
-	@ApiModelProperty(name="headerPic",value="头像",dataType="String")
+	@ApiModelProperty(name="headerPic",value="头像")
 	private String headerPic;
 	//小程序用户opendID
-	@ApiModelProperty(name="openid",value="小程序用户opendID",dataType="String")
+	@ApiModelProperty(name="openid",value="小程序用户opendID")
 	private String openid;
 	//小程序用户unionid
-	@ApiModelProperty(name="unionid",value="小程序用户unionid",dataType="String")
+	@ApiModelProperty(name="unionid",value="小程序用户unionid")
 	private String unionid;
 	//性别（1、男，2、女，其他保密）
-	@ApiModelProperty(name="gender",value="性别（1、男，2、女，其他保密）",dataType="java.lang.Integer")
+	@ApiModelProperty(name="gender",value="性别（1、男，2、女，其他保密）")
 	private java.lang.Integer gender;
 	//创建时间
-	@ApiModelProperty(name="createTime",value="创建时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="createTime",value="创建时间")
 	private java.lang.Long createTime;
 	//登录验证token
-	@ApiModelProperty(name="boundToken",value="登录验证token",dataType="String")
+	@ApiModelProperty(name="boundToken",value="登录验证token")
 	private String boundToken;
 	//token生成时间
-	@ApiModelProperty(name="tokenTime",value="token生成时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="tokenTime",value="token生成时间")
 	private java.lang.Long tokenTime;
 	//微信绑定手机号码
-	@ApiModelProperty(name="boundPhone",value="微信绑定手机号码",dataType="String")
+	@ApiModelProperty(name="boundPhone",value="微信绑定手机号码")
 	private String boundPhone;
 
 	public java.lang.Long getHpUserBoundId() {

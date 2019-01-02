@@ -42,9 +42,9 @@ public class HappySpringBoot extends SpringBootServletInitializer implements Env
     public void setEnvironment(Environment environment) {
         
         //可使用反射替代
-        String upload_base_path = environment.getProperty("ServiceConfig.filePath.upload_base_path");// 根据自己定义的获取文件上传地址
-        String upload_base_url = environment.getProperty("ServiceConfig.filePath.upload_base_url");// 根据自己定义的获取文件上传后访问域名
-        String swaggerEnabled = environment.getProperty("ServiceConfig.swagger.enabled");// 根据自己定义的获取swagger接口是否开放
+        String upload_base_path = environment.getProperty("serviceConfig.filePath.upload_base_path");// 根据自己定义的获取文件上传地址
+        String upload_base_url = environment.getProperty("serviceConfig.filePath.upload_base_url");// 根据自己定义的获取文件上传后访问域名
+        String swaggerEnabled = environment.getProperty("serviceConfig.swagger.enabled");// 根据自己定义的获取swagger接口是否开放
         logger.info("upload_base_path:{}",upload_base_path);
         logger.info("upload_base_url:{}",upload_base_url);
         logger.info("swaggerEnabled:{}",swaggerEnabled);

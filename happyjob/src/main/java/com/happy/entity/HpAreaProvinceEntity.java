@@ -12,13 +12,13 @@ public class HpAreaProvinceEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//省ID
-	@ApiModelProperty(name="provinceId",value="省ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="provinceId",value="省ID")
 	private java.lang.Long provinceId;
 	//省唯一标识
-	@ApiModelProperty(name="provinceCode",value="省唯一标识",dataType="String")
+	@ApiModelProperty(name="provinceCode",value="省唯一标识")
 	private String provinceCode;
 	//省名称
-	@ApiModelProperty(name="provinceName",value="省名称",dataType="String")
+	@ApiModelProperty(name="provinceName",value="省名称")
 	private String provinceName;
 
 	public java.lang.Long getProvinceId() {

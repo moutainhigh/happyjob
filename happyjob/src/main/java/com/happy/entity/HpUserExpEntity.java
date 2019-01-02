@@ -12,22 +12,22 @@ public class HpUserExpEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//求职者工作经验表
-	@ApiModelProperty(name="hpUserExpId",value="求职者工作经验表",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpUserExpId",value="求职者工作经验表")
 	private java.lang.Long hpUserExpId;
-	//活动背景图id
-	@ApiModelProperty(name="hpUserId",value="活动背景图id",dataType="java.lang.Long")
-	private java.lang.Long hpUserId;
+	//用户简历表id
+	@ApiModelProperty(name="hpUserResumeId",value="用户简历表id")
+	private java.lang.Long hpUserResumeId;
 	//公司名称
-	@ApiModelProperty(name="comName",value="公司名称",dataType="String")
+	@ApiModelProperty(name="comName",value="公司名称")
 	private String comName;
 	//工作职位
-	@ApiModelProperty(name="posType",value="工作职位",dataType="String")
+	@ApiModelProperty(name="posType",value="工作职位")
 	private String posType;
 	//入职时间
-	@ApiModelProperty(name="startTime",value="入职时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="startTime",value="入职时间")
 	private java.lang.Long startTime;
 	//离职时间
-	@ApiModelProperty(name="endTime",value="离职时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="endTime",value="离职时间")
 	private java.lang.Long endTime;
 
 	public java.lang.Long getHpUserExpId() {
@@ -40,13 +40,13 @@ public class HpUserExpEntity implements  Serializable  {
 	}
 
 
-	public java.lang.Long getHpUserId() {
-		return hpUserId;
+	public java.lang.Long getHpUserResumeId() {
+		return hpUserResumeId;
 	}
 
 
-	public void setHpUserId(java.lang.Long hpUserId) {
-		this.hpUserId = hpUserId;
+	public void setHpUserResumeId(java.lang.Long hpUserResumeId) {
+		this.hpUserResumeId = hpUserResumeId;
 	}
 
 

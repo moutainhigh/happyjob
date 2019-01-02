@@ -12,37 +12,37 @@ public class HpPositionRefUserEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//公司职位招聘拼团参与表ID
-	@ApiModelProperty(name="hpPositionRefUserId",value="公司职位招聘拼团参与表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpPositionRefUserId",value="公司职位招聘拼团参与表ID")
 	private java.lang.Long hpPositionRefUserId;
 	//公司职位招聘拼团表ID
-	@ApiModelProperty(name="hpPositionGroupId",value="公司职位招聘拼团表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpPositionGroupId",value="公司职位招聘拼团表ID")
 	private java.lang.Long hpPositionGroupId;
 	//公司招聘岗位表id
-	@ApiModelProperty(name="hpPositionId",value="公司招聘岗位表id",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpPositionId",value="公司招聘岗位表id")
 	private java.lang.Long hpPositionId;
 	//申请人id
-	@ApiModelProperty(name="hpUserId",value="申请人id",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpUserId",value="申请人id")
 	private java.lang.Long hpUserId;
 	//是否是发起人
-	@ApiModelProperty(name="leaderOn",value="是否是发起人",dataType="java.lang.Integer")
+	@ApiModelProperty(name="leaderOn",value="是否是发起人")
 	private java.lang.Integer leaderOn;
 	//申请时间
-	@ApiModelProperty(name="partTime",value="申请时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="partTime",value="申请时间")
 	private java.lang.Long partTime;
 	//申请类型（1、普通申请，2、拼团申请）
-	@ApiModelProperty(name="partType",value="申请类型（1、普通申请，2、拼团申请）",dataType="java.lang.Integer")
+	@ApiModelProperty(name="partType",value="申请类型（1、普通申请，2、拼团申请）")
 	private java.lang.Integer partType;
 	//是否入职
-	@ApiModelProperty(name="workOn",value="是否入职",dataType="java.lang.Integer")
+	@ApiModelProperty(name="workOn",value="是否入职")
 	private java.lang.Integer workOn;
 	//入职时间
-	@ApiModelProperty(name="workTime",value="入职时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="workTime",value="入职时间")
 	private java.lang.Long workTime;
 	//操作联系人ID
-	@ApiModelProperty(name="optionId",value="操作联系人ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="optionId",value="操作联系人ID")
 	private java.lang.Long optionId;
 	//操作联系时间
-	@ApiModelProperty(name="optionTime",value="操作联系时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="optionTime",value="操作联系时间")
 	private java.lang.Long optionTime;
 
 	public java.lang.Long getHpPositionRefUserId() {

@@ -12,31 +12,31 @@ public class HpAdvBannerEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//广告位轮播图表ID
-	@ApiModelProperty(name="hpAdvBannerId",value="广告位轮播图表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpAdvBannerId",value="广告位轮播图表ID")
 	private java.lang.Long hpAdvBannerId;
 	//标题
-	@ApiModelProperty(name="title",value="标题",dataType="String")
+	@ApiModelProperty(name="title",value="标题")
 	private String title;
 	//创建时间
-	@ApiModelProperty(name="createTime",value="创建时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="createTime",value="创建时间")
 	private java.lang.Long createTime;
 	//结束时间
-	@ApiModelProperty(name="endTime",value="结束时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="endTime",value="结束时间")
 	private java.lang.Long endTime;
 	//排序
-	@ApiModelProperty(name="sortNum",value="排序",dataType="java.lang.Long")
+	@ApiModelProperty(name="sortNum",value="排序")
 	private java.lang.Long sortNum;
 	//图片地址
-	@ApiModelProperty(name="picUrl",value="图片地址",dataType="String")
+	@ApiModelProperty(name="picUrl",value="图片地址")
 	private String picUrl;
 	//图片详情链接
-	@ApiModelProperty(name="targetUrl",value="图片详情链接",dataType="String")
+	@ApiModelProperty(name="targetUrl",value="图片详情链接")
 	private String targetUrl;
 	//是否开启
-	@ApiModelProperty(name="useOn",value="是否开启",dataType="java.lang.Integer")
+	@ApiModelProperty(name="useOn",value="是否开启")
 	private java.lang.Integer useOn;
 	//是否删除
-	@ApiModelProperty(name="delOn",value="是否删除",dataType="java.lang.Integer")
+	@ApiModelProperty(name="delOn",value="是否删除")
 	private java.lang.Integer delOn;
 
 	public java.lang.Long getHpAdvBannerId() {

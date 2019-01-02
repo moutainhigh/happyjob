@@ -41,6 +41,8 @@ import io.swagger.annotations.ApiModelProperty;
     private int comApplyNum;
     @ApiModelProperty(name="groupApplyNum",value="正在进行的拼团申请数")
     private int groupApplyNum;
+    @ApiModelProperty(name="welfareArr",value="岗位福利名称，逗号分隔")
+    private String welfareArr;
     
     public String getComName() {
         return comName;
@@ -138,5 +140,10 @@ import io.swagger.annotations.ApiModelProperty;
     public void setGroupApplyNum(int groupApplyNum) {
         this.groupApplyNum = groupApplyNum;
     }
-    
+    public String getWelfareArr() {
+        return welfareArr;
+    }
+    public void setWelfareArr(String welfareArr) {
+        this.welfareArr = welfareArr;
+    }
 }

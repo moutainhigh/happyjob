@@ -7,13 +7,13 @@ public interface BannerService {
      
      /**
       * 
-      * @TODO:   分页获取招聘列表
+      * @TODO:   分页获取轮播图列表
       */
     BannerListMsg getBannerList(Integer useOn,Integer delOn,Integer state,int isPage,Integer currentPage,Integer showCount);
      
     /**
      * 
-     * @TODO:   获取招聘岗位详情
+     * @TODO:   获取轮播图详情
      */
     BannerDataMsg getBanner(Long hpBannerId);
     

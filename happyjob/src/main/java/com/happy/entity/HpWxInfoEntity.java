@@ -12,13 +12,13 @@ public class HpWxInfoEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//微信token信息保存表ID
-	@ApiModelProperty(name="hpWxInfoId",value="微信token信息保存表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpWxInfoId",value="微信token信息保存表ID")
 	private java.lang.Long hpWxInfoId;
 	//access_token
-	@ApiModelProperty(name="accessToken",value="access_token",dataType="String")
+	@ApiModelProperty(name="accessToken",value="access_token")
 	private String accessToken;
 	//有效时间
-	@ApiModelProperty(name="tokenTime",value="有效时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="tokenTime",value="有效时间")
 	private java.lang.Long tokenTime;
 
 	public java.lang.Long getHpWxInfoId() {

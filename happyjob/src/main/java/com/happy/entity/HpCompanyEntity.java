@@ -12,46 +12,46 @@ public class HpCompanyEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//企业id
-	@ApiModelProperty(name="hpCompanyId",value="企业id",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpCompanyId",value="企业id")
 	private java.lang.Long hpCompanyId;
 	//公司名称
-	@ApiModelProperty(name="comName",value="公司名称",dataType="String")
+	@ApiModelProperty(name="comName",value="公司名称")
 	private String comName;
 	//公司描述
-	@ApiModelProperty(name="comDesc",value="公司描述",dataType="String")
+	@ApiModelProperty(name="comDesc",value="公司描述")
 	private String comDesc;
 	//区ID
-	@ApiModelProperty(name="countyId",value="区ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="countyId",value="区ID")
 	private java.lang.Long countyId;
 	//公司行业类型表id
-	@ApiModelProperty(name="hpCompanyTypeId",value="公司行业类型表id",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpCompanyTypeId",value="公司行业类型表id")
 	private java.lang.Long hpCompanyTypeId;
 	//公司规模表id
-	@ApiModelProperty(name="hpCompanyScaleId",value="公司规模表id",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpCompanyScaleId",value="公司规模表id")
 	private java.lang.Long hpCompanyScaleId;
 	//详细地址
-	@ApiModelProperty(name="addrDetail",value="详细地址",dataType="String")
+	@ApiModelProperty(name="addrDetail",value="详细地址")
 	private String addrDetail;
 	//联系人
-	@ApiModelProperty(name="comtPerson",value="联系人",dataType="String")
+	@ApiModelProperty(name="comtPerson",value="联系人")
 	private String comtPerson;
 	//联系电话
-	@ApiModelProperty(name="comPhone",value="联系电话",dataType="String")
+	@ApiModelProperty(name="comPhone",value="联系电话")
 	private String comPhone;
 	//联系邮箱
-	@ApiModelProperty(name="comEmail",value="联系邮箱",dataType="String")
+	@ApiModelProperty(name="comEmail",value="联系邮箱")
 	private String comEmail;
 	//公司logo
-	@ApiModelProperty(name="comLogo",value="公司logo",dataType="String")
+	@ApiModelProperty(name="comLogo",value="公司logo")
 	private String comLogo;
 	//公司营业执照
-	@ApiModelProperty(name="comLicense",value="公司营业执照",dataType="String")
+	@ApiModelProperty(name="comLicense",value="公司营业执照")
 	private String comLicense;
 	//添加时间
-	@ApiModelProperty(name="createTime",value="添加时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="createTime",value="添加时间")
 	private java.lang.Long createTime;
 	//认证状态（0、未认证，1、已认证）
-	@ApiModelProperty(name="approveState",value="认证状态（0、未认证，1、已认证）",dataType="java.lang.Integer")
+	@ApiModelProperty(name="approveState",value="认证状态（0、未认证，1、已认证）")
 	private java.lang.Integer approveState;
 
 	public java.lang.Long getHpCompanyId() {

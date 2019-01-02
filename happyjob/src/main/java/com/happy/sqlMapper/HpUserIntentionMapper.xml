@@ -6,13 +6,13 @@
 	<resultMap id="BaseResultMap" type="com.happy.entity.HpUserIntentionEntity">
 		<result column="hp_user_intention_id" property="hpUserIntentionId"/>
 		<result column="hp_position_salary_id" property="hpPositionSalaryId"/>
-		<result column="county_id" property="countyId"/>
-		<result column="hp_user_id" property="hpUserId"/>
+		<result column="work_area" property="workArea"/>
+		<result column="hp_user_resume_id" property="hpUserResumeId"/>
 		<result column="pos_type" property="posType"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserIntentionId" parameterType="com.happy.entity.HpUserIntentionEntity">
-		insert into hp_user_intention(hp_position_salary_id,county_id,hp_user_id,pos_type)
-		 values (#{hpPositionSalaryId},#{countyId},#{hpUserId},#{posType});
+		insert into hp_user_intention(hp_position_salary_id,work_area,hp_user_resume_id,pos_type)
+		 values (#{hpPositionSalaryId},#{workArea},#{hpUserResumeId},#{posType});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_user_intention where hp_user_intention_id=#{hpUserIntentionId}
@@ -29,11 +29,11 @@
 			<if test="hpPositionSalaryId!=null ">
 				hp_position_salary_id=#{hpPositionSalaryId},
 			</if>
-			<if test="countyId!=null ">
-				county_id=#{countyId},
+			<if test="workArea!=null">
+				work_area=#{workArea},
 			</if>
-			<if test="hpUserId!=null ">
-				hp_user_id=#{hpUserId},
+			<if test="hpUserResumeId!=null ">
+				hp_user_resume_id=#{hpUserResumeId},
 			</if>
 			<if test="posType!=null">
 				pos_type=#{posType},

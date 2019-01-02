@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.happy.controller.base.BaseController;
+import com.happy.plugin.BaseMsg;
 import com.happy.service.user.UserService;
 import com.happy.service.user.data.OtherLoginData;
 import com.happy.service.user.data.OtherLoginMsg;
@@ -145,5 +146,25 @@ public class WxAppletsLoginController {
        return msg;
    }
     
-    
+   /**
+   *
+   * @TODO:     提交信息指定专属方案
+   */
+  @ApiOperation(value="提交信息指定专属方案",notes="提交信息指定专属方案")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name="name",value="姓名",dataType="String",paramType="query",required=true),
+      @ApiImplicitParam(name="comName",value="公司名称",dataType="String",paramType="query",required=true),
+      @ApiImplicitParam(name="contactNo",value="联系方式",dataType="String",paramType="query",required=true),
+      @ApiImplicitParam(name="position",value="职务",dataType="String",paramType="query",required=true),
+  })
+  @PostMapping(value="comApply")
+  public BaseMsg comApply(HttpServletRequest request) {
+      
+      String name = request.getParameter("name");
+      String comName = request.getParameter("comName");
+      String contactNo = request.getParameter("contactNo");
+      String position = request.getParameter("position");
+      return this.userService.insertCompanyApply(name, comName, contactNo, position);
+  }
+  
 }

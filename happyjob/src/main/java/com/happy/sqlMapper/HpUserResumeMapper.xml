@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpUserResumeMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpUserResumeEntity">
+		<result column="hp_user_resume_id" property="hpUserResumeId"/>
+		<result column="hp_user_id" property="hpUserId"/>
+		<result column="hp_education_id" property="hpEducationId"/>
+		<result column="res_pic" property="resPic"/>
+		<result column="res_name" property="resName"/>
+		<result column="res_gender" property="resGender"/>
+		<result column="res_born_time" property="resBornTime"/>
+		<result column="res_phone" property="resPhone"/>
+		<result column="res_time" property="resTime"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserResumeId" parameterType="com.happy.entity.HpUserResumeEntity">
+		insert into hp_user_resume(hp_user_id,hp_education_id,res_pic,res_name,res_gender,res_born_time,res_phone,res_time)
+		 values (#{hpUserId},#{hpEducationId},#{resPic},#{resName},#{resGender},#{resBornTime},#{resPhone},#{resTime});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_user_resume where hp_user_resume_id=#{hpUserResumeId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_user_resume
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_user_resume
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpUserResumeEntity">
+		update hp_user_resume
+		<set>
+			<if test="hpUserId!=null ">
+				hp_user_id=#{hpUserId},
+			</if>
+			<if test="hpEducationId!=null ">
+				hp_education_id=#{hpEducationId},
+			</if>
+			<if test="resPic!=null">
+				res_pic=#{resPic},
+			</if>
+			<if test="resName!=null">
+				res_name=#{resName},
+			</if>
+			<if test="resGender!=null ">
+				res_gender=#{resGender},
+			</if>
+			<if test="resBornTime!=null ">
+				res_born_time=#{resBornTime},
+			</if>
+			<if test="resPhone!=null">
+				res_phone=#{resPhone},
+			</if>
+			<if test="resTime!=null ">
+				res_time=#{resTime},
+			</if>
+		</set>
+		 where hp_user_resume_id=#{hpUserResumeId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_user_resume where hp_user_resume_id=#{hpUserResumeId}
+	</delete>
+</mapper>

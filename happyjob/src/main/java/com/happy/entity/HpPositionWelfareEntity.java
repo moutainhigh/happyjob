@@ -12,13 +12,13 @@ public class HpPositionWelfareEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//公司岗位福利表id
-	@ApiModelProperty(name="hpPositionWelfareId",value="公司岗位福利表id",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpPositionWelfareId",value="公司岗位福利表id")
 	private java.lang.Long hpPositionWelfareId;
 	//福利名称
-	@ApiModelProperty(name="welfareName",value="福利名称",dataType="String")
+	@ApiModelProperty(name="welfareName",value="福利名称")
 	private String welfareName;
 	//是否启用
-	@ApiModelProperty(name="useOn",value="是否启用",dataType="java.lang.Integer")
+	@ApiModelProperty(name="useOn",value="是否启用")
 	private java.lang.Integer useOn;
 
 	public java.lang.Long getHpPositionWelfareId() {

@@ -9,9 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.happy.entity.HpCompanyApplyEntity;
 import com.happy.entity.HpUserBoundEntity;
+import com.happy.entity.HpUserEducationEntity;
 import com.happy.entity.HpUserEntity;
+import com.happy.entity.HpUserExpEntity;
+import com.happy.entity.HpUserIntentionEntity;
 import com.happy.entity.HpUserRecommendEntity;
+import com.happy.entity.HpUserResumeEntity;
 import com.happy.entity.HpUserSearchEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.user.UserService;
@@ -19,6 +24,8 @@ import com.happy.service.user.data.OtherLoginData;
 import com.happy.service.user.data.OtherUserData;
 import com.happy.service.user.data.UserAddData;
 import com.happy.service.user.data.UserManageSearch;
+import com.happy.service.user.data.UserResumeData;
+import com.happy.service.user.data.UserResumeDataMsg;
 import com.happy.service.user.data.UserSearch;
 import com.happy.service.user.data.UserSerachListMsg;
 import com.happy.service.user.data.UserSimpleData;
@@ -26,9 +33,14 @@ import com.happy.service.user.data.UserSimpleDataMsg;
 import com.happy.service.user.data.UserSimpleListMsg;
 import com.happy.sqlExMapper.HpUserBoundExMapper;
 import com.happy.sqlExMapper.HpUserExMapper;
+import com.happy.sqlMapper.HpCompanyApplyMapper;
 import com.happy.sqlMapper.HpUserBoundMapper;
+import com.happy.sqlMapper.HpUserEducationMapper;
+import com.happy.sqlMapper.HpUserExpMapper;
+import com.happy.sqlMapper.HpUserIntentionMapper;
 import com.happy.sqlMapper.HpUserMapper;
 import com.happy.sqlMapper.HpUserRecommendMapper;
+import com.happy.sqlMapper.HpUserResumeMapper;
 import com.happy.sqlMapper.HpUserSearchMapper;
 import com.happy.util.Util;
 import com.happy.util.pubConst.Const;
@@ -50,6 +62,16 @@ public class UserServiceImpl implements UserService {
     private HpUserSearchMapper hpUserSearchMapper;
     @Autowired
     private HpUserRecommendMapper hpUserRecommendMapper;
+    @Autowired
+    private HpCompanyApplyMapper hpCompanyApplyMapper;
+    @Autowired
+    private HpUserResumeMapper hpUserResumeMapper;
+    @Autowired
+    private HpUserIntentionMapper hpUserIntentionMapper;
+    @Autowired
+    private HpUserEducationMapper hpUserEducationMapper;
+    @Autowired
+    private HpUserExpMapper hpUserExpMapper;
 
     @Override
     public OtherUserData confirmUser(String sid, String oid, int isUser, int isOther) {
@@ -462,4 +484,132 @@ public class UserServiceImpl implements UserService {
         return msg;
     }
 
+
+    @Override
+    public BaseMsg insertCompanyApply(String name, String comName, String contactNo, String position) {
+        BaseMsg msg = new BaseMsg();
+        if(Util.isEmpty(name) || name.length()>50) {
+            msg.setErrorCode(1);
+            msg.setMessage("姓名必填，长度50以内");
+            return msg;
+        }
+        if(Util.isEmpty(comName) || comName.length()>50) {
+            msg.setErrorCode(1);
+            msg.setMessage("公司必填，长度50以内");
+            return msg;
+        }
+        if(Util.isEmpty(contactNo) || contactNo.length()>50) {
+            msg.setErrorCode(1);
+            msg.setMessage("联系方式必填，长度50以内");
+            return msg;
+        }
+        if(Util.isEmpty(position) || position.length()>50) {
+            msg.setErrorCode(1);
+            msg.setMessage("职位必填，长度50以内");
+            return msg;
+        }
+        HpCompanyApplyEntity data = new HpCompanyApplyEntity();
+        data.setName(comName);
+        data.setComName(comName);
+        data.setContactNum(contactNo);
+        data.setPosition(position);
+        this.hpCompanyApplyMapper.insert(data);
+        return msg;
+    }
+
+
+    @Override
+    public BaseMsg insertOrUpUserResumeBase(String sid, HpUserResumeEntity data) {
+        BaseMsg msg = new BaseMsg();
+        if(data == null) {
+            msg.setErrorCode(1);
+            msg.setMessage("上传内容为空");
+            return msg;
+        }
+        Long hasResumeId = this.hpUserExMapper.getUserResumeId(sid);
+        Long hpUserResumeId = data.getHpEducationId();
+        if(hpUserResumeId == null) { // 新增
+            if(hasResumeId != null) {
+                msg.setErrorCode(1);
+                msg.setMessage("已经存在简历，不可继续添加");
+                return msg;
+            }
+            this.hpUserResumeMapper.insert(data);
+        }else {
+            if(hasResumeId == null || !hpUserResumeId.equals(hasResumeId)) {
+                msg.setErrorCode(1);
+                msg.setMessage("参数错误hpUserResumeId");
+                return msg;
+            }
+            this.hpUserResumeMapper.updateByPK(data);
+        }
+        
+        return msg;
+    }
+
+
+    @Override
+    public UserResumeDataMsg getUserResume(String sid) {
+        UserResumeDataMsg msg = new UserResumeDataMsg();
+        UserResumeData data = new UserResumeData();
+        
+        HpUserResumeEntity base = this.hpUserExMapper.getUserResumBySid(sid);
+        if(base == null) {
+            msg.setErrorCode(1);
+            msg.setMessage("没有创建简历信息");
+            return msg;
+        }
+        Long hpResumeId = base.getHpUserResumeId();
+        data.setResumeBase(base);
+        data.setEduList(this.hpUserExMapper.getUserEduByResumeId(hpResumeId));
+        data.setExpList(this.hpUserExMapper.getUserExpByResumeId(hpResumeId));
+        data.setIntentionList(this.hpUserExMapper.getUserIntendByResumeId(hpResumeId));
+        msg.setData(data);
+        return msg;
+    }
+
+
+    @Override
+    public BaseMsg insertOrUpUserIntent(String sid, HpUserIntentionEntity data) {
+        BaseMsg msg = new BaseMsg();
+        // TODO 安全验证
+        Long intentId = data.getHpUserIntentionId();
+        if(intentId == null || intentId.compareTo(1L)<0) { // 新增 
+            this.hpUserIntentionMapper.insert(data);
+        }else {
+            this.hpUserIntentionMapper.updateByPK(data);
+        }
+        
+        return msg;
+    }
+
+
+    @Override
+    public BaseMsg insertOrUpUserEdu(String sid, HpUserEducationEntity data) {
+        BaseMsg msg = new BaseMsg();
+        // TODO 安全验证
+        Long eduId = data.getHpEducationId();
+        if(eduId == null || eduId.compareTo(1L)<0) { // 新增 
+            this.hpUserEducationMapper.insert(data);
+        }else {
+            this.hpUserEducationMapper.updateByPK(data);
+        }
+        return msg;
+    }
+
+
+    @Override
+    public BaseMsg insertOrUpUserExp(String sid, HpUserExpEntity data) {
+        BaseMsg msg = new BaseMsg();
+        // TODO 安全验证
+        Long expId = data.getHpUserExpId();
+        if(expId == null || expId.compareTo(1L)<0) { // 新增 
+            this.hpUserExpMapper.insert(data);
+        }else {
+            this.hpUserExpMapper.updateByPK(data);
+        }
+        return msg;
+    }
+
+    
 }

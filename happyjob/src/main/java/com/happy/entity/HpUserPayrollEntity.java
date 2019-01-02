@@ -12,37 +12,37 @@ public class HpUserPayrollEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//用户工资条表ID
-	@ApiModelProperty(name="hpUserPayrollId",value="用户工资条表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpUserPayrollId",value="用户工资条表ID")
 	private java.lang.Long hpUserPayrollId;
 	//姓名
-	@ApiModelProperty(name="payName",value="姓名",dataType="String")
+	@ApiModelProperty(name="payName",value="姓名")
 	private String payName;
 	//身份证号
-	@ApiModelProperty(name="payIdNum",value="身份证号",dataType="String")
+	@ApiModelProperty(name="payIdNum",value="身份证号")
 	private String payIdNum;
 	//工号
-	@ApiModelProperty(name="workNum",value="工号",dataType="String")
+	@ApiModelProperty(name="workNum",value="工号")
 	private String workNum;
 	//公司名称
-	@ApiModelProperty(name="payComName",value="公司名称",dataType="String")
+	@ApiModelProperty(name="payComName",value="公司名称")
 	private String payComName;
 	//工资月份时间
-	@ApiModelProperty(name="payTime",value="工资月份时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="payTime",value="工资月份时间")
 	private java.lang.Long payTime;
 	//应发合计
-	@ApiModelProperty(name="shouldMoney",value="应发合计",dataType="Double")
+	@ApiModelProperty(name="shouldMoney",value="应发合计")
 	private Double shouldMoney;
 	//扣款合计
-	@ApiModelProperty(name="deductionMoney",value="扣款合计",dataType="Double")
+	@ApiModelProperty(name="deductionMoney",value="扣款合计")
 	private Double deductionMoney;
 	//实发工资
-	@ApiModelProperty(name="realMoney",value="实发工资",dataType="Double")
+	@ApiModelProperty(name="realMoney",value="实发工资")
 	private Double realMoney;
 	//其他详细信息
-	@ApiModelProperty(name="payDetail",value="其他详细信息",dataType="String")
+	@ApiModelProperty(name="payDetail",value="其他详细信息")
 	private String payDetail;
 	//记录生成时间
-	@ApiModelProperty(name="createTime",value="记录生成时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="createTime",value="记录生成时间")
 	private java.lang.Long createTime;
 
 	public java.lang.Long getHpUserPayrollId() {

@@ -44,4 +44,25 @@
 	<select id="getUserCountByPhone" resultType="int" >
 		SELECT COUNT(*) FROM hp_user u WHERE u.phone_no=#{phoneNo};
 	</select>
+	
+	<select id="getUserResumeId" resultType="Long" >
+		SELECT ur.hp_user_resume_id FROM hp_user_resume ur WHERE ur.hp_user_id=<include refid="getIdBySid"></include>
+		ORDER ur.res_time DESC
+	</select>
+	
+	
+	<select id="getUserEduByResumeId" resultType="com.happy.service.user.data.UserEduDate" >
+		SELECT ue.*,e.edu_name FROM hp_user_education ue LEFT JOIN hp_education e 
+	WHERE ue.hp_user_resume_id=#{hpResumeId} AND ue.hp_education_id=e.hp_education_id
+	</select>
+	<select id="getUserIntendByResumeId" resultType="com.happy.service.user.data.UserIntentionData" >
+		SELECT ui.*,ps.lower_num,ps.hight_num FROM hp_user_intention ui LEFT JOIN hp_position_salary ps 
+WHERE ui.hp_user_resume_id=#{hpResumeId} AND ui.hp_position_salary_id=ps.hp_position_salary_id
+	</select>
+	<select id="getUserExpByResumeId" resultType="com.happy.entity.HpUserExpEntity" >
+		SELECT ue.* FROM hp_user_exp ue WHERE ue.hp_user_resume_id=#{hpResumeId}
+	</select>
+	<select id="getUserResumBySid" resultType="com.happy.entity.HpUserResumeEntity" >
+		SELECT ur.* FROM hp_user_resume ur WHERE ur.hp_user_id=<include refid="getIdBySid"></include>
+	</select>
 </mapper>

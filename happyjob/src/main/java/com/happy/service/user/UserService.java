@@ -1,10 +1,15 @@
  package com.happy.service.user;
 
 import com.alibaba.fastjson.JSONObject;
+import com.happy.entity.HpUserEducationEntity;
+import com.happy.entity.HpUserExpEntity;
+import com.happy.entity.HpUserIntentionEntity;
+import com.happy.entity.HpUserResumeEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.user.data.OtherLoginData;
 import com.happy.service.user.data.OtherUserData;
 import com.happy.service.user.data.UserAddData;
+import com.happy.service.user.data.UserResumeDataMsg;
 import com.happy.service.user.data.UserSerachListMsg;
 import com.happy.service.user.data.UserSimpleDataMsg;
 import com.happy.service.user.data.UserSimpleListMsg;
@@ -56,6 +61,38 @@ public interface UserService {
    * @TODO:     用户提交认证信息，申请认证
    */
    BaseMsg updateUserIdApply(String sid,String realName,String idNum,String idFrontPic,String idBackPic,String idPersonPic);
+   /**
+    *
+    * @TODO:     提交信息指定专属方案
+    */
+   BaseMsg insertCompanyApply(String name,String comName,String contactNo,String position);
+   /**
+    *
+    * @TODO:     新增或更新用户简历基本信息
+    */
+   BaseMsg insertOrUpUserResumeBase(String sid,HpUserResumeEntity data);
+   /**
+    *
+    * @TODO:     获取用户简历详情
+    */
+   UserResumeDataMsg getUserResume(String sid);
+   /**
+    *
+    * @TODO:     新增或更新用户简历求职意向
+    */
+   BaseMsg insertOrUpUserIntent(String sid,HpUserIntentionEntity data);
+   /**
+    *
+    * @TODO:     新增或更新用户简历学历
+    */
+   BaseMsg insertOrUpUserEdu(String sid,HpUserEducationEntity data);
+   /**
+    *
+    * @TODO:     新增或更新用户简历工作经验
+    */
+   BaseMsg insertOrUpUserExp(String sid,HpUserExpEntity data);
+   
+   
    
    
    

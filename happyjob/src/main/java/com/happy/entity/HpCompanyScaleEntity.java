@@ -12,13 +12,13 @@ public class HpCompanyScaleEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//公司规模表id
-	@ApiModelProperty(name="hpCompanyScaleId",value="公司规模表id",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpCompanyScaleId",value="公司规模表id")
 	private java.lang.Long hpCompanyScaleId;
 	//下限值（为0显示上限值人以下）
-	@ApiModelProperty(name="lowerNum",value="下限值（为0显示上限值人以下）",dataType="java.lang.Integer")
+	@ApiModelProperty(name="lowerNum",value="下限值（为0显示上限值人以下）")
 	private java.lang.Integer lowerNum;
 	//上限值（为0显示下限值人以上）
-	@ApiModelProperty(name="hightNum",value="上限值（为0显示下限值人以上）",dataType="java.lang.Integer")
+	@ApiModelProperty(name="hightNum",value="上限值（为0显示下限值人以上）")
 	private java.lang.Integer hightNum;
 
 	public java.lang.Long getHpCompanyScaleId() {

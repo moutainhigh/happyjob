@@ -435,7 +435,7 @@ public class GeneratorUtilConvText {
 					System.out.println(value.contentEquals("\r\n"));
 				}
 				// swagger2注解
-				String annotations = GENERATOR_API_PREFIX_1 + "(name=\"" + name + "\",value=\"" + value + "\",dataType=\"" + javaType + "\")";
+				String annotations = GENERATOR_API_PREFIX_1 + "(name=\"" + name + "\",value=\"" + value + "\")";
 				
 				bw.write(GENERATOR_ENTITY_PREFIX_14 + annotations + FILE_HH);
 				bw.write(GENERATOR_ENTITY_PREFIX_14 + GENERATOR_ENTITY_PREFIX_15 + " " + javaType + " " + name + GENERATOR_ENTITY_PREFIX_18 + FILE_HH);

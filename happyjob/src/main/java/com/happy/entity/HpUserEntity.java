@@ -12,91 +12,91 @@ public class HpUserEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//用户ID
-	@ApiModelProperty(name="hpUserId",value="用户ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpUserId",value="用户ID")
 	private java.lang.Long hpUserId;
 	//企业id
-	@ApiModelProperty(name="hpCompanyId",value="企业id",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpCompanyId",value="企业id")
 	private java.lang.Long hpCompanyId;
 	//账号类型（1、超级管理员，2、求职者）
-	@ApiModelProperty(name="userType",value="账号类型（1、超级管理员，2、求职者）",dataType="java.lang.Integer")
+	@ApiModelProperty(name="userType",value="账号类型（1、超级管理员，2、求职者）")
 	private java.lang.Integer userType;
 	//用户名（数字、字母、下划线）
-	@ApiModelProperty(name="userName",value="用户名（数字、字母、下划线）",dataType="String")
+	@ApiModelProperty(name="userName",value="用户名（数字、字母、下划线）")
 	private String userName;
 	//密码
-	@ApiModelProperty(name="password",value="密码",dataType="String")
+	@ApiModelProperty(name="password",value="密码")
 	private String password;
 	//密码加盐
-	@ApiModelProperty(name="salt",value="密码加盐",dataType="String")
+	@ApiModelProperty(name="salt",value="密码加盐")
 	private String salt;
 	//性别（1、男，2、女）
-	@ApiModelProperty(name="gender",value="性别（1、男，2、女）",dataType="java.lang.Integer")
+	@ApiModelProperty(name="gender",value="性别（1、男，2、女）")
 	private java.lang.Integer gender;
 	//手机号码
-	@ApiModelProperty(name="phoneNo",value="手机号码",dataType="String")
+	@ApiModelProperty(name="phoneNo",value="手机号码")
 	private String phoneNo;
 	//出生年份（时间戳s），计算年龄
-	@ApiModelProperty(name="bornYear",value="出生年份（时间戳s），计算年龄",dataType="java.lang.Long")
+	@ApiModelProperty(name="bornYear",value="出生年份（时间戳s），计算年龄")
 	private java.lang.Long bornYear;
 	//真实姓名
-	@ApiModelProperty(name="realName",value="真实姓名",dataType="String")
+	@ApiModelProperty(name="realName",value="真实姓名")
 	private String realName;
 	//是否被禁用
-	@ApiModelProperty(name="blackOn",value="是否被禁用",dataType="java.lang.Integer")
+	@ApiModelProperty(name="blackOn",value="是否被禁用")
 	private java.lang.Integer blackOn;
 	//认证状态（0、未申请认证，1、认证通过，2、认证不通过，3、认证待审核）
-	@ApiModelProperty(name="approveState",value="认证状态（0、未申请认证，1、认证通过，2、认证不通过，3、认证待审核）",dataType="java.lang.Integer")
+	@ApiModelProperty(name="approveState",value="认证状态（0、未申请认证，1、认证通过，2、认证不通过，3、认证待审核）")
 	private java.lang.Integer approveState;
 	//头像
-	@ApiModelProperty(name="headerPic",value="头像",dataType="String")
+	@ApiModelProperty(name="headerPic",value="头像")
 	private String headerPic;
 	//身份证号
-	@ApiModelProperty(name="idNum",value="身份证号",dataType="String")
+	@ApiModelProperty(name="idNum",value="身份证号")
 	private String idNum;
 	//身份证正面图片
-	@ApiModelProperty(name="idFrontPic",value="身份证正面图片",dataType="String")
+	@ApiModelProperty(name="idFrontPic",value="身份证正面图片")
 	private String idFrontPic;
 	//身份证反面图片
-	@ApiModelProperty(name="idBackPic",value="身份证反面图片",dataType="String")
+	@ApiModelProperty(name="idBackPic",value="身份证反面图片")
 	private String idBackPic;
 	//身份证手持图片
-	@ApiModelProperty(name="idPersonPic",value="身份证手持图片",dataType="String")
+	@ApiModelProperty(name="idPersonPic",value="身份证手持图片")
 	private String idPersonPic;
 	//创建时间
-	@ApiModelProperty(name="createTime",value="创建时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="createTime",value="创建时间")
 	private java.lang.Long createTime;
 	//注册来源（1、APP，2、小程序，3、微信，4、门店，5、邀请注册）
-	@ApiModelProperty(name="registResource",value="注册来源（1、APP，2、小程序，3、微信，4、门店，5、邀请注册）",dataType="java.lang.Integer")
+	@ApiModelProperty(name="registResource",value="注册来源（1、APP，2、小程序，3、微信，4、门店，5、邀请注册）")
 	private java.lang.Integer registResource;
 	//邀请人ID
-	@ApiModelProperty(name="inviteUserId",value="邀请人ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="inviteUserId",value="邀请人ID")
 	private java.lang.Long inviteUserId;
 	//账户余额
-	@ApiModelProperty(name="userMoney",value="账户余额",dataType="Double")
+	@ApiModelProperty(name="userMoney",value="账户余额")
 	private Double userMoney;
 	//认证申请次数
-	@ApiModelProperty(name="approveNum",value="认证申请次数",dataType="java.lang.Integer")
+	@ApiModelProperty(name="approveNum",value="认证申请次数")
 	private java.lang.Integer approveNum;
 	//认证申请时间
-	@ApiModelProperty(name="applyTime",value="认证申请时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="applyTime",value="认证申请时间")
 	private java.lang.Long applyTime;
 	//是否会员
-	@ApiModelProperty(name="vipOn",value="是否会员",dataType="java.lang.Integer")
+	@ApiModelProperty(name="vipOn",value="是否会员")
 	private java.lang.Integer vipOn;
 	//登录token
-	@ApiModelProperty(name="userToken",value="登录token",dataType="String")
+	@ApiModelProperty(name="userToken",value="登录token")
 	private String userToken;
 	//token有效时间
-	@ApiModelProperty(name="tokenTime",value="token有效时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="tokenTime",value="token有效时间")
 	private java.lang.Long tokenTime;
 	//最近登录时间
-	@ApiModelProperty(name="loginTime",value="最近登录时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="loginTime",value="最近登录时间")
 	private java.lang.Long loginTime;
 	//登录ip
-	@ApiModelProperty(name="loginIp",value="登录ip",dataType="String")
+	@ApiModelProperty(name="loginIp",value="登录ip")
 	private String loginIp;
 	//分享身份识别码
-	@ApiModelProperty(name="shareToken",value="分享身份识别码",dataType="String")
+	@ApiModelProperty(name="shareToken",value="分享身份识别码")
 	private String shareToken;
 
 	public java.lang.Long getHpUserId() {

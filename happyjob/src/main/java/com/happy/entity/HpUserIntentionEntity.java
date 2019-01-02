@@ -12,19 +12,19 @@ public class HpUserIntentionEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//求职者求职意向表id
-	@ApiModelProperty(name="hpUserIntentionId",value="求职者求职意向表id",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpUserIntentionId",value="求职者求职意向表id")
 	private java.lang.Long hpUserIntentionId;
 	//公司招聘岗位月薪表ID（0、表示面议）
-	@ApiModelProperty(name="hpPositionSalaryId",value="公司招聘岗位月薪表ID（0、表示面议）",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpPositionSalaryId",value="公司招聘岗位月薪表ID（0、表示面议）")
 	private java.lang.Long hpPositionSalaryId;
-	//区ID
-	@ApiModelProperty(name="countyId",value="区ID",dataType="java.lang.Long")
-	private java.lang.Long countyId;
-	//活动背景图id
-	@ApiModelProperty(name="hpUserId",value="活动背景图id",dataType="java.lang.Long")
-	private java.lang.Long hpUserId;
+	//期望地点
+	@ApiModelProperty(name="workArea",value="期望地点")
+	private String workArea;
+	//求职者简历表ID
+	@ApiModelProperty(name="hpUserResumeId",value="求职者简历表ID")
+	private java.lang.Long hpUserResumeId;
 	//期望行业
-	@ApiModelProperty(name="posType",value="期望行业",dataType="String")
+	@ApiModelProperty(name="posType",value="期望行业")
 	private String posType;
 
 	public java.lang.Long getHpUserIntentionId() {
@@ -47,23 +47,23 @@ public class HpUserIntentionEntity implements  Serializable  {
 	}
 
 
-	public java.lang.Long getCountyId() {
-		return countyId;
+	public String getWorkArea() {
+		return workArea;
 	}
 
 
-	public void setCountyId(java.lang.Long countyId) {
-		this.countyId = countyId;
+	public void setWorkArea(String workArea) {
+		this.workArea = workArea;
 	}
 
 
-	public java.lang.Long getHpUserId() {
-		return hpUserId;
+	public java.lang.Long getHpUserResumeId() {
+		return hpUserResumeId;
 	}
 
 
-	public void setHpUserId(java.lang.Long hpUserId) {
-		this.hpUserId = hpUserId;
+	public void setHpUserResumeId(java.lang.Long hpUserResumeId) {
+		this.hpUserResumeId = hpUserResumeId;
 	}
 
 

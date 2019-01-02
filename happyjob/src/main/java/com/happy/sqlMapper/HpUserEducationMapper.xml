@@ -5,15 +5,15 @@
 <mapper namespace="com.happy.sqlMapper.HpUserEducationMapper">
 	<resultMap id="BaseResultMap" type="com.happy.entity.HpUserEducationEntity">
 		<result column="hp_user_education_id" property="hpUserEducationId"/>
-		<result column="hp_user_id" property="hpUserId"/>
+		<result column="hp_user_resume_id" property="hpUserResumeId"/>
 		<result column="hp_education_id" property="hpEducationId"/>
 		<result column="sch_name" property="schName"/>
 		<result column="start_time" property="startTime"/>
 		<result column="end_time" property="endTime"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserEducationId" parameterType="com.happy.entity.HpUserEducationEntity">
-		insert into hp_user_education(hp_user_id,hp_education_id,sch_name,start_time,end_time)
-		 values (#{hpUserId},#{hpEducationId},#{schName},#{startTime},#{endTime});
+		insert into hp_user_education(hp_user_resume_id,hp_education_id,sch_name,start_time,end_time)
+		 values (#{hpUserResumeId},#{hpEducationId},#{schName},#{startTime},#{endTime});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_user_education where hp_user_education_id=#{hpUserEducationId}
@@ -27,8 +27,8 @@
 	<update id="updateByPK" parameterType="com.happy.entity.HpUserEducationEntity">
 		update hp_user_education
 		<set>
-			<if test="hpUserId!=null ">
-				hp_user_id=#{hpUserId},
+			<if test="hpUserResumeId!=null ">
+				hp_user_resume_id=#{hpUserResumeId},
 			</if>
 			<if test="hpEducationId!=null ">
 				hp_education_id=#{hpEducationId},

@@ -12,19 +12,19 @@ public class HpUserMoneyEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//求职者余额记录表ID
-	@ApiModelProperty(name="hpUserMoneyId",value="求职者余额记录表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpUserMoneyId",value="求职者余额记录表ID")
 	private java.lang.Long hpUserMoneyId;
 	//员工信息表id
-	@ApiModelProperty(name="hpUserId",value="员工信息表id",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpUserId",value="员工信息表id")
 	private java.lang.Long hpUserId;
 	//交易类型（1、收入，2、支出）
-	@ApiModelProperty(name="state",value="交易类型（1、收入，2、支出）",dataType="java.lang.Integer")
+	@ApiModelProperty(name="state",value="交易类型（1、收入，2、支出）")
 	private java.lang.Integer state;
 	//记录时间
-	@ApiModelProperty(name="createTime",value="记录时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="createTime",value="记录时间")
 	private java.lang.Long createTime;
 	//操作描述
-	@ApiModelProperty(name="optDesc",value="操作描述",dataType="String")
+	@ApiModelProperty(name="optDesc",value="操作描述")
 	private String optDesc;
 
 	public java.lang.Long getHpUserMoneyId() {

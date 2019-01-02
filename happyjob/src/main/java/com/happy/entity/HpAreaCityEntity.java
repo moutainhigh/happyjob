@@ -12,16 +12,16 @@ public class HpAreaCityEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//市ID
-	@ApiModelProperty(name="cityId",value="市ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="cityId",value="市ID")
 	private java.lang.Long cityId;
 	//省ID
-	@ApiModelProperty(name="provinceId",value="省ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="provinceId",value="省ID")
 	private java.lang.Long provinceId;
 	//省唯一标识
-	@ApiModelProperty(name="cityCode",value="省唯一标识",dataType="String")
+	@ApiModelProperty(name="cityCode",value="省唯一标识")
 	private String cityCode;
 	//市名称
-	@ApiModelProperty(name="cityName",value="市名称",dataType="String")
+	@ApiModelProperty(name="cityName",value="市名称")
 	private String cityName;
 
 	public java.lang.Long getCityId() {

@@ -11,23 +11,23 @@ import io.swagger.annotations.ApiModelProperty;
 public class HpUserEducationEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
-	//求职者教育背景表ID
-	@ApiModelProperty(name="hpUserEducationId",value="求职者教育背景表ID",dataType="java.lang.Long")
+	//用户简历表id
+	@ApiModelProperty(name="hpUserEducationId",value="用户简历表id")
 	private java.lang.Long hpUserEducationId;
 	//活动背景图id
-	@ApiModelProperty(name="hpUserId",value="活动背景图id",dataType="java.lang.Long")
-	private java.lang.Long hpUserId;
+	@ApiModelProperty(name="hpUserResumeId",value="活动背景图id")
+	private java.lang.Long hpUserResumeId;
 	//学历选项表ID
-	@ApiModelProperty(name="hpEducationId",value="学历选项表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpEducationId",value="学历选项表ID")
 	private java.lang.Long hpEducationId;
 	//学校名称
-	@ApiModelProperty(name="schName",value="学校名称",dataType="String")
+	@ApiModelProperty(name="schName",value="学校名称")
 	private String schName;
 	//入学时间
-	@ApiModelProperty(name="startTime",value="入学时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="startTime",value="入学时间")
 	private java.lang.Long startTime;
 	//毕业时间
-	@ApiModelProperty(name="endTime",value="毕业时间",dataType="java.lang.Long")
+	@ApiModelProperty(name="endTime",value="毕业时间")
 	private java.lang.Long endTime;
 
 	public java.lang.Long getHpUserEducationId() {
@@ -40,13 +40,13 @@ public class HpUserEducationEntity implements  Serializable  {
 	}
 
 
-	public java.lang.Long getHpUserId() {
-		return hpUserId;
+	public java.lang.Long getHpUserResumeId() {
+		return hpUserResumeId;
 	}
 
 
-	public void setHpUserId(java.lang.Long hpUserId) {
-		this.hpUserId = hpUserId;
+	public void setHpUserResumeId(java.lang.Long hpUserResumeId) {
+		this.hpUserResumeId = hpUserResumeId;
 	}
 
 

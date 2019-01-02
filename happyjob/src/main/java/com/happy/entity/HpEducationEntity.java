@@ -12,13 +12,13 @@ public class HpEducationEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//学历选项表ID
-	@ApiModelProperty(name="hpEducationId",value="学历选项表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpEducationId",value="学历选项表ID")
 	private java.lang.Long hpEducationId;
 	//学历名称
-	@ApiModelProperty(name="eduName",value="学历名称",dataType="String")
+	@ApiModelProperty(name="eduName",value="学历名称")
 	private String eduName;
 	//是否启用
-	@ApiModelProperty(name="useOn",value="是否启用",dataType="java.lang.Integer")
+	@ApiModelProperty(name="useOn",value="是否启用")
 	private java.lang.Integer useOn;
 
 	public java.lang.Long getHpEducationId() {

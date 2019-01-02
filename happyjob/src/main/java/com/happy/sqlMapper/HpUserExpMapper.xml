@@ -5,15 +5,15 @@
 <mapper namespace="com.happy.sqlMapper.HpUserExpMapper">
 	<resultMap id="BaseResultMap" type="com.happy.entity.HpUserExpEntity">
 		<result column="hp_user_exp_id" property="hpUserExpId"/>
-		<result column="hp_user_id" property="hpUserId"/>
+		<result column="hp_user_resume_id" property="hpUserResumeId"/>
 		<result column="com_name" property="comName"/>
 		<result column="pos_type" property="posType"/>
 		<result column="start_time" property="startTime"/>
 		<result column="end_time" property="endTime"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserExpId" parameterType="com.happy.entity.HpUserExpEntity">
-		insert into hp_user_exp(hp_user_id,com_name,pos_type,start_time,end_time)
-		 values (#{hpUserId},#{comName},#{posType},#{startTime},#{endTime});
+		insert into hp_user_exp(hp_user_resume_id,com_name,pos_type,start_time,end_time)
+		 values (#{hpUserResumeId},#{comName},#{posType},#{startTime},#{endTime});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_user_exp where hp_user_exp_id=#{hpUserExpId}
@@ -27,8 +27,8 @@
 	<update id="updateByPK" parameterType="com.happy.entity.HpUserExpEntity">
 		update hp_user_exp
 		<set>
-			<if test="hpUserId!=null ">
-				hp_user_id=#{hpUserId},
+			<if test="hpUserResumeId!=null ">
+				hp_user_resume_id=#{hpUserResumeId},
 			</if>
 			<if test="comName!=null">
 				com_name=#{comName},

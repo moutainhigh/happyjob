@@ -12,13 +12,13 @@ public class HpPositionRefWelfareEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//公司岗位福利关联表ID
-	@ApiModelProperty(name="hpPositionRefWelfareId",value="公司岗位福利关联表ID",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpPositionRefWelfareId",value="公司岗位福利关联表ID")
 	private java.lang.Long hpPositionRefWelfareId;
-	//公司职位表id
-	@ApiModelProperty(name="hpCompanyPositionId",value="公司职位表id",dataType="java.lang.Long")
-	private java.lang.Long hpCompanyPositionId;
+	//招聘岗位表id
+	@ApiModelProperty(name="hpPositionId",value="招聘岗位表id")
+	private java.lang.Long hpPositionId;
 	//公司岗位福利表id
-	@ApiModelProperty(name="hpPositionWelfareId",value="公司岗位福利表id",dataType="java.lang.Long")
+	@ApiModelProperty(name="hpPositionWelfareId",value="公司岗位福利表id")
 	private java.lang.Long hpPositionWelfareId;
 
 	public java.lang.Long getHpPositionRefWelfareId() {
@@ -31,13 +31,13 @@ public class HpPositionRefWelfareEntity implements  Serializable  {
 	}
 
 
-	public java.lang.Long getHpCompanyPositionId() {
-		return hpCompanyPositionId;
+	public java.lang.Long getHpPositionId() {
+		return hpPositionId;
 	}
 
 
-	public void setHpCompanyPositionId(java.lang.Long hpCompanyPositionId) {
-		this.hpCompanyPositionId = hpCompanyPositionId;
+	public void setHpPositionId(java.lang.Long hpPositionId) {
+		this.hpPositionId = hpPositionId;
 	}
 
 
