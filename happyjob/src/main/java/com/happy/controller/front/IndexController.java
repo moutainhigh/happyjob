@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.happy.controller.base.BaseController;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.banner.BannerService;
 import com.happy.service.banner.data.BannerListMsg;
@@ -20,6 +21,7 @@ import com.happy.service.position.PositionService;
 import com.happy.service.position.data.PositionListMsg;
 import com.happy.service.position.data.PositionMsg;
 import com.happy.service.user.UserService;
+import com.happy.service.user.data.OtherLoginMsg;
 import com.happy.service.user.data.PhoneCodeData;
 import com.happy.service.user.data.PhoneCodeMsg;
 import com.happy.service.user.data.UserSerachListMsg;
@@ -230,12 +232,14 @@ import io.swagger.annotations.ApiOperation;
            msg.setMessage("手机号码格式不正确");
            return msg;
        }
+       Long curTime = Util.getDateSecond(Util.getCurrentDate());
        //发短信
        String msgCode = Util.sendPhoneCode(phoneNo, Const.PHONE_MSGCODE_NUM);
        if(Util.isEmpty(msgCode)) { // 发送成功
-           HttpSession session = request.getSession(false);
+           HttpSession session = request.getSession();
            session.setAttribute(Const.SESSION_ATTR_NAME_PHONE, phoneNo);
            session.setAttribute(Const.SESSION_ATTR_NAME_MSGCODE, msgCode);
+           session.setAttribute(Const.SESSION_ATTR_NAME_PHONE_AGE, curTime+Const.SESSION_ATTR_AGE_PHONE);
            PhoneCodeData data = new PhoneCodeData();
            data.setMsgCode(msgCode);
            msg.setData(data);
@@ -263,5 +267,36 @@ import io.swagger.annotations.ApiOperation;
    public EduListMsg eduList() {
        return this.configService.getEduList(1);
    }
+   
+   /**
+    *
+    * @TODO:     用户手机号码绑定、更换
+    */
+   @ApiOperation(value="用户手机号码绑定、更换",notes="用户手机号码绑定、更换")
+   @ApiImplicitParams({
+       @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
+       @ApiImplicitParam(name="sid",value="用户登录凭证，存在用户更新手机号码、否则利用手机号新增用户",dataType="String",paramType="header",required=false),
+       @ApiImplicitParam(name="phoneNo",value="手机号码",dataType="String",paramType="query",required=true),
+       @ApiImplicitParam(name="msgCode",value="手机短信验证码",dataType="String",paramType="query",required=true),
+   })
+   @PostMapping("phone")
+   public OtherLoginMsg phone(HttpServletRequest request) {
+       String sid = request.getHeader("sid");
+       String oid = request.getHeader("oid");
+       String phoneNo = request.getParameter("phoneNo");
+       String msgCode = request.getParameter("msgCode");
+       
+       BaseMsg result = BaseController.checkPhoneCode(request, phoneNo, msgCode);
+       if(result.getErrorCode() != 0) {
+           OtherLoginMsg msg = new OtherLoginMsg();
+           msg.setErrorCode(result.getErrorCode());
+           msg.setMessage(result.getMessage());
+           return msg;
+       }
+       
+       return this.userService.insertOrUpUserByPhone(sid, oid, phoneNo);
+   }
+   
+   
    
 }

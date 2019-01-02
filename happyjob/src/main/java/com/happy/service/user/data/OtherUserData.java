@@ -2,35 +2,61 @@
 
 import com.happy.plugin.BaseMsg;
 
-import io.swagger.annotations.ApiModel;
-
 /**
  *
- *   TODO: 第三方登录信息返回类
+ *   TODO: 第三方登录信息返回类，程序内使用
  *
  */
-@ApiModel(value="OtherUserData",description="登录信息封装类")
-public class OtherUserData extends BaseMsg {
+public class OtherUserData extends BaseMsg{
 
-    private Long ygfUserId;
+    private Long hpUserId;
     
-    private String openId;
-
-    public Long getYgfUserId() {
-        return ygfUserId;
-    }
-
-    public void setYgfUserId(Long ygfUserId) {
-        this.ygfUserId = ygfUserId;
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
+    private Long hpUserBoundId;
     
+    private String openid;
     
+    private String userToken;
+    
+    private String shareToken;
+
+    
+    public Long getHpUserId() {
+        return hpUserId;
+    }
+
+    public void setHpUserId(Long hpUserId) {
+        this.hpUserId = hpUserId;
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
+
+    public Long getHpUserBoundId() {
+        return hpUserBoundId;
+    }
+
+    public void setHpUserBoundId(Long hpUserBoundId) {
+        this.hpUserBoundId = hpUserBoundId;
+    }
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
+
+    public String getShareToken() {
+        return shareToken;
+    }
+
+    public void setShareToken(String shareToken) {
+        this.shareToken = shareToken;
+    }
 }

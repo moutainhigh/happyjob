@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.happy.entity.HpUserExpEntity;
 import com.happy.entity.HpUserResumeEntity;
+import com.happy.service.user.data.OtherLoginData;
+import com.happy.service.user.data.OtherUserData;
 import com.happy.service.user.data.UserEduDate;
 import com.happy.service.user.data.UserIntentionData;
 import com.happy.service.user.data.UserManageSearch;
@@ -29,6 +31,11 @@ public interface HpUserExMapper{
     *
     * @TODO:     描述一下这个方法是干什么的
     */
+   Long getUserIdBySid(@Param("sid") String sid);
+   /**
+    *
+    * @TODO:     描述一下这个方法是干什么的
+    */
    UserSimpleData getSimpleUserByKey(@Param("hpUserId") Long hpUserId,@Param("sid") String sid);
    /**
    *
@@ -42,9 +49,9 @@ public interface HpUserExMapper{
   List<UserSimpleData> getUserlistPage(UserManageSearch page);
   /**
   *
-  * @TODO:     描述一下这个方法是干什么的
+  * @TODO:     验证手机号是否被注册
   */
-  int getUserCountByPhone(@Param("phoneNo") String phoneNo);
+  OtherUserData getUserByPhone(@Param("phoneNo") String phoneNo,@Param("userType") int userType);
   /**
    *
    * @TODO:     描述一下这个方法是干什么的

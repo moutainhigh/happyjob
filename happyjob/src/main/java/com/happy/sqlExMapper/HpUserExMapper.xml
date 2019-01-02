@@ -25,6 +25,10 @@
 		SELECT u.hp_user_id FROM hp_user u WHERE u.share_token=#{shareToken};
 	</select>
 	
+	<select id="getUserIdBySid" resultType="Long" >
+		SELECT u.hp_user_id FROM hp_user u WHERE u.user_token=#{sid};
+	</select>
+	
 	
 	<select id="getUserlistPage" parameterType="com.happy.service.user.data.UserManageSearch" resultType="com.happy.service.user.data.UserSimpleData" >
 		SELECT u.hp_user_id,u.hp_company_id,u.user_type,u.user_name,u.gender,u.phone_no,u.born_year,u.real_name,u.black_on,
@@ -41,8 +45,10 @@
 		ORDER BY create_time desc
 	</select>
 	
-	<select id="getUserCountByPhone" resultType="int" >
-		SELECT COUNT(*) FROM hp_user u WHERE u.phone_no=#{phoneNo};
+	<select id="getUserByPhone" resultType="com.happy.service.user.data.OtherUserData" >
+		SELECT u.hp_user_id,ub.hp_user_bound_id,u.user_token,u.bound_token 
+		FROM hp_user u LEFT JOIN hp_user_bound ub ON u.hp_user_id=ub.hp_user_id 
+		WHERE u.phone_no=#{phoneNo} AND u.user_type=#{userType} LIMIT 1;
 	</select>
 	
 	<select id="getUserResumeId" resultType="Long" >

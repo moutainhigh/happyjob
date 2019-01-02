@@ -7,6 +7,7 @@ import com.happy.entity.HpUserIntentionEntity;
 import com.happy.entity.HpUserResumeEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.user.data.OtherLoginData;
+import com.happy.service.user.data.OtherLoginMsg;
 import com.happy.service.user.data.OtherUserData;
 import com.happy.service.user.data.UserAddData;
 import com.happy.service.user.data.UserResumeDataMsg;
@@ -91,6 +92,11 @@ public interface UserService {
     * @TODO:     新增或更新用户简历工作经验
     */
    BaseMsg insertOrUpUserExp(String sid,HpUserExpEntity data);
+   /**
+    *
+    * @TODO:     新增或更新用户简历工作经验
+    */
+   OtherLoginMsg insertOrUpUserByPhone(String sid,String oid,String phoneNo);
    
    
    

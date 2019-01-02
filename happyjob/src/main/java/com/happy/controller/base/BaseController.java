@@ -10,6 +10,7 @@ import java.util.UUID;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.util.WebUtils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.happy.plugin.BaseMsg;
 import com.happy.util.ServiceConfig;
 import com.happy.util.Util;
 import com.happy.util.pubConst.Const;
@@ -249,5 +251,34 @@ public class BaseController {
            
            return json;
        }
-       
+       /**
+        *
+        * @TODO:     验证手机号、验证码是否正确
+        */
+      public static BaseMsg checkPhoneCode(HttpServletRequest request,String phoneNo,String msgCode) {
+           BaseMsg msg = new BaseMsg();
+           HttpSession session = request.getSession(false);
+           if(session == null) {
+               msg.setErrorCode(1);
+               msg.setMessage("验证信息有误，请重新发送验证码");
+               return msg;
+           }
+           Object sessionphoneObj = session.getAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
+           String sessionphone = sessionphoneObj==null?null:(String)sessionphoneObj;
+           String sessionCodeObj = (String)session.getAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
+           String sessionCode = sessionCodeObj==null?null:(String)sessionCodeObj;
+           Long sessionAgeObj = (Long)session.getAttribute(Const.SESSION_ATTR_NAME_PHONE_AGE);
+           Long sessionAge = sessionAgeObj==null?null:(Long)sessionAgeObj;
+           Long curTime = Util.getDateSecond(Util.getCurrentDate());
+           if(!Util.isEmpty(phoneNo) && !Util.isEmpty(msgCode) && phoneNo.equals(sessionphone) 
+               && sessionCode.equals(sessionCode) && !Util.isEmpty(sessionAge) && curTime.compareTo(sessionAge)<=0) {
+               return msg;
+           }
+           session.removeAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
+           session.removeAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
+           session.removeAttribute(Const.SESSION_ATTR_NAME_PHONE_AGE);
+           msg.setErrorCode(1);
+           msg.setMessage("验证信息有误，请重新发送验证码");
+           return msg;
+       }
 }

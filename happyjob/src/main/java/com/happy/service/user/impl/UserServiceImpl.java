@@ -21,6 +21,7 @@ import com.happy.entity.HpUserSearchEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.user.UserService;
 import com.happy.service.user.data.OtherLoginData;
+import com.happy.service.user.data.OtherLoginMsg;
 import com.happy.service.user.data.OtherUserData;
 import com.happy.service.user.data.UserAddData;
 import com.happy.service.user.data.UserManageSearch;
@@ -115,9 +116,9 @@ public class UserServiceImpl implements UserService {
                 msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_5);                
                 return msg;
             }
-            msg.setOpenId(userBound.getOpenid());
+            msg.setOpenid(userBound.getOpenid());
         }
-        msg.setYgfUserId(ygfUserId);
+        msg.setHpUserId(ygfUserId);
         
          return msg;
     }
@@ -390,8 +391,8 @@ public class UserServiceImpl implements UserService {
             msg.setMessage("参数错误：userType");
             return msg;
         }
-        int num = this.hpUserExMapper.getUserCountByPhone(phoneNo);
-        if(num >0) {
+        OtherUserData userData = this.hpUserExMapper.getUserByPhone(phoneNo,userType);
+        if(userData != null && userData.getHpUserId() !=null) {
             msg.setErrorCode(1);
             msg.setMessage("手机号码已经被注册，请更换手机号");
             return msg;
@@ -608,6 +609,64 @@ public class UserServiceImpl implements UserService {
         }else {
             this.hpUserExpMapper.updateByPK(data);
         }
+        return msg;
+    }
+
+
+    @Override
+    public OtherLoginMsg insertOrUpUserByPhone(String sid, String oid, String phoneNo) {
+        OtherLoginMsg msg = new OtherLoginMsg();
+        OtherUserData userData = this.hpUserExMapper.getUserByPhone(phoneNo,2);
+        HpUserBoundEntity bound = this.hpUserBoundExMapper.getBoundByToken(oid);
+        Long userId = bound.getHpUserId();
+        Long boundId = bound.getHpUserBoundId();
+        Long phoneUserId = null; // 手机号绑定用户ID
+        Long phoneBoundId = null; 
+        if(userData != null) {
+            phoneUserId = userData.getHpUserId();
+            phoneBoundId = userData.getHpUserBoundId();
+        }
+        if(phoneBoundId != null) {// 手机号已注册，并绑定微信
+            msg.setErrorCode(1);
+            msg.setMessage("手机号已被其他用户绑定，请更换手机号");
+            return msg;
+        }
+        if(phoneUserId == null) { // 手机号未注册，新增用户
+            HpUserEntity user = new HpUserEntity();
+            user.setHpUserId(userId);
+            user.setPhoneNo(phoneNo);
+            user.setApproveNum(0);
+            user.setApproveState(0);
+            String shareToken = Util.getUuidRd();
+            user.setShareToken(shareToken);
+            user.setUserMoney(0d);
+            String userToken = Util.getUuidRd();
+            user.setUserToken(userToken);
+            user.setVipOn(0);
+            user.setRegistResource(0);
+            this.hpUserMapper.insert(user);
+            userId = user.getHpUserId();
+            OtherLoginData data = new OtherLoginData();
+            bound = new HpUserBoundEntity();
+            bound.setHpUserBoundId(boundId);
+            bound.setHpUserId(userId);
+            this.hpUserBoundMapper.updateByPK(bound);
+            data.setOid(oid);
+            data.setSid(userToken);
+            data.setShareToken(shareToken);
+            return msg;
+        }else if(phoneUserId != null && phoneBoundId == null) { // 手机号已被添加为用户，但是未绑定微信：微信用户绑定后台添加用户
+            bound = new HpUserBoundEntity();
+            bound.setHpUserBoundId(boundId);
+            bound.setHpUserId(phoneUserId);
+            this.hpUserBoundMapper.updateByPK(bound);
+            OtherLoginData data = new OtherLoginData();
+            data.setOid(oid);
+            data.setSid(userData.getUserToken());
+            data.setShareToken(userData.getShareToken());
+            return msg;
+        }
+            
         return msg;
     }
 
