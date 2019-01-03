@@ -133,121 +133,57 @@
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 		<h1>
-			广告列表
+			广告添加
 			<small>Optional description</small>
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i>广告位</a></li>
-			<li class="active">广告列表</li>
+			<li class="active">广告添加</li>
 		</ol>
 		</section>
 	
 		<!-- Main content -->
-		<section class="content">
+		<section class="content ">
 	
 			<!-- /.row -->
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="box">
-					
-					<div class="box-header" style="overflow-y: auto">
-
+			<div class="row col-sm-6" >
+				<form class="form-horizontal">
+					<div class="form-group ">
+						<label for="" class="col-sm-3 " >广告标题</label>
+						<input class="showValue" />
 					</div>
-					<!-- /.box-header -->
-					<div class="box-body table-responsive no-padding">
-						<table class="table table-hover" id='advertisementList'>
-						<thead>
-							<tr>
-								<th>广告标题</th>
-								<th>广告位</th>
-								<th>类型</th>
-								<th>添加时间</th>
-								<th>结束时间</th>
-								<th>排序</th>
-								<th>操作</th>
-							</tr>
-						</thead>
-						<tbody class="tbody"></tbody>
-					</table>
+					<div class="form-group">
+						<label for="" class="col-sm-3">广告位</label>
+						<input class="showValue" />
 					</div>
-					<!-- /.box-body -->
+					<div class="form-group">
+						<label for="" class="col-sm-3">类型</label>
+						<input class="showValue" />
 					</div>
-					<!-- /.box -->
-				</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3">结束时间</label>
+						<input type="text" class="datepicker" placeholder="请选择日期" />
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3">排序</label>
+						<div class="col-sm-9 showValue">1</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3">上传图片</label>
+						
+					    <div class="file-loading  showValue">
+					          <input id="file-fr" name="file" type="file" multiple>
+					    </div>
+					</div>
+				</form>
 			</div>
 	
 		</section>
 		<!-- /.content -->
 	</div>
-	<!-- /.content-wrapper -->
-		
-	<!-- Add the sidebar's background. This div must be placed
-			immediately after the control sidebar -->
-	<div class="control-sidebar-bg"></div>
 	
 </div>
 
-
-
-<!-- 编辑广告 -->
-<div class="modal fade" id="browseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title">广告信息</h4>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="form-group">
-					<label for="" class="col-sm-3">广告标题</label>
-<!-- 					<div class="col-sm-9 showValue">测试</div> -->
-					<input class="showValue" />
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3">广告位</label>
-<!-- 					<div class="col-sm-9 showValue">主页轮播</div> -->
-					<input class="showValue" />
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3">类型</label>
-<!-- 					<div class="col-sm-9 showValue">图片</div> -->
-					<input class="showValue" />
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3">结束时间</label>
-<!-- 					<div class="col-sm-9 showValue datepicker">2018-12-19 12:35:18</div> -->
-					<input type="text" class="datepicker" placeholder="请选择日期" />
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3">排序</label>
-					<div class="col-sm-9 showValue">1</div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3">上传图片</label>
-					
-				    <div class="file-loading  showValue">
-				          <input id="file-fr" name="file" type="file" multiple>
-				    </div>
-        
-<!-- 					<div class="col-sm-9 showValue"> -->
-<!-- 						<input type="file" >  -->
-<!-- 					</div> -->
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3">身份证正面</label>
-					<div class="col-sm-9">
-						<img src="" alt="" class="showValue idStyle">
-					</div>
-				</div>					
-			</form>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
-		</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div>
 	
 <!-- jQuery 3 -->
 <script src="/static/adminlet/bower_components/jquery/dist/jquery.min.js"></script>
@@ -263,7 +199,7 @@
 
 <!-- 页面逻辑 -->
 <script src="/static/js/common.js"></script>
-<script src="/static/js/advertisement-list.js"></script>
+<script src="/static/js/advertisement.js"></script>
 
 </html>
 

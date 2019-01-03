@@ -77,6 +77,21 @@ public class BannerServiceImpl implements BannerService {
         return msg;
 	}
 
+	@Override
+	public BaseMsg deleteAdvertisement(Long hpAdvBannerId) {
+		BaseMsg msg = new BaseMsg();
+        if(hpAdvBannerId == null) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数错误：hpAdvBannerId");
+            return msg;
+        }
+        HpAdvBannerEntity adv = new HpAdvBannerEntity();
+        adv.setHpAdvBannerId(hpAdvBannerId);
+        adv.setDelOn(0);
+        this.hpAdvBannerMapper.updateByPK(adv);
+		return msg;
+	}
+
 
 
 }

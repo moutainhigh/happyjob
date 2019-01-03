@@ -22,4 +22,9 @@ public interface BannerService {
      * 开启 /关闭
      */
     BaseMsg updateUseOn(Long hpBannerId,Integer useOn);
+    
+    /**
+     * 删除广告
+     */
+    BaseMsg deleteAdvertisement(Long hpBannerId);
 }

@@ -34,7 +34,7 @@ public class AdvertisementManageController {
 	    @GetMapping(value="advertisementList")
 	    public BannerListMsg userList(HttpServletRequest request){
 	        logger.info("AdvertiseManageController class  userList method");
-	        BannerListMsg result = this.bannerService.getBannerList(null, null, null, 1, 1, 10);
+	        BannerListMsg result = this.bannerService.getBannerList(null, 1, null, 1, 1, 10);
 	        return  result;
 	    }
 	    
@@ -50,4 +50,17 @@ public class AdvertisementManageController {
 	        logger.info("backAdvertisement.advertisementUseOn 请求参数：hpAdvBannerId={},useOn={}",hpAdvBannerId,useOn);
 	        return this.bannerService.updateUseOn(hpAdvBannerId,useOn);
 	    }
+	    
+	    /**
+	     * 广告开启/关闭
+	     */
+	    @ApiOperation(value="是否开启广告",notes="是否开启广告")
+	    @PostMapping(value="deleteAdvertisement")
+	    public BaseMsg deleteAdvertisement(HttpServletRequest request){
+	        Long hpAdvBannerId = (Long)Util.typeChange(request.getParameter("hpAdvBannerId"), Long.class);
+	        logger.info("backAdvertisement.deleteAdvertisement 请求参数：hpAdvBannerId={}",hpAdvBannerId);
+	        BaseMsg ss = this.bannerService.deleteAdvertisement(hpAdvBannerId);
+	        return ss;
+	    }
+	    
 }
