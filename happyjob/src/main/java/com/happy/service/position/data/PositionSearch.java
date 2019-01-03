@@ -20,6 +20,8 @@ public class PositionSearch extends Page {
     private Integer welfareOn;
     @ApiModelProperty(name="urgentOn",value="是否高薪急聘")
     private Integer urgentOn;
+    @ApiModelProperty(name="groupOn",value="关键字，模糊匹配公司名称、职位")
+    private Integer groupOn;
     @ApiModelProperty(name="curTime",value="当前时间秒")
     private Long curTime;
     @ApiModelProperty(name="hpPositionId",value="岗位ID")
@@ -30,6 +32,7 @@ public class PositionSearch extends Page {
     private String sid;
     @ApiModelProperty(name="keyWord",value="关键字，模糊匹配公司名称、职位")
     private String keyWord;
+
     
     
     
@@ -98,5 +101,11 @@ public class PositionSearch extends Page {
     }
     public void setKeyWord(String keyWord) {
         this.keyWord = keyWord;
+    }
+    public Integer getGroupOn() {
+        return groupOn;
+    }
+    public void setGroupOn(Integer groupOn) {
+        this.groupOn = groupOn;
     }
 }

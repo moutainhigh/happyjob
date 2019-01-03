@@ -644,6 +644,8 @@ public class UserServiceImpl implements UserService {
             user.setUserToken(userToken);
             user.setVipOn(0);
             user.setRegistResource(0);
+            user.setUserName(bound.getNickName());
+            user.setHeaderPic(bound.getHeaderPic());
             this.hpUserMapper.insert(user);
             userId = user.getHpUserId();
             OtherLoginData data = new OtherLoginData();

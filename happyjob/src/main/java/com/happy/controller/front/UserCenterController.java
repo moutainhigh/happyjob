@@ -18,8 +18,10 @@ import com.happy.entity.HpUserExpEntity;
 import com.happy.entity.HpUserIntentionEntity;
 import com.happy.entity.HpUserResumeEntity;
 import com.happy.plugin.BaseMsg;
+import com.happy.service.position.PositionService;
 import com.happy.service.user.UserService;
 import com.happy.service.user.data.UserResumeDataMsg;
+import com.happy.util.Util;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -35,6 +37,8 @@ public class UserCenterController {
     
     @Resource
     private UserService userService;
+    @Resource
+    private PositionService positionService;
     
     /**
     *
@@ -51,6 +55,8 @@ public class UserCenterController {
        // TODO 是否需要验证用户
         String oid = request.getHeader("oid");
         String sid = request.getHeader("sid");
+        
+        logger.info("resume 参数日志：oid=={},sid=={}",oid,sid);
         
         return this.userService.getUserCenterDate(oid, sid);
     }
@@ -80,6 +86,9 @@ public class UserCenterController {
        String idBackPic = request.getParameter("idBackPic");
        String idPersonPic = request.getParameter("idPersonPic");
        
+       logger.info("resume 参数日志：sid=={},realName=={},idNum=={},idFrontPic=={},idBackPic=={},idPersonPic=={}",
+           sid,realName,idNum,idFrontPic,idBackPic,idPersonPic);
+       
        return this.userService.updateUserIdApply(sid, realName, idNum, idFrontPic, idBackPic, idPersonPic);
    }
    
@@ -108,6 +117,7 @@ public class UserCenterController {
    public UserResumeDataMsg resume(@RequestHeader(value="oid",required=true) String oid,
        @RequestHeader(value="sid",required=true) String sid) {
        
+       logger.info("resume 参数日志：oid=={},sid=={}",oid,sid);
        return this.userService.getUserResume(sid);
    }
    
@@ -120,6 +130,8 @@ public class UserCenterController {
    public BaseMsg resumeIntent(@RequestHeader(value="oid",required=true) String oid,
        @RequestHeader(value="sid",required=true) String sid,
        @RequestBody HpUserIntentionEntity data) {
+       
+       logger.info("resumeIntent 参数日志：sid=={},data=={}",sid,JSONObject.toJSONString(data));
        
        return this.userService.insertOrUpUserIntent(sid,data);
    }
@@ -145,8 +157,32 @@ public class UserCenterController {
        @RequestHeader(value="sid",required=true) String sid,
        @RequestBody HpUserExpEntity data) {
        
+       logger.info("resumeExp 参数日志：sid=={},data=={}",sid,JSONObject.toJSONString(data));
+       
        return this.userService.insertOrUpUserExp(sid, data);
    }
+   
+   /**
+    *
+    * @TODO:     用户申请职位或者发起拼团
+    */
+   @ApiOperation(value="用户申请职位或者发起拼团",notes="用户申请职位或者发起拼团")
+   @ApiImplicitParams({
+       @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
+       @ApiImplicitParam(name="sid",value="用户登录凭证",dataType="String",paramType="header",required=true),
+       @ApiImplicitParam(name="hpPositionId",value="岗位ID",dataType="long",paramType="query",required=true),
+   })
+   @PostMapping(value="positionApply")
+   public BaseMsg positionApply(HttpServletRequest request) {
+       
+       String sid = request.getHeader("sid");
+       Long hpPositionId = (Long)Util.typeChange(request.getParameter("hpPositionId"), Long.class);
+       logger.info("positionApply 参数日志：sid=={},hpPositionId=={}",sid,hpPositionId);
+       return null;
+//       return this.positionService
+   }
+   
+   
    
    
 }

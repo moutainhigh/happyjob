@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
-@Api(value="前台首页相关请求API",tags="前台首页相关请求API")
+@Api(value="前台首页相关请求API:不需要强制用户信息",tags="前台首页相关请求API:不需要强制验证用户信息")
 @RestController
 @RequestMapping("frontIndex")
  public class IndexController {
@@ -60,6 +60,8 @@ import io.swagger.annotations.ApiOperation;
         @ApiImplicitParam(name="retOn",value="是否入职返现",dataType="int",paramType="path",required=false),
         @ApiImplicitParam(name="hotOn",value="是否热门",dataType="int",paramType="path",required=false),
         @ApiImplicitParam(name="welfareOn",value="是否福利岗位",dataType="int",paramType="path",required=false),
+        @ApiImplicitParam(name="urgentOn",value="是否高薪急聘",dataType="int",paramType="path",required=false),
+        @ApiImplicitParam(name="groupOn",value="是否是拼团岗位",dataType="int",paramType="path",required=false),
         @ApiImplicitParam(name="currentPage",value="当前分页",dataType="int",paramType="path",required=false),
         @ApiImplicitParam(name="showCount",value="单页展示记录数",dataType="int",paramType="path",required=false),
     })
@@ -73,16 +75,18 @@ import io.swagger.annotations.ApiOperation;
         Integer retOn = (Integer)Util.typeChange(request.getParameter("retOn"), Integer.class);
         Integer hotOn = (Integer)Util.typeChange(request.getParameter("hotOn"), Integer.class);
         Integer welfareOn = (Integer)Util.typeChange(request.getParameter("welfareOn"), Integer.class);
+        Integer urgentOn = (Integer)Util.typeChange(request.getParameter("urgentOn"), Integer.class);
+        Integer groupOn = (Integer)Util.typeChange(request.getParameter("groupOn"), Integer.class);
         Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
         currentPage = currentPage==null||currentPage<=0?1:currentPage;
         Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
-        showCount = showCount==null||showCount<=0?1:showCount;
+        showCount = showCount==null||showCount<=0?10:showCount;
         
         if(!Util.isEmpty(keyWord)) { // 添加搜索记录
             this.userService.insertUserSearch(oid, keyWord);
         }
         
-        return this.positionService.getPostionlistPage(oid,keyWord,cityName, posNature, retOn, hotOn, welfareOn, currentPage, showCount);
+        return this.positionService.getPostionlistPage(oid,keyWord,cityName, posNature, retOn, hotOn, welfareOn,urgentOn,groupOn, currentPage, showCount);
     }
     
     /**
@@ -297,6 +301,49 @@ import io.swagger.annotations.ApiOperation;
        return this.userService.insertOrUpUserByPhone(sid, oid, phoneNo);
    }
    
-   
-   
+   /**
+   *
+   * @TODO:     拼团岗位详情页面获取正在进行的拼团列表
+   */
+  @ApiOperation(value="拼团岗位详情页面获取正在进行的拼团列表",notes="拼团岗位详情页面获取正在进行的拼团列表")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
+      @ApiImplicitParam(name="sid",value="用户登录凭证",dataType="String",paramType="header",required=false),
+      @ApiImplicitParam(name="hpPositionId",value="岗位ID",dataType="long",paramType="query",required=true),
+      @ApiImplicitParam(name="isPage",value="是否分页",dataType="int",paramType="query",required=false),
+      @ApiImplicitParam(name="currentPage",value="分页当前页",dataType="int",paramType="query",required=false),
+      @ApiImplicitParam(name="showCount",value="单页展示数",dataType="int",paramType="query",required=false),
+  })
+  @GetMapping(value="groupList")
+  public BaseMsg groupList(HttpServletRequest request) {
+      
+      String sid = request.getHeader("sid");
+      Long hpPositionId = (Long)Util.typeChange(request.getParameter("hpPositionId"), Long.class);
+      Integer isPage = (Integer)Util.typeChange(request.getParameter("isPage"), Integer.class);
+      isPage = isPage==null || isPage!=1 ?0:isPage;
+      Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
+      Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
+      
+      return this.positionService.getGrouplistPage(sid, hpPositionId, isPage, currentPage, showCount);
+  }
+  /**
+   *
+   * @TODO:     拼团岗位用户拼团详情
+   */
+  @ApiOperation(value="拼团岗位详情页面获取正在进行的拼团列表",notes="拼团岗位详情页面获取正在进行的拼团列表")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
+      @ApiImplicitParam(name="sid",value="用户登录凭证",dataType="String",paramType="header",required=false),
+      @ApiImplicitParam(name="hpPositionGroupId",value="拼团ID",dataType="long",paramType="query",required=true),
+  })
+  @GetMapping(value="group")
+  public BaseMsg group(HttpServletRequest request) {
+      
+      String sid = request.getHeader("sid");
+      Long hpPositionGroupId = (Long)Util.typeChange(request.getParameter("hpPositionGroupId"), Long.class);
+      
+      return this.positionService.getGroupDetail(sid, hpPositionGroupId);
+  }
+  
+  
 }

@@ -49,7 +49,9 @@
 		SELECT p.hp_position_id,p.hp_company_id,c.com_name,p.pos_name,ps.lower_num,ps.hight_num,aco.county_name,aci.city_name,
 		p.ret_on,p.ret_man_money,p.ret_woman_money,p.urgent_on,p.urgent_money,pr.*,
 		(SELECT GROUP_CONCAT(pw.welfare_name) FROM hp_position_ref_welfare prw JOIN hp_position_welfare pw 
-         WHERE prw.hp_position_id=p.hp_position_id AND prw.hp_position_welfare_id=pw.hp_position_welfare_id) welfareArr
+         WHERE prw.hp_position_id=p.hp_position_id AND prw.hp_position_welfare_id=pw.hp_position_welfare_id) welfareArr,
+         (SELECT COUNT(pru.hp_position_ref_user_id) FROM hp_position_group pg JOIN hp_position_ref_user pru 
+		WHERE pg.hp_position_id=p.hp_position_id AND p.group_on=1 AND pg.hp_position_group_id=pru.hp_position_group_id) groupSccNum
 		FROM hp_position p JOIN hp_company c ON p.hp_company_id=c.hp_company_id 
 		JOIN hp_position_salary ps ON p.hp_position_salary_id=ps.hp_position_salary_id 
 		JOIN hp_area_county aco ON p.county_id=aco.county_id 
@@ -61,6 +63,7 @@
 		<if test="retOn != null ">AND p.ret_on=#{retOn}</if>
 		<if test="welfareOn != null ">AND p.welfare_on=#{welfareOn}</if>
 		<if test="urgentOn != null ">AND p.urgent_on=#{urgentOn}</if>
+		<if test="groupOn != null ">AND p.group_on=#{groupOn}</if>
 		<if test="cityName != null and cityName != '' ">AND aci.city_name==#{cityName}</if>
 		<if test="keyWord !=null and keyWord !=''">
 			AND (p.pos_type LIKE CONCAT('%',#{keyWord},'%') OR p.pos_name LIKE CONCAT('%',#{keyWord},'%') OR c.com_name LIKE CONCAT('%',#{keyWord},'%') )
@@ -104,6 +107,71 @@
 			<when test="state == 4">AND p.end_time &lt;#{curTime} </when>
 		</choose>
 		<if test="sid !=null and sid !=''">AND pru.hp_user_id=<include refid="getIdBySid"></include></if>
+	</select>
+	
+	<select id="getGroupListBySearch" parameterType="com.happy.service.position.data.GroupSearch" resultType="com.happy.service.position.data.GroupData" >
+		SELECT pg.*,u.user_name,u.header_pic,c.com_name,p.pos_name,ps.lower_num,ps.hight_num,
+@part_num:=(SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_id=pg.hp_position_group_id) partNum,
+(pg.end_time-#{curTime}) leftTime 
+FROM  hp_company c JOIN hp_position p ON c.hp_company_id=p.hp_company_id 
+JOIN hp_position_group pg ON p.hp_position_id=pg.hp_position_id 
+LEFT JOIN hp_user u ON pg.hp_user_id=u.hp_user_id 
+LEFT JOIN hp_position_salary ps ON p.hp_position_salary_id=ps.hp_position_salary_id 
+WHERE p.hp_position_id=#{curTime} AND p.group_on=1 AND pg.end_time>#{curTime} AND @part_num &lt;3 
+ORDER BY pg.end_time 
+<if test="isPage == 1">LIMIT #{currentResult},#{showCount}</if>
+	</select>
+	
+	<select id="getGroupNumBySearch" parameterType="com.happy.service.position.data.GroupSearch" resultType="int" >
+		SELECT COUNT(*) 
+FROM hp_position p JOIN hp_position_group pg ON p.hp_position_id=pg.hp_position_id 
+WHERE p.hp_position_id=#{curTime} AND p.group_on=1 AND pg.end_time>#{curTime} AND @part_num &lt;3 
+	</select>
+	
+	<resultMap type="com.happy.service.position.data.GroupData" id="GroupDataMap">
+		<id column="hp_position_group_id" property="hpPositionGroupId"/>
+		<result column="hp_position_id" property="hpPositionId"/>
+		<result column="start_time" property="startTime"/>
+		<result column="end_time" property="endTime"/>
+		<result column="group_state" property="groupState"/>
+		<result column="com_name" property="comName"/>
+		<result column="pos_name" property="posName"/>
+		<result column="lower_num" property="lowerNum"/>
+		<result column="hight_num" property="hightNum"/>
+		<result column="pos_com_desc" property="posComDesc"/>
+		<result column="groupStatus" property="groupStatus"/>
+		<result column="leftTime" property="leftTime"/>
+		<collection property="userList" javaType="java.util.List" ofType="com.happy.entity.HpUserEntity" >
+			<id column="hp_user_id" property="hpUserId"/>
+			<result column="header_pic" property="headerPic"/>
+		</collection>
+		
+	</resultMap>
+	
+	<select id="getGroupDetail" resultMap="GroupDataMap" >
+		SELECT pg.*,c.com_name,p.pos_name,pru.hp_user_id,u.header_pic,ps.lower_num,ps.hight_num,
+		p.pos_com_desc,CASE WHEN pg.end_time>1 THEN 1 ELSE 2 END ,CASE WHEN pg.end_time>1 THEN 1 ELSE 2 END groupStatus,
+		(pg.end_time-#{curTime}) leftTime,
+		<choose>
+			<when test="sid != null and sid !=''">
+		IF((SELECT COUNT(*) FROM hp_position_ref_user pru1 WHERE pru1.hp_user_id=<include refid="getIdBySid"></include>)>0,1,0) userIsPart    
+			</when>
+			<otherwise>
+				0 userIsPart
+			</otherwise>
+		</choose>
+		
+		FROM hp_company c JOIN hp_position p ON c.hp_company_id=p.hp_company_id 
+		JOIN hp_position_group pg ON p.hp_position_id=pg.hp_position_id 
+		JOIN hp_position_ref_user pru ON pg.hp_position_group_id=pru.hp_position_group_id 
+		JOIN hp_user u ON pru.hp_user_id=u.hp_user_id 
+		LEFT JOIN hp_position_salary ps ON p.hp_position_salary_id=ps.hp_position_salary_id 
+		WHERE pg.hp_position_group_id=#{hpPositionGroupId} 
+	</select>
+	
+	<select id="getSimplePosByKey" resultType="com.happy.entity.HpPositionEntity" >
+		SELECT p.hp_position_id,p.start_time,p.end_time,p.group_on 
+		FROM hp_position p WHERE p.hp_position_id=#{hpPositionId}
 	</select>
 	
 </mapper>

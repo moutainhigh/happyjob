@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.happy.entity.HpUserExpEntity;
 import com.happy.entity.HpUserResumeEntity;
-import com.happy.service.user.data.OtherLoginData;
 import com.happy.service.user.data.OtherUserData;
 import com.happy.service.user.data.UserEduDate;
 import com.happy.service.user.data.UserIntentionData;
