@@ -1,5 +1,6 @@
  package com.happy.service.banner;
 
+import com.happy.plugin.BaseMsg;
 import com.happy.service.banner.data.BannerDataMsg;
 import com.happy.service.banner.data.BannerListMsg;
 
@@ -17,5 +18,8 @@ public interface BannerService {
      */
     BannerDataMsg getBanner(Long hpBannerId);
     
-    
+    /**
+     * 开启 /关闭
+     */
+    BaseMsg updateUseOn(Long hpBannerId,Integer useOn);
 }

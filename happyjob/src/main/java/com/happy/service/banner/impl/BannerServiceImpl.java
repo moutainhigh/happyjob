@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.happy.entity.HpAdvBannerEntity;
+import com.happy.entity.HpUserEntity;
+import com.happy.plugin.BaseMsg;
 import com.happy.service.banner.BannerService;
 import com.happy.service.banner.data.BannerDataMsg;
 import com.happy.service.banner.data.BannerListMsg;
@@ -53,6 +55,27 @@ public class BannerServiceImpl implements BannerService {
         msg.setData(banner);
         return msg;
     }
+
+	@Override
+	public BaseMsg updateUseOn(Long hpAdvBannerId,Integer useOn) {
+		BaseMsg msg = new BaseMsg();
+        if(hpAdvBannerId == null) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数错误：hpAdvBannerId");
+            return msg;
+        }
+        if(useOn == null ) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数错误：useOn");
+            return msg;
+        }
+        
+        HpAdvBannerEntity adv = new HpAdvBannerEntity();
+        adv.setHpAdvBannerId(hpAdvBannerId);
+        adv.setUseOn(useOn == 1?0:1);
+	    this.hpAdvBannerMapper.updateByPK(adv);
+        return msg;
+	}
 
 
 
