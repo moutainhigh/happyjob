@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+  <title>开心工作后台管理系统</title>
+
+<!-- Bootstrap 的样式表 -->
+<link rel="stylesheet" href="/static/adminlet/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- 字体库 -->
+  <link rel="stylesheet" href="/static/adminlet/bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- 图标库 -->
+  <link rel="stylesheet" href="/static/adminlet/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- AdminLTE 的基本样式 -->
+  <link rel="stylesheet" href="/static/adminlet/dist/css/AdminLTE.min.css">
+<!--  AdminLTE 的皮肤样式 -->
+<link rel="stylesheet" href="/static/adminlet/dist/css/skins/skin-blue.min.css">
+<!-- 兼容的处理和谷歌字体库 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<!-- 日期选择器 -->
+<link rel="stylesheet" href="/static/adminlet/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<!-- 确认提示框 -->
+<link rel="stylesheet" href="/static/plugins/sweetalert/sweetalert2.min.css">
+<style>
+.idStyle{max-width: 200px;max-height: 200px;}
+</style>
+  
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+	<!-- Main Header -->
+	<header class="main-header">
+	
+		<!-- Logo -->
+		<a href="index2.html" class="logo">
+		<!-- mini logo for sidebar mini 50x50 pixels -->
+		<span class="logo-mini">开心</span>
+		<!-- logo for regular state and mobile devices -->
+		<span class="logo-lg">开心工作后台管理系统</span>
+		</a>
+	
+		<!-- Header Navbar -->
+		<nav class="navbar navbar-static-top" role="navigation">
+		<!-- Sidebar toggle button-->
+		<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+			<span class="sr-only">Toggle navigation</span>
+		</a>
+		<!-- Navbar Right Menu -->
+		<div class="navbar-custom-menu">
+			<ul class="nav navbar-nav">
+				<!-- User Account Menu -->
+				<li class="dropdown user user-menu">
+					<!-- Menu Toggle Button -->
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					<!-- hidden-xs hides the username on small devices so only the image appears. -->
+					<span class="hidden-xs">Alexander Pierce</span>
+					</a>
+					<ul class="dropdown-menu">
+					<!-- The user image in the menu -->
+					<li class="user-header">
+						<p>
+						Alexander Pierce - Web Developer
+						<small>Member since Nov. 2012</small>
+						</p>
+					</li>
+					<!-- Menu Footer-->
+					<li class="user-footer">
+						<div class="pull-right">
+						<a href="#" class="btn btn-default btn-flat">Sign out</a>
+						</div>
+					</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		</nav>
+	</header>
+	<!-- Left side column. contains the logo and sidebar -->
+	<aside class="main-sidebar">
+	
+		<!-- sidebar: style can be found in sidebar.less -->
+		<section class="sidebar">
+	
+		<!-- Sidebar Menu -->
+		<ul class="sidebar-menu" data-widget="tree">
+			<li class="header">HEADER</li>
+			<li class="treeview active">
+				<a href="#"><i class="fa fa-user"></i> <span>用户管理</span>
+					<span class="pull-right-container">
+					<i class="fa fa-angle-left pull-right"></i>
+					</span>
+				</a>
+				<ul class="treeview-menu">
+					<li><a href="#"><i class="fa fa-circle-o"></i>用户列表</a></li>
+					<li ><a href="#"><i class="fa fa-circle-o"></i>工资查询</a></li>
+<!-- 					<li class="active"><a href="#"><i class="fa fa-circle-o"><a href="#"><i class="fa fa-circle-o"></i>工资查询</a></li> -->
+					<li><a href="#"><i class="fa fa-circle-o"></i>用户投递</a></li>
+				</ul>
+			</li>
+			<li class="treeview">
+				<a href="#"><i class="fa fa-laptop"></i> <span>企业管理</span>
+					<span class="pull-right-container">
+					<i class="fa fa-angle-left pull-right"></i>
+					</span>
+				</a>
+				<ul class="treeview-menu">
+					<li><a href="#"><i class="fa fa-circle-o"></i>企业列表</a></li>
+					<li><a href="#"><i class="fa fa-circle-o"></i>招聘列表</a></li>
+				</ul>
+			</li>
+			<li class="treeview">
+				<a href="#"><i class="fa fa-link"></i> <span>广告位</span>
+					<span class="pull-right-container">
+					<i class="fa fa-angle-left pull-right"></i>
+					</span>
+				</a>
+				<ul class="treeview-menu">
+					<li><a href="#"><i class="fa fa-circle-o"></i>广告列表</a></li>
+					<li><a href="#"><i class="fa fa-circle-o"></i>添加广告</a></li>
+				</ul>
+			</li>
+		</ul>
+		<!-- /.sidebar-menu -->
+		</section>
+		<!-- /.sidebar -->
+	</aside>
+	
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+		<h1>
+			工资查询
+			<small>Optional description</small>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> 用户管理</a></li>
+			<li class="active">工资查询</li>
+		</ol>
+		</section>
+	
+		<!-- Main content -->
+		<section class="content">
+	
+			<!-- /.row -->
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="box">
+					<div class="box-header" style="overflow-y: auto">
+						<form class="form-inline" style="display: flex;justify-content: space-between">
+							<div class="form-group ">
+								<label for="exampleInputName2">工号：</label>
+								<input id="workNum" type="text" class="form-control"  placeholder="请填写工号">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputName2">姓名：</label>
+								<input id="payName" type="text" class="form-control"  placeholder="">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputEmail2">身份证号：</label>
+								<input id="payIdNum" type="text" class="form-control"  placeholder="">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputEmail2">公司名称：</label>
+								<input id="payComName" type="text" class="form-control"  placeholder="">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputEmail2">工资月份：</label>
+								<input id="payTime" type="text"  class="form-control datepicker"  placeholder="">
+							</div>
+							<div class="form-group">
+								<button  type="submit" class="btn btn-primary querySalary">查询</button>
+							</div>
+						</form>
+
+					</div>
+					<!-- /.box-header -->
+					<div class="box-body table-responsive no-padding">
+						<table class="table table-hover" id='userList'>
+						<thead>
+							<tr>
+								<th>姓名</th>
+								<th>公司名称</th>
+								<th>身份证号码</th>
+								<th>工号</th>
+								<th>工资月份</th>
+								<th>应发工资</th>
+								<th>扣款合计</th>
+								<th>实发工资</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody class="tbody"></tbody>
+					</table>
+					</div>
+					</div>
+				</div>
+			</div>
+	
+		</section>
+	</div>
+	<div class="control-sidebar-bg"></div>
+	
+</div>
+
+
+
+<!-- 查看用户资料 -->
+<div class="modal fade" id="browseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title">用户资料</h4>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="" class="col-sm-2">记录id</label>
+					<div class="col-sm-10 showValue"></div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">姓名</label>
+					<div class="col-sm-10 showValue"></div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">身份证号</label>
+					<div class="col-sm-10 showValue"></div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">工号</label>
+					<div class="col-sm-10 showValue"></div>
+				</div>
+				
+				<div class="form-group">
+					<label for="" class="col-sm-2">公司名称</label>
+					<div class="col-sm-10 showValue"></div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">工资月份</label>
+					<div class="col-sm-10 showValue"></div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">应发合计</label>
+					<div class="col-sm-10 showValue"></div>
+				</div>
+				
+				<div class="form-group">
+					<label for="" class="col-sm-2">扣款合计</label>
+					<div class="col-sm-10 showValue"></div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">实发工资</label>
+					<div class="col-sm-10 showValue"></div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">其他详细信息</label>
+					<div class="col-sm-10 showValue"></div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">记录时间</label>
+					<div class="col-sm-10 showValue"></div>
+				</div>
+			
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+		</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+	
+<!-- jQuery 3 -->
+<script src="/static/adminlet/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="/static/adminlet/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/adminlet/dist/js/adminlte.min.js"></script>
+
+<!-- 日期选择器 -->
+<script src="/static/adminlet/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!-- 确认提示框 帮助文档：http://www.cnblogs.com/hulin520/p/5818746.html -->
+<script src="/static/plugins/sweetalert/sweetalert2.min.js"></script>
+
+<!-- 页面逻辑 -->
+<script src="/static/js/common.js"></script>
+<script src="/static/js/salary-list.js"></script>
+
+</html>
+

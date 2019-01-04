@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlExMapper.HpSalaryExMapper">
+	
+	<select id="getSalarylistPage" parameterType="com.happy.service.salary.data.SalaryManageSearch" resultType="com.happy.entity.HpUserPayrollEntity" >
+		SELECT *
+		FROM hp_user_payroll 
+		WHERE 1=1 
+		<if test="workNum !=null and workNum !='' ">AND work_num LIKE CONCAT('%',#{workNum},'%')</if>
+		<if test="payName !=null and payName !='' ">AND pay_name LIKE CONCAT('%',#{payName},'%')</if>
+		<if test="payIdNum !=null and payIdNum !='' ">AND pay_id_num LIKE CONCAT('%',#{payIdNum},'%')</if>
+		<if test="payComName !=null and payComName !='' ">AND pay_com_name LIKE CONCAT('%',#{payComName},'%')</if>
+		
+		<if test="payTime !=null and payTime !=0 ">AND pay_time=#{payTime}</if>
+		
+		ORDER BY create_time desc
+		
+	</select>	
+	
+</mapper>

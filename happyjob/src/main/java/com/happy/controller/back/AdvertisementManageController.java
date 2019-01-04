@@ -18,7 +18,7 @@ import com.happy.util.Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(value="后台用户管理相关请求API",tags="后台用户管理相关请求API")
+@Api(value="后台广告管理相关请求API",tags="后台广告管理相关请求API")
 @RestController
 @RequestMapping("backAdvertisement")
 public class AdvertisementManageController {
@@ -34,7 +34,10 @@ public class AdvertisementManageController {
 	    @GetMapping(value="advertisementList")
 	    public BannerListMsg userList(HttpServletRequest request){
 	        logger.info("AdvertiseManageController class  userList method");
-	        BannerListMsg result = this.bannerService.getBannerList(null, 1, null, 1, 1, 10);
+	        Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
+	        Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
+	       
+	        BannerListMsg result = this.bannerService.getBannerList(null, 1, null, 1, currentPage, showCount);
 	        return  result;
 	    }
 	    
