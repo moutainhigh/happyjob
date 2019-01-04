@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlExMapper.HpPositionRefUserExMapper">
+    
+	<select id="getDeliverylistPage" parameterType="com.happy.service.delivery.data.DeliverySearch" resultType="com.happy.service.delivery.data.DeliveryData" >
+		SELECT u.user_name userName,u.real_name realName ,u.gender gender ,u.born_year,c.com_name,p.pos_name,
+			CASE WHEN u.gender = 1
+	           		THEN 
+		             	p.ret_man_money
+	           		ELSE 
+	           			p.ret_woman_money
+	        END reMoney,
+			pu.part_time,u.phone_no
+		from hp_position_ref_user pu
+		left join hp_user u on pu.hp_user_id =u.hp_user_id
+		left join hp_position p on	pu.hp_position_id =p.hp_position_id
+		left join hp_company c on  p.hp_company_id =c.hp_company_id
+		
+		WHERE 1=1 
+		<if test="userName !=null and userName !='' ">AND u.user_name LIKE CONCAT('%',#{userName},'%')</if>
+		<if test="comName !=null and comName !='' ">AND c.com_name LIKE CONCAT('%',#{comName},'%')</if>
+		<if test="posName !=null and posName !='' ">AND p.pos_name LIKE CONCAT('%',#{posName},'%')</if>
+		<if test="startTime !=null and startTime !=0 ">AND pu.part_time &gt;=#{startTime}</if>
+		<if test="endTime !=null and endTime !=0 ">AND pu.part_time &lt;=#{endTime}</if>
+		<if test="realName !=null and realName !='' ">AND u.real_name LIKE CONCAT('%',#{realName},'%')</if>
+		<if test="gender !=null and gender !='' ">AND u.gender = #{gender} </if>
+		
+<!-- 		<if test="contactStat !=null and contactStat !='' ">AND contactStat = #{contactStat}</if> -->
+		
+		ORDER BY part_time desc
+		
+	</select>	
+	
+</mapper>
