@@ -54,16 +54,16 @@ import io.swagger.annotations.ApiOperation;
     @ApiImplicitParams({
         @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
         @ApiImplicitParam(name="sid",value="用户登录凭证",dataType="String",paramType="header",required=false),
-        @ApiImplicitParam(name="cityName",value="城市名称",dataType="String",paramType="path",required=false),
-        @ApiImplicitParam(name="keyWord",value="关键字，模糊匹配公司名称、职位名称",dataType="String",paramType="path",required=false),
-        @ApiImplicitParam(name="posNature",value="职位性质（1、实习，2、兼职，3、全职）",dataType="int",paramType="path",required=false),
-        @ApiImplicitParam(name="retOn",value="是否入职返现",dataType="int",paramType="path",required=false),
-        @ApiImplicitParam(name="hotOn",value="是否热门",dataType="int",paramType="path",required=false),
-        @ApiImplicitParam(name="welfareOn",value="是否福利岗位",dataType="int",paramType="path",required=false),
-        @ApiImplicitParam(name="urgentOn",value="是否高薪急聘",dataType="int",paramType="path",required=false),
-        @ApiImplicitParam(name="groupOn",value="是否是拼团岗位",dataType="int",paramType="path",required=false),
-        @ApiImplicitParam(name="currentPage",value="当前分页",dataType="int",paramType="path",required=false),
-        @ApiImplicitParam(name="showCount",value="单页展示记录数",dataType="int",paramType="path",required=false),
+        @ApiImplicitParam(name="cityName",value="城市名称",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="keyWord",value="关键字，模糊匹配公司名称、职位名称",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="posNature",value="职位性质（1、实习，2、兼职，3、全职）",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="retOn",value="是否入职返现",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="hotOn",value="是否热门",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="welfareOn",value="是否福利岗位",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="urgentOn",value="是否高薪急聘",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="groupOn",value="是否是拼团岗位",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="currentPage",value="当前分页",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="showCount",value="单页展示记录数",dataType="int",paramType="query",required=false),
     })
     @GetMapping(value="position")
     public PositionListMsg position(HttpServletRequest request){
@@ -86,7 +86,7 @@ import io.swagger.annotations.ApiOperation;
             this.userService.insertUserSearch(oid, keyWord);
         }
         
-        return this.positionService.getPostionlistPage(oid,keyWord,cityName, posNature, retOn, hotOn, welfareOn,urgentOn,groupOn, currentPage, showCount);
+        return this.positionService.getPostionlistPage(null,keyWord,cityName, posNature, retOn, hotOn, welfareOn,urgentOn,groupOn, currentPage, showCount);
     }
     
     /**

@@ -3,51 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.happy.sqlExMapper.HpPositionExMapper">
-	<resultMap id="BaseResultMap" type="com.happy.entity.HpPositionEntity">
-		<result column="hp_position_id" property="hpPositionId"/>
-		<result column="hp_company_id" property="hpCompanyId"/>
-		<result column="hp_position_offer_id" property="hpPositionOfferId"/>
-		<result column="hp_position_require_id" property="hpPositionRequireId"/>
-		<result column="county_id" property="countyId"/>
-		<result column="hp_position_salary_id" property="hpPositionSalaryId"/>
-		<result column="hp_education_id" property="hpEducationId"/>
-		<result column="pos_name" property="posName"/>
-		<result column="ret_man_money" property="retManMoney"/>
-		<result column="man_day_num" property="manDayNum"/>
-		<result column="ret_woman_money" property="retWomanMoney"/>
-		<result column="women_day_num" property="womenDayNum"/>
-		<result column="urgent_on" property="urgentOn"/>
-		<result column="urgent_money" property="urgentMoney"/>
-		<result column="group_on" property="groupOn"/>
-		<result column="three_money" property="threeMoney"/>
-		<result column="five_money" property="fiveMoney"/>
-		<result column="welfare_on" property="welfareOn"/>
-		<result column="welfare_detail" property="welfareDetail"/>
-		<result column="job_hours" property="jobHours"/>
-		<result column="com_cust_phone" property="comCustPhone"/>
-		<result column="pos_type" property="posType"/>
-		<result column="pos_detail" property="posDetail"/>
-		<result column="car_on" property="carOn"/>
-		<result column="car_desc" property="carDesc"/>
-		<result column="pos_com_desc" property="posComDesc"/>
-		<result column="other_welfare" property="otherWelfare"/>
-		<result column="pos_nature" property="posNature"/>
-		<result column="pos_work_year" property="posWorkYear"/>
-		<result column="start_time" property="startTime"/>
-		<result column="end_time" property="endTime"/>
-		<result column="pos_num" property="posNum"/>
-		<result column="pos_person" property="posPerson"/>
-		<result column="pos_phone" property="posPhone"/>
-		<result column="pos_email" property="posEmail"/>
-		<result column="hot_on" property="hotOn"/>
-		<result column="ret_on" property="retOn"/>
-	</resultMap>
 	
 	<sql id="getIdBySid">(SELECT u.hp_user_id FROM hp_user u WHERE u.user_token=#{sid})</sql>
 	
 	<select id="getFrontPoslistPage" parameterType="com.happy.service.position.data.PositionSearch" resultType="com.happy.service.position.data.PositionData" >
 		SELECT p.hp_position_id,p.hp_company_id,c.com_name,p.pos_name,ps.lower_num,ps.hight_num,aco.county_name,aci.city_name,
-		p.ret_on,p.ret_man_money,p.ret_woman_money,p.urgent_on,p.urgent_money,pr.*,
+		p.ret_on,p.ret_man_money,p.ret_woman_money,p.urgent_on,p.urgent_money,<include refid="selectRequireCol"></include>,
 		(SELECT GROUP_CONCAT(pw.welfare_name) FROM hp_position_ref_welfare prw JOIN hp_position_welfare pw 
          WHERE prw.hp_position_id=p.hp_position_id AND prw.hp_position_welfare_id=pw.hp_position_welfare_id) welfareArr,
          (SELECT COUNT(pru.hp_position_ref_user_id) FROM hp_position_group pg JOIN hp_position_ref_user pru 
@@ -56,8 +17,11 @@
 		JOIN hp_position_salary ps ON p.hp_position_salary_id=ps.hp_position_salary_id 
 		JOIN hp_area_county aco ON p.county_id=aco.county_id 
 		JOIN hp_area_city aci ON aco.city_id=aci.city_id 
-		JOIN hp_position_require pr ON p.hp_position_require_id=pr.hp_position_require_id 
-		WHERE p.start_time &gt;=#{curTime} AND p.end_time &lt;=#{curTime}  AND p.pos_state=1 
+		<if test="sid !=null and sid != ''">
+			JOIN hp_position_ref_user pru1 ON p.hp_position_id=pru1.hp_position_id 
+		</if>
+		LEFT JOIN hp_position_require pr ON p.hp_position_id=pr.hp_position_id 
+		WHERE p.start_time &lt;=#{curTime} AND p.end_time &gt;=#{curTime}  AND p.pos_state=1 
 		<if test="hotOn != null ">AND p.hot_on=#{hotOn}</if>
 		<if test="posNature != null ">AND p.pos_nature=#{posNature}</if>
 		<if test="retOn != null ">AND p.ret_on=#{retOn}</if>
@@ -72,20 +36,23 @@
 	</select>
 	
 	<select id="getFrontPosByKey" resultType="com.happy.service.position.data.PositionData" >
-		SELECT p.*,c.com_name,ps.lower_num,ps.hight_num,aco.county_name,aci.city_name,pr.*,
+		SELECT p.*,c.com_name,ps.lower_num,ps.hight_num,aco.county_name,aci.city_name,<include refid="selectRequireCol"></include>,
 		(SELECT GROUP_CONCAT(pw.welfare_name) FROM hp_position_ref_welfare prw JOIN hp_position_welfare pw 
          WHERE prw.hp_position_id=p.hp_position_id AND prw.hp_position_welfare_id=pw.hp_position_welfare_id) welfareArr  
 		FROM hp_position p JOIN hp_company c ON p.hp_company_id=c.hp_company_id 
 		JOIN hp_position_salary ps ON p.hp_position_salary_id=ps.hp_position_salary_id 
 		JOIN hp_area_county aco ON p.county_id=aco.county_id 
 		JOIN hp_area_city aci ON aco.city_id=aci.city_id 
-		JOIN hp_position_require pr ON p.hp_position_require_id=pr.hp_position_require_id 
+		LEFT JOIN hp_position_require pr ON p.hp_position_id=pr.hp_position_id 
 		WHERE p.hp_position_id=#{hpPositionId} 
 	</select>
 	
+	<sql id="selectRequireCol">pr.hp_position_require_id,pr.req_gender,pr.req_age,pr.req_education,pr.req_skill,pr.req_exp,pr.req_work_years,pr.req_other</sql>
+	
 	<select id="getPosNumBySearch" parameterType="com.happy.service.position.data.PositionSearch" resultType="int" >
-		SELECT COUNT(*) FROM hp_position_ref_user pru JOIN hp_position p ON pru.hp_position_id=p.hp_position_id 
-		WHERE pru.part_type=1 
+		SELECT COUNT(DISTINCT pru.hp_position_id) FROM hp_position_ref_user pru JOIN hp_position p ON pru.hp_position_id=p.hp_position_id 
+		WHERE 1=1 
+		<if test="partType !=null and partType != 0"> AND pru.part_type=#{partType} </if>
 		<if test="hpPositionId !=null"> AND pru.hp_position_id=#{hpPositionId} </if>
 		<choose>
 			<when test="state == 1">AND p.start_time &lt;=#{curTime} AND p.end_time &gt;=#{curTime} </when>
@@ -96,15 +63,17 @@
 	</select>
 	
 	<select id="getGroupPosNumBySearch" parameterType="com.happy.service.position.data.PositionSearch" resultType="int" >
-		SELECT COUNT(*) FROM hp_position_ref_user pru JOIN hp_position_group pg 
+		SELECT COUNT(DISTINCT pg.hp_position_id) FROM hp_position_ref_user pru JOIN hp_position_group pg 
 		ON pru.hp_position_group_id=pg.hp_position_group_id 
 		WHERE pru.part_type=2 
 		<if test="hpPositionId !=null"> AND pg.hp_position_id=#{hpPositionId} </if>
+		<if test="hpPositionGroupId !=null"> AND pg.hp_position_group_id=#{hpPositionGroupId} </if>
 		<choose>
 			<when test="state == 1">AND pg.start_time &lt;=#{curTime} AND pg.end_time &gt;=#{curTime} </when>
 			<when test="state == 2">AND pru.work_on=1 </when>
 			<when test="state == 3">AND (SELECT COUNT(*) FROM hp_position_ref_user pru1 WHERE pru1.hp_position_group_id=pru.hp_position_group_id )>=3 </when>
 			<when test="state == 4">AND p.end_time &lt;#{curTime} </when>
+			<when test="state == 5">AND FROM_UNIXTIME(pru.part_time,'%Y-%m-%d')=FROM_UNIXTIME(#{curTime},'%Y-%m-%d') </when>
 		</choose>
 		<if test="sid !=null and sid !=''">AND pru.hp_user_id=<include refid="getIdBySid"></include></if>
 	</select>
@@ -172,6 +141,10 @@ WHERE p.hp_position_id=#{curTime} AND p.group_on=1 AND pg.end_time>#{curTime} AN
 	<select id="getSimplePosByKey" resultType="com.happy.entity.HpPositionEntity" >
 		SELECT p.hp_position_id,p.start_time,p.end_time,p.group_on 
 		FROM hp_position p WHERE p.hp_position_id=#{hpPositionId}
+	</select>
+	
+	<select id="getGroupPartNum" resultType="int" >
+		SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_id=#{hpPositionGroupId}
 	</select>
 	
 </mapper>

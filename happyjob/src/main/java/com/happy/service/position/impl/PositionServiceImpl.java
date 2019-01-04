@@ -6,7 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.happy.entity.HpPositionEntity;
+import com.happy.entity.HpPositionGroupEntity;
+import com.happy.entity.HpPositionRefUserEntity;
+import com.happy.entity.HpUserResumeEntity;
 import com.happy.service.position.PositionService;
 import com.happy.service.position.data.GroupData;
 import com.happy.service.position.data.GroupDataMsg;
@@ -17,16 +21,27 @@ import com.happy.service.position.data.PositionListMsg;
 import com.happy.service.position.data.PositionMsg;
 import com.happy.service.position.data.PositionSearch;
 import com.happy.sqlExMapper.HpPositionExMapper;
+import com.happy.sqlExMapper.HpUserExMapper;
+import com.happy.sqlMapper.HpPositionGroupMapper;
+import com.happy.sqlMapper.HpPositionRefUserMapper;
 import com.happy.util.Util;
+import com.happy.util.pubConst.Const;
+import com.happy.util.pubConst.ResultMsg;
 
 @Service
 public class PositionServiceImpl implements PositionService {
 
     @Autowired
     private HpPositionExMapper hpPositionExMapper;
+    @Autowired
+    private HpUserExMapper hpUserExMapper;
+    @Autowired
+    private HpPositionGroupMapper hpPositionGroupMapper;
+    @Autowired
+    private HpPositionRefUserMapper hpPositionRefUserMapper;
     
     @Override
-    public PositionListMsg getPostionlistPage(String oid, String keyWord, String cityName, Integer posNature, Integer retOn, Integer hotOn,
+    public PositionListMsg getPostionlistPage(String sid, String keyWord, String cityName, Integer posNature, Integer retOn, Integer hotOn,
         Integer welfareOn, Integer urgentOn, Integer groupOn, Integer currentPage, Integer showCount) {
         
         Date curDate = Util.getCurrentDate();
@@ -44,6 +59,7 @@ public class PositionServiceImpl implements PositionService {
         search.setCurTime(curTime);
         search.setUrgentOn(urgentOn);
         search.setGroupOn(groupOn);
+        search.setSid(sid);
         if(!Util.isEmpty(keyWord)) { // 首页搜索
             keyWord = keyWord.trim();
             search.setKeyWord(keyWord);
@@ -52,6 +68,7 @@ public class PositionServiceImpl implements PositionService {
         List<PositionData> posList = this.hpPositionExMapper.getFrontPoslistPage(search);
         msg.setList(posList);
         msg.setPage(search);
+        search.setSid(null);
         return msg;
     }
 
@@ -73,7 +90,8 @@ public class PositionServiceImpl implements PositionService {
              search.setState(1);
              long curTime = Util.getDateSecond(Util.getCurrentDate());
              search.setCurTime(curTime);
-             int comNum = this.hpPositionExMapper.getGroupPosNumBySearch(search);
+             search.setPartType(1);
+             int comNum = this.hpPositionExMapper.getPosNumBySearch(search);
              // 拼团
              int groupNum = this.hpPositionExMapper.getGroupPosNumBySearch(search);
              data.setComApplyNum(comNum);
@@ -119,31 +137,176 @@ public class PositionServiceImpl implements PositionService {
         msg.setData(data);
         return msg;
     }
-
+    /**
+     * 
+     * @TODO:     验证用户是否可以进行岗位申请
+     * @param partType 1、参与非拼团/发起拼团，2、参与拼团
+     * @param sid
+     * @param hpPositionId
+     * @param hpPositionGroupId
+     */
+    public JSONObject confirmApply(int partType,String sid, Long hpPositionId, Long hpPositionGroupId) {
+        JSONObject json = new JSONObject();
+        if(partType != 1 && partType != 2) {
+            json.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
+            json.put(Const.RESUTL_MESSAGE_MESSAGE, "参数错误：partType");
+            return json;
+        }
+        if(partType == 1 && (hpPositionId == null || hpPositionId.compareTo(1L)<0) ) { // 非拼团申请
+            json.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
+            json.put(Const.RESUTL_MESSAGE_MESSAGE, "参数错误：hpPositionId");
+            return json;
+        }
+        if(partType == 2 && (hpPositionGroupId == null || hpPositionGroupId.compareTo(1L)<0) ) { // 非拼团申请
+            json.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
+            json.put(Const.RESUTL_MESSAGE_MESSAGE, "参数错误：hpPositionGroupId");
+            return json;
+        }
+        HpUserResumeEntity userResume = this.hpUserExMapper.getUserResumBySid(sid); // 判断用户是否已经有简历
+        if(userResume == null) {
+            json.put(Const.RESUTL_MESSAGE_ERRORCODE, ResultMsg.LOGIN_FILTER_RESULT_CODE_6);
+            json.put(Const.RESUTL_MESSAGE_MESSAGE, ResultMsg.LOGIN_FILTER_RESULT_CONTENT_6);
+            return json;
+        }
+        Long hpUserId = userResume.getHpUserId();
+        json.put("hpUserId", hpUserId); // 用户ID
+        long curTime = Util.getDateSecond(Util.getCurrentDate());
+        int groupOn = 0;
+        if(partType == 1) {
+            
+            HpPositionEntity postion = this.hpPositionExMapper.getSimplePosByKey(hpPositionId);
+            if(postion == null) {
+                json.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
+                json.put(Const.RESUTL_MESSAGE_MESSAGE, "招聘岗位信息不存在");
+                return json;
+            }
+            long posEndTime = postion.getEndTime(); // 活动结束时间
+            json.put("posEndTime", posEndTime);
+            long posStartTime = postion.getStartTime();
+            if(posStartTime>curTime || posEndTime < curTime) {
+                json.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
+                json.put(Const.RESUTL_MESSAGE_MESSAGE, "不在岗位招聘时间内");
+                return json;
+            }
+            groupOn = postion.getGroupOn();
+        }else {
+            groupOn = 1;
+            HpPositionGroupEntity groupData = this.hpPositionGroupMapper.selectByPK(hpPositionGroupId);
+            if(groupData == null) {
+                json.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
+                json.put(Const.RESUTL_MESSAGE_MESSAGE, "拼团信息不存在");
+                return json;
+            }
+            hpPositionId = groupData.getHpPositionId();
+            long groupEndTime = groupData.getEndTime();
+            if(groupEndTime < curTime) { // 已结束
+                json.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
+                json.put(Const.RESUTL_MESSAGE_MESSAGE, "拼团时间已结束");
+                return json;
+            }
+        }
+        
+        json.put("groupOn", groupOn); // 是否拼团职位
+        PositionSearch page = new PositionSearch();
+        page.setHpPositionId(hpPositionId);
+        page.setSid(sid);
+        int targetPosNum = this.hpPositionExMapper.getPosNumBySearch(page); // 是否申请过该职位
+        if(targetPosNum >0) {
+            json.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
+            json.put(Const.RESUTL_MESSAGE_MESSAGE, "您已经申请过该职位，请不要重复申请");
+            return json;
+        }
+        if(groupOn == 1) { // 拼团岗位每天一个求职者只能参加一次，拼团失效时间为三天（原型图有误需要修改
+            page.setCurTime(curTime);
+            int groupPosNum = this.hpPositionExMapper.getGroupPosNumBySearch(page); // 获取当天已经申请的拼团岗位数量
+            if(groupPosNum >0) {
+                json.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
+                json.put(Const.RESUTL_MESSAGE_MESSAGE, "您今天已经参与过拼团，每人每天仅可参与一次拼团");
+                return json;
+            }
+        }
+        return json;
+    }
+    
     @Override
     public GroupDataMsg insertUserPostionApply(String sid, Long hpPositionId) {
         // TODO 暂定单人仅可申请同一岗位一次
         GroupDataMsg msg = new GroupDataMsg();
-        if(hpPositionId == null) {
-            msg.setErrorCode(1);
-            msg.setMessage("参数错误：hpPositionId为空");
+        
+        JSONObject json = this.confirmApply(1, sid, hpPositionId, null); // 判断用户是否可以申请岗位
+        if(json.getIntValue(Const.RESUTL_MESSAGE_ERRORCODE) != 0) {
+            msg.setErrorCode(json.getIntValue(Const.RESUTL_MESSAGE_ERRORCODE));
+            msg.setMessage(json.getString(Const.RESUTL_MESSAGE_MESSAGE));
             return msg;
         }
-        HpPositionEntity postion = this.hpPositionExMapper.getSimplePosByKey(hpPositionId);
-        if(postion == null) {
-            msg.setErrorCode(1);
-            msg.setMessage("招聘岗位信息不存在");
-            return msg;
-        }
-        int groupOn = postion.getGroupOn();
-        Long curTime = Util.getDateSecond(Util.getCurrentDate());
+        HpPositionRefUserEntity posUser = null;
+        int groupOn = json.getIntValue("groupOn");
+        int partType = 1;
+        Long groupId = null;
+        long curTime = Util.getDateSecond(Util.getCurrentDate());
+        long hpUserId = json.getLongValue("hpUserId");
+        long posEndTime = json.getLongValue("posEndTime");
         if(groupOn == 1) { // 拼团岗位每天一个求职者只能参加一次，拼团失效时间为三天（原型图有误需要修改
+            HpPositionGroupEntity group = new HpPositionGroupEntity();
+            group.setHpUserId(hpUserId);
+            group.setGroupState(0);
+            group.setHpPositionId(hpPositionId);
+            group.setStartTime(curTime);
+            long endTime = (curTime + Const.HP_POSITION_GROUP_MAX_AGE)>posEndTime?posEndTime:(curTime + Const.HP_POSITION_GROUP_MAX_AGE);
+            group.setEndTime(endTime);
+            this.hpPositionGroupMapper.insert(group); // 添加拼团发起记录
+            partType = 2;
+            groupId = group.getHpPositionGroupId();
+            posUser = new HpPositionRefUserEntity();
+            posUser.setHpPositionGroupId(groupId);
+            posUser.setLeaderOn(1);
             
         }else { // 可以同时申请不同非拼团岗位
-            
+            posUser = new HpPositionRefUserEntity();
         }
+        posUser.setHpPositionId(hpPositionId);
+        posUser.setHpUserId(hpUserId);
+        posUser.setPartTime(curTime);
+        posUser.setPartType(partType);
+        posUser.setWorkOn(0);
+        this.hpPositionRefUserMapper.insert(posUser);
+        GroupData data = new GroupData();
+        data.setHpPositionId(hpPositionId);
+        data.setHpPositionGroupId(groupId);
+        msg.setData(data);
+        return msg;
+    }
+
+    @Override
+    public GroupDataMsg insertUserGroupApply(String sid, Long hpPositionGroupId) {
+        GroupDataMsg msg = new GroupDataMsg();
         
-        return null;
+        JSONObject json = this.confirmApply(2, sid, null, hpPositionGroupId); // 判断用户是否可以申请岗位
+        if(json.getIntValue(Const.RESUTL_MESSAGE_ERRORCODE) != 0) {
+            msg.setErrorCode(json.getIntValue(Const.RESUTL_MESSAGE_ERRORCODE));
+            msg.setMessage(json.getString(Const.RESUTL_MESSAGE_MESSAGE));
+            return msg;
+        }
+        Long hpUserId = json.getLong("hpUserId");
+        Long hpPositionId = json.getLong("hpPositionId");
+        int partNum = this.hpPositionExMapper.getGroupPartNum(hpPositionGroupId);
+        long curTime = Util.getDateSecond(Util.getCurrentDate());
+        HpPositionRefUserEntity posUser = new HpPositionRefUserEntity();
+        posUser.setHpPositionGroupId(hpPositionGroupId);
+        posUser.setHpPositionId(hpPositionId);
+        posUser.setHpUserId(hpUserId);
+        posUser.setLeaderOn(0);
+        posUser.setPartTime(curTime);
+        posUser.setPartType(2);
+        posUser.setWorkOn(0);
+        this.hpPositionRefUserMapper.insert(posUser);
+        if(partNum + 1>=3) {
+            HpPositionGroupEntity group = new HpPositionGroupEntity();
+            group.setHpPositionGroupId(hpPositionGroupId);
+            group.setGroupState(1);
+            this.hpPositionGroupMapper.updateByPK(group);
+        }
+        return msg;
     }
 
 }

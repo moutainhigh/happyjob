@@ -5,6 +5,7 @@
 <mapper namespace="com.happy.sqlMapper.HpPositionRequireMapper">
 	<resultMap id="BaseResultMap" type="com.happy.entity.HpPositionRequireEntity">
 		<result column="hp_position_require_id" property="hpPositionRequireId"/>
+		<result column="hp_position_id" property="hpPositionId"/>
 		<result column="req_gender" property="reqGender"/>
 		<result column="req_age" property="reqAge"/>
 		<result column="req_education" property="reqEducation"/>
@@ -14,8 +15,8 @@
 		<result column="req_other" property="reqOther"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpPositionRequireId" parameterType="com.happy.entity.HpPositionRequireEntity">
-		insert into hp_position_require(req_gender,req_age,req_education,req_skill,req_exp,req_work_years,req_other)
-		 values (#{reqGender},#{reqAge},#{reqEducation},#{reqSkill},#{reqExp},#{reqWorkYears},#{reqOther});
+		insert into hp_position_require(hp_position_id,req_gender,req_age,req_education,req_skill,req_exp,req_work_years,req_other)
+		 values (#{hpPositionId},#{reqGender},#{reqAge},#{reqEducation},#{reqSkill},#{reqExp},#{reqWorkYears},#{reqOther});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_position_require where hp_position_require_id=#{hpPositionRequireId}
@@ -29,6 +30,9 @@
 	<update id="updateByPK" parameterType="com.happy.entity.HpPositionRequireEntity">
 		update hp_position_require
 		<set>
+			<if test="hpPositionId!=null ">
+				hp_position_id=#{hpPositionId},
+			</if>
 			<if test="reqGender!=null">
 				req_gender=#{reqGender},
 			</if>

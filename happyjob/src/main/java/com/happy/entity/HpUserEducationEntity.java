@@ -5,17 +5,17 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
  * 
- * 求职者教育背景表
+ * 
  */
-@ApiModel(value="HpUserEducation对象",description="求职者教育背景表")
+@ApiModel(value="HpUserEducation对象",description="")
 public class HpUserEducationEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//用户简历表id
 	@ApiModelProperty(name="hpUserEducationId",value="用户简历表id")
 	private java.lang.Long hpUserEducationId;
-	//活动背景图id
-	@ApiModelProperty(name="hpUserResumeId",value="活动背景图id")
+	//求职者简历表id
+	@ApiModelProperty(name="hpUserResumeId",value="求职者简历表id")
 	private java.lang.Long hpUserResumeId;
 	//学历选项表ID
 	@ApiModelProperty(name="hpEducationId",value="学历选项表ID")

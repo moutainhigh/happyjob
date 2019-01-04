@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
  * 
- * 公司行业类型表
+ * 
  */
-@ApiModel(value="HpCompanyType对象",description="公司行业类型表")
+@ApiModel(value="HpCompanyType对象",description="")
 public class HpCompanyTypeEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 

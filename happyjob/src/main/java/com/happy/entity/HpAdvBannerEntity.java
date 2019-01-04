@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
  * 
- * 广告位轮播图表
+ * 
  */
-@ApiModel(value="HpAdvBanner对象",description="广告位轮播图表")
+@ApiModel(value="HpAdvBanner对象",description="")
 public class HpAdvBannerEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 

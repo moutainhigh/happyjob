@@ -37,9 +37,9 @@ import io.swagger.annotations.ApiModelProperty;
     private String reqWorkYears;
     @ApiModelProperty(name="reqOther",value="其他要求")
     private String reqOther;
-    @ApiModelProperty(name="comApplyNum",value="正在进行的非拼团申请数")
+    @ApiModelProperty(name="comApplyNum",value="用户正在进行的非拼团申请数")
     private int comApplyNum;
-    @ApiModelProperty(name="groupApplyNum",value="正在进行的拼团申请数")
+    @ApiModelProperty(name="groupApplyNum",value="用户正在进行的拼团申请数")
     private int groupApplyNum;
     @ApiModelProperty(name="welfareArr",value="岗位福利名称，逗号分隔")
     private String welfareArr;

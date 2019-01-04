@@ -11,7 +11,7 @@ public interface PositionService {
       * 
       * @TODO:   分页获取招聘列表
       */
-    PositionListMsg getPostionlistPage(String oid,String keyWord,String cityName,Integer posNature,Integer retOn,
+    PositionListMsg getPostionlistPage(String sid,String keyWord,String cityName,Integer posNature,Integer retOn,
          Integer hotOn,Integer welfareOn,Integer urgentOn,Integer groupOn,Integer currentPage,Integer showCount);
      
     /**
@@ -36,4 +36,10 @@ public interface PositionService {
     * @TODO:   用户申请职位或者发起拼团
     */
    GroupDataMsg insertUserPostionApply(String sid,Long hpPositionId);
+   /**
+    * 
+    * @TODO:   用户申请参与拼团
+    */
+   GroupDataMsg insertUserGroupApply(String sid,Long hpPositionGroupId);
+   
 }

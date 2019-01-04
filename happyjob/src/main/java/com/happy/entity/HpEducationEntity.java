@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
  * 
- * 学历选项表
+ * 
  */
-@ApiModel(value="HpEducation对象",description="学历选项表")
+@ApiModel(value="HpEducation对象",description="")
 public class HpEducationEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 

@@ -19,6 +19,8 @@ import com.happy.entity.HpUserIntentionEntity;
 import com.happy.entity.HpUserResumeEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.position.PositionService;
+import com.happy.service.position.data.GroupDataMsg;
+import com.happy.service.position.data.PositionListMsg;
 import com.happy.service.user.UserService;
 import com.happy.service.user.data.UserResumeDataMsg;
 import com.happy.util.Util;
@@ -112,7 +114,7 @@ public class UserCenterController {
     *
     * @TODO:     我的简历信息获取
     */
-   @ApiOperation(value="用户简历详情信息",notes="用户简历详情信息")
+   @ApiOperation(value="用户简历：用户简历详情信息",notes="用户简历：用户简历详情信息")
    @GetMapping(value="resume")
    public UserResumeDataMsg resume(@RequestHeader(value="oid",required=true) String oid,
        @RequestHeader(value="sid",required=true) String sid) {
@@ -125,7 +127,7 @@ public class UserCenterController {
     *
     * @TODO:     我的用户求职意向编辑、新增
     */
-   @ApiOperation(value="用户求职意向编辑、新增",notes="用户求职意向编辑、新增")
+   @ApiOperation(value="用户简历：用户求职意向编辑、新增",notes="用户简历：用户求职意向编辑、新增")
    @PostMapping(value="resumeIntent")
    public BaseMsg resumeIntent(@RequestHeader(value="oid",required=true) String oid,
        @RequestHeader(value="sid",required=true) String sid,
@@ -139,7 +141,7 @@ public class UserCenterController {
     *
     * @TODO:     用户教育背景编辑、新增
     */
-   @ApiOperation(value="用户教育背景编辑、新增",notes="用户教育背景编辑、新增")
+   @ApiOperation(value="用户简历：用户教育背景编辑、新增",notes="用户简历：用户教育背景编辑、新增")
    @PostMapping(value="resumeEdu")
    public BaseMsg resumeEdu(@RequestHeader(value="oid",required=true) String oid,
        @RequestHeader(value="sid",required=true) String sid,
@@ -151,7 +153,7 @@ public class UserCenterController {
     *
     * @TODO:     用户工作经验编辑、新增
     */
-   @ApiOperation(value="用户工作经验编辑、新增",notes="用户工作经验编辑、新增")
+   @ApiOperation(value="用户简历：用户工作经验编辑、新增",notes="用户简历：用户工作经验编辑、新增")
    @PostMapping(value="resumeExp")
    public BaseMsg resumeExp(@RequestHeader(value="oid",required=true) String oid,
        @RequestHeader(value="sid",required=true) String sid,
@@ -164,22 +166,68 @@ public class UserCenterController {
    
    /**
     *
-    * @TODO:     用户申请职位或者发起拼团
+    * @TODO:     岗位申请：用户申请职位或者发起拼团
     */
-   @ApiOperation(value="用户申请职位或者发起拼团",notes="用户申请职位或者发起拼团")
+   @ApiOperation(value="岗位申请：用户申请职位或者发起拼团",notes="岗位申请：用户申请职位或者发起拼团")
    @ApiImplicitParams({
        @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
        @ApiImplicitParam(name="sid",value="用户登录凭证",dataType="String",paramType="header",required=true),
        @ApiImplicitParam(name="hpPositionId",value="岗位ID",dataType="long",paramType="query",required=true),
    })
    @PostMapping(value="positionApply")
-   public BaseMsg positionApply(HttpServletRequest request) {
+   public GroupDataMsg positionApply(HttpServletRequest request) {
        
        String sid = request.getHeader("sid");
        Long hpPositionId = (Long)Util.typeChange(request.getParameter("hpPositionId"), Long.class);
        logger.info("positionApply 参数日志：sid=={},hpPositionId=={}",sid,hpPositionId);
-       return null;
-//       return this.positionService
+       
+       return this.positionService.insertUserPostionApply(sid, hpPositionId);
+   }
+   
+   /**
+    *
+    * @TODO:     岗位申请：用户申请参与职位拼团
+    */
+   @ApiOperation(value="岗位申请：用户申请参与职位拼团",notes="岗位申请：用户申请参与职位拼团")
+   @ApiImplicitParams({
+       @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
+       @ApiImplicitParam(name="sid",value="用户登录凭证",dataType="String",paramType="header",required=true),
+       @ApiImplicitParam(name="hpPositionGroupId",value="岗位拼团ID",dataType="long",paramType="query",required=true),
+   })
+   @PostMapping(value="groupApply")
+   public GroupDataMsg groupApply(HttpServletRequest request) {
+       
+       String sid = request.getHeader("sid");
+       Long hpPositionGroupId = (Long)Util.typeChange(request.getParameter("hpPositionGroupId"), Long.class);
+       logger.info("positionApply 参数日志：sid=={},hpPositionGroupId=={}",sid,hpPositionGroupId);
+       
+       return this.positionService.insertUserGroupApply(sid, hpPositionGroupId);
+   }
+   
+   /**
+    *
+    * @TODO:     用户岗位申请列表
+    */
+   @ApiOperation(value="用户中心：我的岗位申请列表",notes="用户中心：我的岗位申请列表")
+   @ApiImplicitParams({
+       @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
+       @ApiImplicitParam(name="sid",value="用户登录凭证",dataType="String",paramType="header",required=true),
+       @ApiImplicitParam(name="groupOn",value="是否是拼团岗位",dataType="int",paramType="query",required=false),
+       @ApiImplicitParam(name="currentPage",value="当前分页",dataType="int",paramType="query",required=true),
+       @ApiImplicitParam(name="showCount",value="单页展示记录数",dataType="int",paramType="query",required=true),
+   })
+   @PostMapping(value="positionList")
+   public PositionListMsg positionList(HttpServletRequest request) {
+       
+       String sid = request.getHeader("sid");
+       Integer groupOn = (Integer)Util.typeChange(request.getParameter("groupOn"), Integer.class);
+       Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
+       currentPage = currentPage==null||currentPage<=0?1:currentPage;
+       Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
+       showCount = showCount==null||showCount<=0?10:showCount;
+       logger.info("positionApply 参数日志：sid=={},groupOn=={},currentPage=={},showCount=={}",sid,groupOn,currentPage,showCount);
+       
+       return this.positionService.getPostionlistPage(sid, null, null, null, null, null, null, null, groupOn, currentPage, showCount);
    }
    
    

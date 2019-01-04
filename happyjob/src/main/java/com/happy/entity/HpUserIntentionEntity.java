@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
  * 
- * 求职者求职意向表
+ * 
  */
-@ApiModel(value="HpUserIntention对象",description="求职者求职意向表")
+@ApiModel(value="HpUserIntention对象",description="")
 public class HpUserIntentionEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 

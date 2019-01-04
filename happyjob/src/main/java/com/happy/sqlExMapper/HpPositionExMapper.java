@@ -21,7 +21,7 @@ public interface HpPositionExMapper{
      *
      * @TODO:     普通申请数量
      */
-    int getPosNumBySearch(PositionSearch search);
+    int getPosNumBySearch(PositionSearch page);
     /**
      *
      * @TODO:     拼团申请数量
@@ -48,5 +48,10 @@ public interface HpPositionExMapper{
     * @TODO:     获取岗位详情指定字段，仅用作判断
     */
     HpPositionEntity getSimplePosByKey(@Param("hpPositionId") Long hpPositionId);
+    /**
+     *
+     * @TODO:     获取拼团当前参与人数
+     */
+    int getGroupPartNum(@Param("hpPositionGroupId") Long hpPositionGroupId);
 }
 

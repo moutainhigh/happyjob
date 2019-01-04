@@ -26,12 +26,16 @@ public class PositionSearch extends Page {
     private Long curTime;
     @ApiModelProperty(name="hpPositionId",value="岗位ID")
     private Long hpPositionId;
-    @ApiModelProperty(name="state",value="用户岗位申请状态0、所有，1、进行中，2、已成功入职，3、拼团成功，4、已过期")
+    @ApiModelProperty(name="hpPositionGroupId",value="岗位拼团ID")
+    private Long hpPositionGroupId;
+    @ApiModelProperty(name="state",value="用户岗位申请状态0、所有，1、进行中，2、已成功入职，3、拼团成功，4、已过期,5、指定日期的拼团")
     private int state;
     @ApiModelProperty(name="sid",value="用户通行证")
     private String sid;
     @ApiModelProperty(name="keyWord",value="关键字，模糊匹配公司名称、职位")
     private String keyWord;
+    @ApiModelProperty(name="partType",value="申请类型：1、非参团，2、参团")
+    private Integer partType;
 
     
     
@@ -107,5 +111,17 @@ public class PositionSearch extends Page {
     }
     public void setGroupOn(Integer groupOn) {
         this.groupOn = groupOn;
+    }
+    public Integer getPartType() {
+        return partType;
+    }
+    public void setPartType(Integer partType) {
+        this.partType = partType;
+    }
+    public Long getHpPositionGroupId() {
+        return hpPositionGroupId;
+    }
+    public void setHpPositionGroupId(Long hpPositionGroupId) {
+        this.hpPositionGroupId = hpPositionGroupId;
     }
 }

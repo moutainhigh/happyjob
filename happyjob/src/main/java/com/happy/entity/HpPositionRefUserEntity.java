@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
  * 
- * 公司职位招聘参与表
+ * 
  */
-@ApiModel(value="HpPositionRefUser对象",description="公司职位招聘参与表")
+@ApiModel(value="HpPositionRefUser对象",description="")
 public class HpPositionRefUserEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 

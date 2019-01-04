@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
  * 
- * 企业信息表
+ * 
  */
-@ApiModel(value="HpCompany对象",description="企业信息表")
+@ApiModel(value="HpCompany对象",description="")
 public class HpCompanyEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 

@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
  * 
- * 微信token信息保存表
+ * 
  */
-@ApiModel(value="HpWxInfo对象",description="微信token信息保存表")
+@ApiModel(value="HpWxInfo对象",description="")
 public class HpWxInfoEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 

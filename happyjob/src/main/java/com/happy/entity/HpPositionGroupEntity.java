@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
  * 
- * 公司职位招聘拼团表
+ * 
  */
-@ApiModel(value="HpPositionGroup对象",description="公司职位招聘拼团表")
+@ApiModel(value="HpPositionGroup对象",description="")
 public class HpPositionGroupEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
@@ -17,6 +17,9 @@ public class HpPositionGroupEntity implements  Serializable  {
 	//公司招聘岗位表id
 	@ApiModelProperty(name="hpPositionId",value="公司招聘岗位表id")
 	private java.lang.Long hpPositionId;
+	//拼团团长ID
+	@ApiModelProperty(name="hpUserId",value="拼团团长ID")
+	private java.lang.Long hpUserId;
 	//拼团开始时间
 	@ApiModelProperty(name="startTime",value="拼团开始时间")
 	private java.lang.Long startTime;
@@ -44,6 +47,16 @@ public class HpPositionGroupEntity implements  Serializable  {
 
 	public void setHpPositionId(java.lang.Long hpPositionId) {
 		this.hpPositionId = hpPositionId;
+	}
+
+
+	public java.lang.Long getHpUserId() {
+		return hpUserId;
+	}
+
+
+	public void setHpUserId(java.lang.Long hpUserId) {
+		this.hpUserId = hpUserId;
 	}
 
 

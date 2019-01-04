@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
  * 
- * 公司招聘岗位表
+ * 
  */
-@ApiModel(value="HpPosition对象",description="公司招聘岗位表")
+@ApiModel(value="HpPosition对象",description="")
 public class HpPositionEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
@@ -20,9 +20,6 @@ public class HpPositionEntity implements  Serializable  {
 	//公司职位招聘形式表
 	@ApiModelProperty(name="hpPositionOfferId",value="公司职位招聘形式表")
 	private java.lang.Long hpPositionOfferId;
-	//公司职位招聘要求表
-	@ApiModelProperty(name="hpPositionRequireId",value="公司职位招聘要求表")
-	private java.lang.Long hpPositionRequireId;
 	//区ID（工作地点）
 	@ApiModelProperty(name="countyId",value="区ID（工作地点）")
 	private java.lang.Long countyId;
@@ -156,16 +153,6 @@ public class HpPositionEntity implements  Serializable  {
 
 	public void setHpPositionOfferId(java.lang.Long hpPositionOfferId) {
 		this.hpPositionOfferId = hpPositionOfferId;
-	}
-
-
-	public java.lang.Long getHpPositionRequireId() {
-		return hpPositionRequireId;
-	}
-
-
-	public void setHpPositionRequireId(java.lang.Long hpPositionRequireId) {
-		this.hpPositionRequireId = hpPositionRequireId;
 	}
 
 

@@ -6,13 +6,14 @@
 	<resultMap id="BaseResultMap" type="com.happy.entity.HpPositionGroupEntity">
 		<result column="hp_position_group_id" property="hpPositionGroupId"/>
 		<result column="hp_position_id" property="hpPositionId"/>
+		<result column="hp_user_id" property="hpUserId"/>
 		<result column="start_time" property="startTime"/>
 		<result column="end_time" property="endTime"/>
 		<result column="group_state" property="groupState"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpPositionGroupId" parameterType="com.happy.entity.HpPositionGroupEntity">
-		insert into hp_position_group(hp_position_id,start_time,end_time,group_state)
-		 values (#{hpPositionId},#{startTime},#{endTime},#{groupState});
+		insert into hp_position_group(hp_position_id,hp_user_id,start_time,end_time,group_state)
+		 values (#{hpPositionId},#{hpUserId},#{startTime},#{endTime},#{groupState});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_position_group where hp_position_group_id=#{hpPositionGroupId}
@@ -28,6 +29,9 @@
 		<set>
 			<if test="hpPositionId!=null ">
 				hp_position_id=#{hpPositionId},
+			</if>
+			<if test="hpUserId!=null ">
+				hp_user_id=#{hpUserId},
 			</if>
 			<if test="startTime!=null ">
 				start_time=#{startTime},

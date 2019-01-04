@@ -71,5 +71,7 @@ public class Const {
     /**图片文件上传保存文件夹*/
     public static final String HP_UP_IMG_FORMAT = ".*\\.(jpg|png|jpeg|gif)";
 
+    /**岗位拼团有效时间3天*/
+    public static final long HP_POSITION_GROUP_MAX_AGE = 3*24*60*60;
 }
 

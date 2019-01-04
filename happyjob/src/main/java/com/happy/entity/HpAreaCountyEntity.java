@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
  * 
- * 地址地区表
+ * 
  */
-@ApiModel(value="HpAreaCounty对象",description="地址地区表")
+@ApiModel(value="HpAreaCounty对象",description="")
 public class HpAreaCountyEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 

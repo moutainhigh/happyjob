@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
  * 
- * 公司规模表
+ * 
  */
-@ApiModel(value="HpCompanyScale对象",description="公司规模表")
+@ApiModel(value="HpCompanyScale对象",description="")
 public class HpCompanyScaleEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
