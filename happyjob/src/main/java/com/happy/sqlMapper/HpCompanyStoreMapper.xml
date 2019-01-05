@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlMapper.HpCompanyStoreMapper">
+	<resultMap id="BaseResultMap" type="com.happy.entity.HpCompanyStoreEntity">
+		<result column="hp_company_store_id" property="hpCompanyStoreId"/>
+		<result column="store_name" property="storeName"/>
+		<result column="store_num" property="storeNum"/>
+		<result column="contact_num" property="contactNum"/>
+		<result column="store_addr" property="storeAddr"/>
+		<result column="store_traffic" property="storeTraffic"/>
+		<result column="clerk_data" property="clerkData"/>
+		<result column="work_time" property="workTime"/>
+		<result column="store_token" property="storeToken"/>
+	</resultMap>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="hpCompanyStoreId" parameterType="com.happy.entity.HpCompanyStoreEntity">
+		insert into hp_company_store(store_name,store_num,contact_num,store_addr,store_traffic,clerk_data,work_time,store_token)
+		 values (#{storeName},#{storeNum},#{contactNum},#{storeAddr},#{storeTraffic},#{clerkData},#{workTime},#{storeToken});
+	</insert>
+	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
+		select * from hp_company_store where hp_company_store_id=#{hpCompanyStoreId}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap" >
+		select * from hp_company_store
+	</select>
+	<select id="selectAllIsUse" resultMap="BaseResultMap" >
+		select * from hp_company_store
+	</select>
+	<update id="updateByPK" parameterType="com.happy.entity.HpCompanyStoreEntity">
+		update hp_company_store
+		<set>
+			<if test="storeName!=null">
+				store_name=#{storeName},
+			</if>
+			<if test="storeNum!=null">
+				store_num=#{storeNum},
+			</if>
+			<if test="contactNum!=null">
+				contact_num=#{contactNum},
+			</if>
+			<if test="storeAddr!=null">
+				store_addr=#{storeAddr},
+			</if>
+			<if test="storeTraffic!=null">
+				store_traffic=#{storeTraffic},
+			</if>
+			<if test="clerkData!=null">
+				clerk_data=#{clerkData},
+			</if>
+			<if test="workTime!=null">
+				work_time=#{workTime},
+			</if>
+			<if test="storeToken!=null">
+				store_token=#{storeToken},
+			</if>
+		</set>
+		 where hp_company_store_id=#{hpCompanyStoreId}
+	</update>
+	<delete id="deleteByPK"  parameterType="long">
+		delete from hp_company_store where hp_company_store_id=#{hpCompanyStoreId}
+	</delete>
+</mapper>

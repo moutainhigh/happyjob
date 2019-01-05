@@ -263,15 +263,24 @@ public class BaseController {
                msg.setMessage("验证信息有误，请重新发送验证码");
                return msg;
            }
-           Object sessionphoneObj = session.getAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
+           logger.info("验证码验证 sessionId==={}",session.getId());
+           Object sessionphoneObj = session.getAttribute(Const.SESSION_ATTR_NAME_PHONE);
            String sessionphone = sessionphoneObj==null?null:(String)sessionphoneObj;
            String sessionCodeObj = (String)session.getAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
            String sessionCode = sessionCodeObj==null?null:(String)sessionCodeObj;
            Long sessionAgeObj = (Long)session.getAttribute(Const.SESSION_ATTR_NAME_PHONE_AGE);
            Long sessionAge = sessionAgeObj==null?null:(Long)sessionAgeObj;
            Long curTime = Util.getDateSecond(Util.getCurrentDate());
+           
+           logger.info("sessionphone=={},sessionCode=={},sessionAge=={}",sessionphone,sessionCode,sessionAge);
+           
            if(!Util.isEmpty(phoneNo) && !Util.isEmpty(msgCode) && phoneNo.equals(sessionphone) 
                && sessionCode.equals(sessionCode) && !Util.isEmpty(sessionAge) && curTime.compareTo(sessionAge)<=0) {
+               
+               session.removeAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
+               session.removeAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
+               session.removeAttribute(Const.SESSION_ATTR_NAME_PHONE_AGE);
+               
                return msg;
            }
            session.removeAttribute(Const.SESSION_ATTR_NAME_MSGCODE);

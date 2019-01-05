@@ -33,8 +33,9 @@
 	<select id="getUserlistPage" parameterType="com.happy.service.user.data.UserManageSearch" resultType="com.happy.service.user.data.UserSimpleData" >
 		SELECT u.hp_user_id,u.hp_company_id,u.user_type,u.user_name,u.gender,u.phone_no,u.born_year,u.real_name,u.black_on,
 		u.approve_state,u.header_pic,u.id_num,u.id_front_pic,u.id_back_pic,u.id_person_pic,u.create_time,u.regist_resource,
-		u.invite_user_id,u.user_money,u.approve_num,u.vip_on,u.login_time,u.login_ip,c.com_name 
+		u.invite_user_id,u.user_money,u.approve_num,u.vip_on,u.login_time,u.login_ip,c.com_name,cs.store_name 
 		FROM hp_user u LEFT JOIN hp_company c ON u.hp_company_id=c.hp_company_id 
+		LEFT JOIN hp_company_store cs ON u.hp_company_store_id=cs.hp_company_store_id 
 		WHERE 1=1 
 		<if test="phoneNo !=null and phoneNo !='' ">AND u.phone_no LIKE CONCAT('%',#{phoneNo},'%')</if>
 		<if test="resource !=null and resource !=0 ">AND u.regist_resource=#{resource}</if>
@@ -46,7 +47,7 @@
 	</select>
 	
 	<select id="getUserByPhone" resultType="com.happy.service.user.data.OtherUserData" >
-		SELECT u.hp_user_id,ub.hp_user_bound_id,u.user_token,u.bound_token 
+		SELECT u.hp_user_id,ub.hp_user_bound_id,u.user_token,ub.bound_token 
 		FROM hp_user u LEFT JOIN hp_user_bound ub ON u.hp_user_id=ub.hp_user_id 
 		WHERE u.phone_no=#{phoneNo} AND u.user_type=#{userType} LIMIT 1;
 	</select>
@@ -71,4 +72,14 @@ WHERE ui.hp_user_resume_id=#{hpResumeId} AND ui.hp_position_salary_id=ps.hp_posi
 	<select id="getUserResumBySid" resultType="com.happy.entity.HpUserResumeEntity" >
 		SELECT ur.* FROM hp_user_resume ur WHERE ur.hp_user_id=<include refid="getIdBySid"></include>
 	</select>
+	
+	<select id="getUserRealByphone" resultType="com.happy.service.user.data.UserSimpleData" >
+		SELECT u.hp_user_id,u.id_num,u.real_name FROM hp_user u WHERE u.phone_no=#{phoneNo}
+	</select>
+	
+	<select id="getPayrollByIdNum" resultType="com.happy.entity.HpUserPayrollEntity" >
+		SELECT up.* FROM hp_user_payroll up WHERE up.pay_id_num=#{idNum} AND up.pay_time=#{time} ORDER BY up.hp_user_payroll_id DESC LIMIT 1
+	</select>
+	
+	
 </mapper>

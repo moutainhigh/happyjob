@@ -73,5 +73,14 @@ public class Const {
 
     /**岗位拼团有效时间3天*/
     public static final long HP_POSITION_GROUP_MAX_AGE = 3*24*60*60;
+    
+    
+    // 项目拦截器常量
+    /**前端访问路径正则*/
+    public static final String INTERCEPTOR_PATH_FRONT_REGEX = "front.*";
+    /**前端用户路径正则*/
+    public static final String INTERCEPTOR_PATH_FRONT_USER_REGEX = ".*user.*";
+    /**后端路径正则*/
+    public static final String INTERCEPTOR_PATH_BACK_REGEX = "back.*";
 }
 

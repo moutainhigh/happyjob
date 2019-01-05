@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,13 +50,18 @@ public class WxAppletsLoginController {
     @ApiOperation(value="投票活动小程序，根据微信CODE获取微信用户信息",notes="投票活动小程序，根据微信CODE获取微信用户信息")
     @ApiImplicitParams({
         @ApiImplicitParam(name="code",value="微信登录CODE",dataType="String",paramType="query",required=true),
+        @ApiImplicitParam(name="storeToken",value="门店识别码（扫门店二维码进入，带上该参数）",dataType="String",paramType="query",required=false),
     })
-    @GetMapping(value="wxVoteLogin")
+    @PostMapping(value="wxVoteLogin")
     public OtherLoginMsg wxVoteLogin(HttpServletRequest request){
         OtherLoginMsg msg = new OtherLoginMsg();
         OtherLoginData data = new OtherLoginData();
         //微信端登录code值
         String code = request.getParameter("code");
+        String storeToken = request.getParameter("storeToken");
+        
+        logger.info("wxVoteLogin 参数信息：code=={},storeToken=={}",code,storeToken);
+        
         JSONObject wxJson = this.userService.getSessionKeyAndOropenid(code, WxAppletsConst.XCX_JOB_APPID, WxAppletsConst.XCX_JOB_SECRET);
         if(Util.isEmpty(wxJson)) { // 未获取到微信信息
             msg.setErrorCode(1);
@@ -83,7 +87,7 @@ public class WxAppletsLoginController {
             return msg;
         }
         
-        data = this.userService.insertWxLogin(openid, unionid);
+        data = this.userService.insertWxLogin(openid, unionid,storeToken);
         data.setSessionKey(sessionKey);
         msg.setData(data);
         return msg;

@@ -33,10 +33,11 @@
 		<result column="login_time" property="loginTime"/>
 		<result column="login_ip" property="loginIp"/>
 		<result column="share_token" property="shareToken"/>
+		<result column="hp_company_store_id" property="hpCompanyStoreId"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserId" parameterType="com.happy.entity.HpUserEntity">
-		insert into hp_user(hp_company_id,user_type,user_name,password,salt,gender,phone_no,born_year,real_name,black_on,approve_state,header_pic,id_num,id_front_pic,id_back_pic,id_person_pic,create_time,regist_resource,invite_user_id,user_money,approve_num,apply_time,vip_on,user_token,token_time,login_time,login_ip,share_token)
-		 values (#{hpCompanyId},#{userType},#{userName},#{password},#{salt},#{gender},#{phoneNo},#{bornYear},#{realName},#{blackOn},#{approveState},#{headerPic},#{idNum},#{idFrontPic},#{idBackPic},#{idPersonPic},#{createTime},#{registResource},#{inviteUserId},#{userMoney},#{approveNum},#{applyTime},#{vipOn},#{userToken},#{tokenTime},#{loginTime},#{loginIp},#{shareToken});
+		insert into hp_user(hp_company_id,user_type,user_name,password,salt,gender,phone_no,born_year,real_name,black_on,approve_state,header_pic,id_num,id_front_pic,id_back_pic,id_person_pic,create_time,regist_resource,invite_user_id,user_money,approve_num,apply_time,vip_on,user_token,token_time,login_time,login_ip,share_token,hp_company_store_id)
+		 values (#{hpCompanyId},#{userType},#{userName},#{password},#{salt},#{gender},#{phoneNo},#{bornYear},#{realName},#{blackOn},#{approveState},#{headerPic},#{idNum},#{idFrontPic},#{idBackPic},#{idPersonPic},#{createTime},#{registResource},#{inviteUserId},#{userMoney},#{approveNum},#{applyTime},#{vipOn},#{userToken},#{tokenTime},#{loginTime},#{loginIp},#{shareToken},#{hpCompanyStoreId});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_user where hp_user_id=#{hpUserId}
@@ -133,6 +134,9 @@
 			</if>
 			<if test="shareToken!=null">
 				share_token=#{shareToken},
+			</if>
+			<if test="hpCompanyStoreId!=null ">
+				hp_company_store_id=#{hpCompanyStoreId},
 			</if>
 		</set>
 		 where hp_user_id=#{hpUserId}

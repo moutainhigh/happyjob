@@ -43,6 +43,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.happy.util.pubConst.Const;
 import com.happy.util.sms.SmsUtil;
 
@@ -1052,7 +1054,21 @@ public class Util {
     
     @Test
     public void test1() {
-        String a = "123456";
-        System.out.println(Util.generate(a, "abcd"));
+//        JSONArray arr = new JSONArray();
+//        JSONObject temp1 = new JSONObject(true);
+//        temp1.put("name", "");
+//        temp1.put("phoneNos", "18001535861,1800535862");
+//        arr.add(temp1);
+        
+//        JSONObject temp2 = new JSONObject(true);
+//        temp2.put("name", "杜燕文");
+//        temp2.put("phoneNos", "18906179369,13511653915");
+//        arr.add(temp2);
+        
+//        JSONObject temp3 = new JSONObject(true);
+//        temp3.put("name", "过中燕");
+//        temp3.put("phoneNos", "18921188621,13861896130");
+//        arr.add(temp3);
+        System.out.println(Util.getUuidRd());
     }
 }

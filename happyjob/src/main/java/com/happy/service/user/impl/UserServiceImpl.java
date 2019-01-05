@@ -15,6 +15,7 @@ import com.happy.entity.HpUserEducationEntity;
 import com.happy.entity.HpUserEntity;
 import com.happy.entity.HpUserExpEntity;
 import com.happy.entity.HpUserIntentionEntity;
+import com.happy.entity.HpUserPayrollEntity;
 import com.happy.entity.HpUserRecommendEntity;
 import com.happy.entity.HpUserResumeEntity;
 import com.happy.entity.HpUserSearchEntity;
@@ -25,6 +26,7 @@ import com.happy.service.user.data.OtherLoginMsg;
 import com.happy.service.user.data.OtherUserData;
 import com.happy.service.user.data.UserAddData;
 import com.happy.service.user.data.UserManageSearch;
+import com.happy.service.user.data.UserPayrollDataMsg;
 import com.happy.service.user.data.UserResumeData;
 import com.happy.service.user.data.UserResumeDataMsg;
 import com.happy.service.user.data.UserSearch;
@@ -32,6 +34,7 @@ import com.happy.service.user.data.UserSerachListMsg;
 import com.happy.service.user.data.UserSimpleData;
 import com.happy.service.user.data.UserSimpleDataMsg;
 import com.happy.service.user.data.UserSimpleListMsg;
+import com.happy.sqlExMapper.HpConfigExMapper;
 import com.happy.sqlExMapper.HpUserBoundExMapper;
 import com.happy.sqlExMapper.HpUserExMapper;
 import com.happy.sqlMapper.HpCompanyApplyMapper;
@@ -73,12 +76,14 @@ public class UserServiceImpl implements UserService {
     private HpUserEducationMapper hpUserEducationMapper;
     @Autowired
     private HpUserExpMapper hpUserExpMapper;
+    @Autowired
+    private HpConfigExMapper hpConfigExMapper;
 
     @Override
     public OtherUserData confirmUser(String sid, String oid, int isUser, int isOther) {
         OtherUserData msg = new OtherUserData();
         Long ygfUserId = null;
-        if(isUser == 1) { // 需要验证手机号用户身份
+        if(isUser == 1 || !Util.isEmpty(sid)) { // 需要验证手机号用户身份
             if(Util.isEmpty(sid) ) {
                 msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_1);
                 msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_1);
@@ -99,7 +104,7 @@ public class UserServiceImpl implements UserService {
             ygfUserId = user.getHpUserId();
             
         }
-        if(isOther == 1) { // 需要验证用户第三方登录信息
+        if(isOther == 1 || !Util.isEmpty(oid)) { // 需要验证用户第三方登录信息
             if(Util.isEmpty(oid)) {
                 msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_2);
                 msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_2);                
@@ -125,19 +130,26 @@ public class UserServiceImpl implements UserService {
 
     
     @Override
-    public OtherLoginData insertWxLogin(String openId,String unionid) {
+    public OtherLoginData insertWxLogin(String openId,String unionid,String storeToken) {
         OtherLoginData data = new OtherLoginData();
         
         HpUserBoundEntity bound = this.hpUserBoundExMapper.getBoundByToken(openId);
         Date curDate = Util.getCurrentDate();
         long curTime = Util.getDateSecond(curDate);
         if(bound == null) { // 未写入过
+            
             bound = new HpUserBoundEntity();
             String boundToken = Util.getUuidRd();
             bound.setBoundToken(boundToken);
             bound.setOpenid(openId);
             bound.setUnionid(unionid);
             bound.setCreateTime(curTime);
+            
+            if(Util.isEmpty(storeToken)) { // 门店信息非空
+                Long storeId = this.hpConfigExMapper.getStoreIdByToken(storeToken);
+                bound.setHpCompanyStoreId(storeId);
+            }
+            
             this.hpUserBoundMapper.insert(bound);
             data.setOid(openId);
         }
@@ -671,6 +683,52 @@ public class UserServiceImpl implements UserService {
             
         return msg;
     }
+
+
+    @Override
+    public UserSimpleDataMsg getPayrollIdByPhone(String phoneNo) {
+        UserSimpleDataMsg msg = new UserSimpleDataMsg();
+        
+        UserSimpleData data = this.hpUserExMapper.getUserRealByphone(phoneNo);
+        if(data == null) {
+            msg.setErrorCode(1);
+            msg.setMessage("该手机号还未成为注册用户");
+            return msg;
+        }
+        if(Util.isEmpty(data.getIdNum())) {
+            msg.setErrorCode(1);
+            msg.setMessage("该手机号用户还未进行实名认证");
+            return msg;
+        }
+        msg.setData(data);
+        return msg;
+    }
+
+
+    @Override
+    public UserPayrollDataMsg getPayrollByIdNum(String idNum, Long time) {
+        UserPayrollDataMsg msg = new UserPayrollDataMsg();
+        if(Util.isEmpty(idNum)) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数错误：idNum");
+            return msg;
+        }
+        if(Util.isEmpty(time) || time.compareTo(1L)<0) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数错误：time");
+            return msg;
+        }
+        HpUserPayrollEntity data = this.hpUserExMapper.getPayrollByIdNum(idNum, time);
+        if(data == null) {
+            msg.setErrorCode(2);
+            msg.setMessage("未查询到工资条");
+            return msg;
+        }
+        msg.setData(data);
+        return msg;
+    }
+
+
 
     
 }

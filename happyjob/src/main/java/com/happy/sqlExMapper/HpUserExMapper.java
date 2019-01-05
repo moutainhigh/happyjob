@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.happy.entity.HpUserExpEntity;
+import com.happy.entity.HpUserPayrollEntity;
 import com.happy.entity.HpUserResumeEntity;
 import com.happy.service.user.data.OtherUserData;
 import com.happy.service.user.data.UserEduDate;
@@ -76,4 +77,14 @@ public interface HpUserExMapper{
    * @TODO:     描述一下这个方法是干什么的
    */
   List<HpUserExpEntity> getUserExpByResumeId(@Param("hpResumeId") Long hpResumeId);
+  /**
+  *
+  * @TODO:    根据手机号获取用户真实信息
+  */
+  UserSimpleData getUserRealByphone(@Param("phoneNo") String phoneNo);
+  /**
+   *
+   * @TODO:    根据身份证号获取工资条信息
+   */
+  HpUserPayrollEntity getPayrollByIdNum(@Param("idNum") String idNum,@Param("time")Long time);
 }

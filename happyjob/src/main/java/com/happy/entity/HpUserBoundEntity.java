@@ -44,6 +44,9 @@ public class HpUserBoundEntity implements  Serializable  {
 	//微信绑定手机号码
 	@ApiModelProperty(name="boundPhone",value="微信绑定手机号码")
 	private String boundPhone;
+	//公司门店表ID（代表扫码注册门店来源）
+	@ApiModelProperty(name="hpCompanyStoreId",value="公司门店表ID（代表扫码注册门店来源）")
+	private java.lang.Long hpCompanyStoreId;
 
 	public java.lang.Long getHpUserBoundId() {
 		return hpUserBoundId;
@@ -152,6 +155,16 @@ public class HpUserBoundEntity implements  Serializable  {
 
 	public void setBoundPhone(String boundPhone) {
 		this.boundPhone = boundPhone;
+	}
+
+
+	public java.lang.Long getHpCompanyStoreId() {
+		return hpCompanyStoreId;
+	}
+
+
+	public void setHpCompanyStoreId(java.lang.Long hpCompanyStoreId) {
+		this.hpCompanyStoreId = hpCompanyStoreId;
 	}
 
 }

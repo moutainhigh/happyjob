@@ -98,6 +98,9 @@ public class HpUserEntity implements  Serializable  {
 	//分享身份识别码
 	@ApiModelProperty(name="shareToken",value="分享身份识别码")
 	private String shareToken;
+	//公司门店表ID（代表扫码注册门店来源）
+	@ApiModelProperty(name="hpCompanyStoreId",value="公司门店表ID（代表扫码注册门店来源）")
+	private java.lang.Long hpCompanyStoreId;
 
 	public java.lang.Long getHpUserId() {
 		return hpUserId;
@@ -386,6 +389,16 @@ public class HpUserEntity implements  Serializable  {
 
 	public void setShareToken(String shareToken) {
 		this.shareToken = shareToken;
+	}
+
+
+	public java.lang.Long getHpCompanyStoreId() {
+		return hpCompanyStoreId;
+	}
+
+
+	public void setHpCompanyStoreId(java.lang.Long hpCompanyStoreId) {
+		this.hpCompanyStoreId = hpCompanyStoreId;
 	}
 
 }

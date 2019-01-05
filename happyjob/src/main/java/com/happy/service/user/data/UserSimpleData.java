@@ -12,6 +12,8 @@ public class UserSimpleData extends HpUserEntity {
 
     @ApiModelProperty(name="comName",value="公司名称")
     private String comName;
+    @ApiModelProperty(name="storeName",value="来源门店名称")
+    private String storeName;
 
     public String getComName() {
         return comName;
@@ -19,6 +21,14 @@ public class UserSimpleData extends HpUserEntity {
 
     public void setComName(String comName) {
         this.comName = comName;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
     
 }

@@ -10,6 +10,7 @@ import com.happy.service.user.data.OtherLoginData;
 import com.happy.service.user.data.OtherLoginMsg;
 import com.happy.service.user.data.OtherUserData;
 import com.happy.service.user.data.UserAddData;
+import com.happy.service.user.data.UserPayrollDataMsg;
 import com.happy.service.user.data.UserResumeDataMsg;
 import com.happy.service.user.data.UserSerachListMsg;
 import com.happy.service.user.data.UserSimpleDataMsg;
@@ -26,7 +27,7 @@ public interface UserService {
     *
     * @TODO:     微信登录信息验证存贮
     */
-   OtherLoginData insertWxLogin(String openId,String unionid);
+   OtherLoginData insertWxLogin(String openId,String unionid,String storeToken);
     /**
     *
     * @TODO:     更新微信用户信息
@@ -97,6 +98,16 @@ public interface UserService {
     * @TODO:     新增或更新用户简历工作经验
     */
    OtherLoginMsg insertOrUpUserByPhone(String sid,String oid,String phoneNo);
+   /**
+    *
+    * @TODO:     根据手机号查询用户工资条身份证、姓名
+    */
+   UserSimpleDataMsg getPayrollIdByPhone(String phoneNo);
+   /**
+    *
+    * @TODO:     根据手机号查询用户工资条
+    */
+   UserPayrollDataMsg getPayrollByIdNum(String idNum,Long time);
    
    
    
