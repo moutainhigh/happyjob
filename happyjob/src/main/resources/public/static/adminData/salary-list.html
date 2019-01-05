@@ -150,48 +150,31 @@
 					<div class="box">
 					<div class="box-header" style="overflow-y: auto">
 						
-						<form  >
-							<div class="form-group col-xs-12 ">
-								<div  class="form-group col-xs-2" >
-									<label for="exampleInputName2">用户名：</label>
-									<input id="userName" style="width:120px;" type="text" class="form-group"  placeholder="">
-								</div>
-								<div class="form-group col-xs-2" >
-									<label for="exampleInputName2">投递公司：</label>
-									<input id="comName" style="width:120px;" type="text" class=""  placeholder="">
-								</div>
-								<div class="form-group col-xs-3">
-									<label for="exampleInputEmail2">职位名称：</label>
-									<input id="posName" style="width:120px;" type="text"  class=" "  placeholder="">
-								</div>
-								
-								<div class="form-group col-xs-4" >
-									<label for="exampleInputEmail2">投递时间：</label>
-									<input id="startTime" type="text" class="datepicker"  placeholder=""> - <input id="endTime" type="text" class=" datepicker"  placeholder="">
-								</div>
-								
+						<form class="form-inline" style="display: flex;justify-content: space-between">
+							<div class="form-group">
+								<label for="exampleInputName2">工号：</label>
+								<input type="text" class="form-control" id="exampleInputName2" placeholder="">
 							</div>
-							<div class="form-group col-xs-12 " style="margin-top:-20px;">
-								<div class="form-group col-xs-2">
-									<label for="exampleInputEmail2">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
-									<input id="realName" style="width:120px;" type="text"  class=""  placeholder="">
-								</div>
-								<div class="form-group col-xs-2">
-									<label for="exampleInputEmail2">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：  </label>
-									<select  style="width:120px;height:30px;">
-										<option selected="" value="请选择">请选择</option>
-										<option value="1">男</option>
-										<option value="2">女</option>
-									</select>
-								</div>
-								<div class="form-group col-xs-3">
-									<label for="exampleInputEmail2">联系状态：</label>
-									<input id="contactStat" style="width:120px;height:30px;" type="text"  class=""  placeholder="">
-								</div>
-								
-								<div class="form-group col-xs-2">
-									<button  type="submit" class="btn btn-primary queryDelivery">查询</button>
-								</div>
+							<div class="form-group">
+								<label for="exampleInputName2">姓名：</label>
+								<input type="text" class="form-control" id="exampleInputName2" placeholder="">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputName2">身份证号：</label>
+								<input type="text" class="form-control" id="exampleInputName2" placeholder="">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputName2">公司名称：</label>
+								<input type="text" class="form-control" id="exampleInputName2" placeholder="">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputEmail2">工资月份：</label>
+								<input type="text" class="datepicker" placeholder="请选择日期" />
+							</div>
+							
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary">查询</button>
+								<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">添加用户</button>
 							</div>
 						</form>
 
@@ -201,18 +184,14 @@
 						<table class="table table-hover" id='userList'>
 						<thead>
 							<tr>
-								<th>用户名</th>
 								<th>姓名</th>
-								<th>性别</th>
-								<th>年龄</th>
-								<th>投递公司</th>
-								<th>职位名称</th>
-								<th>入职返现</th>
-								<th>投递时间</th>
-								<th>联系方式</th>
+								<th>公司名称</th>
+								<th>工号</th>
+								<th>工资月份</th>
+								<th>应发工资</th>
+								<th>扣款合计</th>
+								<th>实发工资</th>
 								<th>操作</th>
-								<th>联系人</th>
-								<th>联系时间</th>
 							</tr>
 						</thead>
 						<tbody class="tbody"></tbody>
@@ -235,94 +214,140 @@
 	
 </div>
 
+<!-- 添加用户模态框 -->
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title">添加用户</h4>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">用户类型</label>
+					<div class="col-sm-10">
+						<select class="form-control">
+							<option selected="" value="求职者">求职者</option>
+							<option value="超级管理员">超级管理员</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">用户名</label>
+					<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="Email">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">密码</label>
+					<div class="col-sm-10">
+					<input type="password" class="form-control" placeholder="Password">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">重复密码</label>
+					<div class="col-sm-10">
+					<input type="password" class="form-control"  placeholder="Password">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">性别</label>
+					<div class="col-sm-10">
+						<select class="form-control">
+							<option selected="" value="男">男</option>
+							<option value="女">女</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">出生年份</label>
+					<div class="col-sm-10">
+						<select class="form-control">
+							<option selected="" value="1988">1988</option>
+							<option value="1995">1995</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">真实姓名</label>
+					<div class="col-sm-10">
+					<input type="text" class="form-control"  placeholder="Email">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">手机号码</label>
+					<div class="col-sm-10">
+					<input type="iphone" class="form-control"  placeholder="Email">
+					</div>
+				</div>					
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">状态</label>
+					<div class="col-sm-10">
+						<select class="form-control">
+							<option selected="" value="开启">开启</option>
+							<option value="禁用">禁用</option>
+						</select>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			<button type="button" class="btn btn-primary">添加</button>
+		</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
 
 <!-- 查看用户资料 -->
 <div class="modal fade" id="browseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-<!-- 		<div class="modal-header"> -->
-<!-- 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-<!-- 			<h4 class="modal-title">用户资料</h4> -->
-<!-- 		</div> -->
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title">用户资料</h4>
+		</div>
 		<div class="modal-body">
 			<form class="form-horizontal">
-					<div class="form-group" style="background-color:#3C8DBC;height:33px;">
-						<h4 style="margin-left:10px;">基本信息</h4>
+				<div class="form-group">
+					<label for="" class="col-sm-2">手机号</label>
+					<div class="col-sm-10 showValue">15865149851</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">姓名</label>
+					<div class="col-sm-10 showValue">蒋依依</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">出生年份</label>
+					<div class="col-sm-10 showValue">1996年</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">身份证号</label>
+					<div class="col-sm-10 showValue">2254482211532212</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">创建时间</label>
+					<div class="col-sm-10 showValue">2018-12-19 12:35:18</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">公司名称</label>
+					<div class="col-sm-10 showValue">三星电子</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">身份是否认证</label>
+					<div class="col-sm-10 showValue">是</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2">身份证正面</label>
+					<div class="col-sm-10">
+						<img src="" alt="" class="showValue idStyle">
 					</div>
-						<div class="form-group">
-							<label for="" class="col-sm-3">头像</label>
-							<div class="col-sm-8">
-								<img src="" alt="" class="showValue idStyle">
-							</div>
-						</div>	
-						
-						<div class="form-group" >
-							<label for="" class="col-sm-3">姓名</label>
-							<div class="showValue col-sm-8"></div>
-						</div>
-						<div class="form-group" style="margin-top:-15px;">
-							<label for="" class="col-sm-3">性别</label>
-							<div class="showValue col-sm-8"></div>
-						</div>
-						<div class="form-group" style="margin-top:-15px;">
-							<label for="" class="col-sm-3">出生年份</label>
-							<div class="showValue col-sm-8"></div>
-						</div>
-						<div class="form-group" style="margin-top:-15px;">
-							<label for="" class="col-sm-3">工作年限</label>
-							<div class="showValue col-sm-8"></div>
-						</div>
-						<div class="form-group" style="margin-top:-15px;">
-							<label for="" class="col-sm-3">联系电话</label>
-							<div class="showValue col-sm-8"></div>
-						</div>
-						<div class="form-group" style="margin-top:-15px;">
-							<label for="" class="col-sm-3">最高学历</label>
-							<div class="showValue col-sm-8"></div>
-						</div>
-						<div class="form-group" style="margin-top:-15px;">
-							<label for="" class="col-sm-3">所学专业</label>
-							<div class="showValue col-sm-8"></div>
-						</div>
-				<div class="form-group" style="background-color:#3C8DBC;height:33px;">
-					<h4 style="margin-left:10px;">求职意向</h4>
+				</div>					
+				<div class="form-group">
+					<label for="" class="col-sm-2">身份证反面</label>
+					<img src="" alt="" class="showValue idStyle">
 				</div>
-						<div class="form-group" >
-							<label for="" class="col-sm-3">期望工作区域</label>
-							<div class="showValue col-sm-8"></div>
-						</div>
-						<div class="form-group" style="margin-top:-15px;">
-							<label for="" class="col-sm-3">期望薪资</label>
-							<div class="showValue col-sm-8"></div>
-						</div>
-						<div class="form-group" style="margin-top:-15px;">
-							<label for="" class="col-sm-3">期望职位</label>
-							<div class="showValue col-sm-8"></div>
-						</div>
-				<div class="form-group" style="background-color:#3C8DBC;height:33px;">
-					<h4 style="margin-left:10px;" >工作经验</h4>
-				</div>
-						<div class="form-group" >
-							<label for="" class="col-sm-3">公司名称</label>
-							<div class="showValue col-sm-8"></div>
-						</div>
-						<div class="form-group" style="margin-top:-15px;">
-							<label for="" class="col-sm-3">任职时间</label>
-							<div class="col-sm-8 showValue"></div>
-						</div>
-						<div class="form-group" style="margin-top:-15px;">
-							<label for="" class="col-sm-3">职位类别</label>
-							<div class="showValue col-sm-8"></div>
-						</div>
-						<div class="form-group" style="margin-top:-15px;">
-							<label for="" class="col-sm-3">职位名称</label>
-							<div class="showValue col-sm-8"></div>
-						</div>
-						<div class="form-group" style="margin-top:-15px;">
-							<label for="" class="col-sm-3">职位描述</label>
-							<div class="showValue col-sm-8"></div>
-						</div>
-					
 			</form>
 		</div>
 		<div class="modal-footer">
@@ -346,13 +371,7 @@
 
 <!-- 页面逻辑 -->
 <script src="/static/js/common.js"></script>
-<script src="/static/js/delivery-list.js"></script>
+<script src="/static/js/user-list.js"></script>
 
-<style>
-        .deliveryColor{
-            background: #B0E2FF;
-        }
-</style>
-    
 </html>
 

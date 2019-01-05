@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.happy.service.delivery.DeliveryService;
+import com.happy.service.delivery.data.DeliveryDetail;
 import com.happy.service.delivery.data.DeliveryListMsg;
 import com.happy.service.salary.SalaryService;
 import com.happy.service.salary.data.SalarySimpleListMsg;
@@ -20,7 +21,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
-@Api(value="后台广告管理相关请求API",tags="后台广告管理相关请求API")
+@Api(value="后台投递管理相关请求API",tags="后台投递管理相关请求API")
 @RestController
 @RequestMapping("backDelivery")
 public class DeliveryManageController {
@@ -31,7 +32,7 @@ public class DeliveryManageController {
     private DeliveryService deliveryService;
     
     /**
-     * @TODO:     用户列表查询
+     * @TODO:    投递列表查询
      */
     @ApiOperation(value="投递列表查询",notes="投递列表查询")
     @ApiImplicitParams({
@@ -63,5 +64,24 @@ public class DeliveryManageController {
         	userName,comName,posName,startTime,endTime,realName,gender,contactStat,currentPage,showCount);
         DeliveryListMsg ss = this.deliveryService.getDeliverylistPage(userName,comName,posName,startTime,endTime,realName,gender,contactStat,currentPage,showCount);
         return ss ;
+    }
+    
+    /**
+     *    投递查看
+     */
+    @ApiOperation(value="投递查看",notes="投递查看")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name="realName",value="姓名 模糊查询",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="gender",value="性别",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="contactStat",value="联系状态",dataType="String",paramType="query",required=false),
+    })
+    @GetMapping(value="deliveryQueryByUserId")
+    public DeliveryDetail deliveryQueryByUserId(HttpServletRequest request){
+    	
+        Long hpUserId = (Long)Util.typeChange(request.getParameter("hpUserId"), Long.class);
+        logger.info("backUser.deliveryList 请求参数：hpUserId={}",hpUserId);
+        DeliveryDetail deliveryDetail = this.deliveryService.deliveryQueryByUserId(hpUserId);
+        
+        return deliveryDetail ;
     }
 }
