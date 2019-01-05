@@ -29,8 +29,21 @@ public class DeliveryData extends HpPositionRefUserEntity {
     private Long partTime;
     @ApiModelProperty(name="phoneNo",value="联系方式")
     private String phoneNo;
-    
+    @ApiModelProperty(name="hpUserId",value="用户表记录id")
+    private Long hpUserId;
+    @ApiModelProperty(name="headerPic",value="用户表记录id")
+    private String headerPic;
    
+    
+	public String getHeaderPic() {
+		return headerPic;
+	}
+
+
+	public void setHeaderPic(String headerPic) {
+		this.headerPic = headerPic;
+	}
+
 
 	public String getUserName() {
 		return userName;
@@ -123,6 +136,19 @@ public class DeliveryData extends HpPositionRefUserEntity {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+
+	public Long getHpUserId() {
+		return hpUserId;
+	}
+
+
+	public void setHpUserId(Long hpUserId) {
+		this.hpUserId = hpUserId;
+	}
+
+
+	
    
    
 }

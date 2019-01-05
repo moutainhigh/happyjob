@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.happy.sqlExMapper.HpPositionRefUserExMapper">
+<mapper namespace="com.happy.sqlExMapper.HpDeliveryMapper">
     
 	<select id="getDeliverylistPage" parameterType="com.happy.service.delivery.data.DeliverySearch" resultType="com.happy.service.delivery.data.DeliveryData" >
 		SELECT u.user_name userName,u.real_name realName ,u.gender gender ,u.born_year,c.com_name,p.pos_name,
@@ -12,7 +12,7 @@
 	           		ELSE 
 	           			p.ret_woman_money
 	        END reMoney,
-			pu.part_time,u.phone_no
+			pu.part_time,u.phone_no,u.hp_user_id,u.header_pic
 		from hp_position_ref_user pu
 		left join hp_user u on pu.hp_user_id =u.hp_user_id
 		left join hp_position p on	pu.hp_position_id =p.hp_position_id
@@ -32,5 +32,24 @@
 		ORDER BY part_time desc
 		
 	</select>	
+	
+	<select id="deliveryQueryUser" parameterType="long" resultType="com.happy.service.delivery.data.DeliveryDetail" >
+		select u.* from hp_user u where u.hp_user_id = #{hpUserID}
+	</select>
+	
+	<select id="getExperienceByUserId" parameterType="long" resultType="com.happy.entity.HpUserExpEntity" >
+		select * from hp_user_exp where hp_user_resume_id = #{hpUserID}
+	</select>
+	
+	<select id="getEducationByUserId" parameterType="long" resultType="com.happy.service.delivery.data.HpUserEducationExt" >
+		select ue.*,e.edu_name from hp_user_education  ue
+		left join hp_education e on ue.hp_education_id =e.hp_education_id
+		where hp_user_resume_id = #{hpUserID}
+	</select>
+	
+	<select id="getIntentionByUserId" parameterType="long" resultType="com.happy.entity.HpUserIntentionEntity" >
+		select * from hp_user_intention where hp_user_resume_id = #{hpUserID}
+	</select>
+	
 	
 </mapper>

@@ -18,59 +18,62 @@ $(document).on("click",".queryDelivery",function(){
 	fetchList();
 })
 
-// 认证
-$(document).on("click",".auth",function(){
-    swal({
-        title: '认证',
-        text: '是否通过认证!',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: '通过',
-        cancelButtonText: '不通过',
-        }).then(function(isConfirm) {
-        if (isConfirm === true) {
-            swal(
-            'Deleted!',
-            'Your imaginary file has been deleted.',
-            'success'
-            );
-        
-        } else if (isConfirm === false) {
-            swal(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
-            );
-        
-        } else {
-        }
-    }); 
+// 联系-->入职
+$(document).on("click",".contact",function(){
+	 var $row = $(this).parents("tr");
+	 var $obj = $(this).parents("tr").find(".contact");
+	 $obj.eq(0).html("入职");
+	 //todo 添加联系人 。。
+	 $(this).parents("tr")
 })
 
 // 查看
 $(document).on("click",".cat",function(){
+	var params = {};
     var $row = $(this).parents("tr");
-    var iphone=$row.data("iphone");
-    var name=$row.data("name");
-    var bornYear=$row.data("born-year");
-    var idNum=$row.data("id-num");
-    var createTime=$row.data("create-time");
-    var comName=$row.data("comname");
-    var approveState=$row.data("approve-state");
-    var idFrontPic=$row.data("id-front-pic");
-    var idBackPic=$row.data("id-back-pic");
+    var hpUserId=$row.data("hp-user-id");
+    var realName=$row.data("real-name");
+    var gender2 = gender($row.data("gender"));
+    var bornYear2=bornYear($row.data("born-year"));
+    var phoneNo=$row.data("phone-no");
+    var headerPic=$row.data("header-pic");
     
-    var $obj = $("#browseModal").find(".showValue");
-    $obj.eq(0).html(iphone)
-    $obj.eq(1).html(name)
-    $obj.eq(2).html(bornYear)
-    $obj.eq(3).html(idNum)
-    $obj.eq(4).html(createTime)
-    $obj.eq(5).html(comName)
-    $obj.eq(6).html(approveState)
-    $obj.eq(7).attr("src",idFrontPic)
-    $obj.eq(8).attr("src",idBackPic)
-    $('#browseModal').modal('toggle')
+    params.hpUserId =hpUserId ;
+    fetchGet({
+        url:"/backDelivery/deliveryQueryByUserId",
+        params:params,
+        callback:function(data){
+            var $obj = $("#browseModal").find(".showValue");
+            if(data.educationList.length >0){
+            	$obj.eq(6).html(data.educationList[0].eduName);
+            }
+            if(data.intentionList.length >0){
+            	$obj.eq(8).html(data.intentionList[0].workArea);
+            	$obj.eq(10).html(data.intentionList[0].posType);
+            }
+            if(data.experienceList.length >0){
+            	$obj.eq(11).html(data.experienceList[0].comName);
+            	$obj.eq(12).html(timestampToDay(data.experienceList[0].startTime)+"--"+timestampToDay(data.experienceList[0].endTime));
+            	
+            	$obj.eq(13).html(data.experienceList[0].posType);
+            }
+            
+
+          $obj.eq(0).attr("src",headerPic)
+          $obj.eq(1).html(realName);
+          $obj.eq(2).html(gender2);
+          $obj.eq(3).html(bornYear2);
+//          $obj.eq(4).html(createTime)
+          $obj.eq(5).html(phoneNo);
+//          
+//          $obj.eq(7).attr("src",idFrontPic)
+//          $obj.eq(8).attr("src",idBackPic)
+          $('#browseModal').modal('toggle')
+          
+        }
+    }) 
+    
+    
 })
 
 var listParams = {
@@ -127,14 +130,16 @@ function addTableList(list){
     list.forEach(function(item){
         templeteTr+='\
         <tr \
+        	data-hp-user-id="'+ item.hpUserId +'" \
             data-user-name="'+ item.userName +'" \
             data-real-name="'+ item.realName +'" \
             data-gender="'+ item.gender +'" \
             data-born-year="'+ item.bornYear +'" \
             data-com-name="'+ item.comName +'" \
-            data-pose-name="'+ item.posName +'" \
+            data-pos-name="'+ item.posName +'" \
             data-re-money="'+ item.reMoney +'" \
             data-part-time="'+ item.partTime +'" \
+            data-header-pic="'+ item.headerPic +'" \
             data-phone-no="'+ item.phoneNo +'" >\
             <th>'+ item.userName +'</th>\
             <th>'+ item.realName +'</th>\
@@ -147,7 +152,7 @@ function addTableList(list){
             <th>'+ item.phoneNo +'</th>\
             <th>\
                 <button type="button" class="btn btn-default btn-sm cat">查看</button>\
-                <button type="button" class="btn btn-primary btn-sm auth">联系</button>\
+                <button type="button" class="btn btn-primary btn-sm contact">联系</button>\
             </th>\
         </tr>';
                 // <button type="button" class="btn btn-danger btn-sm restart">复用</button>\
@@ -176,6 +181,15 @@ function timestampToTime(timestamp) {
     var m = change(date.getMinutes()) + ':';
     var s = change(date.getSeconds());
     return Y + M + D + h + m + s;
+}
+
+function timestampToDay(timestamp) {
+    var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var D = change(date.getDate()) ;
+   
+    return Y + M + D ;
 }
 function change(t) {
     if (t < 10) {
