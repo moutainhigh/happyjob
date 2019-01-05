@@ -55,9 +55,9 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter {
 			    if(msg.getErrorCode() == 0) {
 			        return true;
 			    }
-			} else if(path.matches(Const.INTERCEPTOR_PATH_BACK_REGEX)){ // 商城前端请求拦截
-			    
-			    msg = this.userService.confirmUser(sid, null, 1, 0);
+			} else if(path.matches(Const.INTERCEPTOR_PATH_BACK_REGEX)){ // 商城后端请求拦截
+			    return true;
+//			    msg = this.userService.confirmUser(sid, null, 1, 0);
 			    
 			}else {
 			    return true;
