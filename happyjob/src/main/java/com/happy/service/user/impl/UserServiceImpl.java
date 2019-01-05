@@ -81,6 +81,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public OtherUserData confirmUser(String sid, String oid, int isUser, int isOther) {
+        
+        logger.info("confirmUser 参数信息：sid=={},oid=={},isUser=={},isOther=={}",sid,oid,isUser,isOther);
+        
         OtherUserData msg = new OtherUserData();
         Long ygfUserId = null;
         if(isUser == 1 || !Util.isEmpty(sid)) { // 需要验证手机号用户身份

@@ -4,9 +4,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.google.common.base.Predicate;
+import com.happy.interceptor.LoginHandlerInterceptor;
 import com.happy.util.ServiceConfig;
 
 import io.swagger.annotations.ApiOperation;
@@ -68,6 +70,18 @@ public class SwaggerConfig implements WebMvcConfigurer  {
                 .allowedOrigins("*")
                 .allowedMethods("*")
                 .allowCredentials(true);
+    }
+    
+    @Bean
+    public LoginHandlerInterceptor loginInterceptor() {
+        return new LoginHandlerInterceptor();
+    }
+    
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        //添加拦截器
+        registry.addInterceptor(loginInterceptor())
+                .addPathPatterns("/**");
     }
     
 //    @Override

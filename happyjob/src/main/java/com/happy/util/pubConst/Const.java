@@ -77,10 +77,10 @@ public class Const {
     
     // 项目拦截器常量
     /**前端访问路径正则*/
-    public static final String INTERCEPTOR_PATH_FRONT_REGEX = "front.*";
+    public static final String INTERCEPTOR_PATH_FRONT_REGEX = ".*front.*";
     /**前端用户路径正则*/
     public static final String INTERCEPTOR_PATH_FRONT_USER_REGEX = ".*user.*";
     /**后端路径正则*/
-    public static final String INTERCEPTOR_PATH_BACK_REGEX = "back.*";
+    public static final String INTERCEPTOR_PATH_BACK_REGEX = ".*back.*";
 }
 

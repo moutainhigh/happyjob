@@ -1,9 +1,6 @@
 package com.happy.interceptor;
 
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +38,7 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter {
 			HttpServletResponse response, Object handler) throws Exception {
 
 		if ((handler instanceof HandlerMethod)&& (AnnotationUtils.getAnnotation(((HandlerMethod) handler).getBeanType(),Controller.class) != null)) {
-		    
+		    logger.info("进入拦截器");
 		    String path = request.getServletPath();
 			path = Util.isEmpty(path)?"/":path.toLowerCase();
 			String sid = request.getHeader("sid");
@@ -65,16 +62,24 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter {
 			}else {
 			    return true;
 			}
-			if(msg != null) {
-			    PrintWriter pw = response.getWriter();
-			    pw.write(JSONObject.toJSONString(pw));
-			    pw.flush();
-			    pw.close();
-			    return false;
-			}
+			
+		    try {
+
+		        response.setCharacterEncoding("UTF-8");  
+		        response.setContentType("application/json; charset=utf-8");
+		        PrintWriter pw = response.getWriter();
+                pw.append(JSONObject.toJSONString(msg));
+                pw.flush();
+                pw.close();
+                return false;
+            } catch (Exception e) {
+                logger.error("拦截器返回信息异常==",e);
+                response.sendError(500);
+                return false;
+            }
+			    
 		}
-//		response.sendRedirect(request.getContextPath()+ Const.LOGIN);
-//		return false;
+		logger.info("没有进入拦截器");
 		return true;
 
 	}
