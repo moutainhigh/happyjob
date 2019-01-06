@@ -95,7 +95,7 @@
 				</a>
 				<ul class="treeview-menu">
 					<li class="active"><a href="/static/adminData/salary-list.html"><i class="fa fa-circle-o"></i>用户列表</a></li>
-					<li><a href="/static/adminData/salary-list.html"><i class="fa fa-circle-o"></i>工资查询</a></li>
+					<li><a href="/static/adminData/salary.html"><i class="fa fa-circle-o"></i>工资查询</a></li>
 					<li><a href="/static/adminData/delivery.html"><i class="fa fa-circle-o"></i>用户投递</a></li>
 				</ul>
 			</li>
@@ -146,37 +146,45 @@
 	
 			<!-- /.row -->
 			<div class="row col-sm-6" >
-				<form class="form-horizontal">
+				<form class="form-horizontal" id="bannerForm">
 					<div class="form-group ">
 						<label for="" class="col-sm-3 " >广告标题</label>
-						<input class="showValue" />
+						<input class="showValue" id="title"/>
 					</div>
 					<div class="form-group">
 						<label for="" class="col-sm-3">广告位</label>
-						<input class="showValue" />
+						<input class="showValue" id="location" />
 					</div>
 					<div class="form-group">
 						<label for="" class="col-sm-3">类型</label>
-						<input class="showValue" />
+						<input class="showValue" id="type"/>
 					</div>
 					<div class="form-group">
 						<label for="" class="col-sm-3">结束时间</label>
-						<input type="text" class="datepicker" placeholder="请选择日期" />
+						<input type="text" class="datepicker" placeholder="请选择日期"  id="endTime" />
 					</div>
 					<div class="form-group">
 						<label for="" class="col-sm-3">排序</label>
-						<div class="col-sm-9 showValue">1</div>
+						<input class="showValue" id="sort"/>
 					</div>
 					<div class="form-group">
 						<label for="" class="col-sm-3">上传图片</label>
-					    <div class="file-loading  showValue">
-<!-- 					          <input id="file-fr" name="file" type="file" multiple> -->
-      						  <img src="images/up.png" alt="" id='imgContent'>
-					          <input type="file" name='photo' class="mui-input-clear" id='upimg' style="opacity: 0;" >
+					    <div class="col-sm-9  showValue">
+      						<img src="" alt="" id='imgContent' style="display:none">
+							<input type="file" id="upPic" >
+<!-- 					          <input type="file" name='photo' class="mui-input-clear" id='upimg' style="opacity: 0;" > -->
+<!-- 							<button id="upfile" type="button" data-api="/wxAppletsLogin/imgUpOne" data-type="pic" >文件上传</button> -->
 					    </div>
 					    
 					    
 					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3">或图片地址</label>
+						<input class="showValue" id="targetUrl"/>
+					</div>
+					
+					<button type="button" class="btn btn-primary" id="saveAdvertisement" >提交</button>
+					<button type="reset" class="btn btn-primary" >重置</button>
 				</form>
 			</div>
 	

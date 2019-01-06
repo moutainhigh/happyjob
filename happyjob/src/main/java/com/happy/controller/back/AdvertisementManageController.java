@@ -55,9 +55,9 @@ public class AdvertisementManageController {
 	    }
 	    
 	    /**
-	     * 广告开启/关闭
+	     * 删除
 	     */
-	    @ApiOperation(value="是否开启广告",notes="是否开启广告")
+	    @ApiOperation(value="删除广告",notes="删除广告")
 	    @PostMapping(value="deleteAdvertisement")
 	    public BaseMsg deleteAdvertisement(HttpServletRequest request){
 	        Long hpAdvBannerId = (Long)Util.typeChange(request.getParameter("hpAdvBannerId"), Long.class);
@@ -66,4 +66,26 @@ public class AdvertisementManageController {
 	        return ss;
 	    }
 	    
+	    /**
+	     * 添加
+	     */
+	    @ApiOperation(value="添加广告",notes="添加广告")
+	    @PostMapping(value="saveAdvertisement")
+	    public BaseMsg saveAdvertisement(HttpServletRequest request){
+	    	String title = request.getParameter("title");
+	    	String location = request.getParameter("location");
+	    	String type = request.getParameter("type");
+	    	String picUrl = request.getParameter("picUrl");
+	    	String targetUrl = request.getParameter("targetUrl");
+	    	
+	        Long endTime = (Long)Util.typeChange(request.getParameter("endTime"), Long.class);
+	        Long sort = (Long)Util.typeChange(request.getParameter("sort"), Long.class);
+	        logger.info("backAdvertisement.saveAdvertisement 请求参数：title={},location={},type={},sort={},picUrl={},endTime={},targetUrl={}",title
+	        		,location,type,sort,picUrl,endTime,targetUrl);
+	        
+	        BaseMsg ss = this.bannerService.saveAdvertisement(title,location,type,sort,picUrl,targetUrl,endTime);
+	        return ss;
+	    }
+	    
+	   
 }

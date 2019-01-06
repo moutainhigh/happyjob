@@ -45,7 +45,7 @@ public class UserManageController {
         @ApiImplicitParam(name="startTime",value="注册时间开始：时间戳（s）",dataType="long",paramType="query",required=false),
         @ApiImplicitParam(name="endTime",value="注册时间结束：时间戳（s）",dataType="long",paramType="query",required=false),
         @ApiImplicitParam(name="blackOn",value="是否禁用，0、未禁用，1、已禁用，空全部",dataType="int",paramType="query",required=false),
-        @ApiImplicitParam(name="userType",value="账号类型，1、管理员，1、求职者",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="userType",value="账号类型，1、管理员，2、求职者",dataType="int",paramType="query",required=false),
         @ApiImplicitParam(name="currentPage",value="当前页",dataType="int",paramType="query",required=false),
         @ApiImplicitParam(name="showCount",value="单页展示数，默认10",dataType="int",paramType="query",required=false),
     })

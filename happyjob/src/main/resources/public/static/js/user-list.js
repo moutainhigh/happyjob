@@ -4,6 +4,32 @@ $(".datepicker").datepicker({
     autoclose: true,//选中之后自动隐藏日期选择框
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
+var list= [];
+var totalPage=1;
+
+var listParams = {
+	    phoneNo:"",
+	    resource:"",
+	    startTime:"",
+	    endTime:"",
+	    blackOn:"",
+	    userType:"",
+	    currentPage:1,
+	    showCount:10
+}
+
+//查询
+$(document).on("click","#queryUser",function(){
+	listParams.phoneNo = $("#phoneNo").val();
+	listParams.resource = $("#registResource").val();
+	listParams.startTime = dateToTime($("#startTime").val());
+	listParams.endTime = dateToTime($("#endTime").val());
+	listParams.blackOn = $("#blackOn").val();
+	listParams.userType = $("#userType").val();
+
+	fetchList();
+})
+
 // 禁用
 $(document).on("click",".forbidden",function(){
     swal({
@@ -120,18 +146,8 @@ $(document).on("click",".cat",function(){
 })
 
 
-var listParams = {
-    phoneNo:"",
-    resource:"",
-    startTime:"",
-    endTime:"",
-    blackOn:"",
-    userType:"",
-    currentPage:1,
-    showCount:10
-}
-var list= [];
-var totalPage=1;
+
+
 
 fetchList();
 /**
@@ -237,8 +253,15 @@ function addTableList(list){
             <th>'+ approveState(item.approveState) +'</th>\
             <th>\
                 <button type="button" class="btn btn-default btn-sm cat">查看</button>\
-                <button type="button" class="btn btn-primary btn-sm auth">认证</button>\
-                <button type="button" class="btn btn-danger btn-sm forbidden">禁用</button>\
+                <button type="button" class="btn btn-primary btn-sm auth">认证</button>\ ' ;
+               
+            if(item.blackOn ==0){
+	        	templeteTr += '<button type="button" class="btn btn-danger btn-sm forbidden">禁用</button>' ;
+	        }else{
+	        	templeteTr += '<button type="button" class="btn btn-danger btn-sm forbidden ">已禁用</button>' ;
+	        }
+        
+        		templeteTr  += '\
             </th>\
         </tr>';
                 // <button type="button" class="btn btn-danger btn-sm restart">复用</button>\
@@ -268,6 +291,15 @@ function timestampToTime(timestamp) {
     var s = change(date.getSeconds());
     return Y + M + D + h + m + s;
 }
+
+function dateToTime(timestamp) {
+	if(timestamp != null && timestamp !=""){
+		var formatTimeS = new Date($("#endTime").val()+" 00:00:00").getTime();
+		return formatTimeS/1000;
+	}
+	return null;
+}
+
 function change(t) {
     if (t < 10) {
         return "0" + t;
