@@ -4,7 +4,7 @@ import com.happy.plugin.BaseMsg;
 
 /**
  *
- *   TODO: 第三方登录信息返回类，程序内使用
+ *   @TODO: 第三方登录信息返回类，程序内使用
  *
  */
 public class OtherUserData extends BaseMsg{
@@ -18,6 +18,12 @@ public class OtherUserData extends BaseMsg{
     private String userToken;
     
     private String shareToken;
+    
+    private String userName;
+
+    private String headerPic;
+    
+    private String password;
 
     
     public Long getHpUserId() {
@@ -58,5 +64,29 @@ public class OtherUserData extends BaseMsg{
 
     public void setShareToken(String shareToken) {
         this.shareToken = shareToken;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getHeaderPic() {
+        return headerPic;
+    }
+
+    public void setHeaderPic(String headerPic) {
+        this.headerPic = headerPic;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

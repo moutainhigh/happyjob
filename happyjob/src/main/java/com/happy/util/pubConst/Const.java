@@ -4,12 +4,14 @@ package com.happy.util.pubConst;
  * @TODO: 项目常量
 */
 public class Const {
-	// COOKIE保存时间
-	/**60*60*24*7*/
-	public static final int COOKIE_MAX_AGE = 60*60*24*7;
-	// COOKIE验证信息保存时间
-	/**60*5*/
+	// COOKIE
+	/**COOKIE保存时间一天*/
+	public static final int COOKIE_MAX_AGE_USER = 60*60*24;
+	/**COOKIE验证信息保存时间*/
 	public static final int COOKIE_SIGN_MAX_AGE = 60*5;
+	/**7000*/
+	public static final String COOKIE_ATTR_NAME_SID = "sid";
+	
 	/**7000*/
 	public static final long WEIXIN_ACCESS_TOKEN_MAX_AGE = 7000;
 	

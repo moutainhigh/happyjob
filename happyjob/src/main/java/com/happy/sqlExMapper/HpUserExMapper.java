@@ -49,9 +49,9 @@ public interface HpUserExMapper{
   List<UserSimpleData> getUserlistPage(UserManageSearch page);
   /**
   *
-  * @TODO:     验证手机号是否被注册
+  * @TODO:     根据手机号或用户名查询用户信息
   */
-  OtherUserData getUserByPhone(@Param("phoneNo") String phoneNo,@Param("userType") int userType);
+  OtherUserData getUserByParam(@Param("phoneNo") String phoneNo,@Param("userName") String userName,@Param("userType") int userType);
   /**
    *
    * @TODO:     描述一下这个方法是干什么的

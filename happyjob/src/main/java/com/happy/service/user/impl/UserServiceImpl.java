@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
         
         OtherUserData msg = new OtherUserData();
         Long ygfUserId = null;
-        if(isUser == 1 || !Util.isEmpty(sid)) { // 需要验证手机号用户身份
+        if(isUser == 1 || isUser == 2 || !Util.isEmpty(sid)) { // 需要验证手机号用户身份：1、管理员，2、求职者
             if(Util.isEmpty(sid) ) {
                 msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_1);
                 msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_1);
@@ -99,12 +99,17 @@ public class UserServiceImpl implements UserService {
                 return msg;
             }
             Integer blackOn = user.getBlackOn();
-            if (blackOn == 0) { // 判断用户是否处于黑名单
+            if (blackOn == 1) { // 判断用户是否处于黑名单
                 msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_4);
                 msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_4);
                 return msg;
             }
             ygfUserId = user.getHpUserId();
+            if(isUser == 1 && user.getUserType() != 1) { // 判断是否是管理员账户
+                msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_7);
+                msg.setMessage(ResultMsg.LOGIN_FILTER_RESULT_CONTENT_7);
+                return msg;
+            }
             
         }
         if(isOther == 1 || !Util.isEmpty(oid)) { // 需要验证用户第三方登录信息
@@ -406,7 +411,7 @@ public class UserServiceImpl implements UserService {
             msg.setMessage("参数错误：userType");
             return msg;
         }
-        OtherUserData userData = this.hpUserExMapper.getUserByPhone(phoneNo,userType);
+        OtherUserData userData = this.hpUserExMapper.getUserByParam(phoneNo,null,userType);
         if(userData != null && userData.getHpUserId() !=null) {
             msg.setErrorCode(1);
             msg.setMessage("手机号码已经被注册，请更换手机号");
@@ -416,6 +421,12 @@ public class UserServiceImpl implements UserService {
         if(userName ==null || !userName.matches(REGEX_USERNAME)) {
             msg.setErrorCode(1);
             msg.setMessage("参数格式错误：userName");
+            return msg;
+        }
+        userData = this.hpUserExMapper.getUserByParam(null,userName,userType);
+        if(userData != null && userData.getHpUserId() !=null) {
+            msg.setErrorCode(1);
+            msg.setMessage("用户名已经被注册，请更换用户名");
             return msg;
         }
         String password1 = data.getPassword1();
@@ -631,7 +642,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public OtherLoginMsg insertOrUpUserByPhone(String sid, String oid, String phoneNo) {
         OtherLoginMsg msg = new OtherLoginMsg();
-        OtherUserData userData = this.hpUserExMapper.getUserByPhone(phoneNo,2);
+        OtherUserData userData = this.hpUserExMapper.getUserByParam(phoneNo, null, 2);
         HpUserBoundEntity bound = this.hpUserBoundExMapper.getBoundByToken(oid);
         Long userId = bound.getHpUserId();
         Long boundId = bound.getHpUserBoundId();
@@ -729,6 +740,41 @@ public class UserServiceImpl implements UserService {
         }
         msg.setData(data);
         return msg;
+    }
+
+
+    @Override
+    public OtherUserData checkUserLogin(String userName, String password, String validCode) {
+        OtherUserData msg = new OtherUserData();
+        if(Util.isEmpty(userName) || Util.isEmpty(password) || Util.isEmpty(validCode) ) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数缺失");
+            return msg;
+        }
+        OtherUserData userData = this.hpUserExMapper.getUserByParam(null, userName, 1); // 查询用户信息
+        if(userData == null || userData.getHpUserId() == null) {
+            msg.setErrorCode(1);
+            msg.setMessage("用户名不存在");
+            return msg;
+        }
+        String pasw = userData.getPassword();
+        if(!Util.verify(password, pasw)) { // 密码匹配
+            msg.setErrorCode(1);
+            msg.setMessage("密码错误");
+            return msg;
+        }
+        return userData;
+    }
+
+
+    @Override
+    public void UpdateUserLogin(Long hpUserId, String ip) {
+        
+        HpUserEntity user = new HpUserEntity();
+        user.setHpUserId(hpUserId);
+        user.setLoginIp(ip);
+        user.setLoginTime(Util.getDateSecond(Util.getCurrentDate()));
+        this.hpUserMapper.updateByPK(user);
     }
 
 

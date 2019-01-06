@@ -18,6 +18,12 @@ public class OtherLoginData {
     
     @ApiModelProperty(name="sessionKey",value="微信小程序登录会话密钥sessionKey")
     private String sessionKey;
+    
+    @ApiModelProperty(name="userName",value="用户名")
+    private String userName;
+    
+    @ApiModelProperty(name="headerPic",value="用户头像")
+    private String headerPic;
 
     public String getOid() {
         return oid;
@@ -49,5 +55,21 @@ public class OtherLoginData {
 
     public void setShareToken(String shareToken) {
         this.shareToken = shareToken;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getHeaderPic() {
+        return headerPic;
+    }
+
+    public void setHeaderPic(String headerPic) {
+        this.headerPic = headerPic;
     }
 }

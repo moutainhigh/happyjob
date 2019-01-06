@@ -46,11 +46,15 @@
 		ORDER BY create_time desc
 	</select>
 	
-	<select id="getUserByPhone" resultType="com.happy.service.user.data.OtherUserData" >
-		SELECT u.hp_user_id,ub.hp_user_bound_id,u.user_token,ub.bound_token 
+	<select id="getUserByParam" resultType="com.happy.service.user.data.OtherUserData" >
+		SELECT u.hp_user_id,ub.hp_user_bound_id,u.user_token,ub.bound_token,u.password,u.header_pic 
 		FROM hp_user u LEFT JOIN hp_user_bound ub ON u.hp_user_id=ub.hp_user_id 
-		WHERE u.phone_no=#{phoneNo} AND u.user_type=#{userType} LIMIT 1;
+		WHERE u.user_type=#{userType} 
+		<if test="phoneNo !=null and phoneNo !=''"> AND u.phone_no=#{phoneNo}</if>
+		<if test="userName !=null and userName !=''"> AND u.user_name=#{userName}</if>
+		LIMIT 1;
 	</select>
+	
 	
 	<select id="getUserResumeId" resultType="Long" >
 		SELECT ur.hp_user_resume_id FROM hp_user_resume ur WHERE ur.hp_user_id=<include refid="getIdBySid"></include>

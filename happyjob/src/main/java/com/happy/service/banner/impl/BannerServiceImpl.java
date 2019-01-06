@@ -36,6 +36,8 @@ public class BannerServiceImpl implements BannerService {
         }
         page.setUseOn(useOn);
         if(isPage == 1) {
+            currentPage = currentPage==null?1:currentPage;
+            showCount = showCount==null?10:showCount;
             page.setIsPage(isPage);
             page.setCurrentPage(currentPage);
             page.setShowCount(showCount);

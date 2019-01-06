@@ -130,4 +130,14 @@ public interface UserService {
     * @TODO:     用户认证、禁用
     */ 
    BaseMsg updateUserState(Long hpUserId,Integer approve,Integer blackOn);
+   /**
+    *
+    * @TODO:     后台用户登录、更新登录状态
+    */ 
+   OtherUserData checkUserLogin(String userName,String password,String validCode);
+   /**
+    *
+    * @TODO:     后台用户登录、更新登录状态
+    */ 
+   void UpdateUserLogin(Long hpUserId,String ip);
 }

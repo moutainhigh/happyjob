@@ -43,8 +43,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.happy.util.pubConst.Const;
 import com.happy.util.sms.SmsUtil;
 
@@ -1069,6 +1067,7 @@ public class Util {
 //        temp3.put("name", "过中燕");
 //        temp3.put("phoneNos", "18921188621,13861896130");
 //        arr.add(temp3);
+        System.out.println(Util.getUuidRd());
         System.out.println(Util.getUuidRd());
     }
 }
