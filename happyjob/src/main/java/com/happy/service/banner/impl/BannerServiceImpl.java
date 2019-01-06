@@ -94,6 +94,29 @@ public class BannerServiceImpl implements BannerService {
 		return msg;
 	}
 
+	@Override
+	public BaseMsg saveAdvertisement(String title, String location, String type, Long sort, String picUrl,String targetUrl,
+			Long endTime) {
+		BaseMsg msg = new BaseMsg();
+        if(sort == null || sort ==0) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数格式错误：排序");
+            return msg;
+        }
+        HpAdvBannerEntity hpAdvBanner = new HpAdvBannerEntity();
+        hpAdvBanner.setTitle(title);
+        hpAdvBanner.setSortNum(sort);
+        hpAdvBanner.setPicUrl(picUrl);
+        hpAdvBanner.setDelOn(1);  //1是不删，后期修改
+        hpAdvBanner.setUseOn(1);   //1使用中
+        hpAdvBanner.setEndTime(endTime);
+        this.hpAdvBannerMapper.insert(hpAdvBanner);
+        if(hpAdvBanner.getHpAdvBannerId() == null) {
+            msg.setErrorCode(1);
+            msg.setMessage("添加失败，稍后再试");
+        }
+        return msg;
+	}
 
 
 }

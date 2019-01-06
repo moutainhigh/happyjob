@@ -6,81 +6,88 @@ $(".datepicker").datepicker({
 });
 
 $('#upimg').on('change',function(){                                                 //选中图片后展示在页面
-    var filePath = $(this)[0].files[0].name //获取到input的value，里面是文件的路径 
+   var filePath = $(this)[0].files[0].name //获取到input的value，里面是文件的路径 
    console.log(filePath) //1.png 
    fileFormat = filePath.split('.')[1].toLowerCase() 
    console.log(fileFormat) //png
    src = window.URL.createObjectURL(this.files[0]) //转成可以在本地预览的格式 
    console.log(src) //blob:null/11ea5a2d-7270-4035-b5c4-4e50c5c061e7
 
-  // 检查是否是图片 
-  if( !fileFormat.match(/png|jpg|jpeg/) ) { 
+   // 检查是否是图片 
+   if( !fileFormat.match(/png|jpg|jpeg/) ) { 
       alert('上传错误,文件格式必须为：png/jpg/jpeg')
      return 
-  } 
+  	} 
 
-$('#imgContent').attr('src',src)
+    $('#imgContent').attr('src',src)
 
 })
-// 禁用
-$(document).on("click",".forbidden",function(){
-    swal({
-        title: '是否禁用该用户',
-        text: '',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: '是',
-        cancelButtonText: '否',
-        }).then(function(isConfirm) {
-        if (isConfirm === true) {
-            swal(
-            'Deleted!',
-            'Your imaginary file has been deleted.',
-            'success'
-            );			
-        } else if (isConfirm === false) {
-            swal(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
-            );
-        
-        } else {
-            // Esc, close button or outside click
-            // isConfirm is undefined
-        }
-    }); 
+
+	
+function uploadPic(url){
+	var file = $("#upPic").get(0).files[0];
+	if(!file){
+		return;
+	}
+	var formData = new FormData();
+	formData.append("file",file);
+	formData.append("code","user");
+	$.ajax({
+		url:url,
+		dataType:"json",
+		type:"post",
+		data:formData,
+        processData: false,  // 不处理数据
+        contentType: false,   // 不设置内容类型
+		header:{
+			oid:"fad7bd3d01f04950b1d906584afc9253",
+		},
+		success:function(data){
+			console.log("===",data);
+			console.log("===",data.data.imgUrl);
+			picUrl = data.data.imgUrl ;
+		}
+	});
+}
+var picUrl ;
+var listParams = {
+		title:"",
+		location:"",
+		type:"",
+		endTime:"",
+		sort:"",
+		picUrl:"",
+		targetUrl:""
+}
+
+// 保存广告
+$(document).on("click","#saveAdvertisement",function(){
+	//先保存图片
+	uploadPic(window.location.origin + "/wxAppletsLogin/imgUpOne");
+	
+	listParams.title = $("#title").val();
+	listParams.location = $("#location").val();
+	listParams.type = $("#type").val();
+	listParams.endTime = dateToTime($("#endTime").val());
+	listParams.sort = $("#sort").val();
+	listParams.picUrl = picUrl;
+	listParams.targetUrl = $("#targetUrl").val();
+	fetchPost({
+	       url:"/backAdvertisement/saveAdvertisement",
+	       params:listParams,
+	       callback:function(result){
+	           console.log(result);
+	           swal(
+	                   'Saved!',
+	                   '已保存.',
+	                   'success'
+	           );
+	       }
+	   }) ; 
+    
 })
-// 认证
-$(document).on("click",".auth",function(){
-    swal({
-        title: '认证',
-        text: '是否通过认证!',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: '通过',
-        cancelButtonText: '不通过',
-        }).then(function(isConfirm) {
-        if (isConfirm === true) {
-            swal(
-            'Deleted!',
-            'Your imaginary file has been deleted.',
-            'success'
-            );
-        
-        } else if (isConfirm === false) {
-            swal(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
-            );
-        
-        } else {
-            // Esc, close button or outside click
-            // isConfirm is undefined
-        }
-    }); 
-})
+
+
 // 复用
 $(document).on("click",".restart",function(){
     swal({
@@ -164,18 +171,7 @@ function postAuth(data){
     })
 }
 
-// 判断性别
-function gender(gender){    
-    return gender==1?"男":"女"
-}
-//判断账号类别
-function userType(userType){
-    return userType==1?"超级管理员":"求职者"
-}
-//判断出生年份
-function bornYear(value){
-    return  new Date().getFullYear()- Number(value)+"岁"
-}
+
 //时间戳转date
 function timestampToTime(timestamp) {
     var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -187,29 +183,16 @@ function timestampToTime(timestamp) {
     var s = change(date.getSeconds());
     return Y + M + D + h + m + s;
 }
+
+function dateToTime(timestamp) {
+	var formatTimeS = new Date($("#endTime").val()+" 00:00:00").getTime();
+	return formatTimeS/1000;
+}
+
 function change(t) {
     if (t < 10) {
         return "0" + t;
     } else {
         return t;
-    }
-}
-// 判断途径
-function registResource(value){
-    switch (value) {
-        case 1:return "APP"
-        case 2:return "小程序"
-        case 3:return "微信"
-        case 4:return "门店"
-        case 5:return "邀请注册"
-    }
-}
-//判断是否认证
-function approveState(value){
-    switch (value) {
-        case 0:return "未申请认证"
-        case 1:return "认证通过"
-        case 2:return "认证不通过"
-        case 3:return "认证待审核"
     }
 }

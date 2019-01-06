@@ -153,40 +153,40 @@
 						<form class="form-inline" style="display: flex;justify-content: space-between">
 							<div class="form-group">
 								<label for="exampleInputName2">手机号：</label>
-								<input type="text" class="form-control" id="exampleInputName2" placeholder="">
+								<input type="text" class="form-control" id="phoneNo" placeholder="">
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail2">注册途径：</label>
-								<select class="form-control">
-									<option value="app">app</option>
-									<option value="小程序">小程序</option>
-									<option value="微信">微信</option>
-									<option value="门店">门店</option>
-									<option value="邀请注册">邀请注册</option>
+								<select class="form-control" id="registResource">
+									<option value="1">app</option>
+									<option value="2">小程序</option>
+									<option value="3">微信</option>
+									<option value="4">门店</option>
+									<option value="5">邀请注册</option>
 									<option selected="" value="请选择">请选择</option>
 								</select>
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail2">注册时间：</label>
-								<input type="text" class="datepicker" placeholder="请选择日期" />
+								<input type="text" class="datepicker" placeholder="请选择日期" id="startTime"/> - <input type="text" class="datepicker" placeholder="请选择日期" id="endTime"/>
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail2">状态：</label>
-								<select class="form-control">
-									<option value="已禁用">已禁用</option>
-									<option value="未禁用">未禁用</option>
-									<option selected="" value="全部">全部</option>
+								<select class="form-control" id="blackOn">
+									<option value="1">已禁用</option>
+									<option value="0">未禁用</option>
+									<option selected="" value="">全部</option>
 								</select>
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail2">用户类型：</label>
-								<select class="form-control">
-									<option selected="" value="求职者">求职者</option>
-									<option value="超级管理员">超级管理员</option>
+								<select class="form-control" id="userType">
+									<option value="1">超级管理员</option>
+									<option selected="" value="2">求职者</option>
 								</select>
 							</div>
 							<div class="form-group">
-								<button type="submit" class="btn btn-primary">查询</button>
+								<button type="submit" class="btn btn-primary" id="queryUser">查询</button>
 								<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">添加用户</button>
 							</div>
 						</form>

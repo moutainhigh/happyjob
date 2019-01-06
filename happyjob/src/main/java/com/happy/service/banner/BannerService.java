@@ -27,4 +27,17 @@ public interface BannerService {
      * 删除广告
      */
     BaseMsg deleteAdvertisement(Long hpBannerId);
+    
+    /**
+     * 添加广告
+     * @param title
+     * @param location
+     * @param type
+     * @param sort
+     * @param picUrl
+     * @param targetUrl
+     * @param endTime
+     * @return
+     */
+    BaseMsg saveAdvertisement(String title,String location,String type,Long sort,String picUrl,String targetUrl,Long endTime);
 }
