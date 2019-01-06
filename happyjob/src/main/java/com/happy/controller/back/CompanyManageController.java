@@ -6,9 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.happy.plugin.BaseMsg;
 import com.happy.service.company.CompanyService;
 import com.happy.service.company.data.CompanyListMsg;
 import com.happy.util.Util;
@@ -49,4 +51,23 @@ public class CompanyManageController {
         CompanyListMsg ss = this.companyService.companyListPage(comName,startTime,endTime,currentPage,showCount);
         return ss ;
     }
+    
+    /**
+     * 认证
+     */
+    @ApiOperation(value="企业认证",notes="企业认证")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name="companyId",value="公司id",dataType="Long",paramType="query",required=false),
+        @ApiImplicitParam(name="approveState",value="认证状态  0未认证，1认证通过，2认证不通过",dataType="int",paramType="query",required=false),
+    })
+    @PostMapping(value="companyAuth")
+    public BaseMsg companyAuth(HttpServletRequest request){
+        Long companyId = (Long)Util.typeChange(request.getParameter("companyId"), Long.class);
+        Integer approveState = (Integer)Util.typeChange(request.getParameter("approveState"), Integer.class);
+        logger.info("backAdvertisement.deleteAdvertisement 请求参数：companyId={},approveState={}",companyId,approveState);
+        BaseMsg ss = this.companyService.companyAuth(companyId,approveState);
+        return ss;
+    }
+    
+    
 }

@@ -188,6 +188,7 @@
 
 
 
+
 <!-- 编辑广告 -->
 <div class="modal fade" id="browseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
@@ -198,50 +199,42 @@
 		</div>
 		<div class="modal-body">
 			<form class="form-horizontal">
-				<div class="form-group">
-					<label for="" class="col-sm-3">广告标题</label>
-<!-- 					<div class="col-sm-9 showValue">测试</div> -->
-					<input class="showValue" />
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3">广告位</label>
-<!-- 					<div class="col-sm-9 showValue">主页轮播</div> -->
-					<input class="showValue" />
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3">类型</label>
-<!-- 					<div class="col-sm-9 showValue">图片</div> -->
-					<input class="showValue" />
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3">结束时间</label>
-<!-- 					<div class="col-sm-9 showValue datepicker">2018-12-19 12:35:18</div> -->
-					<input type="text" class="datepicker" placeholder="请选择日期" />
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3">排序</label>
-					<div class="col-sm-9 showValue">1</div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3">上传图片</label>
-					
-				    <div class="file-loading  showValue">
-				          <input id="file-fr" name="file" type="file" multiple>
-				    </div>
-        
-<!-- 					<div class="col-sm-9 showValue"> -->
-<!-- 						<input type="file" >  -->
-<!-- 					</div> -->
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3">身份证正面</label>
-					<div class="col-sm-9">
-						<img src="" alt="" class="showValue idStyle">
+				<div class="form-group ">
+						<label for="" class="col-sm-3 " >广告标题</label>
+						<input class="showValue" id="title"/>
 					</div>
-				</div>					
+					<div class="form-group">
+						<label for="" class="col-sm-3">广告位</label>
+						<input class="showValue" id="location" />
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3">类型</label>
+						<input class="showValue" id="type"/>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3">结束时间</label>
+						<input type="text" class="datepicker showValue" placeholder="请选择日期"  id="endTime" />
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3">排序</label>
+						<input class="showValue" id="sort"/>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3">上传图片</label>
+					    <div class="col-sm-9 ">
+      						<img src="" alt="" id='imgContent' >
+							<input type="file" id="upPic" >
+					    </div>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3">或图片地址</label>
+						<input class="showValue" id="targetUrl"/>
+					</div>
+									
 			</form>
 		</div>
 		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 			<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
 		</div>
 		</div><!-- /.modal-content -->

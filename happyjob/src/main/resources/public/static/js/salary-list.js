@@ -3,6 +3,25 @@ $(".datepicker").datepicker({
     autoclose: true,//选中之后自动隐藏日期选择框
     format: "yyyy-mm"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
+
+$(document).on("click","#upload",function(){
+    var formData = new FormData($('#uploadFile')[0]);
+	$.ajax({
+		url:url,
+		dataType:"json",
+		type:"post",
+		data:formData,
+        processData: false,  // 不处理数据
+        contentType: false,   // 不设置内容类型
+		success:function(data){
+			console.log("===",data);
+			alert("123");
+		}
+	});
+});
+
+
+
 $(document).on("click",".querySalary",function(){
 	listParams.payName = $("#payName").val();
 	listParams.payIdNum = $("#payIdNum").val();
