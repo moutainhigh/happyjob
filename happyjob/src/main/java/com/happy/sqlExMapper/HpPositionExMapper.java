@@ -53,5 +53,10 @@ public interface HpPositionExMapper{
      * @TODO:     获取拼团当前参与人数
      */
     int getGroupPartNum(@Param("hpPositionGroupId") Long hpPositionGroupId);
+    /**
+    *
+    * @TODO:     后台：职位列表查询
+    */
+    List<PositionData> getBackPoslistPage(PositionSearch page);
 }
 

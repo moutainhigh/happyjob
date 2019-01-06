@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.happy.entity.HpAdvBannerEntity;
-import com.happy.entity.HpUserEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.banner.BannerService;
 import com.happy.service.banner.data.BannerDataMsg;

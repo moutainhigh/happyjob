@@ -35,6 +35,23 @@
 		ORDER BY p.apply_time desc
 	</select>
 	
+	<select id="getBackPoslistPage" parameterType="com.happy.service.position.data.PositionSearch" resultType="com.happy.service.position.data.PositionData" >
+		SELECT p.hp_position_id,p.hp_company_id,p.pos_name,p.pos_state,p.start_time,p.end_time,
+		c.approve_state,c.com_name 
+		FROM hp_position p JOIN hp_company c ON p.hp_company_id=c.hp_company_id 
+		WHERE 1=1  
+		<if test="posName != null and posName !='' ">AND p.pos_name LIKE CONCAT('%',#{posName},'%') </if>
+		<if test="comName != null and comName !='' ">AND c.com_name LIKE CONCAT('%',#{comName},'%')</if>
+		<if test="creatStartTime != null and creatStartTime!=0 ">AND p.apply_time &gt;=#{creatStartTime}</if>
+		<if test="creatEndTime != null and creatEndTime !=0 ">AND p.apply_time &lt;=#{creatEndTime}</if>
+		<choose>
+			<when test="state == 1">AND p.start_time &lt;=#{curTime} AND p.end_time &gt;=#{curTime} </when>
+			<when test="state == 4">AND p.end_time &lt;#{curTime}  </when>
+		</choose>
+		ORDER BY p.apply_time desc 
+	</select>
+	
+	
 	<select id="getFrontPosByKey" resultType="com.happy.service.position.data.PositionData" >
 		SELECT p.*,c.com_name,ps.lower_num,ps.hight_num,aco.county_name,aci.city_name,<include refid="selectRequireCol"></include>,
 		(SELECT GROUP_CONCAT(pw.welfare_name) FROM hp_position_ref_welfare prw JOIN hp_position_welfare pw 
@@ -146,5 +163,6 @@ WHERE p.hp_position_id=#{curTime} AND p.group_on=1 AND pg.end_time>#{curTime} AN
 	<select id="getGroupPartNum" resultType="int" >
 		SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_id=#{hpPositionGroupId}
 	</select>
+	
 	
 </mapper>

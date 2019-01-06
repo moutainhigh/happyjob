@@ -45,6 +45,8 @@ import io.swagger.annotations.ApiModelProperty;
     private String welfareArr;
     @ApiModelProperty(name="groupSccNum",value="岗位拼团成功人数")
     private Integer groupSccNum;
+    @ApiModelProperty(name="approveState",value="公司认证状态（0、未认证，1、已认证）")
+    private Integer approveState;
     
     public String getComName() {
         return comName;
@@ -153,5 +155,11 @@ import io.swagger.annotations.ApiModelProperty;
     }
     public void setGroupSccNum(Integer groupSccNum) {
         this.groupSccNum = groupSccNum;
+    }
+    public Integer getApproveState() {
+        return approveState;
+    }
+    public void setApproveState(Integer approveState) {
+        this.approveState = approveState;
     }
 }

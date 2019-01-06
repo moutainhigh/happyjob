@@ -20,7 +20,7 @@ public class PositionSearch extends Page {
     private Integer welfareOn;
     @ApiModelProperty(name="urgentOn",value="是否高薪急聘")
     private Integer urgentOn;
-    @ApiModelProperty(name="groupOn",value="关键字，模糊匹配公司名称、职位")
+    @ApiModelProperty(name="groupOn",value="是否是拼团岗位")
     private Integer groupOn;
     @ApiModelProperty(name="curTime",value="当前时间秒")
     private Long curTime;
@@ -29,15 +29,22 @@ public class PositionSearch extends Page {
     @ApiModelProperty(name="hpPositionGroupId",value="岗位拼团ID")
     private Long hpPositionGroupId;
     @ApiModelProperty(name="state",value="用户岗位申请状态0、所有，1、进行中，2、已成功入职，3、拼团成功，4、已过期,5、指定日期的拼团")
-    private int state;
+    private Integer state;
     @ApiModelProperty(name="sid",value="用户通行证")
     private String sid;
     @ApiModelProperty(name="keyWord",value="关键字，模糊匹配公司名称、职位")
     private String keyWord;
     @ApiModelProperty(name="partType",value="申请类型：1、非参团，2、参团")
     private Integer partType;
+    @ApiModelProperty(name="posName",value="职位名称")
+    private String posName;
+    @ApiModelProperty(name="comName",value="公司名称")
+    private String comName;
+    @ApiModelProperty(name="creatStartTime",value="发布开始时间（s）")
+    private Long creatStartTime;
+    @ApiModelProperty(name="creatEndTime",value="发布结束时间（s）")
+    private Long creatEndTime;
 
-    
     
     
     public String getCityName() {
@@ -88,10 +95,10 @@ public class PositionSearch extends Page {
     public void setHpPositionId(Long hpPositionId) {
         this.hpPositionId = hpPositionId;
     }
-    public int getState() {
+    public Integer getState() {
         return state;
     }
-    public void setState(int state) {
+    public void setState(Integer state) {
         this.state = state;
     }
     public String getSid() {
@@ -123,5 +130,29 @@ public class PositionSearch extends Page {
     }
     public void setHpPositionGroupId(Long hpPositionGroupId) {
         this.hpPositionGroupId = hpPositionGroupId;
+    }
+    public String getPosName() {
+        return posName;
+    }
+    public void setPosName(String posName) {
+        this.posName = posName;
+    }
+    public String getComName() {
+        return comName;
+    }
+    public void setComName(String comName) {
+        this.comName = comName;
+    }
+    public Long getCreatStartTime() {
+        return creatStartTime;
+    }
+    public void setCreatStartTime(Long creatStartTime) {
+        this.creatStartTime = creatStartTime;
+    }
+    public Long getCreatEndTime() {
+        return creatEndTime;
+    }
+    public void setCreatEndTime(Long creatEndTime) {
+        this.creatEndTime = creatEndTime;
     }
 }

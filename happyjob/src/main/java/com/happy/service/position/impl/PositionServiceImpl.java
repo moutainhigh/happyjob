@@ -11,6 +11,7 @@ import com.happy.entity.HpPositionEntity;
 import com.happy.entity.HpPositionGroupEntity;
 import com.happy.entity.HpPositionRefUserEntity;
 import com.happy.entity.HpUserResumeEntity;
+import com.happy.plugin.BaseMsg;
 import com.happy.service.position.PositionService;
 import com.happy.service.position.data.GroupData;
 import com.happy.service.position.data.GroupDataMsg;
@@ -23,6 +24,7 @@ import com.happy.service.position.data.PositionSearch;
 import com.happy.sqlExMapper.HpPositionExMapper;
 import com.happy.sqlExMapper.HpUserExMapper;
 import com.happy.sqlMapper.HpPositionGroupMapper;
+import com.happy.sqlMapper.HpPositionMapper;
 import com.happy.sqlMapper.HpPositionRefUserMapper;
 import com.happy.util.Util;
 import com.happy.util.pubConst.Const;
@@ -33,6 +35,8 @@ public class PositionServiceImpl implements PositionService {
 
     @Autowired
     private HpPositionExMapper hpPositionExMapper;
+    @Autowired
+    private HpPositionMapper hpPositionMapper;
     @Autowired
     private HpUserExMapper hpUserExMapper;
     @Autowired
@@ -306,6 +310,44 @@ public class PositionServiceImpl implements PositionService {
             group.setGroupState(1);
             this.hpPositionGroupMapper.updateByPK(group);
         }
+        return msg;
+    }
+
+    @Override
+    public PositionListMsg getBackPostionlistPage(String posName, String comName, Long startTime, Long endTime,
+        Integer posState, Integer currentPage, Integer showCount) {
+        
+        Date curDate = Util.getCurrentDate();
+        Long curTime = Util.getDateSecond(curDate);
+        
+        PositionListMsg msg = new PositionListMsg();
+        PositionSearch page = new PositionSearch();
+        page.setCurrentPage(currentPage);
+        page.setShowCount(showCount);
+        page.setComName(comName);
+        page.setPosName(posName);
+        page.setCreatStartTime(startTime);
+        page.setCreatEndTime(endTime);
+        page.setCurTime(curTime);
+        page.setState(posState);
+        
+        List<PositionData> posList = this.hpPositionExMapper.getBackPoslistPage(page);
+        msg.setList(posList);
+        msg.setPage(page);
+        return msg;
+    }
+
+    @Override
+    public BaseMsg updatePositionHotOn(Long hpPositionId, Integer hotOn) {
+        BaseMsg msg = new BaseMsg();
+        if(hpPositionId == null || hotOn == null) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数缺失");
+        }
+        HpPositionEntity position = new HpPositionEntity();
+        position.setHpPositionId(hpPositionId);
+        position.setHotOn(hotOn);
+        this.hpPositionMapper.updateByPK(position);
         return msg;
     }
 

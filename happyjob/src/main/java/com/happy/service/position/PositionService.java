@@ -1,5 +1,6 @@
  package com.happy.service.position;
 
+import com.happy.plugin.BaseMsg;
 import com.happy.service.position.data.GroupDataMsg;
 import com.happy.service.position.data.GroupListMsg;
 import com.happy.service.position.data.PositionListMsg;
@@ -41,5 +42,16 @@ public interface PositionService {
     * @TODO:   用户申请参与拼团
     */
    GroupDataMsg insertUserGroupApply(String sid,Long hpPositionGroupId);
+   /**
+    * 
+    * @TODO:   后台：招聘列表
+    */
+   PositionListMsg getBackPostionlistPage(String posName,String comName,Long startTime,Long endTime,
+       Integer posState,Integer currentPage,Integer showCount);
+   /**
+    * 
+    * @TODO:   后台：招聘设置热门状态
+    */
+   BaseMsg updatePositionHotOn(Long hpPositionId,Integer hotOn);
    
 }
