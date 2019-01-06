@@ -239,7 +239,7 @@ public class BaseController {
            try {
                file_member.transferTo(file);
                
-               json.put("realPath", realPath);
+               json.put(Const.RESUTL_MESSAGE_UP_IMG_URL, realPath);
                json.put(Const.RESUTL_MESSAGE_ERRORCODE, 0);
                json.put(Const.RESUTL_MESSAGE_MESSAGE, "success");
                return json;
