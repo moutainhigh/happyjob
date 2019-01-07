@@ -3,6 +3,7 @@ package com.happy.util.sms;
 
 import java.nio.charset.Charset;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import okhttp3.Response;
 public class SmsUtil {
 
     @Autowired
-    private static Zz253Property zz253Property;
+    private  static Zz253Property zz253Property;
 
     private static final Logger logger = LoggerFactory.getLogger(SmsUtil.class);
 
@@ -31,7 +32,7 @@ public class SmsUtil {
 
     public static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
     
-    public static final String MSG_MODEL = "【开心工作】尊敬的用户： 您的验证码为${msgCode}，如非本人操作，请忽略此短信。";
+    public static final String MSG_MODEL = "尊敬的用户： 您的验证码为${msgCode}，如非本人操作，请忽略此短信。";
 
     /**
      * @param msg 短信内容
@@ -45,11 +46,12 @@ public class SmsUtil {
             Zz253Request zz253Req = new Zz253Request();
             zz253Req.setAccount(zz253Property.getAccount());
             zz253Req.setPassword(zz253Property.getPassword());
-            zz253Req.setMsg(msg);
+            //拼接签名
+            zz253Req.setMsg(StringUtils.appendIfMissing(zz253Property.getSmsSign(), msg));
             zz253Req.setPhone(phoneNum);
             String postBody = JSON.toJSONString(zz253Req);
 
-            Request request = new Request.Builder().url("https://api.github.com/markdown/raw")
+            Request request = new Request.Builder().url(zz253Property.getSmsUrl())
                 .post(RequestBody.create(MEDIA_TYPE_JSON, postBody)).build();
 
             Response response = client.newCall(request).execute();
