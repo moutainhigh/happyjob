@@ -59,4 +59,59 @@ public class CompanyServiceImpl implements CompanyService{
 		
 	}
 
+	@Override
+	public BaseMsg newCompany(String comName, Long companyTypeId, Long companyScaleId, String comDesc, Long countyId,
+			String addrDetail, String comtPerson, String comPhone, String comEmail) {
+		BaseMsg msg = new BaseMsg();
+        if(comName == null || comName == "") {
+            msg.setErrorCode(1);
+            msg.setMessage("公司名称必填");
+            return msg;
+        }
+        if(comDesc == null || comDesc == "") {
+            msg.setErrorCode(1);
+            msg.setMessage("公司描述必填");
+            return msg;
+        }
+        if(companyScaleId == null || companyScaleId == 0) {
+            msg.setErrorCode(1);
+            msg.setMessage("公司规模必填");
+            return msg;
+        }
+        if(countyId == null || countyId == 0) {
+            msg.setErrorCode(1);
+            msg.setMessage("公司位置必填");
+            return msg;
+        }
+        if(addrDetail == null || addrDetail == "") {
+        	msg.setErrorCode(1);
+        	msg.setMessage("公司详细地址必填");
+        	return msg;
+        }
+        if(comtPerson == null || comtPerson == "") {
+        	msg.setErrorCode(1);
+        	msg.setMessage("联系人必填");
+        	return msg;
+        }
+        if(comPhone == null || comPhone =="") {
+        	msg.setErrorCode(1);
+        	msg.setMessage("联系电话必填");
+        	return msg;
+        }
+        
+        HpCompanyEntity company = new HpCompanyExt();
+        company.setComName(comName);
+        company.setHpCompanyTypeId(companyTypeId);
+        company.setHpCompanyScaleId(companyScaleId);
+        company.setComDesc(comDesc);
+        company.setCountyId(countyId);
+        company.setAddrDetail(addrDetail);
+        company.setComtPerson(comtPerson);
+        company.setComPhone(comPhone);
+        company.setComEmail(comEmail);
+        company.setApproveState(0); //未认证
+        this.hpCompanyMapper.insert(company);
+		return msg;
+	}
+
 }

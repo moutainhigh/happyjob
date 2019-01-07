@@ -151,8 +151,11 @@ $(document).on("click",".updateAdv",function(){
       $("#picUrl").attr("src",picUrl);
       $("#targetUrl").val(targetUrl);
       $("#title").val(title);
+      
+      var obj = document.getElementById('upPic') ; //清空
+      obj.outerHTML=obj.outerHTML; 
      
-    $('#browseModal').modal('toggle')
+    $('#browseModal').modal('toggle');
 })
 
 

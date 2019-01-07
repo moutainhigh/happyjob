@@ -95,7 +95,7 @@ $(document).on("click",".updateCompany",function(){
     var comLicense = $row.data("com-license");
     var comEmail = $row.data("com-email");
     
-    var $obj = $("#browseModal").find(".showValue");
+    var $obj = $("#updateCompanyModel").find(".showValue");
     $obj.eq(0).html(comName);
     $obj.eq(1).html(typeName);
     $obj.eq(2).html(scale);
@@ -107,7 +107,7 @@ $(document).on("click",".updateCompany",function(){
     $obj.eq(8).html(comEmail);
 //    $obj.eq(7).attr("src",comLogo);
 //    $obj.eq(8).attr("src",comLicense);
-    $('#browseModal').modal('toggle');
+    $('#updateCompanyModel').modal('toggle');
 })
 
 
@@ -116,11 +116,77 @@ $(document).on("click","#openAddCompany",function(){
     $('#addCompanyModel').modal('toggle');
 })
 
+//邢增 企业
 $(document).on("click","#newCompany",function(){
     var $obj = $("#addCompanyModel").find(".showValue");
-    $('#addCompanyModel').modal('toggle');
+    
+    var comName = $("#comName").val();
+    var companyTypeId = $("#companyTypeId").val();
+    var companyScaleId = $("#companyScaleId").val();
+    var comDesc = $("#comDesc").val();
+    var countyId = $("#countyId").val();
+    var addrDetail = $("#addrDetail").val();
+    var comtPerson = $("#comtPerson").val();
+    var comPhone = $("#comPhone").val();
+    var comEmail = $("#comEmail").val();
+    
+    var saveParams ={};
+    saveParams.comName = comName ;
+    saveParams.companyTypeId = companyTypeId ;
+    saveParams.companyScaleId = companyScaleId ;
+    saveParams.comDesc = comDesc ;
+    saveParams.countyId = countyId ;
+    saveParams.addrDetail = addrDetail ;
+    saveParams.comtPerson = comtPerson ;
+    saveParams.comPhone = comPhone ;
+    saveParams.comEmail = comEmail ;
+    //保存图片
+    
+//    uploadPic(window.location.origin + "/wxAppletsLogin/imgUpOne");
+//    saveParams.upPicLogoUrl =upPicLogoUrl ;
+    
+    fetchPost({
+        url:"/backCompany/newCompany",
+        params: saveParams,
+        callback:function(data){
+            console.log(data);
+            fetchList();
+            swal(
+	                   'Saved!',
+	                   '已保存.',
+	                   'success'
+	           );
+        }
+    })
+   //$('#addCompanyModel').modal('toggle');
 })
-
+ 
+var upPicLogoUrl ;
+function uploadPic(url){
+	var file =  $("#upPicLogo").get(0).files[0];
+	if(!file){
+		return ;
+	}
+	var formData = new FormData();
+	formData.append("file",file);
+	formData.append("code","user");
+	$.ajax({
+		url:url,
+		dataType:"json",
+		type:"post",
+		data:formData,
+        processData: false,  // 不处理数据
+        contentType: false,   // 不设置内容类型
+		header:{
+			oid:"fad7bd3d01f04950b1d906584afc9253",
+		},
+		success:function(data){
+			console.log("===",data);
+			console.log("===",data.data.imgUrl);
+			upPicLogoUrl = data.data.imgUrl ;
+		}
+	});
+}
 
 var listParams = {
 	comName:"",
