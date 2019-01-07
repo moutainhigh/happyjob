@@ -28,6 +28,13 @@ public interface BannerService {
      */
     BaseMsg deleteAdvertisement(Long hpBannerId);
     
+    
+    /**
+     * 修改广告
+     */
+    BaseMsg updateAdvertisement(Long hpAdvBannerId ,String title,String location,String type,Long sort,String picUrl,String targetUrl,Long endTime);
+
+    
     /**
      * 添加广告
      * @param title

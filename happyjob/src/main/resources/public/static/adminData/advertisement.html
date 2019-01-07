@@ -24,7 +24,7 @@
 <!-- 确认提示框 -->
 <link rel="stylesheet" href="/static/plugins/sweetalert/sweetalert2.min.css">
 <style>
-.idStyle{max-width: 200px;max-height: 200px;}
+	.idStyle{max-width: 200px;max-height: 200px;}
 </style>
   
 </head>
@@ -198,44 +198,69 @@
 			<h4 class="modal-title">广告信息</h4>
 		</div>
 		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="form-group ">
+			<form class="form-horizontal" id="formModal">
+					<div class="form-group ">
+						<label for="" class="col-sm-3 " >id</label>
+						<div class="col-sm-5 ">
+							<input type="text" class="form-control"  id="bannerId">
+						</div>
+					</div>
+					
+				   <div class="form-group ">
 						<label for="" class="col-sm-3 " >广告标题</label>
-						<input class="showValue" id="title"/>
+						<div class="col-sm-5 ">
+							<input type="text" class="form-control"  id="title">
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="" class="col-sm-3">广告位</label>
-						<input class="showValue" id="location" />
+						<div class="col-sm-5 ">
+							<input type="text" class="form-control"  id="location">
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="" class="col-sm-3">类型</label>
-						<input class="showValue" id="type"/>
+						<div class="col-sm-5 ">
+							<input type="text" class="form-control"  id="type">
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="" class="col-sm-3">结束时间</label>
-						<input type="text" class="datepicker showValue" placeholder="请选择日期"  id="endTime" />
+						<div class="col-sm-5 ">
+							<input type="text" class="form-control datepicker" id="endTime">
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="" class="col-sm-3">排序</label>
-						<input class="showValue" id="sort"/>
+						<div class="col-sm-5 ">
+							<input type="text" class="form-control" id="sortNum">
+						</div>
 					</div>
+					
 					<div class="form-group">
 						<label for="" class="col-sm-3">上传图片</label>
-					    <div class="col-sm-9 ">
-      						<img src="" alt="" id='imgContent' >
-							<input type="file" id="upPic" >
-					    </div>
+						<div class="col-sm-5 ">
+						     <input type="file" class="form-control" id="upPic" >
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="" class="col-sm-3">或图片地址</label>
-						<input class="showValue" id="targetUrl"/>
+						<div class="col-sm-5 ">
+							<input  type="text" class="form-control" id="targetUrl"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3">原图片</label>
+					    <div class="col-sm-4 ">
+      						<img src="" alt="" id='picUrl' class="idStyle">
+					    </div>
 					</div>
 									
 			</form>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-			<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+			<button type="button" class="btn btn-primary" id="updateAdvertisement">修改</button>
 		</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->

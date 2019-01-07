@@ -87,5 +87,31 @@ public class AdvertisementManageController {
 	        return ss;
 	    }
 	    
+	    /**
+	     * 广告修改
+	     */
+	    @ApiOperation(value="修改广告",notes="修改广告")
+	    @PostMapping(value="updateAdvertisement")
+	    public BaseMsg updateAdvertisement(HttpServletRequest request){
+	    	
+	        Long hpAdvBannerId = (Long)Util.typeChange(request.getParameter("hpAdvBannerId"), Long.class);
+
+	        String title = request.getParameter("title");
+	    	String location = request.getParameter("location");
+	    	String type = request.getParameter("type");
+	    	String picUrl = request.getParameter("picUrl");
+	    	String targetUrl = request.getParameter("targetUrl");
+	    	
+	        Long endTime = (Long)Util.typeChange(request.getParameter("endTime"), Long.class);
+	        Long sortNum = (Long)Util.typeChange(request.getParameter("sortNum"), Long.class);
+	        
+	        
+	        logger.info("backAdvertisement.saveAdvertisement 请求参数：hpAdvBannerId={},title={},location={},type={},sort={},picUrl={},endTime={},targetUrl={}",hpAdvBannerId,title
+	        		,location,type,sortNum,picUrl,endTime,targetUrl);
+	        
+	        BaseMsg ss = this.bannerService.updateAdvertisement(hpAdvBannerId,title,location,type,sortNum,picUrl,targetUrl,endTime);
+	        return ss;
+	    }
+	    
 	   
 }

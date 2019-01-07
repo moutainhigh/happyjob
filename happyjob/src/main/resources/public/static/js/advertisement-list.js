@@ -4,6 +4,65 @@ $(".datepicker").datepicker({
     autoclose: true,//选中之后自动隐藏日期选择框
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
+
+function uploadPic(url){
+	var file = $("#upPic").get(0).files[0];
+	if(!file){
+		return;
+	}
+	var formData = new FormData();
+	formData.append("file",file);
+	formData.append("code","user");
+	$.ajax({
+		url:url,
+		dataType:"json",
+		type:"post",
+		data:formData,
+        processData: false,  // 不处理数据
+        contentType: false,   // 不设置内容类型
+		header:{
+			oid:"fad7bd3d01f04950b1d906584afc9253",
+		},
+		success:function(data){
+			console.log("===",data);
+			console.log("===",data.data.imgUrl);
+			picUrl = data.data.imgUrl ;
+		}
+	});
+}
+var picUrl ;
+var saveParams ={};
+//修改
+$(document).on("click","#updateAdvertisement",function(){
+	//先保存图片
+	uploadPic(window.location.origin + "/wxAppletsLogin/imgUpOne");
+	
+	saveParams.hpAdvBannerId = $("#bannerId").val();
+	saveParams.title = $("#title").val();
+	saveParams.location = $("#location").val();
+	saveParams.type = $("#type").val();
+	saveParams.endTime = dateToTime($("#endTime").val());
+	saveParams.sortNum = $("#sortNum").val();
+	saveParams.picUrl = picUrl;
+	saveParams.targetUrl = $("#targetUrl").val();
+	
+	fetchPost({
+	       url:"/backAdvertisement/updateAdvertisement",
+	       params:saveParams,
+	       callback:function(result){
+	           console.log(result);
+	           $("#browseModal").modal('hide');  //手动关闭
+	           $("#formModal").data('bootstrapValidator').resetForm();
+	           fetchList(); //刷新页面
+	           swal(
+	                   'Saved!',
+	                   '已修改',
+	                   'success'
+	           );
+	       }
+	   }) ; 
+    
+})
 // 删除
 $(document).on("click",".deleteAdv",function(){
 	var result = {};
@@ -20,27 +79,18 @@ $(document).on("click",".deleteAdv",function(){
         }).then(function(isConfirm) {
         if (isConfirm === true) {
         	deleteAdvertisement(result);
-        	//重新初始化
-        	fetchList();
         } else if (isConfirm === false) {
             swal(
-            'Cancelled',
-            'Your imaginary file is safe :)',
+            '取消',
+            '未删除',
             'error'
             );
-        
         } else {
-            // Esc, close button or outside click
-            // isConfirm is undefined
+        	
         }
     }); 
 })
 
-//$(document).on("click",".cat",function(){
-//    var $row = $(this).parents("tr");
-//    var iphone=$row.data("iphone");
-//    var name=$row.data("name");
-//})
 
 // 开启/关闭
 $(document).on("click",".openOrClose",function(){
@@ -60,6 +110,7 @@ $(document).on("click",".openOrClose",function(){
         }).then(function(isConfirm) {
         if (isConfirm === true) {
         	postUseOn(result);
+        	
 //            swal(
 //            'Deleted!',
 //            'Your imaginary file has been deleted.',
@@ -79,46 +130,28 @@ $(document).on("click",".openOrClose",function(){
         }
     }); 
 })
-// 复用
-$(document).on("click",".restart",function(){
-    swal({
-        title: '是否对该用户复用？',
-        text: '',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: '是',
-        cancelButtonText: '否',
-        }).then(function(isConfirm) {
-        if (isConfirm === true) {
-        
-        } else if (isConfirm === false) {
-            swal(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
-            );
-        
-        } else {
-        }
-    }); 
-})
-// 查看
-$(document).on("click",".auth",function(){
+
+// 点击出现modal
+$(document).on("click",".updateAdv",function(){
     var $row = $(this).parents("tr");
+    var hpAdvBannerId=$row.data("hpadvbannerid");
     var title=$row.data("title");
-    var location=$row.data("location");
-    var type=$row.data("type");
-    var createTime=$row.data("creat-time");
-    var endTime=$row.data("end-time");
-    var sortName=$row.data("sort-num");
     
-    var $obj = $("#browseModal").find(".showValue");
-    $obj.eq(0).html(title)
-    $obj.eq(1).html(location)
-    $obj.eq(2).html(type)
-//    $obj.eq(4).html(createTime)
-    $obj.eq(5).html(endTime)
-//    $obj.eq(6).html(sortName)
+    // var location=$row.data("location");
+    // var type=$row.data("type");
+    var endTime = $row.data("end-time");
+    var sortNum=$row.data("sort-num");
+    var picUrl=$row.data("pic-url");
+    var targetUrl=$row.data("target-url");
+    
+      $("#bannerId").val(hpAdvBannerId);
+      $("#title").val(title);
+      $("#endTime").val(endTime);
+      $("#sortNum").val(sortNum);
+      $("#picUrl").attr("src",picUrl);
+      $("#targetUrl").val(targetUrl);
+      $("#title").val(title);
+     
     $('#browseModal').modal('toggle')
 })
 
@@ -158,7 +191,8 @@ function postUseOn(data){
         url:"/backAdvertisement/advertisementUseOn",
         params: data,
         callback:function(data){
-            console.log(data)
+            console.log(data);
+            fetchList();
         }
     })
 }
@@ -169,7 +203,8 @@ function deleteAdvertisement(data){
         url:"/backAdvertisement/deleteAdvertisement",
         params: data,
         callback:function(data){
-            console.log(data)
+            console.log(data);
+            fetchList();
         }
     })
 }
@@ -187,7 +222,9 @@ function addTableList(list){
             data-sort-num="'+ item.sortNum +'" \
             data-create-time="'+ timestampToTime(item.createTime) +'" \
             data-comname="'+ (item.picUrl || "") +'" \
-            data-end-time="'+ timestampToTime(item.endTime) +'" \
+            data-end-time="'+ timestampToDay(item.endTime) +'" \
+            data-pic-url="'+ item.picUrl +'" \
+            data-target-url="'+ item.targetUrl +'" \
             data-del-on"'+ item.delOn +'" >\
             <th>'+ item.title +'</th>\
             <th>'+ '首页轮播' +'</th>\
@@ -203,7 +240,7 @@ function addTableList(list){
             	templeteTr += '<button type="button" class="btn btn-default btn-sm openOrClose">关闭</button>' ;
             }
             templeteTr  += '\
-                <button type="button" class="btn btn-primary btn-sm auth">编辑</button>\
+                <button type="button" class="btn btn-primary btn-sm updateAdv">编辑</button>\
                 <button type="button" class="btn btn-danger btn-sm deleteAdv">删除</button>\
             </th></tr>';
     })
@@ -221,6 +258,20 @@ function timestampToTime(timestamp) {
     var m = change(date.getMinutes()) + ':';
     var s = change(date.getSeconds());
     return Y + M + D + h + m + s;
+}
+
+function timestampToDay(timestamp) {
+    var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var D = change(date.getDate());
+    
+    return Y + M + D;
+}
+
+function dateToTime(timestamp) {
+	var formatTimeS = new Date($("#endTime").val()+" 00:00:00").getTime();
+	return formatTimeS/1000;
 }
 function change(t) {
     if (t < 10) {

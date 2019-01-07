@@ -106,6 +106,7 @@ public class BannerServiceImpl implements BannerService {
         hpAdvBanner.setTitle(title);
         hpAdvBanner.setSortNum(sort);
         hpAdvBanner.setPicUrl(picUrl);
+        hpAdvBanner.setPicUrl(targetUrl);
         hpAdvBanner.setDelOn(1);  //1是不删，后期修改
         hpAdvBanner.setUseOn(1);   //1使用中
         hpAdvBanner.setEndTime(endTime);
@@ -114,6 +115,30 @@ public class BannerServiceImpl implements BannerService {
             msg.setErrorCode(1);
             msg.setMessage("添加失败，稍后再试");
         }
+        return msg;
+	}
+
+	@Override
+	public BaseMsg updateAdvertisement(Long hpAdvBannerId, String title, String location, String type, Long sortNum,
+			String picUrl, String targetUrl, Long endTime) {
+		BaseMsg msg = new BaseMsg();
+        if(hpAdvBannerId == null || hpAdvBannerId ==0) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数格式错误：hpAdvBannerId");
+            return msg;
+        }
+        HpAdvBannerEntity hpAdvBanner = new HpAdvBannerEntity();
+        hpAdvBanner.setHpAdvBannerId(hpAdvBannerId);
+        hpAdvBanner.setTitle(title);
+        hpAdvBanner.setSortNum(sortNum);
+        if(picUrl != null && picUrl != "") {
+        	hpAdvBanner.setPicUrl(picUrl);
+        }
+        
+        hpAdvBanner.setPicUrl(targetUrl);
+        hpAdvBanner.setEndTime(endTime);
+        this.hpAdvBannerMapper.updateByPK(hpAdvBanner);
+        
         return msg;
 	}
 
