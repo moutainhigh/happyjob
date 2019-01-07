@@ -1,8 +1,10 @@
  package com.happy.service.position.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.happy.entity.HpPositionEntity;
 import com.happy.entity.HpPositionGroupEntity;
 import com.happy.entity.HpPositionRefUserEntity;
+import com.happy.entity.HpPositionRequireEntity;
 import com.happy.entity.HpUserResumeEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.position.PositionService;
@@ -18,6 +21,8 @@ import com.happy.service.position.data.GroupDataMsg;
 import com.happy.service.position.data.GroupListMsg;
 import com.happy.service.position.data.GroupSearch;
 import com.happy.service.position.data.PositionData;
+import com.happy.service.position.data.PositionDetail;
+import com.happy.service.position.data.PositionDetailMsg;
 import com.happy.service.position.data.PositionListMsg;
 import com.happy.service.position.data.PositionMsg;
 import com.happy.service.position.data.PositionSearch;
@@ -26,6 +31,7 @@ import com.happy.sqlExMapper.HpUserExMapper;
 import com.happy.sqlMapper.HpPositionGroupMapper;
 import com.happy.sqlMapper.HpPositionMapper;
 import com.happy.sqlMapper.HpPositionRefUserMapper;
+import com.happy.sqlMapper.HpPositionRequireMapper;
 import com.happy.util.Util;
 import com.happy.util.pubConst.Const;
 import com.happy.util.pubConst.ResultMsg;
@@ -43,6 +49,8 @@ public class PositionServiceImpl implements PositionService {
     private HpPositionGroupMapper hpPositionGroupMapper;
     @Autowired
     private HpPositionRefUserMapper hpPositionRefUserMapper;
+    @Autowired
+    private HpPositionRequireMapper hpPositionRequireMapper;
     
     @Override
     public PositionListMsg getPostionlistPage(String sid, String keyWord, String cityName, Integer posNature, Integer retOn, Integer hotOn,
@@ -349,6 +357,119 @@ public class PositionServiceImpl implements PositionService {
         position.setHotOn(hotOn);
         this.hpPositionMapper.updateByPK(position);
         return msg;
+    }
+
+    @Override
+    public PositionDetailMsg getPostionDetail(Long hpPositionId) {
+        PositionDetailMsg msg = new PositionDetailMsg();
+        if(hpPositionId != null) {
+            msg.setData(this.hpPositionExMapper.getPosDetailByKey(hpPositionId));
+        }
+        return msg;
+    }
+
+    private static final String REGEX_NUMBER_STR_ARR = "([1-9],)+[1-9]";
+    
+    @Override
+    public BaseMsg insertOrUpPosition(PositionDetail data) {
+         long curTime = Util.getDateSecond(Util.getCurrentDate());
+         Long hpPositionId = data.getHpPositionId();
+         HpPositionEntity position = new HpPositionEntity();
+         position.setHpPositionId(hpPositionId);
+         position.setCarDesc(data.getCarDesc());
+         position.setCarOn(data.getCarOn());
+         position.setComCustPhone(data.getComCustPhone());
+         position.setCountyId(data.getCountyId());
+         position.setEndTime(data.getEndTime());
+         position.setFiveMoney(data.getFiveMoney());
+         position.setGroupOn(data.getGroupOn());
+         position.setHotOn(data.getHotOn());
+         position.setHpCompanyId(data.getHpCompanyId());
+         position.setHpEducationId(data.getHpEducationId());
+         position.setHpPositionOfferId(data.getHpPositionOfferId());
+         position.setHpPositionSalaryId(data.getHpPositionSalaryId());
+         position.setHpPositionTypeId(data.getHpPositionTypeId());
+         position.setJobHours(data.getJobHours());
+         position.setManDayNum(data.getManDayNum());
+         position.setOtherWelfare(data.getOtherWelfare());
+         position.setPosComDesc(data.getPosComDesc());
+         position.setPosDetail(data.getPosDetail());
+         position.setPosEmail(data.getPosEmail());
+         position.setPosName(data.getPosName());
+         position.setPosNature(data.getPosNature());
+         position.setPosNum(data.getPosNum());
+         position.setPosPerson(data.getPosPerson());
+         position.setPosPhone(data.getPosPhone());
+         position.setPosState(1);
+         position.setPosWorkYear(data.getPosWorkYear());
+         position.setRetManMoney(data.getRetManMoney());
+         position.setRetOn(data.getRetOn());
+         position.setRetWomanMoney(data.getRetWomanMoney());
+         position.setStartTime(data.getStartTime());
+         position.setThreeMoney(data.getThreeMoney());
+         position.setUrgentMoney(data.getUrgentMoney());
+         position.setUrgentOn(data.getUrgentOn());
+         position.setWelfareDetail(data.getWelfareDetail());
+         position.setWelfareOn(data.getWelfareOn());
+         position.setWomenDayNum(data.getWomenDayNum());
+         
+         if(hpPositionId == null ) { // 新增
+             position.setApplyTime(curTime);
+             this.hpPositionMapper.insert(position);
+             hpPositionId = position.getHpPositionId();
+         }else {
+             this.hpPositionMapper.updateByPK(position);
+             // 清空福利关联表信息
+             this.hpPositionExMapper.deleteGroupWelfare(hpPositionId);
+         }
+         
+         String welfareIds = data.getWelfareArr();
+         if(!Util.isEmpty(welfareIds) && welfareIds.matches(REGEX_NUMBER_STR_ARR)) { // 新增福利关联表信息
+             String[] welfareIdArr = welfareIds.split(",");
+             List<Long> list = new ArrayList<Long>();
+             for(String str : welfareIdArr) {
+                 list.add((Long)Util.typeChange(str, Long.class));
+             }
+             this.hpPositionExMapper.insertGroupWelfare(hpPositionId, list);
+         }
+         
+         // 要求
+         HpPositionRequireEntity require = new HpPositionRequireEntity();
+         require.setHpPositionId(hpPositionId);
+         require.setReqAge(data.getReqAge());
+         require.setReqEducation(data.getReqEducation());
+         require.setReqExp(data.getReqExp());
+         require.setReqGender(data.getReqGender());
+         require.setReqOther(data.getReqOther());
+         require.setReqSkill(data.getReqSkill());
+         require.setReqWorkYears(data.getReqWorkYears());
+         Long hpPositionRequireId = this.hpPositionExMapper.getPositionRequireId(hpPositionId);
+         if(hpPositionRequireId == null) { // 新增岗位要求
+             this.hpPositionRequireMapper.insert(require);
+         }else {// 更新
+             this.hpPositionRequireMapper.updateByPK(require);
+         }
+         
+         return new BaseMsg();
+    }
+
+    @Test
+    public void test1() {
+        String a = "1,2,3";
+        System.out.println(a.split(",").length);
+    }
+
+    @Override
+    public BaseMsg insertOrUpPositionTest(Long hpPositionId, String ids) {
+        if(!Util.isEmpty(ids) && ids.matches(REGEX_NUMBER_STR_ARR)) { // 新增福利关联表信息
+            String[] welfareIdArr = ids.split(",");
+            List<Long> list = new ArrayList<Long>();
+            for(String str : welfareIdArr) {
+                list.add((Long)Util.typeChange(str, Long.class));
+            }
+            this.hpPositionExMapper.insertGroupWelfare(hpPositionId, list);
+        }
+        return new BaseMsg();
     }
 
 }

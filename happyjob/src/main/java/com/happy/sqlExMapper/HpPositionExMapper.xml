@@ -28,7 +28,7 @@
 		<if test="welfareOn != null ">AND p.welfare_on=#{welfareOn}</if>
 		<if test="urgentOn != null ">AND p.urgent_on=#{urgentOn}</if>
 		<if test="groupOn != null ">AND p.group_on=#{groupOn}</if>
-		<if test="cityName != null and cityName != '' ">AND aci.city_name==#{cityName}</if>
+		<if test="cityName != null and cityName != '' ">AND aci.city_name=#{cityName}</if>
 		<if test="keyWord !=null and keyWord !=''">
 			AND (p.pos_type LIKE CONCAT('%',#{keyWord},'%') OR p.pos_name LIKE CONCAT('%',#{keyWord},'%') OR c.com_name LIKE CONCAT('%',#{keyWord},'%') )
 		</if>
@@ -164,5 +164,33 @@ WHERE p.hp_position_id=#{curTime} AND p.group_on=1 AND pg.end_time>#{curTime} AN
 		SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_id=#{hpPositionGroupId}
 	</select>
 	
+	<select id="getPosDetailByKey" resultType="com.happy.service.position.data.PositionDetail" >
+		SELECT p.*,c.hp_company_id,<include refid="selectRequireCol"></include>,
+		(SELECT GROUP_CONCAT(pw.hp_position_welfare_id) FROM hp_position_ref_welfare prw JOIN hp_position_welfare pw 
+         WHERE prw.hp_position_id=p.hp_position_id AND prw.hp_position_welfare_id=pw.hp_position_welfare_id) welfareIdArr  
+         
+		FROM hp_position p JOIN hp_company c ON p.hp_company_id=c.hp_company_id 
+		JOIN hp_position_salary ps ON p.hp_position_salary_id=ps.hp_position_salary_id 
+		JOIN hp_area_county aco ON p.county_id=aco.county_id 
+		JOIN hp_area_city aci ON aco.city_id=aci.city_id 
+		LEFT JOIN hp_position_require pr ON p.hp_position_id=pr.hp_position_id 
+		WHERE p.hp_position_id=#{hpPositionId} 
+	</select>
+	
+	<delete id="deleteGroupWelfare" >
+		DELETE FROM hp_position WHERE hp_position.hp_position_id=#{hpPositionId}
+	</delete>
+	
+	<insert id="insertGroupWelfare" >
+		INSERT INTO hp_position_ref_welfare(hp_position_id,hp_position_welfare_id) 
+		VALUES 
+		<foreach collection="list" open="(" close=")" separator="),(" item="item" >
+			#{hpPositionId},#{item}
+		</foreach>
+	</insert>
+	
+	<select id="getPositionRequireId">
+		SELECT pr.hp_position_require_id FROM hp_position_require pr WHERE pr.hp_position_id=#{hpPositionId} LIMIT 1
+	</select>
 	
 </mapper>

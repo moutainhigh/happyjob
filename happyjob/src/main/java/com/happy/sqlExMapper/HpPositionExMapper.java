@@ -9,6 +9,7 @@ import com.happy.entity.HpPositionEntity;
 import com.happy.service.position.data.GroupData;
 import com.happy.service.position.data.GroupSearch;
 import com.happy.service.position.data.PositionData;
+import com.happy.service.position.data.PositionDetail;
 import com.happy.service.position.data.PositionSearch;
 
 @Repository("hpPositionExMapper")
@@ -58,5 +59,25 @@ public interface HpPositionExMapper{
     * @TODO:     后台：职位列表查询
     */
     List<PositionData> getBackPoslistPage(PositionSearch page);
+    /**
+    *
+    * @TODO:     后台：岗位详细信息：编辑
+    */
+    PositionDetail getPosDetailByKey(@Param("hpPositionId") Long hpPositionId);
+    /**
+    *
+    * @TODO:     后台：删除岗位福利关联关系
+    */
+    int deleteGroupWelfare(@Param("hpPositionId") Long hpPositionId);
+    /**
+     *
+     * @TODO:     后台：新增岗位福利关联关系
+     */
+    int insertGroupWelfare(@Param("hpPositionId") Long hpPositionId,@Param("list")List<Long> idArr);
+    /**
+    *
+    * @TODO:     后台：获取岗位要求ID
+    */
+    Long getPositionRequireId(@Param("hpPositionId") Long hpPositionId);
 }
 

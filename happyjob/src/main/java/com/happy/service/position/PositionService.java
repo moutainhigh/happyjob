@@ -1,8 +1,11 @@
  package com.happy.service.position;
 
 import com.happy.plugin.BaseMsg;
+import com.happy.service.config.data.WelfareListMsg;
 import com.happy.service.position.data.GroupDataMsg;
 import com.happy.service.position.data.GroupListMsg;
+import com.happy.service.position.data.PositionDetail;
+import com.happy.service.position.data.PositionDetailMsg;
 import com.happy.service.position.data.PositionListMsg;
 import com.happy.service.position.data.PositionMsg;
 
@@ -54,4 +57,19 @@ public interface PositionService {
     */
    BaseMsg updatePositionHotOn(Long hpPositionId,Integer hotOn);
    
+   /**
+    * 
+    * @TODO:   获取招聘岗位详情
+    */
+   PositionDetailMsg getPostionDetail(Long hpPositionId);
+   /**
+    *
+    * @TODO:   招聘新增、更新
+    */
+   BaseMsg insertOrUpPosition(PositionDetail data);
+   /**
+    *
+    * @TODO:   招聘新增、更新
+    */
+   BaseMsg insertOrUpPositionTest(Long hpPositionId,String ids);
 }

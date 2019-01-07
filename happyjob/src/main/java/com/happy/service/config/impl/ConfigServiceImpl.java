@@ -8,13 +8,19 @@ import org.springframework.stereotype.Service;
 import com.happy.entity.HpCompanyStoreEntity;
 import com.happy.plugin.Page;
 import com.happy.service.config.ConfigService;
+import com.happy.service.config.data.AreaListMsg;
+import com.happy.service.config.data.AreaSearch;
 import com.happy.service.config.data.EduListMsg;
+import com.happy.service.config.data.PosTypeListMsg;
 import com.happy.service.config.data.SalaryListMsg;
 import com.happy.service.config.data.StoreDataMsg;
 import com.happy.service.config.data.StoreListMsg;
+import com.happy.service.config.data.WelfareListMsg;
 import com.happy.sqlExMapper.HpConfigExMapper;
 import com.happy.sqlMapper.HpCompanyStoreMapper;
 import com.happy.sqlMapper.HpPositionSalaryMapper;
+import com.happy.sqlMapper.HpPositionTypeMapper;
+import com.happy.sqlMapper.HpPositionWelfareMapper;
 /**
  *
  *   TODO: 数据库中一些配置表数据操作处理
@@ -22,6 +28,10 @@ import com.happy.sqlMapper.HpPositionSalaryMapper;
  */
 @Service
 public class ConfigServiceImpl implements ConfigService {
+    
+    public static final int AREA_CODE_0 = 0;
+    public static final int AREA_CODE_1 = 1;
+    public static final int AREA_CODE_2 = 2;
 
     @Autowired
     private HpConfigExMapper hpConfigExMapper;
@@ -29,6 +39,10 @@ public class ConfigServiceImpl implements ConfigService {
     private HpPositionSalaryMapper hpPositionSalaryMapper;
     @Autowired
     private HpCompanyStoreMapper hpCompanyStoreMapper;
+    @Autowired
+    private HpPositionWelfareMapper hpPositionWelfareMapper;
+    @Autowired
+    private HpPositionTypeMapper hpPositionTypeMapper;
     
     @Override
     public EduListMsg getEduList(int useOn) {
@@ -70,6 +84,34 @@ public class ConfigServiceImpl implements ConfigService {
             msg.setData(data);
         }
         
+        return msg;
+    }
+
+    @Override
+    public WelfareListMsg getPositionWelfare() {
+        WelfareListMsg msg = new WelfareListMsg();
+        msg.setList(this.hpPositionWelfareMapper.selectAll());
+        return msg;
+    }
+
+    @Override
+    public AreaListMsg getAreaList(int areaCode, Long areaId) {
+        AreaListMsg msg = new AreaListMsg();
+        AreaSearch page = new AreaSearch();
+        if(areaCode == AREA_CODE_1) {
+            page.setProvinceId(areaId);
+        }else if(areaCode == AREA_CODE_2) {
+            page.setCityId(areaId);
+        }
+        msg.setList(this.hpConfigExMapper.getAreaList(page));
+        msg.setPage(page);
+        return msg;
+    }
+
+    @Override
+    public PosTypeListMsg getPosTypeList() {
+        PosTypeListMsg msg = new PosTypeListMsg();
+        msg.setList(this.hpPositionTypeMapper.selectAll());
         return msg;
     }
     

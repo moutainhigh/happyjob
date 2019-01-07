@@ -22,4 +22,18 @@
 		SELECT cs.hp_company_store_id FROM hp_company_store cs WHERE cs.store_token=#{storeToken}
 	</select>
 
+	<select id="getAreaList" resultType="com.happy.service.config.data.AreaData" >
+		<choose>
+			<when test="provinceId !=null and provinceId !=0">
+				SELECT aci.city_id areaId,aci.city_name areaName FROM hp_area_city aci WHERE aci.province_id=#{provinceId}
+			</when>
+			<when test="cityId !=null and cityId !=0">
+				SELECT aco.county_id areaId,aco.county_name areaName FROM hp_area_county aco WHERE aco.city_id=#{cityId}
+			</when>
+			<otherwise>
+				SELECT ap.province_id areaId,ap.province_name areaName FROM hp_area_province ap
+			</otherwise>
+		</choose>
+	</select>
+
 </mapper>
