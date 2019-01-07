@@ -1,14 +1,20 @@
 
 package com.happy.util.sms;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
 /**
  * https://zz.253.com/v5.html#/api_doc https://www.253.com 短信平台参数
  */
+@ConfigurationProperties(prefix = "sms")
+@Component
 public class Zz253Property {
 
     private String account;// N6000001" 用户在253云通讯平台上申请的API账号
     private String password;// 123456" 用户在253云通讯平台上申请的API账号对应的API密钥
-    private String smsUr; // http://xxx/msg/send/json 或者 https://xxx/msg/send/json
+    private String smsUrl; // http://xxx/msg/send/json 或者 https://xxx/msg/send/json
+    private String smsSign; // 在zz.253.com 后台设置签名管理
 
     public String getAccount() {
         return account;
@@ -26,17 +32,26 @@ public class Zz253Property {
         this.password = password;
     }
 
-    public String getSmsUr() {
-        return smsUr;
+    public String getSmsUrl() {
+        return smsUrl;
     }
 
-    public void setSmsUr(String smsUr) {
-        this.smsUr = smsUr;
+    public void setSmsUrl(String smsUrl) {
+        this.smsUrl = smsUrl;
+    }
+
+    public String getSmsSign() {
+        return smsSign;
+    }
+
+    public void setSmsSign(String smsSign) {
+        this.smsSign = smsSign;
     }
 
     @Override
     public String toString() {
-        return "Zz253Property [account=" + account + ", password=" + password + ", smsUr=" + smsUr + "]";
+        return "Zz253Property [account=" + account + ", password=" + password + ", smsUrl=" + smsUrl + ", smsSign="
+            + smsSign + "]";
     }
 
 }
