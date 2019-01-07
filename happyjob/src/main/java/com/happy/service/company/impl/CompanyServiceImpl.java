@@ -99,7 +99,7 @@ public class CompanyServiceImpl implements CompanyService{
         	return msg;
         }
         
-        HpCompanyEntity company = new HpCompanyExt();
+        HpCompanyEntity company = new HpCompanyEntity();
         company.setComName(comName);
         company.setHpCompanyTypeId(companyTypeId);
         company.setHpCompanyScaleId(companyScaleId);
@@ -111,6 +111,30 @@ public class CompanyServiceImpl implements CompanyService{
         company.setComEmail(comEmail);
         company.setApproveState(0); //未认证
         this.hpCompanyMapper.insert(company);
+		return msg;
+	}
+
+	@Override
+	public BaseMsg updateCompany(Long companyId, String comName, Long companyTypeId, Long companyScaleId,
+			String comDesc, Long countyId, String addrDetail, String comtPerson, String comPhone, String comEmail) {
+		BaseMsg msg = new BaseMsg();
+        if(companyId == null || companyId == 0) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数有问题："+companyId);
+            return msg;
+        }
+        
+        HpCompanyEntity company = new HpCompanyEntity();
+        company.setComName(comName);
+        company.setHpCompanyTypeId(companyTypeId);
+        company.setHpCompanyScaleId(companyScaleId);
+        company.setComDesc(comDesc);
+        company.setCountyId(countyId);
+        company.setAddrDetail(addrDetail);
+        company.setComtPerson(comtPerson);
+        company.setComPhone(comPhone);
+        company.setComEmail(comEmail);
+        this.hpCompanyMapper.updateByPK(company);
 		return msg;
 	}
 

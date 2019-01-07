@@ -11,4 +11,7 @@ public interface CompanyService {
 	 
 	 BaseMsg newCompany(String comName,Long companyTypeId,Long companyScaleId,String comDesc,
 			 Long countyId,String addrDetail,String comtPerson,String comPhone,String comEmail);
+	 
+	 BaseMsg updateCompany(Long companyId ,String comName,Long companyTypeId,Long companyScaleId,String comDesc,
+			 Long countyId,String addrDetail,String comtPerson,String comPhone,String comEmail);
 }
