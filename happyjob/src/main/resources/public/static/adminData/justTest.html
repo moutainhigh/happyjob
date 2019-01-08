@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<meta charset="utf-8" >
+<script src="/static/adminlet/bower_components/jquery/dist/jquery.min.js"></script>
+	</head>
+	
+	<body>
+		
+		<br><br>
+		<input type="file" id="upPic" >
+		<button type="button" data-api="/wxAppletsLogin/imgUpOne" data-type="pic" >文件上传</button>
+	</body>
+	
+	
+	<script type="text/javascript">
+	
+	$(function(){
+		
+		$("button").click(function(){
+			var url = window.location.origin + $(this).data("api");
+			var type = $(this).data("type");
+			if(type=="file"){
+				upload(url);
+			}else if(type == "pic"){
+				uploadPic(url)
+			}else{
+				vote(url);
+			}
+		});
+	})
+	
+	function uploadPic(url){
+		var file = $("#upPic").get(0).files[0];
+		if(!file){
+			return;
+		}
+		var formData = new FormData();
+		formData.append("file",file);
+		formData.append("code","user");
+		$.ajax({
+			url:url,
+			dataType:"json",
+			type:"post",
+			data:formData,
+	        processData: false,  // 不处理数据
+	        contentType: false,   // 不设置内容类型
+			header:{
+				oid:"fad7bd3d01f04950b1d906584afc9253",
+			},
+			success:function(data){
+				console.log("===",data);
+			}
+		});
+	}
+	
+	
+	</script>
+	
+</html>

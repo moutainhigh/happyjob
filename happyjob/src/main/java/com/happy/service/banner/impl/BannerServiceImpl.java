@@ -95,7 +95,7 @@ public class BannerServiceImpl implements BannerService {
 	}
 
 	@Override
-	public BaseMsg saveAdvertisement(String title, String location, String type, Long sort, String picUrl,String targetUrl,
+	public BaseMsg saveAdvertisement(String title, Integer posType, String type, Long sort, String picUrl,String targetUrl,
 			Long endTime) {
 		BaseMsg msg = new BaseMsg();
         if(sort == null || sort ==0) {
@@ -107,7 +107,8 @@ public class BannerServiceImpl implements BannerService {
         hpAdvBanner.setTitle(title);
         hpAdvBanner.setSortNum(sort);
         hpAdvBanner.setPicUrl(picUrl);
-        hpAdvBanner.setPicUrl(targetUrl);
+        hpAdvBanner.setTargetUrl(targetUrl);
+        hpAdvBanner.setPosType(posType);
         hpAdvBanner.setDelOn(EnumConst.advertisementDelOn.DelOnNo.getKey());   
         hpAdvBanner.setUseOn(EnumConst.advertisementUseOn.UseOnNo.getKey());   //关闭状态
         hpAdvBanner.setEndTime(endTime);
@@ -120,7 +121,7 @@ public class BannerServiceImpl implements BannerService {
 	}
 
 	@Override
-	public BaseMsg updateAdvertisement(Long hpAdvBannerId, String title, String location, String type, Long sortNum,
+	public BaseMsg updateAdvertisement(Long hpAdvBannerId, String title, Integer posType, String type, Long sortNum,
 			String picUrl, String targetUrl, Long endTime) {
 		BaseMsg msg = new BaseMsg();
         if(hpAdvBannerId == null || hpAdvBannerId ==0) {

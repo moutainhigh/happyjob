@@ -32,7 +32,7 @@ public interface BannerService {
     /**
      * 修改广告
      */
-    BaseMsg updateAdvertisement(Long hpAdvBannerId ,String title,String location,String type,Long sort,String picUrl,String targetUrl,Long endTime);
+    BaseMsg updateAdvertisement(Long hpAdvBannerId ,String title,Integer posType,String type,Long sort,String picUrl,String targetUrl,Long endTime);
 
     
     /**
@@ -46,5 +46,5 @@ public interface BannerService {
      * @param endTime
      * @return
      */
-    BaseMsg saveAdvertisement(String title,String location,String type,Long sort,String picUrl,String targetUrl,Long endTime);
+    BaseMsg saveAdvertisement(String title,Integer posType,String type,Long sort,String picUrl,String targetUrl,Long endTime);
 }

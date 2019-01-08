@@ -20,7 +20,13 @@ $(document).on("click","#upload",function(){
 	});
 });
 
-
+function clearlistParams(){
+	listParams.payName = "";
+	listParams.payIdNum = "";
+	listParams.workNum = "";
+	listParams.payComName = "";
+	listParams.payTime = "";
+}
 
 $(document).on("click",".querySalary",function(){
 	listParams.payName = $("#payName").val();
@@ -28,9 +34,10 @@ $(document).on("click",".querySalary",function(){
 	listParams.workNum = $("#workNum").val();
 	listParams.payComName = $("#payComName").val();
 	listParams.payTime = $("#payTime").val();
-	
 	fetchList();
+	clearlistParams();
 })
+
 $(document).on("click",".cat",function(){
 	
     
@@ -94,7 +101,7 @@ function fetchList(){
 
 // 添加table数据
 function addTableList(list){
-    var $table = $("#userList");
+    var $table = $("#salaryList");
     var $tBody = $table.find("tbody");
     var templeteTr="";
     list.forEach(function(item){
@@ -120,7 +127,7 @@ function addTableList(list){
             <th>'+ item.deductionMoney +'</th>\
             <th>'+ item.realMoney +'</th>\
             <th>\
-                <button type="button" class="btn btn-default btn-sm cat">产看更多</button>\
+                <button type="button" class="btn btn-default btn-sm cat">查看更多</button>\
             </th>\
         </tr>';
     })

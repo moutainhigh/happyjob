@@ -52,7 +52,6 @@ $(document).on("click","#updateAdvertisement",function(){
 	       callback:function(result){
 	           console.log(result);
 	           $("#browseModal").modal('hide');  //手动关闭
-	           $("#formModal").data('bootstrapValidator').resetForm();
 	           fetchList(); //刷新页面
 	           swal(
 	                   'Saved!',
@@ -111,46 +110,27 @@ $(document).on("click",".openOrClose",function(){
         if (isConfirm === true) {
         	postUseOn(result);
         	
-//            swal(
-//            'Deleted!',
-//            'Your imaginary file has been deleted.',
-//            'success'
-//            );
-        
-        } else if (isConfirm === false) {
             swal(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
+	            '开启/关闭!',
+	            '成功.',
+	            'success'
             );
         
-        } else {
-            // Esc, close button or outside click
-            // isConfirm is undefined
-        }
+        } 
     }); 
 })
 
 // 点击出现modal
 $(document).on("click",".updateAdv",function(){
     var $row = $(this).parents("tr");
-    var hpAdvBannerId=$row.data("hpadvbannerid");
-    var title=$row.data("title");
     
-    // var location=$row.data("location");
-    // var type=$row.data("type");
-    var endTime = $row.data("end-time");
-    var sortNum=$row.data("sort-num");
-    var picUrl=$row.data("pic-url");
-    var targetUrl=$row.data("target-url");
-    
-      $("#bannerId").val(hpAdvBannerId);
-      $("#title").val(title);
-      $("#endTime").val(endTime);
-      $("#sortNum").val(sortNum);
-      $("#picUrl").attr("src",picUrl);
-      $("#targetUrl").val(targetUrl);
-      $("#title").val(title);
+      $("#bannerId").val($row.data("hpadvbannerid"));
+      $("#title").val($row.data("title"));
+      $("#endTime").val($row.data("end-time"));
+      $("#sortNum").val($row.data("sort-num"));
+      $("#picUrl").attr("src",$row.data("pic-url"));
+      $("#targetUrl").val($row.data("target-url"));
+      $("#posType").val($row.data("pos-type"));
       
       var obj = document.getElementById('upPic') ; //清空
       obj.outerHTML=obj.outerHTML; 
@@ -222,6 +202,7 @@ function addTableList(list){
             data-hpadvbannerid="'+ item.hpAdvBannerId +'" \
             data-use-on="'+ item.useOn +'" \
             data-title="'+ item.title +'" \
+            data-pos-type="'+ item.posType +'" \
             data-sort-num="'+ item.sortNum +'" \
             data-create-time="'+ timestampToTime(item.createTime) +'" \
             data-comname="'+ (item.picUrl || "") +'" \
@@ -230,8 +211,7 @@ function addTableList(list){
             data-target-url="'+ item.targetUrl +'" \
             data-del-on"'+ item.delOn +'" >\
             <th>'+ item.title +'</th>\
-            <th>'+ '首页轮播' +'</th>\
-            <th>'+ '图片' +'</th>\
+            <th>'+ posType(item.posType) +'</th>\
             <th>'+ timestampToTime(item.createTime) +'</th>\
             <th>'+ timestampToTime(item.endTime) +'</th>\
             <th>'+ item.sortNum +'</th>\
@@ -284,5 +264,11 @@ function change(t) {
         return "0" + t;
     } else {
         return t;
+    }
+}
+
+function posType(value){
+    switch (value) {
+        case 1:return "首页轮播"
     }
 }

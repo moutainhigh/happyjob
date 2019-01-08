@@ -94,7 +94,7 @@
 					</span>
 				</a>
 				<ul class="treeview-menu">
-					<li class="active"><a href="/static/adminData/salary-list.html"><i class="fa fa-circle-o"></i>用户列表</a></li>
+					<li class="active"><a href="/index.html"><i class="fa fa-circle-o"></i>用户列表</a></li>
 					<li><a href="/static/adminData/salary.html"><i class="fa fa-circle-o"></i>工资查询</a></li>
 					<li><a href="/static/adminData/delivery.html"><i class="fa fa-circle-o"></i>用户投递</a></li>
 				</ul>
@@ -159,7 +159,6 @@
 							<tr>
 								<th>广告标题</th>
 								<th>广告位</th>
-								<th>类型</th>
 								<th>添加时间</th>
 								<th>结束时间</th>
 								<th>排序</th>
@@ -215,13 +214,9 @@
 					<div class="form-group">
 						<label for="" class="col-sm-3">广告位</label>
 						<div class="col-sm-5 ">
-							<input type="text" class="form-control"  id="location">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="" class="col-sm-3">类型</label>
-						<div class="col-sm-5 ">
-							<input type="text" class="form-control"  id="type">
+							<select class="form-control" id="posType">
+									<option selected="" value="1">首页轮播</option>
+							</select>
 						</div>
 					</div>
 					<div class="form-group">
