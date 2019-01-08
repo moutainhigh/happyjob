@@ -262,8 +262,9 @@
 			
 			<div>
 				<label for="hpPositionTypeId">职位行业：</label>
+				<input id="hpPositionTypeId" type="hidden" >
 				<div>
-					<div>已选：</div>
+					<div>已选：<div>我擦</div></div>
 					<div>
 						<div>
 							IT|互联网|通信|电子
@@ -275,8 +276,155 @@
 				</div>
 			</div>
 			
+			<div>
+				<label for="posDetail" >基本信息：</label>
+				<div>
+					<textarea id="posDetail" rows="5" cols="100"></textarea>
+				</div>
+			</div>
 			
+			<div>
+				<label >岗位要求：</label>
+				<div>
+					<div>
+						性别要求<input id="reqGender" >
+						年龄要求<input id="reqAge" >
+						学历要求<input id="reqEducation" >
+						专业技能<input id="reqSkill" >
+						工作经验<input id="reqExp" >
+						工作年限<input id="reqWorkYears" >
+						其他要求<input id="reqOther" >
+					</div>
+				</div>
+			</div>
 	
+			<div>
+				<label for="otherWelfare" >其他福利：</label>
+				<div>
+					<textarea id="otherWelfare" rows="5" cols="100"></textarea>
+				</div>
+			</div>
+	
+			<div>
+				<label for="carOn" >是否有班车：</label>
+				<div>
+					<select id="carOn" >
+						<option>请选择</option>
+						<option value="0">是</option>
+						<option value="1">否</option>
+					</select>
+				</div>
+			</div>
+			<div>
+				<label for="carDesc" >班车信息：</label>
+				<div>
+					<textarea id="carDesc" rows="5" cols="100"></textarea>
+				</div>
+			</div>
+			
+			<div>
+				<label for="posComDesc" >公司介绍：</label>
+				<div>
+					<textarea id="posComDesc" rows="5" cols="100"></textarea>
+				</div>
+			</div>
+			
+			<div>
+				<label for="posNature" >职位性质：</label>
+				<div>
+					<input name='posNature' type="radio" value="1" >实习
+					<input name='posNature' type="radio" value="2" >兼职
+					<input name='posNature' type="radio" value="3" >全职
+				</div>
+			</div>
+			
+			<div>
+				<label for="hpPositionSalaryId" >职位月薪：</label>
+				<div>
+					<select id="hpPositionSalaryId" >
+						<option>请选择</option>
+						<option value="-1">不限</option>
+						<option value="0">面议</option>
+					</select>
+				</div>
+			</div>
+			
+			<div>
+				<label for="posWorkYear" >工作经验：</label>
+				<div>
+					<select id="posWorkYear" >
+						<option value="">请选择</option>
+						<option value="不限">不限</option>
+						<option value="无经验">无经验</option>
+						<option value="1年以下">1年以下</option>
+						<option value="1-3年">1-3年</option>
+						<option value="3-5年">3-5年</option>
+						<option value="5-10年">5-10年</option>
+						<option value="10年以上">10年以上</option>
+					</select>
+				</div>
+			</div>
+			
+			<div>
+				<label for="startTime" >开始时间：</label>
+				<div>
+					<input id="startTime" type="text" class="datepicker" >
+				</div>
+			</div>
+			<div>
+				<label for="endTime" >到期时间：</label>
+				<div>
+					<input id="endTime" type="text" class="datepicker" >
+				</div>
+			</div>
+			
+			<div>
+				<label for="posNum" >招聘人数：</label>
+				<div>
+					<input id="posNum" type="text" >
+				</div>
+			</div>
+			
+			<div>
+				<label for="area" >工作地点：</label>
+				<div>
+					<select id="province" ></select>
+					<select id="city" ></select>
+					<select id="county" ></select>
+				</div>
+			</div>
+			
+			<div>
+				<label for="hpEducationId" >学历要求：</label>
+				<div>
+					<select id="hpEducationId" >
+						<option  >请选择</option>
+						<option value="-1">不限</option>
+						<option value="0">其他</option>
+						
+					</select>
+				</div>
+			</div>
+			
+			<div>
+				<label for="posPerson" >联系人：</label>
+				<div>
+					<input id="posPerson" type="text" >
+				</div>
+			</div>
+			<div>
+				<label for="posPhone" >联系电话：</label>
+				<div>
+					<input id="posPhone" type="text" >
+				</div>
+			</div>
+			<div>
+				<label for="posEmail" >接收邮箱：</label>
+				<div>
+					<input id="posEmail" type="text" >
+				</div>
+			</div>
+			
 		</section>
 	</div>
 	

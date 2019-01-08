@@ -2,6 +2,7 @@
 
 import com.happy.service.config.data.AreaListMsg;
 import com.happy.service.config.data.EduListMsg;
+import com.happy.service.config.data.PosOfferListMsg;
 import com.happy.service.config.data.PosTypeListMsg;
 import com.happy.service.config.data.SalaryListMsg;
 import com.happy.service.config.data.StoreDataMsg;
@@ -50,4 +51,9 @@ public interface ConfigService {
    * @TODO:   获取职位行业类型
    */
   PosTypeListMsg getPosTypeList();
+  /**
+   *
+   * @TODO:   获取职位行业类型
+   */
+  PosOfferListMsg getPosOfferList();
 }

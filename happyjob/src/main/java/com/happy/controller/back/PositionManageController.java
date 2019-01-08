@@ -16,6 +16,7 @@ import com.happy.plugin.BaseMsg;
 import com.happy.service.config.ConfigService;
 import com.happy.service.config.data.AreaListMsg;
 import com.happy.service.config.data.EduListMsg;
+import com.happy.service.config.data.PosOfferListMsg;
 import com.happy.service.config.data.SalaryListMsg;
 import com.happy.service.config.data.WelfareListMsg;
 import com.happy.service.config.impl.ConfigServiceImpl;
@@ -173,13 +174,13 @@ public class PositionManageController {
     }
     
     /**
-     * @TODO:     职位行业类型选项获取
+     * @TODO:     职位招聘方式选项获取
      */
-    @ApiOperation(value="配置：职位行业类型选项",notes="职位行业类型选项")
+    @ApiOperation(value="配置：职位招聘方式选项",notes="职位招聘方式选项")
     @GetMapping(value="posTypeList")
-    public EduListMsg posTypeList(){
+    public PosOfferListMsg posTypeList(){
         
-        return this.configService.getEduList(1);
+        return this.configService.getPosOfferList();
     }
     
     /**

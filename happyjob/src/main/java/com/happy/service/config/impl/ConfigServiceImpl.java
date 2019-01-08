@@ -11,6 +11,7 @@ import com.happy.service.config.ConfigService;
 import com.happy.service.config.data.AreaListMsg;
 import com.happy.service.config.data.AreaSearch;
 import com.happy.service.config.data.EduListMsg;
+import com.happy.service.config.data.PosOfferListMsg;
 import com.happy.service.config.data.PosTypeListMsg;
 import com.happy.service.config.data.SalaryListMsg;
 import com.happy.service.config.data.StoreDataMsg;
@@ -18,6 +19,7 @@ import com.happy.service.config.data.StoreListMsg;
 import com.happy.service.config.data.WelfareListMsg;
 import com.happy.sqlExMapper.HpConfigExMapper;
 import com.happy.sqlMapper.HpCompanyStoreMapper;
+import com.happy.sqlMapper.HpPositionOfferMapper;
 import com.happy.sqlMapper.HpPositionSalaryMapper;
 import com.happy.sqlMapper.HpPositionTypeMapper;
 import com.happy.sqlMapper.HpPositionWelfareMapper;
@@ -43,6 +45,8 @@ public class ConfigServiceImpl implements ConfigService {
     private HpPositionWelfareMapper hpPositionWelfareMapper;
     @Autowired
     private HpPositionTypeMapper hpPositionTypeMapper;
+    @Autowired
+    private HpPositionOfferMapper hpPositionOfferMapper;
     
     @Override
     public EduListMsg getEduList(int useOn) {
@@ -112,6 +116,13 @@ public class ConfigServiceImpl implements ConfigService {
     public PosTypeListMsg getPosTypeList() {
         PosTypeListMsg msg = new PosTypeListMsg();
         msg.setList(this.hpPositionTypeMapper.selectAll());
+        return msg;
+    }
+
+    @Override
+    public PosOfferListMsg getPosOfferList() {
+        PosOfferListMsg msg = new PosOfferListMsg();
+        msg.setList(this.hpPositionOfferMapper.selectAll());
         return msg;
     }
     
