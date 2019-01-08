@@ -106,4 +106,42 @@ public class CompanyManageController {
     }
     
     
+    /**
+     * 编辑企业
+     */
+    @ApiOperation(value="编辑企业",notes="编辑企业")
+    @ApiImplicitParams({
+    	@ApiImplicitParam(name="companyId",value="公司id",dataType="Long",paramType="query",required=true),
+        @ApiImplicitParam(name="comName",value="公司名称",dataType="String",paramType="query",required=true),
+        @ApiImplicitParam(name="companyTypeId",value="行业类型id",dataType="Long",paramType="query",required=false),
+        @ApiImplicitParam(name="companyScaleId",value="公司规模id",dataType="Long",paramType="query",required=false),
+        @ApiImplicitParam(name="comDesc",value="公司描述",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="countyId",value="区id",dataType="Long",paramType="query",required=false),
+        @ApiImplicitParam(name="addrDetail",value="详细地址",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="comtPerson",value="联系人",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="comPhone",value="联系电话",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="comEmail",value="联系Email",dataType="String",paramType="query",required=false),
+    })
+    @PostMapping(value="updateCompany")
+    public BaseMsg updateCompany(HttpServletRequest request){
+    	Long companyId = (Long)Util.typeChange(request.getParameter("companyId"), Long.class);
+    	String comName = request.getParameter("comName");
+    	Long companyTypeId = (Long)Util.typeChange(request.getParameter("companyTypeId"), Long.class);
+    	Long companyScaleId = (Long)Util.typeChange(request.getParameter("companyScaleId"), Long.class);
+    	String comDesc = request.getParameter("comDesc");
+    	Long countyId = (Long)Util.typeChange(request.getParameter("countyId"), Long.class);
+    	String addrDetail = request.getParameter("addrDetail");
+    	String comtPerson = request.getParameter("comtPerson");
+    	String comPhone = request.getParameter("comPhone");
+    	String comEmail = request.getParameter("comEmail");
+    	
+        logger.info("backAdvertisement.deleteAdvertisement 请求参数：companyId={} ,comName={},companyTypeId={},companyScaleId={},comDesc={}"
+        		+ ",countyId={},addrDetail={},comtPerson={},comPhone={},comEmail={}",companyId,comName,companyTypeId,
+        		companyScaleId,comDesc,countyId,addrDetail,comtPerson,comPhone,comEmail);
+        BaseMsg ss = this.companyService.updateCompany(companyId,comName,companyTypeId,
+        		companyScaleId,comDesc,countyId,addrDetail,comtPerson,comPhone,comEmail);
+        return ss;
+    }
+    
+    
 }

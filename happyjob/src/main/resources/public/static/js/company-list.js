@@ -81,8 +81,8 @@ $(document).on("click",".cat",function(){
     $('#browseModal').modal('toggle');
 })
 
-// 查看
-$(document).on("click",".updateCompany",function(){
+// 打开 修改modal
+$(document).on("click","#"updateCompanyModal"",function(){
     var $row = $(this).parents("tr");
     var comName = $row.data("com-name");
     var typeName = $row.data("type-name");
@@ -96,18 +96,60 @@ $(document).on("click",".updateCompany",function(){
     var comEmail = $row.data("com-email");
     
     var $obj = $("#updateCompanyModel").find(".showValue");
-    $obj.eq(0).html(comName);
-    $obj.eq(1).html(typeName);
-    $obj.eq(2).html(scale);
-    $obj.eq(3).html(comDesc);
-    $obj.eq(5).html(addrDetail);
-    $obj.eq(6).html(comtPerson);
-    $obj.eq(7).html(comPhone);
+    $("#comName2").val(comName);
+    $("#companyTypeId2").val(typeName);
+    $("#companyScaleId2").val(scale);
+    $("#comDesc2").val(comDesc);
+    $("#countyId2").val(countyId);
+    $("#addrDetail2").val(addrDetail);
+    $("#comtPerson2").val(comtPerson);
+    $("#comPhone2").val(comPhone);
+    $("#comLicense2").val(comLicense);
+    $("comEmail2").val(comEmail);
+    
+    $("comLogo2").attr("src",comLogo);
+    $("comlicens2").attr("src",comLogo);
+})
+
+//修改 提交
+$(document).on("click","#updateCompanyModal",function(){
+	
+	var comName = $("#comName2").val();
+    var companyTypeId = $("#companyTypeId2").val();
+    var companyScaleId = $("#companyScaleId2").val();
+    var comDesc = $("#comDesc2").val();
+    var countyId = $("#countyId2").val();
+    var addrDetail = $("#addrDetail2").val();
+    var comtPerson = $("#comtPerson2").val();
+    var comPhone = $("#comPhone2").val();
+    var comEmail = $("#comEmail2").val();
+    
+    var saveParams ={};
+    saveParams.comName = comName ;
+    saveParams.companyTypeId = companyTypeId ;
+    saveParams.companyScaleId = companyScaleId ;
+    saveParams.comDesc = comDesc ;
+    saveParams.countyId = countyId ;
+    saveParams.addrDetail = addrDetail ;
+    saveParams.comtPerson = comtPerson ;
+    saveParams.comPhone = comPhone ;
+    saveParams.comEmail = comEmail ;
+
+    fetchPost({
+        url:"/backCompany/updateCompany",
+        params: saveParams,
+        callback:function(data){
+            console.log(data);
+            fetchList();
+            swal(
+	                   'Saved!',
+	                   '已修改.',
+	                   'success'
+	           );
+        }
+    })
    
-    $obj.eq(8).html(comEmail);
-//    $obj.eq(7).attr("src",comLogo);
-//    $obj.eq(8).attr("src",comLicense);
-    $('#updateCompanyModel').modal('toggle');
+    $('#updateCompanyModal').modal('toggle');
 })
 
 
@@ -116,7 +158,7 @@ $(document).on("click","#openAddCompany",function(){
     $('#addCompanyModel').modal('toggle');
 })
 
-//邢增 企业
+//新增 企业
 $(document).on("click","#newCompany",function(){
     var $obj = $("#addCompanyModel").find(".showValue");
     
