@@ -82,7 +82,7 @@ $(document).on("click",".cat",function(){
 })
 
 // 打开 修改modal
-$(document).on("click","#"updateCompanyModal"",function(){
+$(document).on("click",".openUpdateModal",function(){
     var $row = $(this).parents("tr");
     var comName = $row.data("com-name");
     var typeName = $row.data("type-name");
@@ -94,8 +94,9 @@ $(document).on("click","#"updateCompanyModal"",function(){
     var comLogo = $row.data("com-logo");
     var comLicense = $row.data("com-license");
     var comEmail = $row.data("com-email");
+    var hpCompanyId = $row.data("company-id");
     
-    var $obj = $("#updateCompanyModel").find(".showValue");
+    $("#hpCompanyId2").val(hpCompanyId);
     $("#comName2").val(comName);
     $("#companyTypeId2").val(typeName);
     $("#companyScaleId2").val(scale);
@@ -108,12 +109,15 @@ $(document).on("click","#"updateCompanyModal"",function(){
     $("comEmail2").val(comEmail);
     
     $("comLogo2").attr("src",comLogo);
-    $("comlicens2").attr("src",comLogo);
+    $("comlicens2").attr("src",comLicense);
+    
+    $('#updateCompanyModal').modal('show');
 })
 
 //修改 提交
-$(document).on("click","#updateCompanyModal",function(){
+$(document).on("click","#updateComfirm",function(){
 	
+	var hpCompanyId = $("#hpCompanyId2").val();
 	var comName = $("#comName2").val();
     var companyTypeId = $("#companyTypeId2").val();
     var companyScaleId = $("#companyScaleId2").val();
@@ -134,13 +138,15 @@ $(document).on("click","#updateCompanyModal",function(){
     saveParams.comtPerson = comtPerson ;
     saveParams.comPhone = comPhone ;
     saveParams.comEmail = comEmail ;
-
+    saveParams.companyId = hpCompanyId ;
+    
     fetchPost({
         url:"/backCompany/updateCompany",
         params: saveParams,
         callback:function(data){
             console.log(data);
             fetchList();
+            $('#updateCompanyModal').modal('hide');
             swal(
 	                   'Saved!',
 	                   '已修改.',
@@ -149,12 +155,10 @@ $(document).on("click","#updateCompanyModal",function(){
         }
     })
    
-    $('#updateCompanyModal').modal('toggle');
 })
 
 
 $(document).on("click","#openAddCompany",function(){
-    var $obj = $("#addCompanyModel").find(".showValue");
     $('#addCompanyModel').modal('toggle');
 })
 
@@ -182,11 +186,11 @@ $(document).on("click","#newCompany",function(){
     saveParams.comtPerson = comtPerson ;
     saveParams.comPhone = comPhone ;
     saveParams.comEmail = comEmail ;
+    
     //保存图片
-    
-//    uploadPic(window.location.origin + "/wxAppletsLogin/imgUpOne");
-//    saveParams.upPicLogoUrl =upPicLogoUrl ;
-    
+    saveParams.comLogo = comLogo ;
+    saveParams.comLicense = comLicense ;
+	console.log("=saveParams==",saveParams);
     fetchPost({
         url:"/backCompany/newCompany",
         params: saveParams,
@@ -200,18 +204,19 @@ $(document).on("click","#newCompany",function(){
 	           );
         }
     })
-   //$('#addCompanyModel').modal('toggle');
+   $('#addCompanyModel').modal('hide');
 })
  
-var upPicLogoUrl ;
-function uploadPic(url){
-	var file =  $("#upPicLogo").get(0).files[0];
+var comLogo ;
+function uploadLogo(){
+	var url = window.location.origin + "/wxAppletsLogin/imgUpOne" ;
+	var file = $("#upPicLogo").get(0).files[0];
 	if(!file){
-		return ;
+		return;
 	}
 	var formData = new FormData();
 	formData.append("file",file);
-	formData.append("code","user");
+	formData.append("code","company");
 	$.ajax({
 		url:url,
 		dataType:"json",
@@ -223,12 +228,41 @@ function uploadPic(url){
 			oid:"fad7bd3d01f04950b1d906584afc9253",
 		},
 		success:function(data){
-			console.log("===",data);
-			console.log("===",data.data.imgUrl);
-			upPicLogoUrl = data.data.imgUrl ;
+			console.log("=data.data.imgUrl==",data.data.imgUrl);
+			comLogo = data.data.imgUrl ;
 		}
 	});
 }
+
+
+var comLicense ;
+function upPicLis(){
+	var url = window.location.origin + "/wxAppletsLogin/imgUpOne" ;
+	var file = $("#upPicLis").get(0).files[0];
+	if(!file){
+		return;
+	}
+	var formData = new FormData();
+	formData.append("file",file);
+	formData.append("code","company");
+	$.ajax({
+		url:url,
+		dataType:"json",
+		type:"post",
+		data:formData,
+        processData: false,  // 不处理数据
+        contentType: false,   // 不设置内容类型
+		header:{
+			oid:"fad7bd3d01f04950b1d906584afc9253",
+		},
+		success:function(data){
+			console.log("==data.data.imgUrl=",data.data.imgUrl);
+			comLicense = data.data.imgUrl ;
+		}
+	});
+}
+
+
 
 var listParams = {
 	comName:"",
@@ -297,7 +331,7 @@ function addTableList(list){
             <th>'+ timestampToTime(item.createTime) +'</th>\
             <th>\
                 <button type="button" class="btn btn-default btn-sm cat">查看</button>\
-                <button type="button" class="btn btn-primary btn-sm updateCompany">编辑</button>\
+                <button type="button" class="btn btn-primary btn-sm openUpdateModal">编辑</button>\
             <button type="button" class="btn btn-danger btn-sm  auth">认证</button>\
             </th>\
         </tr>';

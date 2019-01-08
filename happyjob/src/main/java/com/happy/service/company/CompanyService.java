@@ -10,8 +10,9 @@ public interface CompanyService {
 	 BaseMsg companyAuth(Long companyId ,Integer approveState);
 	 
 	 BaseMsg newCompany(String comName,Long companyTypeId,Long companyScaleId,String comDesc,
-			 Long countyId,String addrDetail,String comtPerson,String comPhone,String comEmail);
+			 Long countyId,String addrDetail,String comtPerson,String comPhone,String comEmail,String comLicense,String comLogo);
 	 
 	 BaseMsg updateCompany(Long companyId ,String comName,Long companyTypeId,Long companyScaleId,String comDesc,
 			 Long countyId,String addrDetail,String comtPerson,String comPhone,String comEmail);
+
 }

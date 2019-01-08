@@ -61,7 +61,7 @@ public class CompanyServiceImpl implements CompanyService{
 
 	@Override
 	public BaseMsg newCompany(String comName, Long companyTypeId, Long companyScaleId, String comDesc, Long countyId,
-			String addrDetail, String comtPerson, String comPhone, String comEmail) {
+			String addrDetail, String comtPerson, String comPhone, String comEmail,String comLicense,String comLogo) {
 		BaseMsg msg = new BaseMsg();
         if(comName == null || comName == "") {
             msg.setErrorCode(1);
@@ -110,6 +110,8 @@ public class CompanyServiceImpl implements CompanyService{
         company.setComPhone(comPhone);
         company.setComEmail(comEmail);
         company.setApproveState(0); //未认证
+        company.setComLicense(comLicense);
+        company.setComLogo(comLogo);
         this.hpCompanyMapper.insert(company);
 		return msg;
 	}
@@ -120,7 +122,7 @@ public class CompanyServiceImpl implements CompanyService{
 		BaseMsg msg = new BaseMsg();
         if(companyId == null || companyId == 0) {
             msg.setErrorCode(1);
-            msg.setMessage("参数有问题："+companyId);
+            msg.setMessage("参数有问题 companyId:" +companyId);
             return msg;
         }
         

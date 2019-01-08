@@ -96,12 +96,14 @@ public class CompanyManageController {
     	String comtPerson = request.getParameter("comtPerson");
     	String comPhone = request.getParameter("comPhone");
     	String comEmail = request.getParameter("comEmail");
+    	String comLicense = request.getParameter("comLicense");
+    	String comLogo = request.getParameter("comLogo");
     	
         logger.info("backAdvertisement.deleteAdvertisement 请求参数：comName={},companyTypeId={},companyScaleId={},comDesc={}"
-        		+ ",countyId={},addrDetail={},comtPerson={},comPhone={},comEmail={}",comName,companyTypeId,
-        		companyScaleId,comDesc,countyId,addrDetail,comtPerson,comPhone,comEmail);
+        		+ ",countyId={},addrDetail={},comtPerson={},comPhone={},comEmail={},comLicense={},comLogo={}",comName,companyTypeId,
+        		companyScaleId,comDesc,countyId,addrDetail,comtPerson,comPhone,comEmail,comLicense,comLogo);
         BaseMsg ss = this.companyService.newCompany(comName,companyTypeId,
-        		companyScaleId,comDesc,countyId,addrDetail,comtPerson,comPhone,comEmail);
+        		companyScaleId,comDesc,countyId,addrDetail,comtPerson,comPhone,comEmail,comLicense,comLogo);
         return ss;
     }
     
