@@ -12,18 +12,19 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value="EduListMsg",description="学历选项列表返回信息类")
  public class EduListMsg extends BaseMsg {
 
-    @ApiModelProperty(name="data",value="学历选项")
-    private List<HpEducationEntity> data;
+    @ApiModelProperty(name="list",value="学历选项")
+    private List<HpEducationEntity> list;
 
     @ApiModelProperty(name="page",value="查询对象")
     private Page page;
     
-    public List<HpEducationEntity> getData() {
-        return data;
+
+    public List<HpEducationEntity> getList() {
+        return list;
     }
 
-    public void setData(List<HpEducationEntity> data) {
-        this.data = data;
+    public void setList(List<HpEducationEntity> list) {
+        this.list = list;
     }
 
     public Page getPage() {

@@ -18,6 +18,7 @@ import com.happy.service.config.ConfigService;
 import com.happy.service.config.data.AreaListMsg;
 import com.happy.service.config.data.EduListMsg;
 import com.happy.service.config.data.PosOfferListMsg;
+import com.happy.service.config.data.PosTypeListMsg;
 import com.happy.service.config.data.SalaryListMsg;
 import com.happy.service.config.data.WelfareListMsg;
 import com.happy.service.config.impl.ConfigServiceImpl;
@@ -148,7 +149,7 @@ public class PositionManageController {
      * @TODO:     招聘福利选项获取
      */
     @ApiOperation(value="配置：招聘福利选项",notes="招聘福利选项")
-    @GetMapping(value="positionWelfare")
+    @GetMapping(value="posWelfare")
     public WelfareListMsg positionWelfare(){
         
         return this.configService.getPositionWelfare();
@@ -158,7 +159,7 @@ public class PositionManageController {
      * @TODO:     招聘薪资选项获取
      */
     @ApiOperation(value="配置：招聘薪资选项",notes="招聘薪资选项")
-    @GetMapping(value="positionSalary")
+    @GetMapping(value="posSalary")
     public SalaryListMsg positionSalary(){
         
         return this.configService.getSalaryList();
@@ -178,8 +179,8 @@ public class PositionManageController {
      * @TODO:     职位招聘方式选项获取
      */
     @ApiOperation(value="配置：职位招聘方式选项",notes="职位招聘方式选项")
-    @GetMapping(value="posTypeList")
-    public PosOfferListMsg posTypeList(){
+    @GetMapping(value="posOfferList")
+    public PosOfferListMsg posOfferList(){
         
         return this.configService.getPosOfferList();
     }
@@ -192,6 +193,16 @@ public class PositionManageController {
     public CompanyListMsg posCompanyList(){
         
         return this.configService.getPosCompanyList();
+    }
+    
+    /**
+     * @TODO:     职位类型选项获取
+     */
+    @ApiOperation(value="配置：职位招聘职位类型选项",notes="职位招聘职位类型选选项")
+    @GetMapping(value="posTypeList")
+    public PosTypeListMsg posTypeList(){
+        
+        return this.configService.getPosTypeList();
     }
     
     /**

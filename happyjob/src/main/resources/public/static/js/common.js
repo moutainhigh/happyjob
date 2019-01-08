@@ -98,7 +98,13 @@ var apiData = {
 	positionList:"/backPosition/positionList",
 	positionAdd:"/backPosition/position",
 	positionHotOn:"/backPosition/positionHotOn",
-	positionHotOn:"/backPosition/positionHotOn",
+	posCompanyList:"/backPosition/posCompanyList",
+	posOfferList:"/backPosition/posOfferList",
+	posTypeList:"/backPosition/posTypeList",
+	posWelfare:"/backPosition/posWelfare",
+	posSalary:"/backPosition/posSalary",
+	eduList:"/backPosition/eduList",
+	area:"/backPosition/area",
 }
 
 var dateStrData = {

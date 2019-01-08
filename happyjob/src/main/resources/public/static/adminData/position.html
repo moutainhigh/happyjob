@@ -140,7 +140,7 @@
 			<li class="active">岗位列表</li>
 		</ol>
 		</section>
-	
+	<form autocomplete="off" >
 		<!-- Main content -->
 		<section class="content">
 	
@@ -152,16 +152,14 @@
 			</div>
 			<div>
 				<label for="comName" >*公司名称：</label>
+				<input id="comId" type="hidden" autocomplete="off" >
 				<div>
 					<input id="comName" list="comList" maxlength="50" >
 					<datalist id="comList" >
-						<option value="哈哈" >哈哈</option>
-						<option value="吼吼"  >吼吼</option>
-						<option value="呵呵" >呵呵</option>
 					</datalist>
 				</div>
 			</div>
-			<div>
+			<div id="retItem" style="display:none" >
 				<label >入职返现金额：</label>
 				<div>
 					<div>
@@ -176,7 +174,7 @@
 					</div>
 					<div>
 						<i>女</i>
-						<select id="wemanDayNum" >
+						<select id="womenDayNum" >
 							<option value="0">请选择</option>
 							<option value="30">30天返</option>
 							<option value="45">45天返</option>
@@ -188,13 +186,7 @@
 			</div>
 			<div>
 				<label>福利：</label>
-				<div>
-					<div>公司福利</div>
-					<div>
-						<!-- 此处需要弹出框 -->
-						<input name="hpPositionWelfareId" type="checkbox" value="1" >包住宿
-					</div>
-				</div>
+				<a class="btn btn-primary" data-toggle="modal" id="openWelfare" >点击添加/修改</a>
 			</div>
 			
 			<div>
@@ -249,9 +241,8 @@
 			<div>
 				<label for="hpPositionOfferId" >招聘形式：</label>
 				<div>
-					<select id="hpPositionTypeId" >
+					<select id="hpPositionOfferId" >
 						<option value="">请选择</option>
-						<option value="1">开心直招</option>
 					</select>
 				</div>
 			</div>
@@ -266,17 +257,7 @@
 			<div>
 				<label for="hpPositionTypeId">职位行业：</label>
 				<input id="hpPositionTypeId" type="hidden" >
-				<div>
-					<div>已选：<div>我擦</div></div>
-					<div>
-						<div>
-							IT|互联网|通信|电子
-						</div>
-						<div>
-							计算机硬件及网络设备
-						</div>
-					</div>
-				</div>
+				<a class="btn btn-primary" data-toggle="modal" id="openPosType" >点击添加/修改</a>
 			</div>
 			
 			<div>
@@ -371,13 +352,13 @@
 			<div>
 				<label for="startTime" >开始时间：</label>
 				<div>
-					<input id="startTime" type="text" class="datepicker" >
+					<input id="startTime" type="text" class="datepicker" autocomplete="false" >
 				</div>
 			</div>
 			<div>
 				<label for="endTime" >到期时间：</label>
 				<div>
-					<input id="endTime" type="text" class="datepicker" >
+					<input id="endTime" type="text" class="datepicker" autocomplete="false" >
 				</div>
 			</div>
 			
@@ -391,9 +372,15 @@
 			<div>
 				<label for="area" >工作地点：</label>
 				<div>
-					<select id="province" ></select>
-					<select id="city" ></select>
-					<select id="county" ></select>
+					<select id="province" data-type="area" >
+						<option>请选择</option>
+					</select>
+					<select id="city" data-type="area" >
+						<option>请选择</option>
+					</select>
+					<select id="county" data-type="area" >
+						<option>请选择</option>
+					</select>
 				</div>
 			</div>
 			
@@ -401,7 +388,7 @@
 				<label for="hpEducationId" >学历要求：</label>
 				<div>
 					<select id="hpEducationId" >
-						<option  >请选择</option>
+						<option>请选择</option>
 						<option value="-1">不限</option>
 						<option value="0">其他</option>
 						
@@ -428,13 +415,78 @@
 				</div>
 			</div>
 			
+			
+			<button type="button" id="btnSub" class="btn btn-primary" >提交</button>
 		</section>
+	</form>
 	</div>
-	
+
 	<div class="control-sidebar-bg"></div>
 	
 </div>
 
+<!-- 查看用户资料 -->
+<div class="modal fade" id="bm_welfare" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+<!-- 		<div class="modal-header"> -->
+<!-- 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+<!-- 			<h4 class="modal-title">用户资料</h4> -->
+<!-- 		</div> -->
+		<div class="modal-body">
+			<form class="form-horizontal col-sm-7">
+					<div id="welfareChoose" >
+						<div class="form-group" >
+							<label for="" class="col-sm-3">已选：</label>
+							<div class="showValue col-sm-8">哈哈</div>
+						</div>
+					</div>
+						
+					<div id="welfareBox" >
+						<div class="form-group">
+							<label class="col-sm-3">
+							<input name="hpPositionWelfareId" type="checkbox" value="1" >
+							头像</label>
+						</div>	
+					</div>
+				</form>	
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+		</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
+<!-- 查看用户资料 -->
+<div class="modal fade" id="bm_posType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+<!-- 		<div class="modal-header"> -->
+<!-- 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+<!-- 			<h4 class="modal-title">用户资料</h4> -->
+<!-- 		</div> -->
+		<div class="modal-body">
+				<div>
+					<div>已选：<div id="posTypeOn">我擦</div></div>
+					<div id="posTypeBox" >
+						<div>
+							IT|互联网|通信|电子
+						</div>
+						<div>
+							<div data-type="posType" data-id="">计算机硬件及网络设备</div>
+							<div data-type="posType" data-id="">计算机硬件及网络设备</div>
+							<div data-type="posType" data-id="">计算机硬件及网络设备</div>
+						</div>
+					</div>
+				</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+		</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
 
 	
 <!-- jQuery 3 -->
@@ -451,7 +503,7 @@
 
 <!-- 页面逻辑 -->
 <script src="/static/js/common.js"></script>
-<script src="/static/js/delivery-list.js"></script>
+<script src="/static/js/position.js"></script>
 
 <style>
         .deliveryColor{

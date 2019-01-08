@@ -52,7 +52,7 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public EduListMsg getEduList(int useOn) {
         EduListMsg msg = new EduListMsg();
-        msg.setData(this.hpConfigExMapper.getUseEduList(useOn));
+        msg.setList(this.hpConfigExMapper.getUseEduList(useOn));
         return msg;
     }
 
@@ -132,7 +132,7 @@ public class ConfigServiceImpl implements ConfigService {
         CompanyListMsg msg = new CompanyListMsg();
         msg.setList(this.hpConfigExMapper.getCompanyList());
         
-        return null;
+        return msg;
     }
     
 }
