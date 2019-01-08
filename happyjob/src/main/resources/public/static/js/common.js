@@ -98,6 +98,7 @@ var apiData = {
 	positionList:"/backPosition/positionList",
 	positionAdd:"/backPosition/position",
 	positionHotOn:"/backPosition/positionHotOn",
+	positionHotOn:"/backPosition/positionHotOn",
 }
 
 var dateStrData = {

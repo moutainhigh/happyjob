@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.happy.entity.HpCompanyStoreEntity;
 import com.happy.plugin.Page;
+import com.happy.service.company.data.CompanyListMsg;
 import com.happy.service.config.ConfigService;
 import com.happy.service.config.data.AreaListMsg;
 import com.happy.service.config.data.AreaSearch;
@@ -124,6 +125,14 @@ public class ConfigServiceImpl implements ConfigService {
         PosOfferListMsg msg = new PosOfferListMsg();
         msg.setList(this.hpPositionOfferMapper.selectAll());
         return msg;
+    }
+
+    @Override
+    public CompanyListMsg getPosCompanyList() {
+        CompanyListMsg msg = new CompanyListMsg();
+        msg.setList(this.hpConfigExMapper.getCompanyList());
+        
+        return null;
     }
     
 }

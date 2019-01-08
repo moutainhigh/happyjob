@@ -1,5 +1,6 @@
  package com.happy.service.config;
 
+import com.happy.service.company.data.CompanyListMsg;
 import com.happy.service.config.data.AreaListMsg;
 import com.happy.service.config.data.EduListMsg;
 import com.happy.service.config.data.PosOfferListMsg;
@@ -56,4 +57,9 @@ public interface ConfigService {
    * @TODO:   获取职位行业类型
    */
   PosOfferListMsg getPosOfferList();
+ /**
+  *
+  * @TODO:   获取公司列表
+  */
+  CompanyListMsg getPosCompanyList();
 }

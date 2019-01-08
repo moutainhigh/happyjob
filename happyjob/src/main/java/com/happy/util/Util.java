@@ -23,8 +23,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.Base64.Decoder;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +36,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -217,8 +216,7 @@ public class Util {
      * @TODO:base64还原字符串并根据前后位数截取
      */
     public static String BASE64DecoderStr(String str, int fnum, int lnum) {
-        Decoder decoder = Base64.getDecoder();
-        byte[] bt = decoder.decode(str);
+        byte[] bt = Base64.decodeBase64(str);
         str = new String(bt);
         str = str.substring(fnum);
         str = str.substring(0, str.length() - lnum);

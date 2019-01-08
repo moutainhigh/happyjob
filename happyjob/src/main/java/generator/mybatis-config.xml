@@ -13,9 +13,9 @@
 					
 			<!-- 开发环境 -->
 			<property name="url"
-				value="jdbc:mysql://101.132.131.185:3306/happyjob" />
+				value="jdbc:mysql://120.55.165.117:3308/happyjob" />
 			<property name="username" value="root" />
-			<property name="password" value="Yugyg@2017" />
+			<property name="password" value="happyjob2019" />
 					
 			</dataSource>
 		</environment>

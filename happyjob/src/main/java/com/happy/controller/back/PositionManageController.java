@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.happy.plugin.BaseMsg;
+import com.happy.service.company.data.CompanyListMsg;
 import com.happy.service.config.ConfigService;
 import com.happy.service.config.data.AreaListMsg;
 import com.happy.service.config.data.EduListMsg;
@@ -181,6 +182,16 @@ public class PositionManageController {
     public PosOfferListMsg posTypeList(){
         
         return this.configService.getPosOfferList();
+    }
+    
+    /**
+     * @TODO:     职位公司选项获取
+     */
+    @ApiOperation(value="配置：职位招聘公司选选项",notes="职位招聘公司选选项")
+    @GetMapping(value="posCompanyList")
+    public CompanyListMsg posCompanyList(){
+        
+        return this.configService.getPosCompanyList();
     }
     
     /**

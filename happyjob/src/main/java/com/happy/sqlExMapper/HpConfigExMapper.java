@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.happy.entity.HpCompanyStoreEntity;
 import com.happy.entity.HpEducationEntity;
 import com.happy.plugin.Page;
+import com.happy.service.company.data.HpCompanyExt;
 import com.happy.service.config.data.AreaData;
 import com.happy.service.config.data.AreaSearch;
 
@@ -33,5 +34,9 @@ public interface HpConfigExMapper{
      * @TODO:     描述一下这个方法是干什么的
      */
 	List<AreaData> getAreaList(AreaSearch page);
+	/**
+	 * @TODO:     描述一下这个方法是干什么的
+	 */
+	List<HpCompanyExt> getCompanyList();
 }
 
