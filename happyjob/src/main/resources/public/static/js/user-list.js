@@ -250,6 +250,7 @@ function addTableList(list){
             <th>'+ userType(item.userType) +'</th>\
             <th>'+ timestampToTime(item.createTime) +'</th>\
             <th>'+ registResource(item.registResource) +'</th>\
+            <th>'+ item.storeName +'</th>\
             <th>'+ approveState(item.approveState) +'</th>\
             <th>\
                 <button type="button" class="btn btn-default btn-sm cat">查看</button>\
@@ -323,6 +324,5 @@ function approveState(value){
         case 0:return "未申请认证"
         case 1:return "认证通过"
         case 2:return "认证不通过"
-        case 3:return "认证待审核"
     }
 }

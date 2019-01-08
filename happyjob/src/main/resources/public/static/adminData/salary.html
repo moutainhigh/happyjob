@@ -94,8 +94,8 @@
 					</span>
 				</a>
 				<ul class="treeview-menu">
-					<li class="active"><a href="/static/adminData/salary-list.html"><i class="fa fa-circle-o"></i>用户列表</a></li>
-					<li><a href="/static/adminData/salary-list.html"><i class="fa fa-circle-o"></i>工资查询</a></li>
+					<li><a href="/index.html"><i class="fa fa-circle-o"></i>用户列表</a></li>
+					<li><a href="/static/adminData/salary.html"><i class="fa fa-circle-o"></i>工资查询</a></li>
 					<li><a href="/static/adminData/delivery.html"><i class="fa fa-circle-o"></i>用户投递</a></li>
 				</ul>
 			</li>
@@ -151,24 +151,24 @@
 					<div class="box-header" style="overflow-y: auto">
 						<form class="form-inline" style="display: flex;justify-content: space-between">
 							<div class="form-group ">
-								<label for="exampleInputName2">工号：</label>
-								<input id="workNum" type="text" class="form-control"  placeholder="请填写工号">
+								<label for="">工号：</label>
+								<input id="workNum" type="text" class="form-control"  placeholder="请填写工号" />
 							</div>
 							<div class="form-group">
-								<label for="exampleInputName2">姓名：</label>
-								<input id="payName" type="text" class="form-control"  placeholder="">
+								<label for="">姓名：</label>
+								<input id="payName" type="text" class="form-control"  placeholder="" />
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail2">身份证号：</label>
-								<input id="payIdNum" type="text" class="form-control"  placeholder="">
+								<input id="payIdNum" type="text" class="form-control"  placeholder="" />
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail2">公司名称：</label>
-								<input id="payComName" type="text" class="form-control"  placeholder="">
+								<input id="payComName" type="text" class="form-control"  placeholder="" />
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail2">工资月份：</label>
-								<input id="payTime" type="text"  class="form-control datepicker"  placeholder="">
+								<input id="payTime" type="text"  class="form-control datepicker"  placeholder="" />
 							</div>
 							<div class="form-group">
 								<button  type="submit" class="btn btn-primary querySalary">查询</button>
@@ -178,7 +178,7 @@
 					</div>
 					<!-- /.box-header -->
 					<div class="box-body table-responsive no-padding">
-						<table class="table table-hover" id='userList'>
+						<table class="table table-hover" id='salaryList'>
 						<thead>
 							<tr>
 								<th>姓名</th>
@@ -217,7 +217,7 @@
 		</div>
 		<div class="modal-body">
 			<form class="form-horizontal">
-				<div class="form-group">
+				<div class="form-group" style="display:none">
 					<label for="" class="col-sm-2">记录id</label>
 					<div class="col-sm-10 showValue"></div>
 				</div>
