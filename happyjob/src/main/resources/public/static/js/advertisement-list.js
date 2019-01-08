@@ -273,8 +273,11 @@ function timestampToDay(timestamp) {
 }
 
 function dateToTime(timestamp) {
-	var formatTimeS = new Date($("#endTime").val()+" 00:00:00").getTime();
-	return formatTimeS/1000;
+	if(timestamp != null && timestamp !=""){
+		var formatTimeS = new Date($("#endTime").val()+" 00:00:00").getTime();
+		return formatTimeS/1000;
+	}
+	return "";
 }
 function change(t) {
     if (t < 10) {

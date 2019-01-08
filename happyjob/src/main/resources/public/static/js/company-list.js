@@ -4,12 +4,13 @@ $(".datepicker").datepicker({
     autoclose: true,//选中之后自动隐藏日期选择框
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
-// 禁用
+// 查询
 $(document).on("click",".queryCompany",function(){
-	listParams.comName = $("#comName").val();
-	listParams.endTime = $("#endTime").val();
-	listParams.startTime = dayToseconds($("#startTime").val());
+	listParams.comName = $("#comNameSearch").val();
+	listParams.endTime = publicObj.transferTime($("#endTimeSearch").val());
+	listParams.startTime = publicObj.transferTime($("#startTimeSearch").val());
 	fetchList();
+	clearlistParams();
 })
 // 认证
 $(document).on("click",".auth",function(){
@@ -42,13 +43,9 @@ $(document).on("click",".auth",function(){
             swal(
             		 '认证',
                      '认证不通过',
-            'error'
+                     'error'
             );
-        
-        } else {
-            // Esc, close button or outside click
-            // isConfirm is undefined
-        }
+        } 
     }); 
 })
 
@@ -67,15 +64,15 @@ $(document).on("click",".cat",function(){
     var comEmail = $row.data("com-email");
     
     var $obj = $("#browseModal").find(".showValue");
-    $obj.eq(0).html(comName);
-    $obj.eq(1).html(typeName);
-    $obj.eq(2).html(scale);
-    $obj.eq(3).html(comDesc);
-    $obj.eq(5).html(addrDetail);
-    $obj.eq(6).html(comtPerson);
-    $obj.eq(7).html(comPhone);
+    $obj.eq(0).html($row.data("com-name"));
+    $obj.eq(1).html($row.data("type-name"));
+    $obj.eq(2).html($row.data("scale"));
+    $obj.eq(3).html($row.data("com-desc"));
+    $obj.eq(5).html($row.data("add-detail"));
+    $obj.eq(6).html($row.data("com-person"));
+    $obj.eq(7).html($row.data("com-phone"));
    
-    $obj.eq(8).html(comEmail);
+    $obj.eq(8).html($row.data("com-email"));
 //    $obj.eq(7).attr("src",comLogo);
 //    $obj.eq(8).attr("src",comLicense);
     $('#browseModal').modal('toggle');
@@ -85,8 +82,9 @@ $(document).on("click",".cat",function(){
 $(document).on("click",".openUpdateModal",function(){
     var $row = $(this).parents("tr");
     var comName = $row.data("com-name");
-    var typeName = $row.data("type-name");
+    var companyTypeId = $row.data("company-type-id");
     var scale = $row.data("scale");
+    var scaleId = $row.data("scale-id");
     var comDesc = $row.data("com-desc");
     var addrDetail = $row.data("add-detail");
     var comtPerson = $row.data("com-person");
@@ -98,18 +96,18 @@ $(document).on("click",".openUpdateModal",function(){
     
     $("#hpCompanyId2").val(hpCompanyId);
     $("#comName2").val(comName);
-    $("#companyTypeId2").val(typeName);
-    $("#companyScaleId2").val(scale);
+    $("#companyTypeId2").val(companyTypeId);
+    $("#companyScaleId2").val(scaleId);
     $("#comDesc2").val(comDesc);
     $("#countyId2").val(countyId);
     $("#addrDetail2").val(addrDetail);
     $("#comtPerson2").val(comtPerson);
     $("#comPhone2").val(comPhone);
     $("#comLicense2").val(comLicense);
-    $("comEmail2").val(comEmail);
+    $("#comEmail2").val(comEmail);
     
-    $("comLogo2").attr("src",comLogo);
-    $("comlicens2").attr("src",comLicense);
+    $("#comLogo2").attr("src",comLogo);
+    $("#comlicens2").attr("src",comLicense);
     
     $('#updateCompanyModal').modal('show');
 })
@@ -164,44 +162,28 @@ $(document).on("click","#openAddCompany",function(){
 
 //新增 企业
 $(document).on("click","#newCompany",function(){
-    var $obj = $("#addCompanyModel").find(".showValue");
-    
-    var comName = $("#comName").val();
-    var companyTypeId = $("#companyTypeId").val();
-    var companyScaleId = $("#companyScaleId").val();
-    var comDesc = $("#comDesc").val();
-    var countyId = $("#countyId").val();
-    var addrDetail = $("#addrDetail").val();
-    var comtPerson = $("#comtPerson").val();
-    var comPhone = $("#comPhone").val();
-    var comEmail = $("#comEmail").val();
-    
-    var saveParams ={};
-    saveParams.comName = comName ;
-    saveParams.companyTypeId = companyTypeId ;
-    saveParams.companyScaleId = companyScaleId ;
-    saveParams.comDesc = comDesc ;
-    saveParams.countyId = countyId ;
-    saveParams.addrDetail = addrDetail ;
-    saveParams.comtPerson = comtPerson ;
-    saveParams.comPhone = comPhone ;
-    saveParams.comEmail = comEmail ;
+    var saveParams ={} ;
+    saveParams.comName = $("#comName").val();
+    saveParams.companyTypeId = $("#companyTypeId").val();
+    saveParams.companyScaleId = $("#companyScaleId").val();
+    saveParams.comDesc = $("#comDesc").val();
+    saveParams.countyId = $("#countyId").val();
+    saveParams.addrDetail =$("#addrDetail").val();
+    saveParams.comtPerson = $("#comtPerson").val();
+    saveParams.comPhone = $("#comPhone").val();
+    saveParams.comEmail = $("#comEmail").val();
     
     //保存图片
     saveParams.comLogo = comLogo ;
     saveParams.comLicense = comLicense ;
+    
 	console.log("=saveParams==",saveParams);
+	
     fetchPost({
         url:"/backCompany/newCompany",
         params: saveParams,
         callback:function(data){
-            console.log(data);
             fetchList();
-            swal(
-	                   'Saved!',
-	                   '已保存.',
-	                   'success'
-	           );
         }
     })
    $('#addCompanyModel').modal('hide');
@@ -262,6 +244,11 @@ function upPicLis(){
 	});
 }
 
+function clearlistParams(){
+	listParams.conName = "";
+	listParams.startTime = "";
+	listParams.endTime = "";
+}
 
 
 var listParams = {
@@ -311,8 +298,10 @@ function addTableList(list){
         <tr \
         	data-company-id="'+ item.hpCompanyId +'" \
             data-com-name="'+ item.comName +'" \
+            data-company-type-id="'+ item.hpCompanyTypeId +'" \
             data-type-name="'+ item.typeName +'" \
             data-scale="'+ item.lowerNum+"-"+item.hightNum +'" \
+            data-scale-id="'+ item.hpCompanyScaleId +'" \
             data-com-desc="'+ item.comDesc +'" \
             data-add-detail="'+ item.addrDetail +'" \
             data-com-person="'+ item.comtPerson +'" \
@@ -352,11 +341,7 @@ function timestampToTime(timestamp) {
     var s = change(date.getSeconds());
     return Y + M + D + h + m + s;
 }
-function dayToSeconds(timestamp){
-	 //var startDate ='2018-07-09 14:13:11';
-     var startDate= timestamp.replace(new RegExp("-","gm"),"/");
-     var startDateM = (new Date(startDate)).getTime(); //得到毫秒数
-}
+
 function change(t) {
     if (t < 10) {
         return "0" + t;
@@ -373,3 +358,4 @@ function approveState(value){
         case 3:return "认证待审核"
     }
 }
+

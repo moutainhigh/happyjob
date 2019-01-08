@@ -14,6 +14,7 @@ import com.happy.service.banner.data.BannerSearch;
 import com.happy.sqlExMapper.HpAdvBannerExMapper;
 import com.happy.sqlMapper.HpAdvBannerMapper;
 import com.happy.util.Util;
+import com.happy.util.pubConst.EnumConst;
 
 @Service
 public class BannerServiceImpl implements BannerService {
@@ -73,7 +74,7 @@ public class BannerServiceImpl implements BannerService {
         
         HpAdvBannerEntity adv = new HpAdvBannerEntity();
         adv.setHpAdvBannerId(hpAdvBannerId);
-        adv.setUseOn(useOn == 1?0:1);
+        adv.setUseOn(useOn == EnumConst.advertisementUseOn.UseOnYse.getKey()?EnumConst.advertisementUseOn.UseOnNo.getKey():EnumConst.advertisementUseOn.UseOnYse.getKey());
 	    this.hpAdvBannerMapper.updateByPK(adv);
         return msg;
 	}
@@ -88,7 +89,7 @@ public class BannerServiceImpl implements BannerService {
         }
         HpAdvBannerEntity adv = new HpAdvBannerEntity();
         adv.setHpAdvBannerId(hpAdvBannerId);
-        adv.setDelOn(0);
+        adv.setDelOn(EnumConst.advertisementDelOn.DelOnYse.getKey());
         this.hpAdvBannerMapper.updateByPK(adv);
 		return msg;
 	}
@@ -107,8 +108,8 @@ public class BannerServiceImpl implements BannerService {
         hpAdvBanner.setSortNum(sort);
         hpAdvBanner.setPicUrl(picUrl);
         hpAdvBanner.setPicUrl(targetUrl);
-        hpAdvBanner.setDelOn(1);  //1是不删，后期修改
-        hpAdvBanner.setUseOn(1);   //1使用中
+        hpAdvBanner.setDelOn(EnumConst.advertisementDelOn.DelOnNo.getKey());   
+        hpAdvBanner.setUseOn(EnumConst.advertisementUseOn.UseOnNo.getKey());   //关闭状态
         hpAdvBanner.setEndTime(endTime);
         this.hpAdvBannerMapper.insert(hpAdvBanner);
         if(hpAdvBanner.getHpAdvBannerId() == null) {

@@ -13,6 +13,7 @@ import com.happy.service.company.data.CompanySearch;
 import com.happy.service.company.data.HpCompanyExt;
 import com.happy.sqlExMapper.HpCompanyExMapper;
 import com.happy.sqlMapper.HpCompanyMapper;
+import com.happy.util.pubConst.EnumConst;
 
 @Service
 public class CompanyServiceImpl implements CompanyService{
@@ -109,7 +110,7 @@ public class CompanyServiceImpl implements CompanyService{
         company.setComtPerson(comtPerson);
         company.setComPhone(comPhone);
         company.setComEmail(comEmail);
-        company.setApproveState(0); //未认证
+        company.setApproveState(EnumConst.companyApproveState.WithoutApprove.getKey()); //未认证
         company.setComLicense(comLicense);
         company.setComLogo(comLogo);
         this.hpCompanyMapper.insert(company);

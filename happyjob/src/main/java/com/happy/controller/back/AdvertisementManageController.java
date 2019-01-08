@@ -14,6 +14,7 @@ import com.happy.plugin.BaseMsg;
 import com.happy.service.banner.BannerService;
 import com.happy.service.banner.data.BannerListMsg;
 import com.happy.util.Util;
+import com.happy.util.pubConst.EnumConst;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,16 +29,16 @@ public class AdvertisementManageController {
 	    private BannerService bannerService;
 	    
 	    /**
-	     * @TODO:     用户列表查询
+	     *      广告列表查询
 	     */
 	    @ApiOperation(value="广告列表查询",notes="广告列表查询")
 	    @GetMapping(value="advertisementList")
 	    public BannerListMsg userList(HttpServletRequest request){
-	        logger.info("AdvertiseManageController class  userList method");
+	    	
 	        Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
 	        Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
-	       
-	        BannerListMsg result = this.bannerService.getBannerList(null, 1, null, 1, currentPage, showCount);
+	        logger.info("backAdvertisement.advertisementUseOn 请求参数：currentPage={},showCount={}",currentPage,showCount);
+	        BannerListMsg result = this.bannerService.getBannerList(null, EnumConst.advertisementDelOn.DelOnNo.getKey(), null, 1, currentPage, showCount);
 	        return  result;
 	    }
 	    

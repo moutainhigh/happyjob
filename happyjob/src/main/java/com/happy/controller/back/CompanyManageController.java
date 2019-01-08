@@ -33,7 +33,7 @@ public class CompanyManageController {
     /**
      *    企业列表查询
      */
-    @ApiOperation(value="工资列表查询",notes="工资列表查询")
+    @ApiOperation(value="企业列表查询",notes="企业列表查询")
     @ApiImplicitParams({
         @ApiImplicitParam(name="comName",value="公司名称，模糊查询",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="startTime",value="开始时间",dataType="long",paramType="query",required=false),
@@ -64,7 +64,7 @@ public class CompanyManageController {
     public BaseMsg companyAuth(HttpServletRequest request){
         Long companyId = (Long)Util.typeChange(request.getParameter("companyId"), Long.class);
         Integer approveState = (Integer)Util.typeChange(request.getParameter("approveState"), Integer.class);
-        logger.info("backAdvertisement.deleteAdvertisement 请求参数：companyId={},approveState={}",companyId,approveState);
+        logger.info("backAdvertisement.companyAuth 请求参数：companyId={},approveState={}",companyId,approveState);
         BaseMsg ss = this.companyService.companyAuth(companyId,approveState);
         return ss;
     }
@@ -84,6 +84,8 @@ public class CompanyManageController {
         @ApiImplicitParam(name="comtPerson",value="联系人",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="comPhone",value="联系电话",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="comEmail",value="联系Email",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="comLicense",value="License图片",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="comLogo",value="logo图片",dataType="String",paramType="query",required=false),
     })
     @PostMapping(value="newCompany")
     public BaseMsg newCompany(HttpServletRequest request){
@@ -99,7 +101,7 @@ public class CompanyManageController {
     	String comLicense = request.getParameter("comLicense");
     	String comLogo = request.getParameter("comLogo");
     	
-        logger.info("backAdvertisement.deleteAdvertisement 请求参数：comName={},companyTypeId={},companyScaleId={},comDesc={}"
+        logger.info("backAdvertisement.newCompany 请求参数：comName={},companyTypeId={},companyScaleId={},comDesc={}"
         		+ ",countyId={},addrDetail={},comtPerson={},comPhone={},comEmail={},comLicense={},comLogo={}",comName,companyTypeId,
         		companyScaleId,comDesc,countyId,addrDetail,comtPerson,comPhone,comEmail,comLicense,comLogo);
         BaseMsg ss = this.companyService.newCompany(comName,companyTypeId,

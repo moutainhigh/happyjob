@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class CompanyListMsg extends BaseMsg{
 
-	    @ApiModelProperty(name="list",value="广告位轮播对象集合")
+	    @ApiModelProperty(name="list",value="企业对象集合")
 	    private List<HpCompanyExt> list;
 	    
 	    @ApiModelProperty(name="page",value="查询对象")
