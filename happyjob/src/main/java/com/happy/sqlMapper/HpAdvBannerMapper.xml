@@ -13,10 +13,11 @@
 		<result column="target_url" property="targetUrl"/>
 		<result column="use_on" property="useOn"/>
 		<result column="del_on" property="delOn"/>
+		<result column="pos_type" property="posType"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpAdvBannerId" parameterType="com.happy.entity.HpAdvBannerEntity">
-		insert into hp_adv_banner(title,create_time,end_time,sort_num,pic_url,target_url,use_on,del_on)
-		 values (#{title},#{createTime},#{endTime},#{sortNum},#{picUrl},#{targetUrl},#{useOn},#{delOn});
+		insert into hp_adv_banner(title,create_time,end_time,sort_num,pic_url,target_url,use_on,del_on,pos_type)
+		 values (#{title},#{createTime},#{endTime},#{sortNum},#{picUrl},#{targetUrl},#{useOn},#{delOn},#{posType});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_adv_banner where hp_adv_banner_id=#{hpAdvBannerId}
@@ -53,6 +54,9 @@
 			</if>
 			<if test="delOn!=null ">
 				del_on=#{delOn},
+			</if>
+			<if test="posType!=null ">
+				pos_type=#{posType},
 			</if>
 		</set>
 		 where hp_adv_banner_id=#{hpAdvBannerId}

@@ -38,6 +38,9 @@ public class HpAdvBannerEntity implements  Serializable  {
 	//是否删除
 	@ApiModelProperty(name="delOn",value="是否删除")
 	private java.lang.Integer delOn;
+	//广告位类型（1、首页轮播）
+	@ApiModelProperty(name="posType",value="广告位类型（1、首页轮播）")
+	private java.lang.Integer posType;
 
 	public java.lang.Long getHpAdvBannerId() {
 		return hpAdvBannerId;
@@ -126,6 +129,16 @@ public class HpAdvBannerEntity implements  Serializable  {
 
 	public void setDelOn(java.lang.Integer delOn) {
 		this.delOn = delOn;
+	}
+
+
+	public java.lang.Integer getPosType() {
+		return posType;
+	}
+
+
+	public void setPosType(java.lang.Integer posType) {
+		this.posType = posType;
 	}
 
 }

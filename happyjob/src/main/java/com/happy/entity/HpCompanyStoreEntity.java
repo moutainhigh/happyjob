@@ -5,17 +5,17 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
  * 
- * 公司门店表
+ * 
  */
-@ApiModel(value="HpCompanyStore对象",description="公司门店表")
+@ApiModel(value="HpCompanyStore对象",description="")
 public class HpCompanyStoreEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	//公司门店表ID
 	@ApiModelProperty(name="hpCompanyStoreId",value="公司门店表ID")
 	private java.lang.Long hpCompanyStoreId;
-	//姓名
-	@ApiModelProperty(name="storeName",value="姓名")
+	//名称
+	@ApiModelProperty(name="storeName",value="名称")
 	private String storeName;
 	//编号
 	@ApiModelProperty(name="storeNum",value="编号")
