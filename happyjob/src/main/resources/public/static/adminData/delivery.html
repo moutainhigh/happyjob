@@ -94,9 +94,9 @@
 					</span>
 				</a>
 				<ul class="treeview-menu">
-					<li class="active"><a href="/index.html"><i class="fa fa-circle-o"></i>用户列表</a></li>
+					<li><a href="/index.html"><i class="fa fa-circle-o"></i>用户列表</a></li>
 					<li><a href="/static/adminData/salary.html"><i class="fa fa-circle-o"></i>工资查询</a></li>
-					<li><a href="/static/adminData/delivery.html"><i class="fa fa-circle-o"></i>用户投递</a></li>
+					<li class="active"><a href="/static/adminData/delivery.html"><i class="fa fa-circle-o"></i>用户投递</a></li>
 				</ul>
 			</li>
 			<li class="treeview">
@@ -132,12 +132,12 @@
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 		<h1>
-			用户列表
+			用户投递
 			<small>Optional description</small>
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> 用户管理</a></li>
-			<li class="active">用户列表</li>
+			<li class="active">用户投递</li>
 		</ol>
 		</section>
 	
@@ -150,47 +150,45 @@
 					<div class="box">
 					<div class="box-header" style="overflow-y: auto">
 						
-						<form  >
-							<div class="form-group col-xs-12 ">
-								<div  class="form-group col-xs-2" >
-									<label for="exampleInputName2">用户名：</label>
-									<input id="userName" style="width:120px;" type="text" class="form-group"  placeholder="">
+						<form class="form-inline" style="display: flex;justify-content: space-between">
+							<div class="form-group">
+								<div  class="form-group" >
+									<label  for="">用户名：</label>
+									<input id="userName"  type="text" class="form-control"  placeholder="">
 								</div>
-								<div class="form-group col-xs-2" >
-									<label for="exampleInputName2">投递公司：</label>
-									<input id="comName" style="width:120px;" type="text" class=""  placeholder="">
+								<div class="form-group" >
+									<label for="">投递公司：</label>
+									<input id="comName" type="text" class="form-control"  placeholder="">
 								</div>
-								<div class="form-group col-xs-3">
-									<label for="exampleInputEmail2">职位名称：</label>
-									<input id="posName" style="width:120px;" type="text"  class=" "  placeholder="">
+								<div class="form-group">
+									<label for="">职位名称：</label>
+									<input id="posName"  type="text"  class="form-control "  placeholder="">
+								</div>
+								<div class="form-group " >
+									<label for="">投递时间：</label>
+									<input id="startTime" type="text" class="form-control datepicker"  placeholder=""> - <input id="endTime" type="text" class="form-control datepicker"  placeholder="">
 								</div>
 								
-								<div class="form-group col-xs-4" >
-									<label for="exampleInputEmail2">投递时间：</label>
-									<input id="startTime" type="text" class="datepicker"  placeholder=""> - <input id="endTime" type="text" class=" datepicker"  placeholder="">
-								</div>
+								<div class="form-group "></div>
 								
-							</div>
-							<div class="form-group col-xs-12 " style="margin-top:-20px;">
-								<div class="form-group col-xs-2">
-									<label for="exampleInputEmail2">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
-									<input id="realName" style="width:120px;" type="text"  class=""  placeholder="">
+								<div class="form-group " style="margin-top:20px;">
+									<label for="">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
+									<input id="realName"  type="text"  class="form-control "  placeholder="">
 								</div>
-								<div class="form-group col-xs-2">
-									<label for="exampleInputEmail2">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：  </label>
-									<select  style="width:120px;height:30px;">
+								<div class="form-group " style="margin-top:20px;">
+									<label for="">联系状态：</label>
+									<input id="contactStat"  type="text"  class="form-control"  placeholder="">
+								</div>
+								<div class="form-group" style="margin-top:20px;">
+									<label for="">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：  </label>
+									<select class="form-control">
 										<option selected="" value="请选择">请选择</option>
 										<option value="1">男</option>
 										<option value="2">女</option>
 									</select>
 								</div>
-								<div class="form-group col-xs-3">
-									<label for="exampleInputEmail2">联系状态：</label>
-									<input id="contactStat" style="width:120px;height:30px;" type="text"  class=""  placeholder="">
-								</div>
-								
-								<div class="form-group col-xs-2">
-									<button  type="submit" class="btn btn-primary queryDelivery">查询</button>
+								<div class="form-group " style="margin-top:20px;float:right">
+									<button  type="button" class="btn btn-primary queryDelivery">查询</button>
 								</div>
 							</div>
 						</form>

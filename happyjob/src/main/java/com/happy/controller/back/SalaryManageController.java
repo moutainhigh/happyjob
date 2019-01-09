@@ -1,17 +1,33 @@
 package com.happy.controller.back;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.List;
+
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.happy.entity.HpUserEntity;
+import com.happy.entity.HpUserPayrollEntity;
+import com.happy.plugin.BaseMsg;
 import com.happy.service.salary.SalaryService;
+import com.happy.service.salary.data.LoginUserMsg;
 import com.happy.service.salary.data.SalarySimpleListMsg;
 import com.happy.util.Util;
+import com.happy.util.excel.ExcelUtil;
+import com.happy.util.excel.PayrollPojo;
+import com.happy.util.pubConst.Const;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -55,6 +71,13 @@ public class SalaryManageController {
         return ss ;
     }
     
+    
+	
+    @PostMapping(value = "/importSalary")
+	public BaseMsg importSalary(@RequestParam(value="file",required=false) MultipartFile file ){
+    	return salaryService.importSalary(file);
+	}
+
    
    
 }

@@ -11,4 +11,11 @@ public interface HpSalaryExMapper {
 	  *  管理端  分页查询工资 
 	  */
 	 List<HpUserPayrollEntity> getSalarylistPage(SalaryManageSearch page);
+	 
+	 /**
+	  * 获取
+	  * @param hpUserPayrollEntity
+	  * @return
+	  */
+	 List<HpUserPayrollEntity> getPayroll(HpUserPayrollEntity hpUserPayrollEntity);
 }

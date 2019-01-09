@@ -134,3 +134,11 @@ var dateStrData = {
 	d2:"yyyy-MM-dd",
 	d3:"HH:mm:ss",
 }
+
+
+function isNull(data){
+	if(data == null || data =="null" ){
+		return "";
+	}
+	return data ;
+}

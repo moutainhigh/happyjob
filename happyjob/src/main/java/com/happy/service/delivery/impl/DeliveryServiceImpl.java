@@ -1,5 +1,6 @@
 package com.happy.service.delivery.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.happy.entity.HpPositionRefUserEntity;
 import com.happy.entity.HpUserExpEntity;
 import com.happy.entity.HpUserIntentionEntity;
 import com.happy.service.delivery.DeliveryService;
@@ -15,8 +17,11 @@ import com.happy.service.delivery.data.DeliveryDetail;
 import com.happy.service.delivery.data.DeliveryListMsg;
 import com.happy.service.delivery.data.DeliverySearch;
 import com.happy.service.delivery.data.HpUserEducationExt;
+import com.happy.service.salary.data.LoginUserMsg;
 import com.happy.service.salary.impl.SalaryServiceImpl;
 import com.happy.sqlExMapper.HpDeliveryMapper;
+import com.happy.sqlMapper.HpPositionRefUserMapper;
+import com.happy.util.Util;
 
 @Service
 public class DeliveryServiceImpl implements DeliveryService{
@@ -25,6 +30,9 @@ public class DeliveryServiceImpl implements DeliveryService{
 	   
 	@Autowired
 	private HpDeliveryMapper hpDeliveryMapper ;
+	
+	@Autowired
+	private HpPositionRefUserMapper hpPositionRefUserMapper;
 	
 	@Override
 	public DeliveryListMsg getDeliverylistPage(String userName, String comName, String posName, Long startTime,
@@ -70,4 +78,23 @@ public class DeliveryServiceImpl implements DeliveryService{
 		return deliveryDetail;
 	}
 
+	@Override
+	public LoginUserMsg getLoginUser(Long hpPositionRefUserId ,String userToken) {
+		LoginUserMsg msg = new LoginUserMsg();
+		LoginUserMsg loginUserMsg = hpDeliveryMapper.getLoginUser(userToken);
+		//更新
+		if(loginUserMsg != null) {
+			HpPositionRefUserEntity positionRefUserEntity = new HpPositionRefUserEntity();
+			positionRefUserEntity.setHpUserId(hpPositionRefUserId);
+			positionRefUserEntity.setOptionId(loginUserMsg.getHpUserId());
+			positionRefUserEntity.setOptionTime(Util.getDateSecond(new Date()));
+			hpPositionRefUserMapper.updateByPK(positionRefUserEntity);
+		}else {
+			msg.setErrorCode(1);
+			msg.setMessage("为获取到登陆人信息");
+		}
+		msg.setErrorCode(0);
+		msg.setMessage("操作成功");
+		return loginUserMsg;
+	}
 }

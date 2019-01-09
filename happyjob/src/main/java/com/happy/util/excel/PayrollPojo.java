@@ -19,7 +19,7 @@ public class PayrollPojo {
     @PayrollProperty(name = "姓名")
     private String payName;
     // 身份证号
-    @PayrollProperty(name = "身份证号")
+    @PayrollProperty(name = "身份证")
     private String payIdNum;
     // 工号
     @PayrollProperty(name = "工号")

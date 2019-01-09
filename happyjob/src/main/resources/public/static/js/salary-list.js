@@ -7,15 +7,14 @@ $(".datepicker").datepicker({
 $(document).on("click","#upload",function(){
     var formData = new FormData($('#uploadFile')[0]);
 	$.ajax({
-		url:url,
+		url:window.location.origin+"/backSalary/importSalary",
 		dataType:"json",
 		type:"post",
 		data:formData,
         processData: false,  // 不处理数据
         contentType: false,   // 不设置内容类型
 		success:function(data){
-			console.log("===",data);
-			alert("123");
+			swal('请求成功', data.message, 'success');
 		}
 	});
 });
@@ -28,7 +27,7 @@ function clearlistParams(){
 	listParams.payTime = "";
 }
 
-$(document).on("click",".querySalary",function(){
+$(document).on("click","#querySalary",function(){
 	listParams.payName = $("#payName").val();
 	listParams.payIdNum = $("#payIdNum").val();
 	listParams.workNum = $("#workNum").val();
@@ -39,7 +38,6 @@ $(document).on("click",".querySalary",function(){
 })
 
 $(document).on("click",".cat",function(){
-	
     
     var $row = $(this).parents("tr");
     var hpUserPayrollId=$row.data("hp--user-payroll-id");
@@ -98,7 +96,6 @@ function fetchList(){
 }
 
 
-
 // 添加table数据
 function addTableList(list){
     var $table = $("#salaryList");
@@ -116,12 +113,12 @@ function addTableList(list){
             data-should-money="'+ item.shouldMoney +'" \
             data-deduction-money="'+ item.deductionMoney +'" \
             data-real-money="'+ item.realMoney +'" \
-            data-pay-detail="'+ item.payDetail +'" \
+            data-pay-detail="'+ item.payDetail.replace(/\"/g,"'") +'" \
             data-create-time="'+ timestampToTime(item.createTime) +'" >\
-            <th>'+ item.payName +'</th>\
-            <th>'+ item.payComName +'</th>\
-            <th>'+ item.payIdNum +'</th>\
-            <th>'+ item.workNum +'</th>\
+            <th>'+ isNull(item.payName) +'</th>\
+            <th>'+ isNull(item.payComName) +'</th>\
+            <th>'+ isNull(item.payIdNum) +'</th>\
+            <th>'+ isNull(item.workNum) +'</th>\
             <th>'+ timestampToMonth(item.createTime) +'</th>\
             <th>'+ item.shouldMoney +'</th>\
             <th>'+ item.deductionMoney +'</th>\
@@ -133,18 +130,7 @@ function addTableList(list){
     })
     $tBody.html(templeteTr)    
 }
-// 判断性别
-function gender(gender){    
-    return gender==1?"男":"女"
-}
-//判断账号类别
-function userType(userType){
-    return userType==1?"超级管理员":"求职者"
-}
-//判断出生年份
-function bornYear(value){
-    return  new Date().getFullYear()- Number(value)+"岁"
-}
+
 //时间戳转date
 function timestampToTime(timestamp) {
     var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -170,3 +156,4 @@ function change(t) {
         return t;
     }
 }
+
