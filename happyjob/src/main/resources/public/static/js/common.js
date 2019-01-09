@@ -24,6 +24,28 @@ function fetchPost(options){
     })
 }
 
+function fetchPostBody(options){
+	$.ajax({
+		url:BASE_URL+ options.url,
+		type:"post",
+		data:JSON.stringify(options.params),
+		headers:{
+			'contentType': 'application/json',
+		},
+		success:function(data){
+	        console.log(data)
+	        if(data.errorCode==0){
+	            options.callback && options.callback(data)
+	        }else{
+		            swal('请求失败', data.message, 'error');
+	        }
+		},
+		error:function(data){
+			swal('请求失败', data.message, 'error');
+		}
+	})
+}
+
 var publicObj = {
 	"basePath":BASE_URL, // 请求域名，端口号
 	"dateFormat": function dateFormat(date,fmt) { // 时间格式化

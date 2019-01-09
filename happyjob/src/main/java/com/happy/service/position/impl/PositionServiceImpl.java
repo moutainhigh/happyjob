@@ -415,6 +415,7 @@ public class PositionServiceImpl implements PositionService {
          
          if(hpPositionId == null ) { // 新增
              position.setApplyTime(curTime);
+             position.setHotOn(position.getHotOn()==null?0:position.getHotOn());
              this.hpPositionMapper.insert(position);
              hpPositionId = position.getHpPositionId();
          }else {

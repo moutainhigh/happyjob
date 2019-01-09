@@ -4,10 +4,11 @@ $(".datepicker").datepicker({
     autoclose: true,//选中之后自动隐藏日期选择框
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
+var _curUrl = window.location.href;
 var positionData = {
   "applyTime": null,
   "carDesc": "",
-  "carOn": null,
+  "carOn": 0,
   "comCustPhone": "",
   "countyId": null,
   "endTime": null,
@@ -97,11 +98,11 @@ function formSub(){ // 提交验证
 	console.log("here is formSub");
 	var posName = $("#posName").val();
 	var comName = $("#comName").val();
-	var comId = $("#comList").find('option[value="'+comName+'"]');
+	var comId = $("#comList").find('option[value="'+comName+'"]').data("id");
 	var manDayNum = $("#manDayNum").val();
 	var retManMoney = $("#retManMoney").val();
 	var womenDayNum = $("#womenDayNum").val();
-	var retWemanMoney = $("#retWemanMoney").val();
+	var retWomanMoney = $("#retWomanMoney").val();
 	var welFareIds = "";
 	var retOn = 0;
 	$('input[name="hpPositionWelfareId"]:checked').each(function(){
@@ -141,7 +142,7 @@ function formSub(){ // 提交验证
 	var reqOther = $("#reqOther").val();
 	
 	var otherWelfare = $("#otherWelfare").val();
-	var carOn = $("carOn").val();
+	var carOn = $("#carOn").val();
 	var carDesc = $("#carDesc").val();
 	var posComDesc = $("#posComDesc").val();
 	var posNature = $('input[name="posNature"]:checked').val();
@@ -166,7 +167,6 @@ function formSub(){ // 提交验证
 	positionData.retManMoney = retManMoney;
 	positionData.womenDayNum = womenDayNum;
 	positionData.retWomanMoney = retWomanMoney;
-	positionData.welFareIds = welFareIds;
 	positionData.urgentOn = urgentOn;
 	positionData.groupOn = groupOn;
 	positionData.threeMoney = threeMoney;
@@ -203,6 +203,15 @@ function formSub(){ // 提交验证
 	positionData.retOn = retOn;
 	positionData.urgentMoney = urgentMoney;
 	positionData.welfareArr = welfareIds;
+	positionData.hpPositionId = publicObj.getParams(_curUrl,"hpPositionId");
+	
+	fetchPostBody({
+		url:apiData.positionAdd,
+		params:positionData,
+		callback:function(data){
+			swal('请求完成', data.message, 'error');
+		}
+	});
 }
 
 function positionConfig(){

@@ -1,7 +1,6 @@
  package com.happy.service.position;
 
 import com.happy.plugin.BaseMsg;
-import com.happy.service.config.data.WelfareListMsg;
 import com.happy.service.position.data.GroupDataMsg;
 import com.happy.service.position.data.GroupListMsg;
 import com.happy.service.position.data.PositionDetail;

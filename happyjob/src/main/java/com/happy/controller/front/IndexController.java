@@ -22,6 +22,7 @@ import com.happy.service.config.data.SalaryListMsg;
 import com.happy.service.config.data.StoreListMsg;
 import com.happy.service.position.PositionService;
 import com.happy.service.position.data.GroupDataMsg;
+import com.happy.service.position.data.GroupListMsg;
 import com.happy.service.position.data.PositionListMsg;
 import com.happy.service.position.data.PositionMsg;
 import com.happy.service.user.UserService;
@@ -349,7 +350,7 @@ import io.swagger.annotations.ApiOperation;
       @ApiImplicitParam(name="showCount",value="单页展示数",dataType="int",paramType="query",required=false),
   })
   @GetMapping(value="groupList")
-  public BaseMsg groupList(HttpServletRequest request) {
+  public GroupListMsg groupList(HttpServletRequest request) {
       
       String sid = request.getHeader("sid");
       String oid = request.getHeader("oid");

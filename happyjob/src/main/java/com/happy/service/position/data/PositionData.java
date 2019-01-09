@@ -47,6 +47,8 @@ import io.swagger.annotations.ApiModelProperty;
     private Integer groupSccNum;
     @ApiModelProperty(name="approveState",value="公司认证状态（0、未认证，1、已认证）")
     private Integer approveState;
+    @ApiModelProperty(name="comLogo",value="公司logo")
+    private String comLogo;
     
     public String getComName() {
         return comName;
@@ -161,5 +163,11 @@ import io.swagger.annotations.ApiModelProperty;
     }
     public void setApproveState(Integer approveState) {
         this.approveState = approveState;
+    }
+    public String getComLogo() {
+        return comLogo;
+    }
+    public void setComLogo(String comLogo) {
+        this.comLogo = comLogo;
     }
 }
