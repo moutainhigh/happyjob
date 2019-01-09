@@ -1,10 +1,12 @@
 package com.happy.controller.back;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -12,18 +14,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.happy.entity.HpUserEntity;
 import com.happy.entity.HpUserPayrollEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.salary.SalaryService;
+import com.happy.service.salary.data.LoginUserMsg;
 import com.happy.service.salary.data.SalarySimpleListMsg;
 import com.happy.util.Util;
 import com.happy.util.excel.ExcelUtil;
 import com.happy.util.excel.PayrollPojo;
+import com.happy.util.pubConst.Const;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -67,40 +71,11 @@ public class SalaryManageController {
         return ss ;
     }
     
+    
+	
     @PostMapping(value = "/importSalary")
 	public BaseMsg importSalary(@RequestParam(value="file",required=false) MultipartFile file ){
-    	logger.info("backUser.importSalary -----start--------------");
-    	BaseMsg msg = new BaseMsg();
-		try {
-			InputStream is = file.getInputStream();
-			String name = file.getOriginalFilename();
-			if( is != null) {
-				List<PayrollPojo> dataList = ExcelUtil.parseExcelToPayrollPojoList(is,name);
-				for(PayrollPojo payrollPojo : dataList) {
-					HpUserPayrollEntity hpUserPayrollEntity = new HpUserPayrollEntity();
-					hpUserPayrollEntity.setPayName(payrollPojo.getPayName());
-					hpUserPayrollEntity.setPayIdNum(payrollPojo.getPayIdNum());
-					hpUserPayrollEntity.setWorkNum(payrollPojo.getWorkNum());
-					hpUserPayrollEntity.setPayComName(payrollPojo.getPayComName());
-					hpUserPayrollEntity.setPayTime(payrollPojo.getPayTime());
-					hpUserPayrollEntity.setShouldMoney(payrollPojo.getShouldMoney());
-					hpUserPayrollEntity.setDeductionMoney(payrollPojo.getDeductionMoney());
-					hpUserPayrollEntity.setRealMoney(payrollPojo.getRealMoney());
-					hpUserPayrollEntity.setPayDetail(payrollPojo.getPayDetail().toJSONString());
-					hpUserPayrollEntity.setCreateTime(Util.getDateSecond(new Date()));
-					salaryService.insertSalary(hpUserPayrollEntity);
-				}
-			}
-			
-		}catch(Exception e) {
-			logger.error("backUser.importSalary ----出错--------------");
-			msg.setErrorCode(1);
-			msg.setMessage("导入出错");
-		}
-		msg.setErrorCode(0);
-		msg.setMessage("导入成功");
-		logger.info("backUser.importSalary -----end--------------");
-		return msg ;
+    	return salaryService.importSalary(file);
 	}
 
    

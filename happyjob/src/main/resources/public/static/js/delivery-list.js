@@ -20,11 +20,24 @@ $(document).on("click",".queryDelivery",function(){
 
 // 联系-->入职
 $(document).on("click",".contact",function(){
-	 var $row = $(this).parents("tr");
-	 var $obj = $(this).parents("tr").find(".contact");
-	 $obj.eq(0).html("入职");
-	 //todo 添加联系人 。。
-	 $(this).parents("tr")
+	var params ={}
+	var $row = $(this).parents("tr");
+	var $row = $(this).parents("tr");
+    var hpPositionRefUserId = $row.data("position_ref_user_id");
+    params.hpPositionRefUserId = hpPositionRefUserId ;
+	var $contact = $(this).parents("tr").find(".contact");
+	var $comPer = $(this).parents("tr").find(".comPer");
+	var $comPon = $(this).parents("tr").find(".comPon");
+	fetchPost({
+	        url:"/backDelivery/getLoginUser",
+	        params: params,
+	        callback:function(data){
+	            console.log(data)
+	            $contact.eq(0).html("入职");
+	            $comPer.eq(0).html(data.userName);
+	            $comPon.eq(0).html(data.phoneNo);
+	        }
+	    })
 })
 
 // 查看
@@ -130,6 +143,7 @@ function addTableList(list){
     list.forEach(function(item){
         templeteTr+='\
         <tr \
+        	data-position_ref_user_id="'+item.hpPositionRefUserId+'" \
         	data-hp-user-id="'+ item.hpUserId +'" \
             data-user-name="'+ item.userName +'" \
             data-real-name="'+ item.realName +'" \
@@ -154,6 +168,8 @@ function addTableList(list){
                 <button type="button" class="btn btn-default btn-sm cat">查看</button>\
                 <button type="button" class="btn btn-primary btn-sm contact">联系</button>\
             </th>\
+            <th class="comPer"></th>\
+            <th class="comPho"></th>\
         </tr>';
                 // <button type="button" class="btn btn-danger btn-sm restart">复用</button>\
     })

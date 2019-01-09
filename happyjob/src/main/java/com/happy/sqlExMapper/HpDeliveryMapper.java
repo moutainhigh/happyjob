@@ -8,6 +8,7 @@ import com.happy.service.delivery.data.DeliveryData;
 import com.happy.service.delivery.data.DeliveryDetail;
 import com.happy.service.delivery.data.DeliverySearch;
 import com.happy.service.delivery.data.HpUserEducationExt;
+import com.happy.service.salary.data.LoginUserMsg;
 
 public interface HpDeliveryMapper {
 
@@ -25,4 +26,6 @@ public interface HpDeliveryMapper {
 	List<HpUserIntentionEntity> getIntentionByUserId( Long hpUserId);
 	
 	DeliveryDetail deliveryQueryUser(Long hpUserId);
+	
+	LoginUserMsg getLoginUser(String userToken);
 }

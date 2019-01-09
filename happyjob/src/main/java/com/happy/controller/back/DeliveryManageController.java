@@ -1,20 +1,22 @@
 package com.happy.controller.back;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.happy.service.delivery.DeliveryService;
 import com.happy.service.delivery.data.DeliveryDetail;
 import com.happy.service.delivery.data.DeliveryListMsg;
-import com.happy.service.salary.SalaryService;
-import com.happy.service.salary.data.SalarySimpleListMsg;
+import com.happy.service.salary.data.LoginUserMsg;
 import com.happy.util.Util;
+import com.happy.util.pubConst.Const;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -83,5 +85,31 @@ public class DeliveryManageController {
         DeliveryDetail deliveryDetail = this.deliveryService.deliveryQueryByUserId(hpUserId);
         
         return deliveryDetail ;
+    }
+    
+    /**
+     * @TODO:    登陆用户
+     */
+    @ApiOperation(value="登陆用户查询",notes="登陆用户查询")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name="userToken",value="登录token",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="hpPositionRefUserId",value="hpPositionRefUserId",dataType="Long",paramType="query",required=false),
+    })
+    @PostMapping(value = "/getLoginUser")
+	public LoginUserMsg getLoginUser(HttpServletRequest request){
+    	Long hpPositionRefUserId = (Long)Util.typeChange(request.getParameter("hpPositionRefUserId"), Long.class);
+    	Cookie[] cookiesArr =  request.getCookies();
+    	String userToken="";
+    	
+    	if (cookiesArr !=null) {
+            for (Cookie cookie : cookiesArr) {
+                if (cookie.getName().equals(Const.COOKIE_ATTR_NAME_SID)) {
+                	userToken = cookie.getValue();
+                }
+            }
+        }
+    	LoginUserMsg loginUserMsg = deliveryService.getLoginUser(hpPositionRefUserId,userToken);
+    	logger.info("backUser.getLoginUser userToken={}",userToken);
+    	return loginUserMsg ;
     }
 }

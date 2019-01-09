@@ -115,10 +115,10 @@ function addTableList(list){
             data-real-money="'+ item.realMoney +'" \
             data-pay-detail="'+ item.payDetail.replace(/\"/g,"'") +'" \
             data-create-time="'+ timestampToTime(item.createTime) +'" >\
-            <th>'+ item.payName +'</th>\
-            <th>'+ item.payComName +'</th>\
-            <th>'+ item.payIdNum +'</th>\
-            <th>'+ item.workNum +'</th>\
+            <th>'+ isNull(item.payName) +'</th>\
+            <th>'+ isNull(item.payComName) +'</th>\
+            <th>'+ isNull(item.payIdNum) +'</th>\
+            <th>'+ isNull(item.workNum) +'</th>\
             <th>'+ timestampToMonth(item.createTime) +'</th>\
             <th>'+ item.shouldMoney +'</th>\
             <th>'+ item.deductionMoney +'</th>\
@@ -156,3 +156,4 @@ function change(t) {
         return t;
     }
 }
+

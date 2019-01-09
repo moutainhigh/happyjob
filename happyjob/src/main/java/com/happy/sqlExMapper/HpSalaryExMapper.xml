@@ -19,4 +19,11 @@
 		
 	</select>	
 	
+	<select id="getPayroll" parameterType="com.happy.entity.HpUserPayrollEntity" resultType="com.happy.entity.HpUserPayrollEntity">
+		select *
+		from hp_user_payroll 
+		where  pay_id_num = #{payIdNum} 
+			and pay_time =#{payTime}
+	</select>
+	
 </mapper>
