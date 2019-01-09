@@ -32,7 +32,7 @@
 		<if test="keyWord !=null and keyWord !=''">
 			AND (p.pos_type LIKE CONCAT('%',#{keyWord},'%') OR p.pos_name LIKE CONCAT('%',#{keyWord},'%') OR c.com_name LIKE CONCAT('%',#{keyWord},'%') )
 		</if>
-		ORDER BY p.apply_time desc
+		ORDER BY p.apply_time desc,p.hp_position_id desc
 	</select>
 	
 	<select id="getBackPoslistPage" parameterType="com.happy.service.position.data.PositionSearch" resultType="com.happy.service.position.data.PositionData" >
@@ -48,12 +48,12 @@
 			<when test="state == 1">AND p.start_time &lt;=#{curTime} AND p.end_time &gt;=#{curTime} </when>
 			<when test="state == 4">AND p.end_time &lt;#{curTime}  </when>
 		</choose>
-		ORDER BY p.apply_time desc 
+		ORDER BY p.apply_time desc,p.hp_position_id desc 
 	</select>
 	
 	
 	<select id="getFrontPosByKey" resultType="com.happy.service.position.data.PositionData" >
-		SELECT p.*,c.com_name,ps.lower_num,ps.hight_num,aco.county_name,aci.city_name,<include refid="selectRequireCol"></include>,
+		SELECT p.*,c.com_name,ps.lower_num,ps.hight_num,aco.county_name,aci.city_name,c.com_logo,<include refid="selectRequireCol"></include>,
 		(SELECT GROUP_CONCAT(pw.welfare_name) FROM hp_position_ref_welfare prw JOIN hp_position_welfare pw 
          WHERE prw.hp_position_id=p.hp_position_id AND prw.hp_position_welfare_id=pw.hp_position_welfare_id) welfareArr  
 		FROM hp_position p JOIN hp_company c ON p.hp_company_id=c.hp_company_id 
@@ -96,7 +96,7 @@
 	</select>
 	
 	<select id="getGroupListBySearch" parameterType="com.happy.service.position.data.GroupSearch" resultType="com.happy.service.position.data.GroupData" >
-		SELECT pg.*,u.user_name,u.header_pic,c.com_name,p.pos_name,ps.lower_num,ps.hight_num,
+		SELECT pg.*,u.user_name leader_name,u.header_pic leader_pic,c.com_name,p.pos_name,ps.lower_num,ps.hight_num,
 @part_num:=(SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_id=pg.hp_position_group_id) partNum,
 (pg.end_time-#{curTime}) leftTime 
 FROM  hp_company c JOIN hp_position p ON c.hp_company_id=p.hp_company_id 
@@ -104,7 +104,7 @@ JOIN hp_position_group pg ON p.hp_position_id=pg.hp_position_id
 LEFT JOIN hp_user u ON pg.hp_user_id=u.hp_user_id 
 LEFT JOIN hp_position_salary ps ON p.hp_position_salary_id=ps.hp_position_salary_id 
 WHERE p.hp_position_id=#{curTime} AND p.group_on=1 AND pg.end_time>#{curTime} AND @part_num &lt;3 
-ORDER BY pg.end_time 
+ORDER BY pg.end_time,pg.hp_position_group_id desc 
 <if test="isPage == 1">LIMIT #{currentResult},#{showCount}</if>
 	</select>
 	
@@ -165,20 +165,22 @@ WHERE p.hp_position_id=#{curTime} AND p.group_on=1 AND pg.end_time>#{curTime} AN
 	</select>
 	
 	<select id="getPosDetailByKey" resultType="com.happy.service.position.data.PositionDetail" >
-		SELECT p.*,c.hp_company_id,c.com_logo,<include refid="selectRequireCol"></include>,
+		SELECT p.*,c.hp_company_id,c.com_name,<include refid="selectRequireCol"></include>,
 		(SELECT GROUP_CONCAT(pw.hp_position_welfare_id) FROM hp_position_ref_welfare prw JOIN hp_position_welfare pw 
-         WHERE prw.hp_position_id=p.hp_position_id AND prw.hp_position_welfare_id=pw.hp_position_welfare_id) welfareIdArr  
+         WHERE prw.hp_position_id=p.hp_position_id AND prw.hp_position_welfare_id=pw.hp_position_welfare_id) welfareArr,
+         aco.county_id,aco.county_name,aci.city_id,aci.city_name,ap.province_id,ap.province_name  
          
 		FROM hp_position p JOIN hp_company c ON p.hp_company_id=c.hp_company_id 
 		JOIN hp_position_salary ps ON p.hp_position_salary_id=ps.hp_position_salary_id 
-		JOIN hp_area_county aco ON p.county_id=aco.county_id 
-		JOIN hp_area_city aci ON aco.city_id=aci.city_id 
+		LEFT JOIN hp_area_county aco ON p.county_id=aco.county_id 
+		LEFT JOIN hp_area_city aci ON aco.city_id=aci.city_id 
+		LEFT JOIN hp_area_province ap ON aci.province_id=ap.province_id 
 		LEFT JOIN hp_position_require pr ON p.hp_position_id=pr.hp_position_id 
 		WHERE p.hp_position_id=#{hpPositionId} 
 	</select>
 	
 	<delete id="deleteGroupWelfare" >
-		DELETE FROM hp_position WHERE hp_position.hp_position_id=#{hpPositionId}
+		DELETE FROM hp_position_ref_welfare WHERE hp_position_ref_welfare.hp_position_id=#{hpPositionId}
 	</delete>
 	
 	<insert id="insertGroupWelfare" >

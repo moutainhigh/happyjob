@@ -5,6 +5,7 @@ $(".datepicker").datepicker({
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
 var _curUrl = window.location.href;
+var hpPositionId = null;
 var positionData = {
   "applyTime": null,
   "carDesc": "",
@@ -56,6 +57,10 @@ var positionData = {
 
 $(function(){
 	positionConfig();
+	hpPositionId = publicObj.getParams(_curUrl,"hpPositionId");
+	if(hpPositionId){ // 编辑
+		editorPosition();
+	}
 	$("#btnSub").click(function(){
 		formSub();
 	});
@@ -69,6 +74,22 @@ $(function(){
 	
 	$('select[data-type="area"]').change(function(){ // 地区选择
 		areaConfig($(this).attr("id"),$(this).val()); // 地区
+	});
+	$('#urgentOn').change(function(){ // 高薪急聘选择
+		if($(this).val()==1){
+			$("#urgentMoney").removeAttr("disabled");
+		}else{
+			$("#urgentMoney").attr("disabled",true);
+		}
+	});
+	$('#groupOn').change(function(){ // 拼团选择
+		if($(this).val()==1){
+			$("#threeMoney").removeAttr("disabled");
+			$("#fiveMoney").removeAttr("disabled");
+		}else{
+			$("#threeMoney").attr("disabled",true);
+			$("#fiveMoney").attr("disabled",true);
+		}
 	});
 })
 
@@ -97,8 +118,16 @@ $(document).on("click",'*[data-type="posType"]',function(){
 function formSub(){ // 提交验证
 	console.log("here is formSub");
 	var posName = $("#posName").val();
+	if(publicObj.spePatt.test(posName)){
+		swal('字段值类型错误', '职位名称不能包含特殊字符', 'error');
+		return;
+	}
 	var comName = $("#comName").val();
 	var comId = $("#comList").find('option[value="'+comName+'"]').data("id");
+	if(!comId){
+		swal('字段值类型错误', '要填写已存在的公司名称', 'error');
+		return;
+	}
 	var manDayNum = $("#manDayNum").val();
 	var retManMoney = $("#retManMoney").val();
 	var womenDayNum = $("#womenDayNum").val();
@@ -111,6 +140,12 @@ function formSub(){ // 提交验证
 			retOn = 1;
 		}
 	});
+	if(retOn != 1){
+		manDayNum = 0;
+		retManMoney = 0;
+		womenDayNum = 0;
+		retWomanMoney = 0;
+	}
 	if(welFareIds != ""){
 		welFareIds = welFareIds.substring(0,welFareIds.length-1);
 	}
@@ -121,6 +156,13 @@ function formSub(){ // 提交验证
 	var groupOn = $("#groupOn").val();
 	var threeMoney = $("#threeMoney").val();
 	var fiveMoney = $("#fiveMoney").val();
+	if(groupOn != 1){
+		threeMoney = 0;
+		fiveMoney = 0;
+	}else if(!threeMoney || !fiveMoney || threeMoney==0 || fiveMoney==0) {
+		swal('字段值类型错误', '开启拼团后拼团奖励必填', 'error');
+		return;
+	}
 	
 	var welfareOn = $("#welfareOn").val();
 	var welfareDetail = $("#welfareDetail").val();
@@ -202,7 +244,7 @@ function formSub(){ // 提交验证
 	positionData.hpPositionOfferId = hpPositionOfferId;
 	positionData.retOn = retOn;
 	positionData.urgentMoney = urgentMoney;
-	positionData.welfareArr = welfareIds;
+	positionData.welfareArr = welFareIds;
 	positionData.hpPositionId = publicObj.getParams(_curUrl,"hpPositionId");
 	
 	fetchPostBody({
@@ -400,6 +442,97 @@ function eduConfig(){
 					$("#hpEducationId").append(content);
 				}
 			}
+		}
+	});
+}
+
+function editorPosition(){
+	fetchGet({
+		url:apiData.positionEditor,
+		params:{
+			hpPositionId:hpPositionId,
+		},
+		callback:function(data){
+			var positionData = data.data;
+			if(!positionData){
+				swal('参数错误', '要查询的岗位信息不存在', 'error');
+				return;
+			}
+			$("#posName").val(positionData.posName);
+			$("#comName").val(positionData.comName);
+			$("#manDayNum").val(positionData.manDayNum);
+			$("#retManMoney").val(positionData.retManMoney);
+			$("#womenDayNum").val(positionData.womenDayNum);
+			$("#retWomanMoney").val(positionData.retWomanMoney);
+			var welFareIds = positionData.welfareArr;
+			console.log(welFareIds);
+			if(welFareIds){
+				var welFareIdArr = welFareIds.split(",");
+				$('input[name="hpPositionWelfareId"]').each(function(){
+					for(var i=0;i<welFareIdArr.length;i++){
+						if($(this).val() == welFareIdArr[i]){
+							$(this).click();
+							if($(this).val() == 2){
+								$("#retItem").show();
+							}
+						}
+					}
+				});
+			}
+			$("#urgentOn").val(positionData.urgentOn);
+			$("#urgentMoney").val(positionData.urgentMoney);
+			if(positionData.urgentOn == 1){
+				$("#urgentMoney").removeAttr("disabled");
+			}
+			$("#groupOn").val(positionData.groupOn);
+			$("#threeMoney").val(positionData.threeMoney);
+			$("#fiveMoney").val(positionData.fiveMoney);
+			if(positionData.groupOn == 1){
+				$("#threeMoney").removeAttr("disabled");
+				$("#fiveMoney").removeAttr("disabled");
+			}
+			$("#welfareOn").val(positionData.welfareOn);
+			$("#welfareDetail").val(positionData.welfareDetail);
+			
+			$("#jobHours").val(positionData.jobHours);
+			$("#hpPositionOfferId").val(positionData.hpPositionOfferId); // 下拉框
+			$("#comCustPhone").val(positionData.comCustPhone);
+			
+			$("#hpPositionTypeId").val(positionData.hpPositionTypeId); // 选择框
+			$('*[data-type="posType"][data-id="'+positionData.hpPositionTypeId+'"]').click();
+			
+			$("#posDetail").val(positionData.posDetail);
+			
+			$("#reqGender").val(positionData.reqGender);
+			$("#reqAge").val(positionData.reqAge);
+			$("#reqEducation").val(positionData.reqEducation);
+			$("#reqSkill").val(positionData.reqSkill);
+			$("#reqExp").val(positionData.reqExp);
+			$("#reqWorkYears").val(positionData.reqWorkYears);
+			$("#reqOther").val(positionData.reqOther);
+			
+			$("#otherWelfare").val(positionData.otherWelfare);
+			$("#carOn").val(positionData.carOn); // 下拉框
+			$("#carDesc").val(positionData.carDesc);
+			$("#posComDesc").val(positionData.posComDesc);
+			$('input[name="posNature"][value="'+positionData.posNature+'"]').prop("checked",true);
+			
+			$('#hpPositionSalaryId').val(positionData.hpPositionSalaryId); // 下拉框
+			$('#posWorkYear').val(positionData.posWorkYear);
+			
+			$("#startTime").val(publicObj.dateFormat(publicObj.secondToDate(positionData.startTime),dateStrData.d1));
+			$("#endTime").val(publicObj.dateFormat(publicObj.secondToDate(positionData.endTime),dateStrData.d1));
+			
+			$('#posNum').val(positionData.posNum);
+			
+			$("#province").val(positionData.provinceId);
+			$("#city").append('<option value="'+positionData.cityId+'" selected >'+positionData.cityName+'</option>');
+			$("#county").append('<option value="'+positionData.countyId+'" selected >'+positionData.countyName+'</option>');
+			
+			$('#hpEducationId').val(positionData.hpEducationId); // 下拉框
+			$('#posPerson').val(positionData.posPerson);
+			$('#posPhone').val(positionData.posPhone);
+			$('#posEmail').val(positionData.posEmail);
 		}
 	});
 }

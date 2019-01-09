@@ -1,27 +1,39 @@
 var BASE_URL = window.location.origin;
 
 function fetchGet(options){
-    $.get( BASE_URL+ options.url,options.params,function(data){
-        console.log(data)
-        if(data.errorCode==0){
-            options.callback && options.callback(data)
-        }else{
-        	console.log(JSON.stringify(data));
-//            swal('请求失败', data.message, 'error');
-        }
-    })
+	$.ajax({
+		url:BASE_URL+ options.url,
+		type:"get",
+		data:options.params,
+		success:function(data){
+	        if(data.errorCode==0){
+	            options.callback && options.callback(data)
+	        }else{
+		            swal('请求失败', data.message, 'error');
+	        }
+		},
+		error:function(data){
+			swal('请求失败', data.message, 'error');
+		}
+	})
 }
 
 function fetchPost(options){
-    $.post( BASE_URL+ options.url,options.params,function(data){
-        console.log(data)
-        if(data.errorCode==0){
-            options.callback && options.callback(data)
-        }else{
-        	console.log(JSON.stringify(data));
-//            swal('请求失败', data.message, 'error');
-        }
-    })
+	$.ajax({
+		url:BASE_URL+ options.url,
+		type:"post",
+		data:options.params,
+		success:function(data){
+	        if(data.errorCode==0){
+	            options.callback && options.callback(data)
+	        }else{
+		            swal('请求失败', data.message, 'error');
+	        }
+		},
+		error:function(data){
+			swal('请求失败', data.message, 'error');
+		}
+	})
 }
 
 function fetchPostBody(options){
@@ -29,9 +41,7 @@ function fetchPostBody(options){
 		url:BASE_URL+ options.url,
 		type:"post",
 		data:JSON.stringify(options.params),
-		headers:{
-			'contentType': 'application/json',
-		},
+		'contentType': 'application/json',
 		success:function(data){
 	        console.log(data)
 	        if(data.errorCode==0){
@@ -104,6 +114,8 @@ var publicObj = {
 			return  new Date(dateStr).getTime()/1000;
 		}
 	},
+	"numPatt": new RegExp(/^\d+$/),
+	"spePatt": new RegExp(/^.*[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/)(\<)(\>)(\?)(\)]+.*$/),
 }
 
 var routingData = {
@@ -119,6 +131,7 @@ var routingData = {
 var apiData = {
 	positionList:"/backPosition/positionList",
 	positionAdd:"/backPosition/position",
+	positionEditor:"/backPosition/position",
 	positionHotOn:"/backPosition/positionHotOn",
 	posCompanyList:"/backPosition/posCompanyList",
 	posOfferList:"/backPosition/posOfferList",

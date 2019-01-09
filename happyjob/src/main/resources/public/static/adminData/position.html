@@ -170,7 +170,7 @@
 							<option value="45">45天返</option>
 							<option value="65">60天返</option>
 						</select>
-						<input id="retManMoney">元
+						<input id="retManMoney" oninput = "value=value.replace(/[^\d]/g,'')" >元
 					</div>
 					<div>
 						<i>女</i>
@@ -180,7 +180,7 @@
 							<option value="45">45天返</option>
 							<option value="65">60天返</option>
 						</select>
-						<input id="retWomanMoney">元
+						<input id="retWomanMoney" oninput = "value=value.replace(/[^\d]/g,'')">元
 					</div>
 				</div>
 			</div>
@@ -194,10 +194,10 @@
 				<div>
 					<select id="urgentOn" >
 						<option>请选择</option>
-						<option value="0">是</option>
-						<option value="1">否</option>
+						<option value="1">是</option>
+						<option value="0">否</option>
 					</select>
-					平台补贴<input id="urgentMoney">元
+					平台补贴<input id="urgentMoney" oninput = "value=value.replace(/[^\d]/g,'')" disabled >元
 				</div>
 			</div>
 			
@@ -206,11 +206,11 @@
 				<div>
 					<select id="groupOn" >
 						<option>请选择</option>
-						<option value="0">是</option>
-						<option value="1">否</option>
+						<option value="1">是</option>
+						<option value="0">否</option>
 					</select>
-					三人团奖励<input id="threeMoney" >元
-					五人团奖励<input id="fiveMoney" >元
+					三人团奖励<input id="threeMoney" oninput = "value=value.replace(/[^\d]/g,'')" disabled >元
+					五人团奖励<input id="fiveMoney" oninput = "value=value.replace(/[^\d]/g,'')" disabled >元
 				</div>
 			</div>
 			
@@ -219,8 +219,8 @@
 				<div>
 					<select id="welfareOn" >
 						<option>请选择</option>
-						<option value="0">是</option>
-						<option value="1">否</option>
+						<option value="1">是</option>
+						<option value="0">否</option>
 					</select>
 				</div>
 			</div>
@@ -234,7 +234,7 @@
 			<div>
 				<label for="jobHours" >工作时限：</label>
 				<div>
-					<input id="jobHours" >
+					<input id="jobHours" maxlength="20" >
 				</div>
 			</div>
 			
@@ -250,7 +250,7 @@
 			<div>
 				<label for="comCustPhone" >公司客服：</label>
 				<div>
-					<input id="comCustPhone" >
+					<input id="comCustPhone" maxlength="11" >
 				</div>
 			</div>
 			
@@ -285,7 +285,7 @@
 			<div>
 				<label for="otherWelfare" >其他福利：</label>
 				<div>
-					<textarea id="otherWelfare" rows="5" cols="100"></textarea>
+					<textarea id="otherWelfare" rows="5" cols="100" ></textarea>
 				</div>
 			</div>
 	
@@ -294,8 +294,8 @@
 				<div>
 					<select id="carOn" >
 						<option>请选择</option>
-						<option value="0">是</option>
-						<option value="1">否</option>
+						<option value="1">是</option>
+						<option value="0">否</option>
 					</select>
 				</div>
 			</div>
@@ -316,7 +316,7 @@
 			<div>
 				<label for="posNature" >职位性质：</label>
 				<div>
-					<input name='posNature' type="radio" value="1" >实习
+					<input name='posNature' type="radio" value="1" checked >实习
 					<input name='posNature' type="radio" value="2" >兼职
 					<input name='posNature' type="radio" value="3" >全职
 				</div>
@@ -365,7 +365,7 @@
 			<div>
 				<label for="posNum" >招聘人数：</label>
 				<div>
-					<input id="posNum" type="text" >
+					<input id="posNum" type="text" oninput = "value=value.replace(/[^\d]/g,'')" >
 				</div>
 			</div>
 			
@@ -399,19 +399,19 @@
 			<div>
 				<label for="posPerson" >联系人：</label>
 				<div>
-					<input id="posPerson" type="text" >
+					<input id="posPerson" type="text" maxlength="50" >
 				</div>
 			</div>
 			<div>
 				<label for="posPhone" >联系电话：</label>
 				<div>
-					<input id="posPhone" type="text" >
+					<input id="posPhone" type="text" oninput = "value=value.replace(/[^\d]/g,'')" maxlength="11" >
 				</div>
 			</div>
 			<div>
 				<label for="posEmail" >接收邮箱：</label>
 				<div>
-					<input id="posEmail" type="text" >
+					<input id="posEmail" type="text" maxlength="50" >
 				</div>
 			</div>
 			
@@ -500,6 +500,7 @@
 <script src="/static/adminlet/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <!-- 确认提示框 帮助文档：http://www.cnblogs.com/hulin520/p/5818746.html -->
 <script src="/static/plugins/sweetalert/sweetalert2.min.js"></script>
+
 
 <!-- 页面逻辑 -->
 <script src="/static/js/common.js"></script>

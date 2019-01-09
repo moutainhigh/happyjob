@@ -23,8 +23,23 @@ import io.swagger.annotations.ApiModelProperty;
     private String reqWorkYears;
     @ApiModelProperty(name="reqOther",value="其他要求")
     private String reqOther;
-    @ApiModelProperty(name="welfareIdArr",value="岗位福利ID，逗号分隔")
+    @ApiModelProperty(name="welfareArr",value="岗位福利ID，逗号分隔")
     private String welfareArr;
+    @ApiModelProperty(name="comName",value="公司名称")
+    private String comName;
+    @ApiModelProperty(name="provinceId",value="省ID")
+    private Long provinceId;
+    @ApiModelProperty(name="provinceName",value="省名称")
+    private String provinceName;
+    @ApiModelProperty(name="cityId",value="市ID")
+    private Long cityId;
+    @ApiModelProperty(name="cityName",value="市名称")
+    private String cityName;
+    @ApiModelProperty(name="countyId",value="区县ID")
+    private Long countyId;
+    @ApiModelProperty(name="countyName",value="区县名称")
+    private String countyName;
+    
     public String getReqGender() {
         return reqGender;
     }
@@ -73,5 +88,46 @@ import io.swagger.annotations.ApiModelProperty;
     public void setWelfareArr(String welfareArr) {
         this.welfareArr = welfareArr;
     }
-    
+    public String getComName() {
+        return comName;
+    }
+    public void setComName(String comName) {
+        this.comName = comName;
+    }
+    public Long getProvinceId() {
+        return provinceId;
+    }
+    public void setProvinceId(Long provinceId) {
+        this.provinceId = provinceId;
+    }
+    public String getProvinceName() {
+        return provinceName;
+    }
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+    public Long getCityId() {
+        return cityId;
+    }
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+    public String getCityName() {
+        return cityName;
+    }
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+    public Long getCountyId() {
+        return countyId;
+    }
+    public void setCountyId(Long countyId) {
+        this.countyId = countyId;
+    }
+    public String getCountyName() {
+        return countyName;
+    }
+    public void setCountyName(String countyName) {
+        this.countyName = countyName;
+    }
 }

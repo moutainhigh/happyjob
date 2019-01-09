@@ -16,6 +16,9 @@ import io.swagger.annotations.ApiModelProperty;
     @ApiModelProperty(name="leaderName",value="发起人用户名")
     private String leaderName;
     
+    @ApiModelProperty(name="leaderPic",value="发起人头像")
+    private String leaderPic;
+    
     @ApiModelProperty(name="leftTime",value="剩余时间（单位s）")
     private Long leftTime;
     
@@ -111,5 +114,11 @@ import io.swagger.annotations.ApiModelProperty;
     }
     public void setUserIsPart(Integer userIsPart) {
         this.userIsPart = userIsPart;
+    }
+    public String getLeaderPic() {
+        return leaderPic;
+    }
+    public void setLeaderPic(String leaderPic) {
+        this.leaderPic = leaderPic;
     }
 }

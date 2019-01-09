@@ -5,6 +5,7 @@ $(".datepicker").datepicker({
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
 var curUrl = window.location.href;
+
 var listParams = {
 		posName:"",
 		comName:"",
@@ -12,17 +13,22 @@ var listParams = {
 		endTime:"",
 		posSate:0,
 		currentPage:1,
-		showCount:10
+		showCount:5,
 }
 var list= [];
 var totalPage=1;
 
 fetchParamsList();
 $(document).on("click",".queryButton",function(){
-	var url = routingData.positionList($("#posName").val(),$("#comName").val(),publicObj.transferTime($("#startTime").val()),
-			publicObj.transferTime($("#endTime").val()),$("#posState").val());
-	window.location.href = url;
+	
+	pageSearch(1);
 })
+// 分页查询
+function pageSearch(page){
+	var url = routingData.positionList($("#posName").val(),$("#comName").val(),publicObj.transferTime($("#startTime").val()),
+			publicObj.transferTime($("#endTime").val()),$("#posState").val(),page,listParams.showCount);
+	window.location.href = url;
+}
 
 // 设为热门-->取消热门
 $(document).on("click","#hotOn",function(){
@@ -57,6 +63,7 @@ function fetchParamsList(){
 	}
 	console.log(publicObj.getParams(curUrl,"posState"));
 	$("#posState").find('option[value="'+publicObj.getParams(curUrl,"posState")+'"]').attr("selected","selected");
+	listParams.currentPage = publicObj.getParams(curUrl,"currentPage");
 	fetchList();
 }
 // 获取table数据
@@ -75,6 +82,7 @@ function fetchList(){
 			listParams.currentPage = data.page.currentPage;
 			totalPage= data.page.totalPage;
 			addTableList(list);
+			pageShow(data.page);
 		}
 	})    
 }
@@ -99,7 +107,7 @@ function addTableList(list){
             <th>'+ showPosState(item.endTime) +'</th>\
             <th>\
                 <button type="button" id="hotOn" class="btn btn-default btn-sm cat">'+showHotOn(item.hotOn)+'</button>\
-                <button type="button" class="btn btn-primary btn-sm contact">编辑</button>\
+                <a class="btn btn-primary btn-sm contact" href="/static/adminData/position.html?hpPositionId='+item.hpPositionId+'" >编辑</button>\
             </th>\
         </tr>';
     })
@@ -127,4 +135,35 @@ function showHotOn(param){
 }
 function posDateFormat(timeStamp){
 	return publicObj.dateFormat(publicObj.secondToDate(timeStamp),dateStrData.d1);
+}
+
+function pageShow(pageData){
+	totalPage = pageData.totalPage;
+    currentPage = pageData.currentPage;
+    // 分页初始化
+    if(totalPage>1){
+        $('#pageLimit').bootstrapPaginator({
+            currentPage: currentPage,//当前的请求页面。
+            totalPages: totalPage,//一共多少页。
+            size:"normal",//应该是页眉的大小。
+            bootstrapMajorVersion: 3,//bootstrap的版本要求。
+            alignment:"right",
+            numberOfPages:5,//一页列出多少数据。
+            itemTexts: function (type, page, current) {//如下的代码是将页眉显示的中文显示我们自定义的中文。
+                switch (type) {
+                    case "first": return "首页";
+                    case "prev": return "上一页";
+                    case "next": return "下一页";
+                    case "last": return "末页";
+                    case "page": return page;
+                }
+            },
+            onPageClicked: function (event, originalEvent, type, page){//给每个页眉绑定一个事件，其实就是ajax请求，其中page变量为当前点击的页上的数字。
+            	pageSearch(page);
+            }
+        });
+        $("#logs-pager").show()
+    }else{
+        $("#logs-pager").hide()
+    }
 }

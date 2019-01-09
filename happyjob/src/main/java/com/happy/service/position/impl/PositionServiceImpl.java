@@ -275,12 +275,14 @@ public class PositionServiceImpl implements PositionService {
             
         }else { // 可以同时申请不同非拼团岗位
             posUser = new HpPositionRefUserEntity();
+            posUser.setLeaderOn(0);
         }
         posUser.setHpPositionId(hpPositionId);
         posUser.setHpUserId(hpUserId);
         posUser.setPartTime(curTime);
         posUser.setPartType(partType);
         posUser.setWorkOn(0);
+        
         this.hpPositionRefUserMapper.insert(posUser);
         GroupData data = new GroupData();
         data.setHpPositionId(hpPositionId);
