@@ -32,6 +32,11 @@ $(document).on("click","#queryUser",function(){
 
 // 禁用
 $(document).on("click",".forbidden",function(){
+	var $row = $(this).parents("tr");
+	var hpUserId = $row.data("user-id");
+	var data ={};
+	data.hpUserId = hpUserId ;
+	
     swal({
         title: '是否禁用该用户',
         text: '',
@@ -41,13 +46,17 @@ $(document).on("click",".forbidden",function(){
         cancelButtonText: '否',
         }).then(function(isConfirm) {
         if (isConfirm === true) {
+        	data.blackOn = 1 ;
+        	postAuth(data);
             swal(
             'Deleted!',
             'Your imaginary file has been deleted.',
             'success'
             );			
         } else if (isConfirm === false) {
-            swal(
+        	data.blackOn = 0 ;
+        	postAuth(data);
+        	swal(
             'Cancelled',
             'Your imaginary file is safe :)',
             'error'
@@ -61,6 +70,10 @@ $(document).on("click",".forbidden",function(){
 })
 // 认证
 $(document).on("click",".auth",function(){
+	var $row = $(this).parents("tr");
+	var hpUserId = $row.data("user-id");
+	var data ={};
+	data.hpUserId = hpUserId ;
     swal({
         title: '认证',
         text: '是否通过认证!',
@@ -70,13 +83,17 @@ $(document).on("click",".auth",function(){
         cancelButtonText: '不通过',
         }).then(function(isConfirm) {
         if (isConfirm === true) {
+        	data.approve = 1 ;
+        	postAuth(data);
             swal(
-            'Deleted!',
-            'Your imaginary file has been deleted.',
+            '认证!',
+            '认证成功',
             'success'
             );
         
         } else if (isConfirm === false) {
+        	data.approve = 2 ;
+        	postAuth(data);
             swal(
             'Cancelled',
             'Your imaginary file is safe :)',
@@ -145,6 +162,29 @@ $(document).on("click",".cat",function(){
     $('#browseModal').modal('toggle')
 })
 
+// 添加
+$(document).on("click","#newUser",function(){
+	var data ={} ;
+	data.userType = $("#userType").val();
+	data.userName =$("#userName").val();
+	data.password1 =$("#password1").val();
+	data.password2 =$("#password2").val();
+	data.gender =$("#gender").val();
+	data.phoneNo =$("#phoneNo").val();
+	data.bornTime =$("#bornTime").val();
+	data.realName =$("#realName").val();
+	data.blackOn =$("#blackOn").val();
+	
+	fetchPost({
+	        url:"/backUser/userInfo",
+	        params: data,
+	        callback:function(data){
+	            console.log(data);
+	            fetchList();
+	        }
+	 })
+//    $('#addUserModal').modal('toggle');
+})
 
 
 
@@ -221,7 +261,8 @@ function postAuth(data){
         url:"/backUser/userInfoUp",
         params: data,
         callback:function(data){
-            console.log(data)
+            console.log(data);
+            fetchList();
         }
     })
 }

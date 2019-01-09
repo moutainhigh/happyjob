@@ -505,13 +505,19 @@ public class UserServiceImpl implements UserService {
         }
         HpUserEntity user = new HpUserEntity();
         user.setHpUserId(hpUserId);
-        user.setApproveState(approve == 1?1:2);
-        user.setBlackOn(blackOn==1?1:0);
+        if(approve !=null) {
+        	user.setApproveState(approve == 1?1:2);
+        }
+        if(blackOn != null) {
+        	user.setBlackOn(blackOn==1?1:0);
+        }
         this.hpUserMapper.updateByPK(user);
         return msg;
     }
 
-
+//    public static void main(String[] args) {
+//		System.out.println(null == 1?1:0);
+//	}
     @Override
     public BaseMsg insertCompanyApply(String name, String comName, String contactNo, String position) {
         BaseMsg msg = new BaseMsg();

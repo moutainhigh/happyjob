@@ -99,7 +99,7 @@ $(document).on("click",".openUpdateModal",function(){
     $("#companyTypeId2").val(companyTypeId);
     $("#companyScaleId2").val(scaleId);
     $("#comDesc2").val(comDesc);
-    $("#countyId2").val(countyId);
+//    $("#countyId2").val(countyId);
     $("#addrDetail2").val(addrDetail);
     $("#comtPerson2").val(comtPerson);
     $("#comPhone2").val(comPhone);
@@ -262,7 +262,57 @@ var list= [];
 var totalPage=1;
 
 fetchList();
-
+$(function(){
+	positionConfig();
+	$('select[data-type="area"]').change(function(){ // 地区选择
+		areaConfig($(this).attr("id"),$(this).val()); // 地区
+	});
+})
+function positionConfig(){
+	areaConfig(null,null); // 地区
+}
+function areaConfig(areaType,areaId){
+	var provinceId = null;
+	var cityId = null;
+	if(areaType == "province"){ // 省查询市
+		provinceId = areaId;
+		$("#county").html('<option>请选择</option>');
+	}else if(areaType == "city"){ // 市查询区县
+		cityId = areaId;
+	}else if(areaType == "county"){
+		return;
+	}
+	fetchGet({
+		url:apiData.area,
+		params:{
+			provinceId:provinceId,
+			cityId:cityId,
+		},
+		callback:function(data){
+			if(data){
+				var content = '<option>请选择</option>';
+				var list = data.list;
+				var length = list.length;
+				for(var i=0;i<length;i++){
+					content += '<option value="'+list[i].areaId+'" >'+list[i].areaName+'</option>';
+				}
+				if(content !=''){
+					if(areaType == "province"){ // 省查询市
+						$("#city").html(content);
+					}else if(areaType == "city"){ // 市查询区县
+						cityId = areaId;
+						$("#county").html(content);
+					}else if(areaType == "county"){
+						return;
+					}else{
+						$("#province").html(content);
+					}
+					
+				}
+			}
+		}
+	});
+}
 // 获取table数据
 function fetchList(){
     fetchGet({
