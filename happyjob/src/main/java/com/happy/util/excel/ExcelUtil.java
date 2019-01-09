@@ -25,7 +25,7 @@ public class ExcelUtil {
     public static void main(String[] args) throws ExcelParseException {
 
         File file = new File("F:/安普瑞斯.xlsx");
-        parseExcelToPayrollPojoList(file);
+//        parseExcelToPayrollPojoList(file);
     }
 
     /**
@@ -35,14 +35,14 @@ public class ExcelUtil {
      * @return List<PayrollPojo>
      * @throws ExcelParseException
      */
-    public static List<PayrollPojo> parseExcelToPayrollPojoList(File file) throws ExcelParseException {
-        InputStream inputStream = null;
+    public static List<PayrollPojo> parseExcelToPayrollPojoList(InputStream inputStream,String fileName) throws ExcelParseException {
+//        InputStream inputStream = null;
         try {
-            inputStream = new FileInputStream(file);
+//            inputStream = new FileInputStream(file);
             if (inputStream != null) {
 
                 FileInputStream fis = (FileInputStream)inputStream;
-                String fileName = file.getName();
+//                String fileName = file.getName();
                 ExcelListener listener = new ExcelListener();
                 ExcelReader excelReader = null;
                 if (fileName != null) {

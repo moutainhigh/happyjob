@@ -1,5 +1,6 @@
  package com.happy.service.salary;
 
+import com.happy.entity.HpUserPayrollEntity;
 import com.happy.service.salary.data.SalarySimpleListMsg;
 
 public interface SalaryService {
@@ -12,4 +13,5 @@ public interface SalaryService {
    SalarySimpleListMsg getSalaryListPage(String workNum,String payName,String payIdNum,
 		   String payComName,Integer payTime,Integer currentPage,Integer showCount);
   
+   void insertSalary(HpUserPayrollEntity hpUserPayrollEntity);
 }

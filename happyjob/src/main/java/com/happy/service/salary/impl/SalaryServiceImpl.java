@@ -12,6 +12,8 @@ import com.happy.service.salary.SalaryService;
 import com.happy.service.salary.data.SalaryManageSearch;
 import com.happy.service.salary.data.SalarySimpleListMsg;
 import com.happy.sqlExMapper.HpSalaryExMapper;
+import com.happy.sqlMapper.HpUserPayrollMapper;
+import com.happy.util.excel.PayrollPojo;
 
 @Service
 public class SalaryServiceImpl implements SalaryService { 
@@ -20,6 +22,9 @@ public class SalaryServiceImpl implements SalaryService {
 	   
 	@Autowired
 	private HpSalaryExMapper hpSalaryExMapper;
+	
+	@Autowired
+	private HpUserPayrollMapper hpUserPayrollMapper ;
 	
 	@Override
 	public SalarySimpleListMsg getSalaryListPage(String workNum, String payName, String payIdNum, String payComName,
@@ -42,5 +47,10 @@ public class SalaryServiceImpl implements SalaryService {
         msg.setList(list);
         msg.setPage(page);
         return msg;
+	}
+
+	@Override
+	public void insertSalary(HpUserPayrollEntity hpUserPayrollEntity) {
+		hpUserPayrollMapper.insert(hpUserPayrollEntity);
 	}
 }
