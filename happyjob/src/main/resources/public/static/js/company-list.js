@@ -6,22 +6,16 @@ $(".datepicker").datepicker({
 });
 // 查询
 $(document).on("click",".queryCompany",function(){
-	listParams.comName = $("#comNameSearch").val();
-	listParams.endTime = publicObj.transferTime($("#endTimeSearch").val());
-	listParams.startTime = publicObj.transferTime($("#startTimeSearch").val());
-	fetchList();
-	clearlistParams();
+	pageSearch(1);
 })
 
 //分页查询
 function pageSearch(page){
-	
 	listParams.comName = $("#comNameSearch").val();
 	listParams.endTime = publicObj.transferTime($("#endTimeSearch").val());
 	listParams.startTime = publicObj.transferTime($("#startTimeSearch").val());
 	listParams.currentPage = page;
 	fetchList();
-	clearlistParams();
 }
 
 // 认证
@@ -256,11 +250,6 @@ function upPicLis(){
 	});
 }
 
-function clearlistParams(){
-	listParams.conName = "";
-	listParams.startTime = "";
-	listParams.endTime = "";
-}
 
 
 var listParams = {

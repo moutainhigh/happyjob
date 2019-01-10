@@ -19,22 +19,9 @@ $(document).on("click","#upload",function(){
 	});
 });
 
-function clearlistParams(){
-	listParams.payName = "";
-	listParams.payIdNum = "";
-	listParams.workNum = "";
-	listParams.payComName = "";
-	listParams.payTime = "";
-}
 
 $(document).on("click","#querySalary",function(){
-	listParams.payName = $("#payName").val();
-	listParams.payIdNum = $("#payIdNum").val();
-	listParams.workNum = $("#workNum").val();
-	listParams.payComName = $("#payComName").val();
-	listParams.payTime = $("#payTime").val();
-	fetchList();
-	clearlistParams();
+	pageSearch(1);
 })
 
 //分页查询
@@ -43,10 +30,9 @@ function pageSearch(page){
 	listParams.payIdNum = $("#payIdNum").val();
 	listParams.workNum = $("#workNum").val();
 	listParams.payComName = $("#payComName").val();
-	listParams.payTime = $("#payTime").val();
+	listParams.payTime = publicObj.transferTime($("#payTime").val());
 	listParams.currentPage = page;
 	fetchList();
-	clearlistParams();
 }
 
 

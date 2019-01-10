@@ -64,7 +64,7 @@ public class ExcelListener extends AnalysisEventListener {
                                 if (payRollProperty.format().equalsIgnoreCase(PayrollPojo.dateFormat)) {
 
                                     Date date = Util.getDateFromStr(cellData, Const.DATE_FORMAT_STR_6);
-                                    cellObj = date.getTime();
+                                    cellObj = date.getTime()/1000; //库中存10位
                                 } else {
 
                                     cellObj = TypeUtil.convert(cellData, field, payRollProperty.format(), false);

@@ -15,20 +15,26 @@ var listParams = {
 	    blackOn:"",
 	    userType:"",
 	    currentPage:1,
-	    showCount:10
+	    showCount:5
 }
 
 //查询
 $(document).on("click","#queryUser",function(){
+	pageSearch(1);
+})
+
+function pageSearch(page){
 	listParams.phoneNo = $("#phoneNo").val();
 	listParams.resource = $("#registResource").val();
 	listParams.startTime = dateToTime($("#startTime").val());
 	listParams.endTime = dateToTime($("#endTime").val());
 	listParams.blackOn = $("#blackOn").val();
 	listParams.userType = $("#userType").val();
-
+	listParams.currentPage = page;
 	fetchList();
-})
+}
+
+
 
 // 禁用
 $(document).on("click",".forbidden",function(){
@@ -251,6 +257,7 @@ function fetchList(){
             listParams.currentPage = data.page.currentPage;
             totalPage= data.page.totalPage;
             addTableList(list);
+            publicObj.pageShow(data.page,pageSearch);
         }
     })    
 }
