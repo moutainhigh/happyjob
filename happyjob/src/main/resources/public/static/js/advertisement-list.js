@@ -90,6 +90,11 @@ $(document).on("click",".deleteAdv",function(){
     }); 
 })
 
+//分页查询
+function pageSearch(page){
+	listParams.currentPage = page;
+	fetchList();
+}
 
 // 开启/关闭
 $(document).on("click",".openOrClose",function(){
@@ -140,14 +145,8 @@ $(document).on("click",".updateAdv",function(){
 
 
 var listParams = {
-    phoneNo:"",
-    resource:"",
-    startTime:"",
-    endTime:"",
-    blackOn:"",
-    userType:"",
     currentPage:1,
-    showCount:10
+    showCount:5
 }
 var list= [];
 var totalPage=1;
@@ -164,6 +163,7 @@ function fetchList(){
             listParams.currentPage = data.page.currentPage;
             totalPage= data.page.totalPage;
             addTableList(list);
+            publicObj.pageShow(data.page,pageSearch);
         }
     })    
 }
@@ -188,6 +188,7 @@ function deleteAdvertisement(data){
         callback:function(data){
             console.log(data);
             fetchList();
+            
         }
     })
 }

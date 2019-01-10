@@ -38,7 +38,7 @@ public class CompanyServiceImpl implements CompanyService{
 		page.setStartTime(startTime);
 		page.setEndTime(endTime);
 		
-		List<HpCompanyExt> list = this.hpCompanyExMapper.getCompanyListPage(page);
+		List<HpCompanyExt> list = this.hpCompanyExMapper.getCompanylistPage(page);
         msg.setList(list);
         msg.setPage(page);
 		return msg;

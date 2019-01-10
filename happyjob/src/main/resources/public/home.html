@@ -28,6 +28,7 @@
 </style>
   
 </head>
+</head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -219,7 +220,13 @@
 			</div>
 	
 		</section>
-		<!-- /.content -->
+		<div class="box-footer" id="logs-pager">
+	        <div class="pagination pagination-sm no-margin pull-right">
+	            <ul id="pageLimit" class="pagination">
+	            	
+	            </ul>
+	        </div>
+	    </div>
 	</div>
 	<!-- /.content-wrapper -->
 		
@@ -314,79 +321,21 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div>
-
-<!-- 查看用户资料 -->
-<div class="modal fade" id="browseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title">用户资料</h4>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="form-group">
-					<label for="" class="col-sm-2">手机号</label>
-					<div class="col-sm-10 showValue"></div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-2">姓名</label>
-					<div class="col-sm-10 showValue"></div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-2">出生年份</label>
-					<div class="col-sm-10 showValue"></div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-2">身份证号</label>
-					<div class="col-sm-10 showValue"></div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-2">创建时间</label>
-					<div class="col-sm-10 showValue"></div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-2">公司名称</label>
-					<div class="col-sm-10 showValue"></div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-2">身份是否认证</label>
-					<div class="col-sm-10 showValue"></div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-2">身份证正面</label>
-					<div class="col-sm-10">
-						<img src="" alt="" class="showValue idStyle">
-					</div>
-				</div>					
-				<div class="form-group">
-					<label for="" class="col-sm-2">身份证反面</label>
-					<img src="" alt="" class="showValue idStyle">
-				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
-		</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div>
+</body>
+	<!-- jQuery 3 -->
+	<script src="/static/adminlet/bower_components/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap 3.3.7 -->
+	<script src="/static/adminlet/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="/static/adminlet/dist/js/adminlte.min.js"></script>
 	
-<!-- jQuery 3 -->
-<script src="/static/adminlet/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="/static/adminlet/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="/static/adminlet/dist/js/adminlte.min.js"></script>
-
-<!-- 日期选择器 -->
-<script src="/static/adminlet/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!-- 确认提示框 帮助文档：http://www.cnblogs.com/hulin520/p/5818746.html -->
-<script src="/static/plugins/sweetalert/sweetalert2.min.js"></script>
-
-<!-- 页面逻辑 -->
-<script src="/static/js/common.js"></script>
-<script src="/static/js/user-list.js"></script>
-
+	<!-- 日期选择器 -->
+	<script src="/static/adminlet/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+	<!-- 确认提示框 帮助文档：http://www.cnblogs.com/hulin520/p/5818746.html -->
+	<script src="/static/plugins/sweetalert/sweetalert2.min.js"></script>
+	<!-- 分页查询 -->
+	<script src="/static/plugins/bootstrap/bootstrap-paginator.js"></script>
+	<!-- 页面逻辑 -->
+	<script src="/static/js/common.js"></script>
+	<script src="/static/js/user-list.js"></script>
 </html>
-

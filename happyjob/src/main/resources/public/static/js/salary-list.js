@@ -19,23 +19,22 @@ $(document).on("click","#upload",function(){
 	});
 });
 
-function clearlistParams(){
-	listParams.payName = "";
-	listParams.payIdNum = "";
-	listParams.workNum = "";
-	listParams.payComName = "";
-	listParams.payTime = "";
-}
 
 $(document).on("click","#querySalary",function(){
+	pageSearch(1);
+})
+
+//分页查询
+function pageSearch(page){
 	listParams.payName = $("#payName").val();
 	listParams.payIdNum = $("#payIdNum").val();
 	listParams.workNum = $("#workNum").val();
 	listParams.payComName = $("#payComName").val();
-	listParams.payTime = $("#payTime").val();
+	listParams.payTime = publicObj.transferTime($("#payTime").val());
+	listParams.currentPage = page;
 	fetchList();
-	clearlistParams();
-})
+}
+
 
 $(document).on("click",".cat",function(){
     
@@ -74,7 +73,7 @@ var listParams = {
 	payComName:"",
 	payTime:"",
     currentPage:1,
-    showCount:10
+    showCount:5
 }
 var list= [];
 var totalPage=1;
@@ -91,6 +90,7 @@ function fetchList(){
             listParams.currentPage = data.page.currentPage;
             totalPage= data.page.totalPage;
             addTableList(list);
+            publicObj.pageShow(data.page,pageSearch);
         }
     })    
 }

@@ -26,4 +26,16 @@
 			<when test="state == 2"> AND ab.end_time &lt;#{curTime} </when>
 		</choose>
 	</select>
+	
+	
+	<select id="getBannerlistPage" parameterType="com.happy.service.banner.data.BannerSearch" resultType="com.happy.entity.HpAdvBannerEntity" >
+		select ab.* from hp_adv_banner ab 
+		
+		where 1=1 
+		<if test="useOn!=null ">AND ab.use_on=#{useOn}</if>
+		<if test="delOn!=null ">AND del_on=#{delOn}</if>
+		ORDER BY ab.create_time 
+		
+	</select>
+	
 </mapper>

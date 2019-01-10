@@ -11,6 +11,9 @@ import com.happy.service.banner.BannerService;
 import com.happy.service.banner.data.BannerDataMsg;
 import com.happy.service.banner.data.BannerListMsg;
 import com.happy.service.banner.data.BannerSearch;
+import com.happy.service.company.data.CompanyListMsg;
+import com.happy.service.company.data.CompanySearch;
+import com.happy.service.company.data.HpCompanyExt;
 import com.happy.sqlExMapper.HpAdvBannerExMapper;
 import com.happy.sqlMapper.HpAdvBannerMapper;
 import com.happy.util.Util;
@@ -142,6 +145,23 @@ public class BannerServiceImpl implements BannerService {
         this.hpAdvBannerMapper.updateByPK(hpAdvBanner);
         
         return msg;
+	}
+
+	
+	@Override
+	public BannerListMsg getBannerlistPage(Integer currentPage, Integer showCount) {
+		BannerListMsg msg = new BannerListMsg();
+		BannerSearch page = new BannerSearch();
+		currentPage = currentPage==null || currentPage<1?1:currentPage;
+        showCount = showCount==null||showCount<1?10:showCount;
+        
+        page.setCurrentPage(currentPage);
+        page.setShowCount(showCount);
+        page.setDelOn(EnumConst.advertisementDelOn.DelOnNo.getKey());
+        List<HpAdvBannerEntity> list = this.hpAdvBannerExMapper.getBannerlistPage(page);
+        msg.setList(list);
+        msg.setPage(page);
+		return msg;
 	}
 
 
