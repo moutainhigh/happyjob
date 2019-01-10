@@ -47,4 +47,11 @@ public interface BannerService {
      * @return
      */
     BaseMsg saveAdvertisement(String title,Integer posType,String type,Long sort,String picUrl,String targetUrl,Long endTime);
+
+    /**
+     * 后台管理
+     * @return
+     */
+    BannerListMsg getBannerlistPage(Integer currentPage,Integer showCount);
+    
 }

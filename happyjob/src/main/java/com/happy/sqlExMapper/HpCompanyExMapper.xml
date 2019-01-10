@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.happy.sqlExMapper.HpCompanyExMapper">
 	
-	<select id="getCompanyListPage" parameterType="com.happy.service.company.data.CompanySearch" resultType="com.happy.service.company.data.HpCompanyExt" >
+	<select id="getCompanylistPage" parameterType="com.happy.service.company.data.CompanySearch" resultType="com.happy.service.company.data.HpCompanyExt" >
 		SELECT c.*,cs.lower_num,cs.hight_num,ct.type_name
 		FROM hp_company c 
 		left join hp_company_scale cs  on c.hp_company_scale_id = cs.hp_company_scale_id

@@ -33,12 +33,12 @@ public class AdvertisementManageController {
 	     */
 	    @ApiOperation(value="广告列表查询",notes="广告列表查询")
 	    @GetMapping(value="advertisementList")
-	    public BannerListMsg userList(HttpServletRequest request){
+	    public BannerListMsg advertisementList(HttpServletRequest request){
 	    	
 	        Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
 	        Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
-	        logger.info("backAdvertisement.advertisementUseOn 请求参数：currentPage={},showCount={}",currentPage,showCount);
-	        BannerListMsg result = this.bannerService.getBannerList(null, EnumConst.advertisementDelOn.DelOnNo.getKey(), null, 1, currentPage, showCount);
+	        logger.info("backAdvertisement.advertisementList 请求参数：currentPage={},showCount={}",currentPage,showCount);
+	        BannerListMsg result = this.bannerService.getBannerlistPage( currentPage, showCount);
 	        return  result;
 	    }
 	    

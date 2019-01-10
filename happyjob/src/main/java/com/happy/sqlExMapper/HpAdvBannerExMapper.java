@@ -12,4 +12,6 @@ public interface HpAdvBannerExMapper{
 	List<HpAdvBannerEntity> getBannerListBySearch(BannerSearch page);
 
 	int getBannerNumBySearch(BannerSearch page);
+	
+	List<HpAdvBannerEntity> getBannerlistPage(BannerSearch page);
 }

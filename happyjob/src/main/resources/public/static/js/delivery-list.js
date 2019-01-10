@@ -18,6 +18,30 @@ $(document).on("click",".queryDelivery",function(){
 	fetchList();
 })
 
+//分页查询
+function pageSearch(page){
+	listParams.userName = $("#userName").val();
+	listParams.comName = $("#comName").val();
+	listParams.posName = $("#posName").val();
+	listParams.startTime = $("#startTime").val();
+	listParams.endTime = $("#endTime").val();
+	listParams.realName = $("#realName").val();
+	listParams.gender = $("#gender").val();
+	listParams.contactStat = $("#contactStat").val();
+	listParams.currentPage = page;
+	fetchList();
+	clearlistParams();
+}
+function clearlistParams(){
+	listParams.userName = "";
+	listParams.comName ="";
+	listParams.posName ="";
+	listParams.startTime = "";
+	listParams.endTime ="";
+	listParams.realName = "";
+	listParams.gender = "";
+	listParams.contactStat = "";
+}
 // 联系-->入职
 $(document).on("click",".contact",function(){
 	var params ={}
@@ -99,7 +123,7 @@ var listParams = {
 		gender:"",
 		contactStat:"",
 		currentPage:1,
-		showCount:10
+		showCount:5
 }
 var list= [];
 var totalPage=1;
@@ -116,6 +140,7 @@ function fetchList(){
             listParams.currentPage = data.page.currentPage;
             totalPage= data.page.totalPage;
             addTableList(list);
+            publicObj.pageShow(data.page,pageSearch);
         }
     })    
 }

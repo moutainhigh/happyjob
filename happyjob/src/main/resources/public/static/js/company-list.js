@@ -12,6 +12,18 @@ $(document).on("click",".queryCompany",function(){
 	fetchList();
 	clearlistParams();
 })
+
+//分页查询
+function pageSearch(page){
+	
+	listParams.comName = $("#comNameSearch").val();
+	listParams.endTime = publicObj.transferTime($("#endTimeSearch").val());
+	listParams.startTime = publicObj.transferTime($("#startTimeSearch").val());
+	listParams.currentPage = page;
+	fetchList();
+	clearlistParams();
+}
+
 // 认证
 $(document).on("click",".auth",function(){
 	var $row = $(this).parents("tr");
@@ -256,7 +268,7 @@ var listParams = {
     startTime:"",
     endTime:"",
     currentPage:1,
-    showCount:10
+    showCount:5
 }
 var list= [];
 var totalPage=1;
@@ -323,9 +335,12 @@ function fetchList(){
             listParams.currentPage = data.page.currentPage;
             totalPage= data.page.totalPage;
             addTableList(list);
+            publicObj.pageShow(data.page,pageSearch);
         }
     })    
 }
+
+
 // 认证、禁用、复用请求
 function postAuth(data){
     fetchPost({
@@ -334,6 +349,7 @@ function postAuth(data){
         callback:function(data){
             console.log(data);
             fetchList();
+            
         }
     })
 }
@@ -363,9 +379,9 @@ function addTableList(list){
             <th>'+ item.typeName +'</th>\
             <th>'+ "没有字段" +'</th>\
             <th>'+ item.lowerNum+"-"+item.hightNum +'</th>\
-            <th>'+ item.comtPerson +'</th>\
-            <th>'+ item.comPhone +'</th>\
-            <th>'+ item.comEmail +'</th>\
+            <th>'+ isNull(item.comtPerson) +'</th>\
+            <th>'+ isNull(item.comPhone) +'</th>\
+            <th>'+ isNull(item.comEmail) +'</th>\
             <th>'+ approveState(item.approveState) +'</th>\
             <th>'+ timestampToTime(item.createTime) +'</th>\
             <th>\
