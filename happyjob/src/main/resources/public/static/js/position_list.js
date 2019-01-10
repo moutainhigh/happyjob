@@ -13,7 +13,7 @@ var listParams = {
 		endTime:"",
 		posSate:0,
 		currentPage:1,
-		showCount:5,
+		showCount:10,
 }
 var list= [];
 var totalPage=1;

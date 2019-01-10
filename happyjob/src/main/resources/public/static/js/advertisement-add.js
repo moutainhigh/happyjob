@@ -66,7 +66,7 @@ $(document).on("click","#saveAdvertisement",function(){
 	uploadPic(window.location.origin + "/wxAppletsLogin/imgUpOne");
 	
 	listParams.title = $("#title").val();
-	listParams.location = $("#"posType"").val();
+	listParams.location = $("#posType").val();
 //	listParams.type = $("#type").val();
 	listParams.endTime = dateToTime($("#endTime").val());
 	listParams.sort = $("#sort").val();
