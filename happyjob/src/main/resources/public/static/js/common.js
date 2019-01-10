@@ -9,7 +9,12 @@ function fetchGet(options){
 	        if(data.errorCode==0){
 	            options.callback && options.callback(data)
 	        }else{
-		            swal('请求失败', data.message, 'error');
+	        	swal('请求失败', data.message, 'error');
+	        	if(data.errorCode == 40001 || data.errorCode == 40003 || data.errorCode == 40007){
+	        		setTimeout(() => {
+						window.location.href = routingData.loginPage;
+					}, 2000);
+	        	}
 	        }
 		},
 		error:function(data){
@@ -27,7 +32,12 @@ function fetchPost(options){
 	        if(data.errorCode==0){
 	            options.callback && options.callback(data)
 	        }else{
-		            swal('请求失败', data.message, 'error');
+	            swal('请求失败', data.message, 'error');
+	            if(data.errorCode == 40001 || data.errorCode == 40003 || data.errorCode == 40007){
+	        		setTimeout(() => {
+						window.location.href = routingData.loginPage;
+					}, 2000);
+	        	}
 	        }
 		},
 		error:function(data){
@@ -47,7 +57,12 @@ function fetchPostBody(options){
 	        if(data.errorCode==0){
 	            options.callback && options.callback(data)
 	        }else{
-		            swal('请求失败', data.message, 'error');
+	            swal('请求失败', data.message, 'error');
+	            if(data.errorCode == 40001 || data.errorCode == 40003 || data.errorCode == 40007){
+	        		setTimeout(() => {
+						window.location.href = routingData.loginPage;
+					}, 2000);
+	        	}
 	        }
 		},
 		error:function(data){
