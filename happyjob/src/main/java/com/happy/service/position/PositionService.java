@@ -38,7 +38,7 @@ public interface PositionService {
     * 
     * @TODO:   用户申请职位或者发起拼团
     */
-   GroupDataMsg insertUserPostionApply(String sid,Long hpPositionId);
+   GroupDataMsg insertUserPositionApply(String sid,Long hpPositionId);
    /**
     * 
     * @TODO:   用户申请参与拼团

@@ -49,6 +49,15 @@ import io.swagger.annotations.ApiModelProperty;
     private Integer approveState;
     @ApiModelProperty(name="comLogo",value="公司logo")
     private String comLogo;
+    @ApiModelProperty(name="partTime",value="申请时间")
+    private Long partTime;
+    @ApiModelProperty(name="groupLeftTime",value="拼团剩余时间")
+    private Long groupLeftTime;
+    @ApiModelProperty(name="leaderName",value="拼团发起人用户名")
+    private String leaderName;
+    @ApiModelProperty(name="leaderPic",value="拼团发起人头像")
+    private String leaderPic;
+    
     
     public String getComName() {
         return comName;
@@ -169,5 +178,29 @@ import io.swagger.annotations.ApiModelProperty;
     }
     public void setComLogo(String comLogo) {
         this.comLogo = comLogo;
+    }
+    public Long getPartTime() {
+        return partTime;
+    }
+    public void setPartTime(Long partTime) {
+        this.partTime = partTime;
+    }
+    public Long getGroupLeftTime() {
+        return groupLeftTime;
+    }
+    public void setGroupLeftTime(Long groupLeftTime) {
+        this.groupLeftTime = groupLeftTime;
+    }
+    public String getLeaderName() {
+        return leaderName;
+    }
+    public void setLeaderName(String leaderName) {
+        this.leaderName = leaderName;
+    }
+    public String getLeaderPic() {
+        return leaderPic;
+    }
+    public void setLeaderPic(String leaderPic) {
+        this.leaderPic = leaderPic;
     }
 }

@@ -241,7 +241,7 @@ public class PositionServiceImpl implements PositionService {
     }
     
     @Override
-    public GroupDataMsg insertUserPostionApply(String sid, Long hpPositionId) {
+    public GroupDataMsg insertUserPositionApply(String sid, Long hpPositionId) {
         // TODO 暂定单人仅可申请同一岗位一次
         GroupDataMsg msg = new GroupDataMsg();
         

@@ -23,6 +23,7 @@ import com.happy.service.position.data.GroupDataMsg;
 import com.happy.service.position.data.PositionListMsg;
 import com.happy.service.user.UserService;
 import com.happy.service.user.data.UserResumeDataMsg;
+import com.happy.service.user.data.UserSimpleDataMsg;
 import com.happy.util.Util;
 
 import io.swagger.annotations.Api;
@@ -52,7 +53,7 @@ public class UserCenterController {
        @ApiImplicitParam(name="sid",value="用户登录凭证",dataType="String",paramType="header",required=true),
    })
    @GetMapping(value="centerInfo")
-    public BaseMsg wxUserInfo(HttpServletRequest request) {
+    public UserSimpleDataMsg wxUserInfo(HttpServletRequest request) {
        
        // TODO 是否需要验证用户
         String oid = request.getHeader("oid");
@@ -181,7 +182,7 @@ public class UserCenterController {
        Long hpPositionId = (Long)Util.typeChange(request.getParameter("hpPositionId"), Long.class);
        logger.info("positionApply 参数日志：sid=={},hpPositionId=={}",sid,hpPositionId);
        
-       return this.positionService.insertUserPostionApply(sid, hpPositionId);
+       return this.positionService.insertUserPositionApply(sid, hpPositionId);
    }
    
    /**
