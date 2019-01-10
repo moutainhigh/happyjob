@@ -275,7 +275,7 @@ public class BaseController {
            logger.info("sessionphone=={},sessionCode=={},sessionAge=={}",sessionphone,sessionCode,sessionAge);
            
            if(!Util.isEmpty(phoneNo) && !Util.isEmpty(msgCode) && phoneNo.equals(sessionphone) 
-               && sessionCode.equals(sessionCode) && !Util.isEmpty(sessionAge) && curTime.compareTo(sessionAge)<=0) {
+               && msgCode.equals(sessionCode) && !Util.isEmpty(sessionAge) && curTime.compareTo(sessionAge)<=0) {
                
                session.removeAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
                session.removeAttribute(Const.SESSION_ATTR_NAME_MSGCODE);

@@ -30,6 +30,8 @@ import org.apache.ibatis.scripting.xmltags.ForEachSqlNode;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.type.TypeHandler;
 import org.apache.ibatis.type.TypeHandlerRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.happy.util.ReflectHelper;
 import com.happy.util.Util;
@@ -44,12 +46,14 @@ import com.happy.util.Util;
 @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = {
 		Connection.class, Integer.class }) })
 public class PagePlugin implements Interceptor {
+    
+    private static final Logger logger = LoggerFactory.getLogger(PagePlugin.class);
 
 	private static String dialect = ""; // 数据库方言
 	private static String pageSqlId = ""; // mapper.xml中需要拦截的ID(正则匹配)
 
 	public Object intercept(Invocation ivk) throws Throwable {
-		// TODO Auto-generated method stub
+		
 		if (ivk.getTarget() instanceof RoutingStatementHandler) {
 			RoutingStatementHandler statementHandler = (RoutingStatementHandler) ivk
 					.getTarget();
@@ -205,7 +209,7 @@ public class PagePlugin implements Interceptor {
 	}
 
 	public Object plugin(Object arg0) {
-		// TODO Auto-generated method stub
+	    
 		return Plugin.wrap(arg0, this);
 	}
 
@@ -215,8 +219,7 @@ public class PagePlugin implements Interceptor {
 			try {
 				throw new PropertyException("dialect property is not found!");
 			} catch (PropertyException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			    logger.debug("setProperties 分页插件出现异常",e);
 			}
 		}
 		pageSqlId = p.getProperty("pageSqlId");
@@ -224,8 +227,7 @@ public class PagePlugin implements Interceptor {
 			try {
 				throw new PropertyException("pageSqlId property is not found!");
 			} catch (PropertyException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			    logger.debug("setProperties 分页插件出现异常",e);
 			}
 		}
 	}
