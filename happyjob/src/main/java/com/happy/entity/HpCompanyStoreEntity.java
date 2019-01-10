@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
  * 
- * 
+ * 公司门店表
  */
-@ApiModel(value="HpCompanyStore对象",description="")
+@ApiModel(value="HpCompanyStore对象",description="公司门店表")
 public class HpCompanyStoreEntity implements  Serializable  {
 	private static final long serialVersionUID = 1L;
 
@@ -38,6 +38,9 @@ public class HpCompanyStoreEntity implements  Serializable  {
 	//门店识别码
 	@ApiModelProperty(name="storeToken",value="门店识别码")
 	private String storeToken;
+	//门店图片
+	@ApiModelProperty(name="storePic",value="门店图片")
+	private String storePic;
 
 	public java.lang.Long getHpCompanyStoreId() {
 		return hpCompanyStoreId;
@@ -126,6 +129,16 @@ public class HpCompanyStoreEntity implements  Serializable  {
 
 	public void setStoreToken(String storeToken) {
 		this.storeToken = storeToken;
+	}
+
+
+	public String getStorePic() {
+		return storePic;
+	}
+
+
+	public void setStorePic(String storePic) {
+		this.storePic = storePic;
 	}
 
 }

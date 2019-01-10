@@ -13,10 +13,11 @@
 		<result column="clerk_data" property="clerkData"/>
 		<result column="work_time" property="workTime"/>
 		<result column="store_token" property="storeToken"/>
+		<result column="store_pic" property="storePic"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpCompanyStoreId" parameterType="com.happy.entity.HpCompanyStoreEntity">
-		insert into hp_company_store(store_name,store_num,contact_num,store_addr,store_traffic,clerk_data,work_time,store_token)
-		 values (#{storeName},#{storeNum},#{contactNum},#{storeAddr},#{storeTraffic},#{clerkData},#{workTime},#{storeToken});
+		insert into hp_company_store(store_name,store_num,contact_num,store_addr,store_traffic,clerk_data,work_time,store_token,store_pic)
+		 values (#{storeName},#{storeNum},#{contactNum},#{storeAddr},#{storeTraffic},#{clerkData},#{workTime},#{storeToken},#{storePic});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_company_store where hp_company_store_id=#{hpCompanyStoreId}
@@ -53,6 +54,9 @@
 			</if>
 			<if test="storeToken!=null">
 				store_token=#{storeToken},
+			</if>
+			<if test="storePic!=null">
+				store_pic=#{storePic},
 			</if>
 		</set>
 		 where hp_company_store_id=#{hpCompanyStoreId}

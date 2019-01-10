@@ -10,7 +10,7 @@
 	
 	<select id="getStoreList" resultType="com.happy.entity.HpCompanyStoreEntity" >
 		
-		SELECT cs.store_name,cs.contact_num,cs.store_addr FROM hp_company_store cs 
+		SELECT cs.store_name,cs.contact_num,cs.store_addr,cs.store_pic FROM hp_company_store cs 
 		<if test="isPage == 1">LIMIT #{currentResult},#{showCount}</if>
 	</select>
 	
