@@ -56,6 +56,18 @@ function fetchPostBody(options){
 	})
 }
 
+$(function(){
+	$("a.btn-flat").click(function(){
+		fetchGet({
+			url:apiData.loginOut,
+			params:{},
+			callback:function(){
+				window.location.href = routingData.loginPage;
+			}
+		})
+	})
+})
+
 var publicObj = {
 	"basePath":BASE_URL, // 请求域名，端口号
 	"dateFormat": function dateFormat(date,fmt) { // 时间格式化
@@ -149,6 +161,8 @@ var publicObj = {
 }
 
 var routingData = {
+	loginPage:"/",
+	homePage:"/home.html",
 	positionList:function(posName,comName,startTime,endTime,posState,currentPage,showCount){
 		url = "/static/adminData/positionList.html";
 		params = "posName=${p1}&comName=${p2}&startTime=${p3}&endTime=${p4}&posState=${p5}&currentPage=${p6}&showCount=${p7}";
@@ -159,6 +173,8 @@ var routingData = {
 }
 
 var apiData = {
+	login:"/login/login",
+	loginOut:"/login/loginOut",
 	positionList:"/backPosition/positionList",
 	positionAdd:"/backPosition/position",
 	positionEditor:"/backPosition/position",

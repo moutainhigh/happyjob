@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,7 +44,7 @@ public class LoginController {
         @ApiImplicitParam(name="password",value="登录密码",dataType="String",paramType="query",required=true),
         @ApiImplicitParam(name="validCode",value="登录验证码",dataType="String",paramType="query",required=true),
     })
-    @GetMapping(value="login")
+    @PostMapping(value="login")
     public OtherLoginMsg login(HttpServletRequest request,HttpServletResponse response){
         
        String userName = request.getParameter("userName");

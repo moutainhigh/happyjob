@@ -1,392 +1,62 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-  <title>开心工作后台管理系统</title>
-
-<!-- Bootstrap 的样式表 -->
-<link rel="stylesheet" href="/static/adminlet/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- 字体库 -->
-  <link rel="stylesheet" href="/static/adminlet/bower_components/font-awesome/css/font-awesome.min.css">
-  <!-- 图标库 -->
-  <link rel="stylesheet" href="/static/adminlet/bower_components/Ionicons/css/ionicons.min.css">
-  <!-- AdminLTE 的基本样式 -->
-  <link rel="stylesheet" href="/static/adminlet/dist/css/AdminLTE.min.css">
-<!--  AdminLTE 的皮肤样式 -->
-<link rel="stylesheet" href="/static/adminlet/dist/css/skins/skin-blue.min.css">
-<!-- 兼容的处理和谷歌字体库 -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-<!-- 日期选择器 -->
-<link rel="stylesheet" href="/static/adminlet/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-<!-- 确认提示框 -->
-<link rel="stylesheet" href="/static/plugins/sweetalert/sweetalert2.min.css">
-<style>
-.idStyle{max-width: 200px;max-height: 200px;}
-</style>
+  <head>
+    <meta charset="utf-8">
+    <title>您需要登录后才可以使用本功能</title>
+    <link href="/static/css/login.css" rel="stylesheet" >
+<link rel="stylesheet" href="/static/adminlet/bower_components/font-awesome/css/font-awesome.min.css">
+    
+  </head>
   
-</head>
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
-
-	<!-- Main Header -->
-	<header class="main-header">
-	
-		<!-- Logo -->
-		<a href="index.html" class="logo">
-		<!-- mini logo for sidebar mini 50x50 pixels -->
-		<span class="logo-mini">开心</span>
-		<!-- logo for regular state and mobile devices -->
-		<span class="logo-lg">开心工作后台管理系统</span>
-		</a>
-	
-		<!-- Header Navbar -->
-		<nav class="navbar navbar-static-top" role="navigation">
-		<!-- Sidebar toggle button-->
-		<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-			<span class="sr-only">Toggle navigation</span>
-		</a>
-		<!-- Navbar Right Menu -->
-		<div class="navbar-custom-menu">
-			<ul class="nav navbar-nav">
-				<!-- User Account Menu -->
-				<li class="dropdown user user-menu">
-					<!-- Menu Toggle Button -->
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					<!-- hidden-xs hides the username on small devices so only the image appears. -->
-					<span class="hidden-xs">Alexander Pierce</span>
-					</a>
-					<ul class="dropdown-menu">
-					<!-- The user image in the menu -->
-					<li class="user-header">
-						<p>
-						Alexander Pierce - Web Developer
-						<small>Member since Nov. 2012</small>
-						</p>
-					</li>
-					<!-- Menu Footer-->
-					<li class="user-footer">
-						<div class="pull-right">
-						<a href="#" class="btn btn-default btn-flat">Sign out</a>
-						</div>
-					</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-		</nav>
-	</header>
-	<!-- Left side column. contains the logo and sidebar -->
-	<aside class="main-sidebar">
-	
-		<!-- sidebar: style can be found in sidebar.less -->
-		<section class="sidebar">
-	
-		<!-- Sidebar Menu -->
-		<ul class="sidebar-menu" data-widget="tree">
-			<li class="header">HEADER</li>
-			<li class="treeview active">
-				<a href="#"><i class="fa fa-user"></i> <span>用户管理</span>
-					<span class="pull-right-container">
-					<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li class="active"><a href="/.html"><i class="fa fa-circle-o"></i>用户列表</a></li>
-					<li><a href="/static/adminData/salary.html"><i class="fa fa-circle-o"></i>工资查询</a></li>
-					<li><a href="/static/adminData/delivery.html"><i class="fa fa-circle-o"></i>用户投递</a></li>
-				</ul>
-			</li>
-			<li class="treeview">
-				<a href="#"><i class="fa fa-laptop"></i> <span>企业管理</span>
-					<span class="pull-right-container">
-					<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li><a href="/static/adminData/company.html"><i class="fa fa-circle-o"></i>企业列表</a></li>
-					<li><a href="/static/adminData/positionList.html"><i class="fa fa-circle-o"></i>招聘列表</a></li>
-				</ul>
-			</li>
-			<li class="treeview">
-				<a href="#"><i class="fa fa-link"></i> <span>广告位</span>
-					<span class="pull-right-container">
-					<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li><a href="/static/adminData/advertisement.html"><i class="fa fa-circle-o"></i>广告列表</a></li>
-					<li><a href="/static/adminData/advertisement-add.html"><i class="fa fa-circle-o"></i>添加广告</a></li>
-				</ul>
-			</li>
-		</ul>
-		<!-- /.sidebar-menu -->
-		</section>
-		<!-- /.sidebar -->
-	</aside>
-	
-	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper">
-		<!-- Content Header (Page header) -->
-		<section class="content-header">
-		<h1>
-			用户列表
-			<small>Optional description</small>
-		</h1>
-		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> 用户管理</a></li>
-			<li class="active">用户列表</li>
-		</ol>
-		</section>
-	
-		<!-- Main content -->
-		<section class="content">
-	
-			<!-- /.row -->
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="box">
-					<div class="box-header" style="overflow-y: auto">
-						
-						<form class="form-inline" style="display: flex;justify-content: space-between">
-							<div class="form-group">
-								<label for="exampleInputName2">手机号：</label>
-								<input type="text" class="form-control" id="phoneNo" placeholder="">
-							</div>
-							<div class="form-group">
-								<label for="exampleInputEmail2">注册途径：</label>
-								<select class="form-control" id="registResource">
-									<option value="1">app</option>
-									<option value="2">小程序</option>
-									<option value="3">微信</option>
-									<option value="4">门店</option>
-									<option value="5">邀请注册</option>
-									<option selected="" value="请选择">请选择</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label for="exampleInputEmail2">注册时间：</label>
-								<input type="text" class="datepicker" placeholder="请选择日期" id="startTime"/> - <input type="text" class="datepicker" placeholder="请选择日期" id="endTime"/>
-							</div>
-							<div class="form-group">
-								<label for="exampleInputEmail2">状态：</label>
-								<select class="form-control" id="blackOn">
-									<option value="1">已禁用</option>
-									<option value="0">未禁用</option>
-									<option selected="" value="">全部</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label for="exampleInputEmail2">用户类型：</label>
-								<select class="form-control" id="userType">
-									<option value="1">超级管理员</option>
-									<option selected="" value="2">求职者</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<button type="button" class="btn btn-primary" id="queryUser">查询</button>
-								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">添加用户</button>
-							</div>
-						</form>
-
-					</div>
-					<!-- /.box-header -->
-					<div class="box-body table-responsive no-padding">
-						<table class="table table-hover" id='userList'>
-						<thead>
-							<tr>
-								<th>手机号</th>
-								<th>姓名</th>
-								<th>性别</th>
-								<th>年龄</th>
-								<th>用户类型</th>
-								<th>注册时间</th>
-								<th>注册途径</th>
-								<th>来源</th>
-								<th>认证</th>
-								<th>操作</th>
-							</tr>
-						</thead>
-						<tbody class="tbody"></tbody>
-					</table>
-					</div>
-					<!-- /.box-body -->
-					</div>
-					<!-- /.box -->
-				</div>
-			</div>
-	
-		</section>
-		<!-- /.content -->
-	</div>
-	<!-- /.content-wrapper -->
-		
-	<!-- Add the sidebar's background. This div must be placed
-			immediately after the control sidebar -->
-	<div class="control-sidebar-bg"></div>
-	
+  <body>
+    <div class="login-layout">
+  <div class="top">
+    <h2>系统管理中心</h2>
+  </div>
+  <form id="form_login" onsubmit="return false;" >
+  	
+    <div class="lock-holder">
+      <div class="form-group pull-left input-username">
+        
+          <label>账号</label>
+          <input name="user_name" id="user_name" autocomplete="off" type="text" class="input-text" required="required">
+      </div>
+      <i class="fa fa-ellipsis-h dot-left"></i> <i class="fa fa-ellipsis-h dot-right"></i>
+      <div class="form-group pull-right input-password-box">
+          <label>密码</label>
+          <input name="password" id="password" class="input-text" autocomplete="off" type="password" title="密码不少于6个字符">
+      </div>
+    </div>
+    <div class="avatar"><img src="/static/images/login/admin.png" alt=""></div>
+    <div class="submit"> 
+    	<span>
+		      <div class="code">
+		        <div class="arrow"></div>
+		        <div class="code-img"><div id="codeimage" style="width: 150px;height: 35px;float:left" ></div></div>
+		        <a href="JavaScript:void(0);" id="hide" class="close" title="关闭"><i></i></a>
+			  </div>
+      		  <input name="captcha" type="text" required class="input-code" id="captcha" placeholder="输入验证" title="验证码为4个字符" autocomplete="off" >
+      	</span>
+      
+      	<span>
+      			<input class="input-button btn-submit" type="button" value="登录">
+      	</span> 
+     </div>
+     <div class="submit"> 
+      	<input id="tip" class="input-text" autocomplete="off" disabled="disabled" style="dispaly:none;color:red" >
+     </div>
+     <div class="submit2"></div>
+  </form>
 </div>
 
-<!-- 添加用户模态框 -->
-<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content" style="width:400px;">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title">添加用户</h4>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="form-group">
-					<label for="" class="col-sm-3 control-label">用户类型</label>
-					<div class="col-sm-9">
-						<select class="form-control" id="userType2">
-							<option selected="" value="2">求职者</option>
-							<option value="1">超级管理员</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3 control-label">用户名</label>
-					<div class="col-sm-9">
-					<input type="text" class="form-control" placeholder="" id="userName2">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3 control-label">密码</label>
-					<div class="col-sm-9">
-					<input type="password" class="form-control" placeholder="Password" id="password1">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3 control-label">重复密码</label>
-					<div class="col-sm-9">
-					<input type="password" class="form-control"  placeholder="Password" id="password2">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3 control-label">性别</label>
-					<div class="col-sm-9">
-						<select class="form-control" id="gender2" >
-							<option selected="" value="男">男</option>
-							<option value="女">女</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3 control-label">出生年份</label>
-					<div class="col-sm-9">
-						<select class="form-control" id="bornTime2">
-							<option selected="" value="1988">1988</option>
-							<option value="1995">1995</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3 control-label">真实姓名</label>
-					<div class="col-sm-9">
-					<input type="text" class="form-control"  placeholder="" id="realName2" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-3 control-label">手机号码</label>
-					<div class="col-sm-9">
-					<input type="iphone" class="form-control"  placeholder="" id="phoneNo2" />
-					</div>
-				</div>					
-				<div class="form-group">
-					<label for="" class="col-sm-3 control-label">状态</label>
-					<div class="col-sm-9">
-						<select class="form-control" id="blackOn2">
-							<option selected="" value="开启">开启</option>
-							<option value="禁用">禁用</option>
-						</select>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-default " data-dismiss="modal">取消</button>
-			<button type="button" class="btn btn-primary" id="newUser">添加</button>
-		</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div>
-
-<!-- 查看用户资料 -->
-<div class="modal fade" id="browseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title">用户资料</h4>
-		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
-				<div class="form-group">
-					<label for="" class="col-sm-2">手机号</label>
-					<div class="col-sm-10 showValue"></div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-2">姓名</label>
-					<div class="col-sm-10 showValue"></div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-2">出生年份</label>
-					<div class="col-sm-10 showValue"></div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-2">身份证号</label>
-					<div class="col-sm-10 showValue"></div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-2">创建时间</label>
-					<div class="col-sm-10 showValue"></div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-2">公司名称</label>
-					<div class="col-sm-10 showValue"></div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-2">身份是否认证</label>
-					<div class="col-sm-10 showValue"></div>
-				</div>
-				<div class="form-group">
-					<label for="" class="col-sm-2">身份证正面</label>
-					<div class="col-sm-10">
-						<img src="" alt="" class="showValue idStyle">
-					</div>
-				</div>					
-				<div class="form-group">
-					<label for="" class="col-sm-2">身份证反面</label>
-					<img src="" alt="" class="showValue idStyle">
-				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
-		</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div>
+<script src="/static/js/login/jquery.js"></script>
+<!-- <script src="/static/adminlet/bower_components/jquery/dist/jquery.min.js"></script> -->
+<script src="/static/js/login/jquery.supersized.min.js" ></script>
+	<script src="/static/js/login/jquery.progressBar.js" type="text/javascript"></script>
 	
-<!-- jQuery 3 -->
-<script src="/static/adminlet/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="/static/adminlet/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="/static/adminlet/dist/js/adminlte.min.js"></script>
+	<script type="text/javascript" src="/static/js/login/gVerify.js" ></script>
+	<script type="text/javascript" src="/static/js/common.js" ></script>
+	<script type="text/javascript" src="/static/js/login/login.js" ></script>
 
-<!-- 日期选择器 -->
-<script src="/static/adminlet/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!-- 确认提示框 帮助文档：http://www.cnblogs.com/hulin520/p/5818746.html -->
-<script src="/static/plugins/sweetalert/sweetalert2.min.js"></script>
-
-<!-- 页面逻辑 -->
-<script src="/static/js/common.js"></script>
-<script src="/static/js/user-list.js"></script>
-
+  </body>
 </html>
-
