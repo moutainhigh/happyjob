@@ -61,7 +61,7 @@
 	
 	<select id="getUserResumeId" resultType="Long" >
 		SELECT ur.hp_user_resume_id FROM hp_user_resume ur WHERE ur.hp_user_id=<include refid="getIdBySid"></include>
-		ORDER ur.res_time DESC
+		ORDER BY ur.res_time DESC
 	</select>
 	
 	

@@ -57,6 +57,8 @@ import io.swagger.annotations.ApiModelProperty;
     private String leaderName;
     @ApiModelProperty(name="leaderPic",value="拼团发起人头像")
     private String leaderPic;
+    @ApiModelProperty(name="groupPartNum",value="拼团参与人数")
+    private Integer groupPartNum;
     
     
     public String getComName() {
@@ -203,4 +205,11 @@ import io.swagger.annotations.ApiModelProperty;
     public void setLeaderPic(String leaderPic) {
         this.leaderPic = leaderPic;
     }
+    public Integer getGroupPartNum() {
+        return groupPartNum;
+    }
+    public void setGroupPartNum(Integer groupPartNum) {
+        this.groupPartNum = groupPartNum;
+    }
+    
 }

@@ -15,7 +15,8 @@
          (SELECT COUNT(pru.hp_position_ref_user_id) FROM hp_position_group pg JOIN hp_position_ref_user pru 
 		WHERE pg.hp_position_id=p.hp_position_id AND p.group_on=1 AND pg.hp_position_group_id=pru.hp_position_group_id) groupSccNum
 		<if test="sid !=null and sid != ''">
-			,pru1.part_time,(pg.end_time-#{curTime}) groupLeftTime,u1.user_name leaderName,u1.header_pic leaderPic
+			,pru1.part_time,(pg.end_time-#{curTime}) groupLeftTime,u1.user_name leaderName,u1.header_pic leaderPic,
+			(SELECT COUNT(*) FROM hp_position_ref_user pru2 WHERE pru2.hp_position_group_id=pg.hp_position_group_id ) groupPartNum
 		</if>
 		
 		FROM hp_position p JOIN hp_company c ON p.hp_company_id=c.hp_company_id 
