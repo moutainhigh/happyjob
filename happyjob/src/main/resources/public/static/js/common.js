@@ -201,6 +201,7 @@ var apiData = {
 	posSalary:"/backPosition/posSalary",
 	eduList:"/backPosition/eduList",
 	area:"/backPosition/area",
+	addUser:"/backUser/userInfo",
 }
 
 var dateStrData = {

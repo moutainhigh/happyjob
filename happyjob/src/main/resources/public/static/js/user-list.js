@@ -22,6 +22,17 @@ var listParams = {
 $(document).on("click","#queryUser",function(){
 	pageSearch(1);
 })
+$(document).on("click","#bornTime2",function(){
+	var option ;
+	var date=new Date;
+	var year=date.getFullYear();
+	for(var i=1950;i<year;i++){
+		option += '<option value="'+i+'" >'+i+'</option>'
+	}
+	if(option !=''){
+		$("#bornTime2").append(option);
+	}
+})
 
 function pageSearch(page){
 	listParams.phoneNo = $("#phoneNo").val();
@@ -44,28 +55,28 @@ $(document).on("click",".forbidden",function(){
 	data.hpUserId = hpUserId ;
 	
     swal({
-        title: '是否禁用该用户',
+        title: '是否禁用/复用该用户',
         text: '',
         type: 'warning',
         showCancelButton: true,
-        confirmButtonText: '是',
-        cancelButtonText: '否',
+        confirmButtonText: '禁用',
+        cancelButtonText: '复用',
         }).then(function(isConfirm) {
         if (isConfirm === true) {
         	data.blackOn = 1 ;
         	postAuth(data);
             swal(
-            'Deleted!',
-            'Your imaginary file has been deleted.',
+            '禁用!',
+            '禁用成功',
             'success'
             );			
         } else if (isConfirm === false) {
         	data.blackOn = 0 ;
         	postAuth(data);
         	swal(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
+            '复用',
+            '复用成功',
+            'success'
             );
         
         } else {
@@ -171,25 +182,26 @@ $(document).on("click",".cat",function(){
 // 添加
 $(document).on("click","#newUser",function(){
 	var data ={} ;
-	data.userType = $("#userType").val();
-	data.userName =$("#userName").val();
+	data.userType = $("#userType2").val();
+	data.userName =$("#userName2").val();
 	data.password1 =$("#password1").val();
 	data.password2 =$("#password2").val();
-	data.gender =$("#gender").val();
-	data.phoneNo =$("#phoneNo").val();
-	data.bornTime =$("#bornTime").val();
-	data.realName =$("#realName").val();
-	data.blackOn =$("#blackOn").val();
+	data.gender =$("#gender2").val();
+	data.phoneNo =$("#phoneNo2").val();
+	data.bornTime =$("#bornTime2").val();
+	data.realName =$("#realName2").val();
+	data.blackOn = $("input[type='radio']:checked").val();
 	
-	fetchPost({
-	        url:"/backUser/userInfo",
-	        params: data,
-	        callback:function(data){
-	            console.log(data);
-	            fetchList();
-	        }
-	 })
-//    $('#addUserModal').modal('toggle');
+	fetchPostBody({
+		url:apiData.addUser,
+		params:data,
+		callback:function(data){
+			$('#addUserModal').modal('hide');
+			fetchList();
+			swal('请求完成', data.message, 'success');
+		}
+	});
+	
 })
 
 
@@ -298,7 +310,7 @@ function addTableList(list){
             <th>'+ userType(item.userType) +'</th>\
             <th>'+ timestampToTime(item.createTime) +'</th>\
             <th>'+ registResource(item.registResource) +'</th>\
-            <th>'+ item.storeName +'</th>\
+            <th>'+ isNull(item.storeName) +'</th>\
             <th>'+ approveState(item.approveState) +'</th>\
             <th>\
                 <button type="button" class="btn btn-default btn-sm cat">查看</button>\
@@ -364,6 +376,7 @@ function registResource(value){
         case 3:return "微信"
         case 4:return "门店"
         case 5:return "邀请注册"
+        default:return ""
     }
 }
 //判断是否认证
