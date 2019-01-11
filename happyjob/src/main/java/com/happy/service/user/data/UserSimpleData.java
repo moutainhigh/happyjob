@@ -14,6 +14,8 @@ public class UserSimpleData extends HpUserEntity {
     private String comName;
     @ApiModelProperty(name="storeName",value="来源门店名称")
     private String storeName;
+    @ApiModelProperty(name="hpUserResumeId",value="简历基本信息ID,为空说明简历未创建")
+    private Long hpUserResumeId;
 
     public String getComName() {
         return comName;
@@ -30,5 +32,12 @@ public class UserSimpleData extends HpUserEntity {
     public void setStoreName(String storeName) {
         this.storeName = storeName;
     }
-    
+
+    public Long getHpUserResumeId() {
+        return hpUserResumeId;
+    }
+
+    public void setHpUserResumeId(Long hpUserResumeId) {
+        this.hpUserResumeId = hpUserResumeId;
+    }
 }
