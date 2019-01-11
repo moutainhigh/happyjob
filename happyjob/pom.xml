@@ -180,6 +180,18 @@
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.9.3</version>
 		</dependency>
+		
+		<!-- ueditor -->
+		<dependency>
+			<groupId>ygf.com.ueditor</groupId>
+			<artifactId>ueditor</artifactId>
+			<version>cust-1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20140107</version>
+		</dependency>
 
 	</dependencies>
 

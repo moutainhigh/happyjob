@@ -44,7 +44,7 @@
 	
 	<select id="getBackPoslistPage" parameterType="com.happy.service.position.data.PositionSearch" resultType="com.happy.service.position.data.PositionData" >
 		SELECT p.hp_position_id,p.hp_company_id,p.pos_name,p.pos_state,p.start_time,p.end_time,
-		c.approve_state,c.com_name 
+		c.approve_state,c.com_name,p.hot_on 
 		FROM hp_position p JOIN hp_company c ON p.hp_company_id=c.hp_company_id 
 		WHERE 1=1  
 		<if test="posName != null and posName !='' ">AND p.pos_name LIKE CONCAT('%',#{posName},'%') </if>

@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.baidu.ueditor.ActionEnter;
 import com.happy.controller.base.BaseController;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.user.UserService;
 import com.happy.service.user.data.OtherLoginData;
 import com.happy.service.user.data.OtherLoginMsg;
 import com.happy.service.user.data.OtherUserData;
+import com.happy.util.ServiceConfig;
 import com.happy.util.Util;
 import com.happy.util.pubConst.Const;
 
@@ -81,5 +83,17 @@ public class LoginController {
         logger.info("loginOut---管理员注销登录");
         BaseController.removeCookieByName(response, Const.COOKIE_ATTR_NAME_SID);
         return new BaseMsg();
+    }
+    
+    /**
+     * @TODO:     ueditor数据接口
+     */
+    @GetMapping(value="ueditor")
+    public String ueditor(HttpServletRequest request){
+        
+        
+        String str = new ActionEnter(request, ServiceConfig.getUeditorRootPath() ).exec();
+        
+        return str;
     }
 }

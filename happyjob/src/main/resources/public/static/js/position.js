@@ -6,6 +6,10 @@ $(".datepicker").datepicker({
 });
 var _curUrl = window.location.href;
 var hpPositionId = null;
+//详情
+var posDetailUe = UE.getEditor('posDetailEditor');
+var otherWelfareUe = UE.getEditor('otherWelfareEditor');
+var posComDescUe = UE.getEditor('posComDescEditor');
 var positionData = {
   "applyTime": null,
   "carDesc": "",
@@ -118,7 +122,7 @@ $(document).on("click",'*[data-type="posType"]',function(){
 function formSub(){ // 提交验证
 	console.log("here is formSub");
 	var posName = $("#posName").val();
-	if(publicObj.spePatt.test(posName)){
+	if(!posName || publicObj.spePatt.test(posName)){
 		swal('字段值类型错误', '职位名称不能包含特殊字符', 'error');
 		return;
 	}
@@ -173,7 +177,7 @@ function formSub(){ // 提交验证
 	
 	var hpPositionTypeId = $("#hpPositionTypeId").val();
 	
-	var posDetail = $("#posDetail").val();
+	var posDetail = UE.getEditor('posDetailEditor').getContent();
 	
 	var reqGender = $("#reqGender").val();
 	var reqAge = $("#reqAge").val();
@@ -183,10 +187,10 @@ function formSub(){ // 提交验证
 	var reqWorkYears = $("#reqWorkYears").val();
 	var reqOther = $("#reqOther").val();
 	
-	var otherWelfare = $("#otherWelfare").val();
+	var otherWelfare = UE.getEditor('otherWelfareEditor').getContent();
 	var carOn = $("#carOn").val();
 	var carDesc = $("#carDesc").val();
-	var posComDesc = $("#posComDesc").val();
+	var posComDesc = UE.getEditor('posComDescEditor').getContent();
 	var posNature = $('input[name="posNature"]:checked').val();
 	
 	var hpPositionSalaryId = $('#hpPositionSalaryId').val();
@@ -501,7 +505,11 @@ function editorPosition(){
 			$("#hpPositionTypeId").val(positionData.hpPositionTypeId); // 选择框
 			$('*[data-type="posType"][data-id="'+positionData.hpPositionTypeId+'"]').click();
 			
-			$("#posDetail").val(positionData.posDetail);
+			posDetailUe.ready(function(){
+    			if(positionData.posDetail){
+    				UE.getEditor('posDetailEditor').execCommand('insertHtml',positionData.posDetail);
+    			}
+	    	});
 			
 			$("#reqGender").val(positionData.reqGender);
 			$("#reqAge").val(positionData.reqAge);
@@ -511,10 +519,18 @@ function editorPosition(){
 			$("#reqWorkYears").val(positionData.reqWorkYears);
 			$("#reqOther").val(positionData.reqOther);
 			
-			$("#otherWelfare").val(positionData.otherWelfare);
+			otherWelfareUe.ready(function(){
+    			if(positionData.otherWelfare){
+    				UE.getEditor('otherWelfareEditor').execCommand('insertHtml',positionData.otherWelfare);
+    			}
+	    	});
 			$("#carOn").val(positionData.carOn); // 下拉框
 			$("#carDesc").val(positionData.carDesc);
-			$("#posComDesc").val(positionData.posComDesc);
+			posComDescUe.ready(function(){
+    			if(positionData.posComDesc){
+    				UE.getEditor('posComDescEditor').execCommand('insertHtml',positionData.posComDesc);
+    			}
+	    	});
 			$('input[name="posNature"][value="'+positionData.posNature+'"]').prop("checked",true);
 			
 			$('#hpPositionSalaryId').val(positionData.hpPositionSalaryId); // 下拉框

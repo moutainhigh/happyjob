@@ -1,7 +1,7 @@
  package com.happy.util;
 
  /**
- *   TODO: 公共配置类
+ *   @TODO: 公共配置类
  *
  */
 public class ServiceConfig {
@@ -11,6 +11,12 @@ public class ServiceConfig {
     private static String uploadBasePath;
     
     private static String uploadBaseUrl;
+    
+    private static String ueditorRootPath = "D:/github/repository/happyjob/happyjob/src/main/resources/public/static";
+    
+    private static String ueditorSavePathPrefix;
+    
+    private static String ueditorUrlPrefix;
 
     public static boolean isSwaggerEnabled() {
         return swaggerEnabled;
@@ -35,6 +41,29 @@ public class ServiceConfig {
     public static void setUploadBaseUrl(String uploadBaseUrl) {
         ServiceConfig.uploadBaseUrl = uploadBaseUrl;
     }
-    
+
+    public static String getUeditorRootPath() {
+        return ueditorRootPath;
+    }
+
+    public static void setUeditorRootPath(String ueditorRootPath) {
+        ServiceConfig.ueditorRootPath = ueditorRootPath;
+    }
+
+    public static String getUeditorSavePathPrefix() {
+        return ueditorSavePathPrefix;
+    }
+
+    public static void setUeditorSavePathPrefix(String ueditorSavePathPrefix) {
+        ServiceConfig.ueditorSavePathPrefix = ueditorSavePathPrefix;
+    }
+
+    public static String getUeditorUrlPrefix() {
+        return ueditorUrlPrefix;
+    }
+
+    public static void setUeditorUrlPrefix(String ueditorUrlPrefix) {
+        ServiceConfig.ueditorUrlPrefix = ueditorUrlPrefix;
+    }
     
 }
