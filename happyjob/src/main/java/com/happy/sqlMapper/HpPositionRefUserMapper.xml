@@ -13,12 +13,12 @@
 		<result column="part_type" property="partType"/>
 		<result column="work_on" property="workOn"/>
 		<result column="work_time" property="workTime"/>
-		<result column="option_id" property="optionId"/>
+		<result column="option_person" property="optionPerson"/>
 		<result column="option_time" property="optionTime"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpPositionRefUserId" parameterType="com.happy.entity.HpPositionRefUserEntity">
-		insert into hp_position_ref_user(hp_position_group_id,hp_position_id,hp_user_id,leader_on,part_time,part_type,work_on,work_time,option_id,option_time)
-		 values (#{hpPositionGroupId},#{hpPositionId},#{hpUserId},#{leaderOn},#{partTime},#{partType},#{workOn},#{workTime},#{optionId},#{optionTime});
+		insert into hp_position_ref_user(hp_position_group_id,hp_position_id,hp_user_id,leader_on,part_time,part_type,work_on,work_time,option_person,option_time)
+		 values (#{hpPositionGroupId},#{hpPositionId},#{hpUserId},#{leaderOn},#{partTime},#{partType},#{workOn},#{workTime},#{optionPerson},#{optionTime});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_position_ref_user where hp_position_ref_user_id=#{hpPositionRefUserId}
@@ -56,8 +56,8 @@
 			<if test="workTime!=null ">
 				work_time=#{workTime},
 			</if>
-			<if test="optionId!=null ">
-				option_id=#{optionId},
+			<if test="optionPerson!=null">
+				option_person=#{optionPerson},
 			</if>
 			<if test="optionTime!=null ">
 				option_time=#{optionTime},

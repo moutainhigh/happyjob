@@ -38,9 +38,9 @@ public class HpPositionRefUserEntity implements  Serializable  {
 	//入职时间
 	@ApiModelProperty(name="workTime",value="入职时间")
 	private java.lang.Long workTime;
-	//操作联系人ID
-	@ApiModelProperty(name="optionId",value="操作联系人ID")
-	private java.lang.Long optionId;
+	//操作联系人名称
+	@ApiModelProperty(name="optionPerson",value="操作联系人名称")
+	private String optionPerson;
 	//操作联系时间
 	@ApiModelProperty(name="optionTime",value="操作联系时间")
 	private java.lang.Long optionTime;
@@ -135,13 +135,13 @@ public class HpPositionRefUserEntity implements  Serializable  {
 	}
 
 
-	public java.lang.Long getOptionId() {
-		return optionId;
+	public String getOptionPerson() {
+		return optionPerson;
 	}
 
 
-	public void setOptionId(java.lang.Long optionId) {
-		this.optionId = optionId;
+	public void setOptionPerson(String optionPerson) {
+		this.optionPerson = optionPerson;
 	}
 
 

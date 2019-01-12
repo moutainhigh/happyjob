@@ -87,7 +87,7 @@ public class DeliveryServiceImpl implements DeliveryService{
 		if(hpPositionRefUserId != null &&  hpPositionRefUserId !=0 ) {
 			HpPositionRefUserEntity positionRefUserEntity = new HpPositionRefUserEntity();
 			positionRefUserEntity.setHpUserId(hpPositionRefUserId);
-			positionRefUserEntity.setOptionId(comtPerson);
+			positionRefUserEntity.setOptionPerson(comtPerson);
 			positionRefUserEntity.setOptionTime(comTime);
 			hpPositionRefUserMapper.updateByPK(positionRefUserEntity);
 		}else {
