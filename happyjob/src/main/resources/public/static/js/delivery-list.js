@@ -38,16 +38,63 @@ function dateToEndTime(timestamp) {
 	}
 	return 0;
 }
-
+var $object ;
 // 点击联系 出现modal
 $(document).on("click",".contact",function(){
-	
 	var $row = $(this).parents("tr");
     var hpPositionRefUserId = $row.data("position_ref_user_id");
 	var $contact = $(this).parents("tr").find(".contact");
 	var $comPer = $(this).parents("tr").find(".comPer");
 	var $comPon = $(this).parents("tr").find(".comPon");
+	$object = $row ;
+	fetchPost({
+	        url:"/backDelivery/getLoginUserInfo",
+	        params: {},
+	        callback:function(data){
+	            console.log(data);
+	            //赋值
+	            $("#comtPerson").val(data.realName);
+	            $("#comTime").val(data.comTime);
+	            $("#positionRefUserId").val(hpPositionRefUserId);
+	        	$('#comtactPersonModal').modal('toggle');
+	        }
+	})
+	    
+})
+
+// 联系人 联系时间
+$(document).on("click","#addComtact",function(){
+	var params ={}
+    params.comtPerson = $("#comtPerson").val();
+	params.comTime = getDayToSecond($("#comTime").val());
+	params.positionRefUserId =  $("#positionRefUserId").val();
+	var $contact = $object.find(".contact");
+	var $comPer = $object.find(".comPer");
+	var $comPon = $object.find(".comPon");
 	
+	fetchPost({
+	        url:"/backDelivery/addComtact",
+	        params: params,
+	        callback:function(data){
+	            console.log(data);
+	            $contact.eq(0).html("入职");
+		        $comPer.eq(0).html(data.userName);
+		        $comPon.eq(0).html(data.phoneNo);
+		        
+	        }
+	})
+    $('#comtactPersonModal').modal('toggle')
+    
+})
+
+// 点击入职  出现modal
+$(document).on("click",".entry",function(){
+	var $row = $(this).parents("tr");
+    var hpPositionRefUserId = $row.data("position_ref_user_id");
+	var $contact = $(this).parents("tr").find(".contact");
+	var $comPer = $(this).parents("tr").find(".comPer");
+	var $comPon = $(this).parents("tr").find(".comPon");
+	$object = $row ;
 	fetchPost({
 	        url:"/backDelivery/getLoginUserInfo",
 	        params: {},
@@ -56,37 +103,36 @@ $(document).on("click",".contact",function(){
 	            $("#comtPerson").val(data.realName);
 	            $("#comTime").val(data.comTime);
 	            $("#positionRefUserId").val(hpPositionRefUserId);
-	        	$('#comtactPersonModal').modal('toggle');
+	        	$('#comtactPersonModal2').modal('toggle');
 	        }
 	})
-	
-	
 	    
 })
 
-// 添加联系人 联系时间
-$(document).on("click","#addComtact",function(){
+// 入职联系人 联系时间
+$(document).on("click","#addEntry",function(){
 	var params ={}
     params.comtPerson = $("#comtPerson").val();
 	params.comTime = getDayToSecond($("#comTime").val());
 	params.positionRefUserId =  $("#positionRefUserId").val();
-	var $contact = $(this).parents("tr").find(".contact");
-	var $comPer = $(this).parents("tr").find(".comPer");
-	var $comPon = $(this).parents("tr").find(".comPon");
-	
+	var $contact = $object.find(".contact");
+	var $comPer = $object.find(".comPer");
+	var $comPon = $object.find(".comPon");
 	fetchPost({
 	        url:"/backDelivery/addComtact",
 	        params: {},
 	        callback:function(data){
-	            console.log(data)
-	            $contact.;
-	            $("comTime").val(data.comTime);
-	            $('#comtactPersonModal').modal('toggle');
+	        	console.log(data);
+	        	$contact.eq(0).html("已入职");
+		        $comPer.eq(0).html(data.userName);
+		        $comPon.eq(0).html(data.phoneNo);
+		            
 	        }
 	})
-    $('#comtactPersonModal').modal('toggle')
+    $('#comtactPersonModal2').modal('toggle')
     
 })
+
 
 // 查看
 $(document).on("click",".cat",function(){
@@ -214,18 +260,22 @@ function addTableList(list){
             <th>'+ timestampToTime(item.partTime) +'</th>\
             <th>'+ item.phoneNo +'</th>\
             <th>\
-                <button type="button" class="btn btn-default btn-sm cat">查看</button>\'
+	            <button type="button" class="btn btn-default btn-sm cat">查看</button>\ '
+            
             if(item.optionId == "" || item.optionId ==null){ //未联系
-            	templeteTr += '\<button type="button" class="btn btn-primary btn-sm contact">联系</button>\'
-            }else{
-            	if(item.workOn == 0){
-            		templeteTr += '\<button type="button" class="btn btn-primary btn-sm contact">入职</button>\'
-            	}else{
-            		templeteTr += '\<button type="button" class="btn btn-primary btn-sm contact">已入职</button>\'
-            	}
-            }
-            templeteTr +='<th class="comPho"></th>\
-        </tr>';
+	        	templeteTr += '<button type="button" class="btn btn-primary btn-sm contact">联系</button> '
+	        }else{
+	        	if(item.workOn == 0){
+	        		templeteTr += '<button type="button" class="btn btn-primary btn-sm entry">入职</button> '
+	        	}else{
+	        		templeteTr += '<button type="button" class="btn btn-primary btn-sm entered">已入职</button>'
+	        	}
+	        }
+            
+	            templeteTr +='</th>\
+	        <th class="comPer"></th>\ 
+	        <th class="comPho"></th>\
+	        </tr>';
     })
     $tBody.html(templeteTr)    
 }

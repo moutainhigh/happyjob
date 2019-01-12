@@ -81,18 +81,21 @@ public class DeliveryServiceImpl implements DeliveryService{
 	}
 
 	@Override
-	public BaseMsg addComtact(Long hpPositionRefUserId,String comtPerson,Long comTime) {
+	public BaseMsg addComtact(Long hpPositionRefUserId,String comtPerson,Long comTime ,Integer workOn) {
 		BaseMsg msg = new BaseMsg();
 		//更新
 		if(hpPositionRefUserId != null &&  hpPositionRefUserId !=0 ) {
 			HpPositionRefUserEntity positionRefUserEntity = new HpPositionRefUserEntity();
-			positionRefUserEntity.setHpUserId(hpPositionRefUserId);
 			positionRefUserEntity.setOptionPerson(comtPerson);
 			positionRefUserEntity.setOptionTime(comTime);
+			if(workOn == 1) {
+				positionRefUserEntity.setWorkOn(workOn); //入职
+			}
 			hpPositionRefUserMapper.updateByPK(positionRefUserEntity);
 		}else {
 			msg.setErrorCode(1);
 			msg.setMessage("参数有误：hpPositionRefUserId");
+			return msg;
 		}
 		msg.setErrorCode(0);
 		msg.setMessage("操作成功");
