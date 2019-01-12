@@ -5,7 +5,7 @@ $(".datepicker").datepicker({
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
 
-$('#upimg').on('change',function(){                                                 //选中图片后展示在页面
+$('#upPic').on('change',function(){                                                 //选中图片后展示在页面
    var filePath = $(this)[0].files[0].name //获取到input的value，里面是文件的路径 
    console.log(filePath) //1.png 
    fileFormat = filePath.split('.')[1].toLowerCase() 
@@ -18,9 +18,8 @@ $('#upimg').on('change',function(){                                             
       alert('上传错误,文件格式必须为：png/jpg/jpeg')
      return 
   	} 
-
+   $("#imgContent").css("display", "block");
     $('#imgContent').attr('src',src)
-
 })
 
 	
@@ -31,7 +30,7 @@ function uploadPic(url){
 	}
 	var formData = new FormData();
 	formData.append("file",file);
-	formData.append("code","user");
+	formData.append("code","banner");
 	$.ajax({
 		url:url,
 		dataType:"json",
@@ -67,10 +66,14 @@ $(document).on("click","#saveAdvertisement",function(){
 	
 	listParams.title = $("#title").val();
 	listParams.location = $("#posType").val();
-//	listParams.type = $("#type").val();
 	listParams.endTime = dateToTime($("#endTime").val());
 	listParams.sort = $("#sort").val();
-	listParams.picUrl = picUrl;
+	var picAddress = $("#picAddress").val();
+	if(picAddress !=null && picAddress !=""){
+		listParams.picUrl = picAddress;
+	}else{
+		listParams.picUrl = picUrl;
+	}
 	listParams.targetUrl = $("#targetUrl").val();
 	fetchPost({
 	       url:"/backAdvertisement/saveAdvertisement",

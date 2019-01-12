@@ -144,41 +144,35 @@
 			<div class="row col-sm-6" >
 				<form class="form-horizontal" id="bannerForm">
 					<div class="form-group ">
-						<label for="" class="col-sm-3 " >广告标题</label>
-						<div class="col-sm-5 ">
+						<label for="" class="col-sm-3 "  align="right">广告标题</label>
+						<div class="col-sm-7 ">
 							<input class="showValue form-control" id="title"/>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="" class="col-sm-3">广告位</label>
-						<div class="col-sm-5 ">
+						<label for="" class="col-sm-3" align="right">广告位</label>
+						<div class="col-sm-7">
 							<select class="showValue form-control" id="posType" >
 								<option value="1"> 首页轮播</option>
 							</select>
 						</div>
 					</div>
-<!-- 					<div class="form-group"> -->
-<!-- 						<label for="" class="col-sm-3">类型</label> -->
-<!-- 						<div class="col-sm-5 "> -->
-<!-- 							<input class="showValue form-control" id="type"/> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
 					<div class="form-group">
-						<label for="" class="col-sm-3">结束时间</label>
-						<div class="col-sm-5 ">
+						<label for="" class="col-sm-3" align="right">结束时间</label>
+						<div class="col-sm-7 ">
 							<input class="datepicker form-control" id="endTime"/>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="" class="col-sm-3">排序</label>
-						<div class="col-sm-5 ">
+						<label for="" class="col-sm-3" align="right">排序</label>
+						<div class="col-sm-7 ">
 							<input class=" form-control" id="sort"/>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="" class="col-sm-3">上传图片</label>
-					    <div class="col-sm-5  showValue">
-      						<img src="" alt="" id='imgContent' style="display:none">
+						<label for="" class="col-sm-3" align="right">上传图片</label>
+					    <div class="col-sm-7  showValue">
+      						<img src="" alt="" id='imgContent' class="idStyle" style="display:none">
 							<input type="file" id="upPic" >
 <!-- 					          <input type="file" name='photo' class="mui-input-clear" id='upimg' style="opacity: 0;" > -->
 <!-- 							<button id="upfile" type="button" data-api="/wxAppletsLogin/imgUpOne" data-type="pic" >文件上传</button> -->
@@ -187,14 +181,21 @@
 					    
 					</div>
 					<div class="form-group">
-						<label for="" class="col-sm-3">或图片地址</label>
-						<div class="col-sm-5 ">
-							<input class=" form-control" id="targetUrl"/>
+						<label for="" class="col-sm-3" align="right">或图片地址</label>
+						<div class="col-sm-7 ">
+							<input class=" form-control" id="picAddress"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3" align="right">图片详情地址</label>
+						<div class="col-sm-7 ">
+							<textarea rows="3" cols="48" id="targetUrl">  
+							</textarea>
 						</div>
 					</div>
 					<div class="form-group ">
-						<button type="reset" class="btn btn-primary  col-sm-offset-2" >重置</button>
-						<button type="button" class="btn btn-primary col-sm-offset-2" id="saveAdvertisement" >提交</button>
+						<button type="reset" class="btn btn-primary  col-sm-offset-3" >重置</button>
+						<button type="button" class="btn btn-primary col-sm-offset-3" id="saveAdvertisement" >提交</button>
 					</div>
 				</form>
 			</div>
