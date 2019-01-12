@@ -43,7 +43,7 @@ public class CompanyManageController {
     public CompanyListMsg companyListPage(HttpServletRequest request){
     	Long startTime = (Long)Util.typeChange(request.getParameter("startTime"), Long.class);
         Long endTime = (Long)Util.typeChange(request.getParameter("endTime"), Long.class);
-        String comName = request.getParameter("comName");
+        String comName = request.getParameter("comName").trim();
         Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
         Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
        
@@ -93,7 +93,7 @@ public class CompanyManageController {
     	Long companyTypeId = (Long)Util.typeChange(request.getParameter("companyTypeId"), Long.class);
     	Long companyScaleId = (Long)Util.typeChange(request.getParameter("companyScaleId"), Long.class);
     	String comDesc = request.getParameter("comDesc");
-    	Long countyId = (Long)Util.typeChange(request.getParameter("countyId"), Long.class);
+    	Long countryId = (Long)Util.typeChange(request.getParameter("countryId"), Long.class);
     	String addrDetail = request.getParameter("addrDetail");
     	String comtPerson = request.getParameter("comtPerson");
     	String comPhone = request.getParameter("comPhone");
@@ -103,9 +103,9 @@ public class CompanyManageController {
     	
         logger.info("backAdvertisement.newCompany 请求参数：comName={},companyTypeId={},companyScaleId={},comDesc={}"
         		+ ",countyId={},addrDetail={},comtPerson={},comPhone={},comEmail={},comLicense={},comLogo={}",comName,companyTypeId,
-        		companyScaleId,comDesc,countyId,addrDetail,comtPerson,comPhone,comEmail,comLicense,comLogo);
+        		companyScaleId,comDesc,countryId,addrDetail,comtPerson,comPhone,comEmail,comLicense,comLogo);
         BaseMsg ss = this.companyService.newCompany(comName,companyTypeId,
-        		companyScaleId,comDesc,countyId,addrDetail,comtPerson,comPhone,comEmail,comLicense,comLogo);
+        		companyScaleId,comDesc,countryId,addrDetail,comtPerson,comPhone,comEmail,comLicense,comLogo);
         return ss;
     }
     

@@ -49,11 +49,28 @@ $(document).on("click",".queryCompany",function(){
 //分页查询
 function pageSearch(page){
 	listParams.comName = $("#comNameSearch").val();
-	listParams.endTime = publicObj.transferTime($("#endTimeSearch").val());
-	listParams.startTime = publicObj.transferTime($("#startTimeSearch").val());
+	listParams.startTime = dateToStartTime($("#startTimeSearch").val());
+	listParams.endTime = dateToEndTime($("#endTimeSearch").val());
 	listParams.currentPage = page;
 	fetchList();
 }
+
+function dateToStartTime(timestamp) {
+	if(timestamp != null && timestamp !=""){
+		var formatTimeS = new Date(timestamp+" 00:00:00").getTime();
+		return formatTimeS/1000;
+	}
+	return 0;
+}
+
+function dateToEndTime(timestamp) {
+	if(timestamp != null && timestamp !=""){
+		var formatTimeS = new Date(timestamp+" 23:59:59").getTime();
+		return formatTimeS/1000;
+	}
+	return 0;
+}
+
 
 // 认证
 $(document).on("click",".auth",function(){
@@ -97,6 +114,7 @@ $(document).on("click",".cat",function(){
     var $row = $(this).parents("tr");
     var comName = $row.data("com-name");
     var typeName = $row.data("type-name");
+    var location = $row.data("location");
     var scale = $row.data("scale");
     var comDesc = $row.data("com-desc");
     var addrDetail = $row.data("add-detail");
@@ -111,6 +129,7 @@ $(document).on("click",".cat",function(){
     $obj.eq(1).html($row.data("type-name"));
     $obj.eq(2).html($row.data("scale"));
     $obj.eq(3).html($row.data("com-desc"));
+    $obj.eq(4).html($row.data("location"));
     $obj.eq(5).html($row.data("add-detail"));
     $obj.eq(6).html($row.data("com-person"));
     $obj.eq(7).html($row.data("com-phone"));
@@ -123,6 +142,11 @@ $(document).on("click",".cat",function(){
 
 // 打开 修改modal
 $(document).on("click",".openUpdateModal",function(){
+	positionConfig2();
+	$('select[data-type="area2"]').change(function(){ // 地区选择
+		areaConfig2($(this).attr("id"),$(this).val()); // 地区
+	});
+	
     var $row = $(this).parents("tr");
     var comName = $row.data("com-name");
     var companyTypeId = $row.data("company-type-id");
@@ -136,13 +160,18 @@ $(document).on("click",".openUpdateModal",function(){
     var comLicense = $row.data("com-license");
     var comEmail = $row.data("com-email");
     var hpCompanyId = $row.data("company-id");
+    var countyId = $row.data("county-id");
+    var cityId = $row.data("city-id");
+    var provinceId = $row.data("province-id");
     
     $("#hpCompanyId2").val(hpCompanyId);
     $("#comName2").val(comName);
     $("#companyTypeId2").val(companyTypeId);
     $("#companyScaleId2").val(scaleId);
     $("#comDesc2").val(comDesc);
-//    $("#countyId2").val(countyId);
+    $("#countyId2").val(countyId);
+    $("#cityId2").val(cityId);
+    $("#provinceId2").val(provinceId);
     $("#addrDetail2").val(addrDetail);
     $("#comtPerson2").val(comtPerson);
     $("#comPhone2").val(comPhone);
@@ -351,6 +380,60 @@ function areaConfig(areaType,areaId){
 		}
 	});
 }
+
+$(function(){
+	positionConfig2();
+	$('select[data-type="area2"]').change(function(){ // 地区选择
+		areaConfig2($(this).attr("id"),$(this).val()); // 地区
+	});
+})
+function positionConfig2(){
+	areaConfig2(null,null); // 地区
+}
+function areaConfig2(areaType,areaId){
+	var provinceId = null;
+	var cityId = null;
+	if(areaType == "province2"){ // 省查询市
+		provinceId = areaId;
+		$("#county").html('<option>请选择</option>');
+	}else if(areaType == "city2"){ // 市查询区县
+		cityId = areaId;
+	}else if(areaType == "county2"){
+		return;
+	}
+	fetchGet({
+		url:apiData.area,
+		params:{
+			provinceId:provinceId,
+			cityId:cityId,
+		},
+		callback:function(data){
+			if(data){
+				var content = '<option>请选择</option>';
+				var list = data.list;
+				var length = list.length;
+				for(var i=0;i<length;i++){
+					content += '<option value="'+list[i].areaId+'" >'+list[i].areaName+'</option>';
+				}
+				if(content !=''){
+					if(areaType == "province2"){ // 省查询市
+						$("#city2").html(content);
+					}else if(areaType == "city2"){ // 市查询区县
+						cityId = areaId;
+						$("#county2").html(content);
+					}else if(areaType == "county2"){
+						return;
+					}else{
+						$("#province2").html(content);
+					}
+					
+				}
+			}
+		}
+	});
+}
+
+
 // 获取table数据
 function fetchList(){
     fetchGet({
@@ -393,6 +476,10 @@ function addTableList(list){
             data-company-type-id="'+ item.hpCompanyTypeId +'" \
             data-type-name="'+ item.typeName +'" \
             data-scale="'+ item.lowerNum+"-"+item.hightNum +'" \
+            data-county-id="'+ item.countyId +'" \
+            data-city-id="'+ item.cityId +'" \
+            data-province-id="'+ item.provinceId +'" \
+            data-location="'+item.provinceName+item.cityName+item.countyName +'"\
             data-scale-id="'+ item.hpCompanyScaleId +'" \
             data-com-desc="'+ item.comDesc +'" \
             data-add-detail="'+ item.addrDetail +'" \

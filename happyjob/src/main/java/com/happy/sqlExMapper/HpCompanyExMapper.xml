@@ -5,10 +5,14 @@
 <mapper namespace="com.happy.sqlExMapper.HpCompanyExMapper">
 	
 	<select id="getCompanylistPage" parameterType="com.happy.service.company.data.CompanySearch" resultType="com.happy.service.company.data.HpCompanyExt" >
-		SELECT c.*,cs.lower_num,cs.hight_num,ct.type_name
+		SELECT c.*,cs.lower_num,cs.hight_num,ct.type_name,ac.county_name,city.city_name,province.province_name, city.city_id,province.province_id
 		FROM hp_company c 
 		left join hp_company_scale cs  on c.hp_company_scale_id = cs.hp_company_scale_id
 		left join hp_company_type ct on ct.hp_company_type_id = c.hp_company_type_id
+		left join hp_area_county ac on c.county_id = ac.county_id
+		left join hp_area_city city on ac.city_id = city.city_id
+		left join hp_area_province province on province.province_id = city.province_id
+		
 		WHERE 1=1 
 		<if test="comName !=null and comName !='' ">AND com_name LIKE CONCAT('%',#{comName},'%')</if>
 		<if test="startTime !=null and startTime !=0 ">AND c.create_time &gt;=#{startTime}</if>
