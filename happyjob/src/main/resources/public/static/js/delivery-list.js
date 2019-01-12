@@ -23,26 +23,69 @@ function pageSearch(page){
 	listParams.currentPage = page;
 	fetchList();
 }
-// 联系-->入职
+function dateToStartTime(timestamp) {
+	if(timestamp != null && timestamp !=""){
+		var formatTimeS = new Date(timestamp+" 00:00:00").getTime();
+		return formatTimeS/1000;
+	}
+	return 0;
+}
+
+function dateToEndTime(timestamp) {
+	if(timestamp != null && timestamp !=""){
+		var formatTimeS = new Date(timestamp+" 23:59:59").getTime();
+		return formatTimeS/1000;
+	}
+	return 0;
+}
+
+// 点击联系 出现modal
 $(document).on("click",".contact",function(){
-	var params ={}
-	var $row = $(this).parents("tr");
+	
 	var $row = $(this).parents("tr");
     var hpPositionRefUserId = $row.data("position_ref_user_id");
-    params.hpPositionRefUserId = hpPositionRefUserId ;
 	var $contact = $(this).parents("tr").find(".contact");
 	var $comPer = $(this).parents("tr").find(".comPer");
 	var $comPon = $(this).parents("tr").find(".comPon");
+	
 	fetchPost({
-	        url:"/backDelivery/getLoginUser",
-	        params: params,
+	        url:"/backDelivery/getLoginUserInfo",
+	        params: {},
+	        callback:function(data){
+	            console.log(data);
+	            $("#comtPerson").val(data.realName);
+	            $("#comTime").val(data.comTime);
+	            $("#positionRefUserId").val(hpPositionRefUserId);
+	        	$('#comtactPersonModal').modal('toggle');
+	        }
+	})
+	
+	
+	    
+})
+
+// 添加联系人 联系时间
+$(document).on("click","#addComtact",function(){
+	var params ={}
+    params.comtPerson = $("#comtPerson").val();
+	params.comTime = getDayToSecond($("#comTime").val());
+	params.positionRefUserId =  $("#positionRefUserId").val();
+	var $contact = $(this).parents("tr").find(".contact");
+	var $comPer = $(this).parents("tr").find(".comPer");
+	var $comPon = $(this).parents("tr").find(".comPon");
+	
+	fetchPost({
+	        url:"/backDelivery/addComtact",
+	        params: {},
 	        callback:function(data){
 	            console.log(data)
-	            $contact.eq(0).html("入职");
-	            $comPer.eq(0).html(data.userName);
-	            $comPon.eq(0).html(data.phoneNo);
+	            $contact.;
+	            $("comTime").val(data.comTime);
+	            $('#comtactPersonModal').modal('toggle');
 	        }
-	    })
+	})
+    $('#comtactPersonModal').modal('toggle')
+    
 })
 
 // 查看
@@ -171,24 +214,28 @@ function addTableList(list){
             <th>'+ timestampToTime(item.partTime) +'</th>\
             <th>'+ item.phoneNo +'</th>\
             <th>\
-                <button type="button" class="btn btn-default btn-sm cat">查看</button>\
-                <button type="button" class="btn btn-primary btn-sm contact">联系</button>\
-            </th>\
-            <th class="comPer"></th>\
-            <th class="comPho"></th>\
+                <button type="button" class="btn btn-default btn-sm cat">查看</button>\'
+            if(item.optionId == "" || item.optionId ==null){ //未联系
+            	templeteTr += '\<button type="button" class="btn btn-primary btn-sm contact">联系</button>\'
+            }else{
+            	if(item.workOn == 0){
+            		templeteTr += '\<button type="button" class="btn btn-primary btn-sm contact">入职</button>\'
+            	}else{
+            		templeteTr += '\<button type="button" class="btn btn-primary btn-sm contact">已入职</button>\'
+            	}
+            }
+            templeteTr +='<th class="comPho"></th>\
         </tr>';
-                // <button type="button" class="btn btn-danger btn-sm restart">复用</button>\
     })
     $tBody.html(templeteTr)    
 }
+
 // 判断性别
 function gender(gender){    
     return gender==1?"男":"女"
 }
-//判断账号类别
-function userType(userType){
-    return userType==1?"超级管理员":"求职者"
-}
+
+
 //判断出生年份
 function bornYear(value){
     return  new Date().getFullYear()- Number(value)+"岁"
@@ -219,5 +266,11 @@ function change(t) {
     } else {
         return t;
     }
+}
+function getDayToSecond(timestamp){
+	if(timestamp !=null && timestamp !=""){
+		timestamp += " 00:00:00";
+		return new Date(timestamp).getTime()/1000;
+	}
 }
 

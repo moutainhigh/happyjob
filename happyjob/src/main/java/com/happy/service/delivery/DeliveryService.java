@@ -1,5 +1,6 @@
 package com.happy.service.delivery;
 
+import com.happy.plugin.BaseMsg;
 import com.happy.service.delivery.data.DeliveryDetail;
 import com.happy.service.delivery.data.DeliveryListMsg;
 import com.happy.service.salary.data.LoginUserMsg;
@@ -17,6 +18,8 @@ public interface DeliveryService {
 	
 	DeliveryDetail deliveryQueryByUserId(Long hpUserId);
 	
-	LoginUserMsg getLoginUser(Long hpPositionRefUserId,String userToken);
+	BaseMsg addComtact(Long hpPositionRefUserId,String comtPerson,Long comTime);
+	
+	LoginUserMsg getLoginUserInfo(String userToken);
 	
 }

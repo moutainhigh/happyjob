@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.happy.entity.HpPositionRefUserEntity;
 import com.happy.entity.HpUserExpEntity;
 import com.happy.entity.HpUserIntentionEntity;
+import com.happy.plugin.BaseMsg;
 import com.happy.service.delivery.DeliveryService;
 import com.happy.service.delivery.data.DeliveryData;
 import com.happy.service.delivery.data.DeliveryDetail;
@@ -22,6 +23,7 @@ import com.happy.service.salary.impl.SalaryServiceImpl;
 import com.happy.sqlExMapper.HpDeliveryMapper;
 import com.happy.sqlMapper.HpPositionRefUserMapper;
 import com.happy.util.Util;
+import com.happy.util.pubConst.Const;
 
 @Service
 public class DeliveryServiceImpl implements DeliveryService{
@@ -79,20 +81,34 @@ public class DeliveryServiceImpl implements DeliveryService{
 	}
 
 	@Override
-	public LoginUserMsg getLoginUser(Long hpPositionRefUserId ,String userToken) {
-		LoginUserMsg msg = new LoginUserMsg();
-		LoginUserMsg loginUserMsg = hpDeliveryMapper.getLoginUser(userToken);
+	public BaseMsg addComtact(Long hpPositionRefUserId,String comtPerson,Long comTime) {
+		BaseMsg msg = new BaseMsg();
 		//更新
-		if(loginUserMsg != null) {
+		if(hpPositionRefUserId != null &&  hpPositionRefUserId !=0 ) {
 			HpPositionRefUserEntity positionRefUserEntity = new HpPositionRefUserEntity();
 			positionRefUserEntity.setHpUserId(hpPositionRefUserId);
-			positionRefUserEntity.setOptionId(loginUserMsg.getHpUserId());
-			positionRefUserEntity.setOptionTime(Util.getDateSecond(new Date()));
+			positionRefUserEntity.setOptionId(comtPerson);
+			positionRefUserEntity.setOptionTime(comTime);
 			hpPositionRefUserMapper.updateByPK(positionRefUserEntity);
 		}else {
 			msg.setErrorCode(1);
-			msg.setMessage("为获取到登陆人信息");
+			msg.setMessage("参数有误：hpPositionRefUserId");
 		}
+		msg.setErrorCode(0);
+		msg.setMessage("操作成功");
+		return msg;
+	}
+	
+	@Override
+	public LoginUserMsg getLoginUserInfo(String userToken) {
+		LoginUserMsg msg = new LoginUserMsg();
+		LoginUserMsg loginUserMsg = hpDeliveryMapper.getLoginUser(userToken);
+		//更新
+		if(loginUserMsg == null) {
+			msg.setErrorCode(1);
+			msg.setMessage("获取不到该登陆人信息");
+		}
+		loginUserMsg.setComTime(Util.dateFormat(new Date(),Const.DATE_FORMAT_STR_2));
 		msg.setErrorCode(0);
 		msg.setMessage("操作成功");
 		return loginUserMsg;

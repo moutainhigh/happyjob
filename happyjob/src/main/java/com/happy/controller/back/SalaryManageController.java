@@ -1,12 +1,6 @@
 package com.happy.controller.back;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-import java.util.List;
-
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -18,16 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.happy.entity.HpUserEntity;
-import com.happy.entity.HpUserPayrollEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.salary.SalaryService;
-import com.happy.service.salary.data.LoginUserMsg;
 import com.happy.service.salary.data.SalarySimpleListMsg;
 import com.happy.util.Util;
-import com.happy.util.excel.ExcelUtil;
-import com.happy.util.excel.PayrollPojo;
-import com.happy.util.pubConst.Const;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -41,6 +29,7 @@ public class SalaryManageController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SalaryManageController.class);
     
+	
     @Resource
     private SalaryService salaryService;
     
@@ -57,15 +46,15 @@ public class SalaryManageController {
     })
     @GetMapping(value="salaryList")
     public SalarySimpleListMsg userList(HttpServletRequest request){
-        String workNum = request.getParameter("workNum");
-        String payName = request.getParameter("payName");
-        String payIdNum = request.getParameter("payIdNum");
-        String payComName = request.getParameter("payComName");
+        String workNum = request.getParameter("workNum").trim();
+        String payName = request.getParameter("payName").trim();
+        String payIdNum = request.getParameter("payIdNum").trim();
+        String payComName = request.getParameter("payComName").trim();
         Integer payTime = (Integer)Util.typeChange(request.getParameter("payTime"), Integer.class);
         Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
         Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
        
-        logger.info("backUser.userList 请求参数：workNum={},payName={},payIdNum={},"
+        logger.info("backSalary.salaryList 请求参数：workNum={},payName={},payIdNum={},"
             + "payComName={},payTime={}",workNum,payName,payIdNum,payComName,payTime);
         SalarySimpleListMsg ss = this.salaryService.getSalaryListPage(workNum,payName,payIdNum,payComName,payTime,currentPage,showCount);
         return ss ;

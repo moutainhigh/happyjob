@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.happy.plugin.BaseMsg;
 import com.happy.service.delivery.DeliveryService;
 import com.happy.service.delivery.data.DeliveryDetail;
 import com.happy.service.delivery.data.DeliveryListMsg;
@@ -50,18 +51,18 @@ public class DeliveryManageController {
     @GetMapping(value="deliveryList")
     public DeliveryListMsg deliveryList(HttpServletRequest request){
     	
-        String userName = request.getParameter("userName");
-        String comName = request.getParameter("comName");
-        String posName = request.getParameter("posName");
+        String userName = request.getParameter("userName").trim();
+        String comName = request.getParameter("comName").trim();
+        String posName = request.getParameter("posName").trim();
         Long startTime = (Long)Util.typeChange(request.getParameter("startTime"), Long.class);
         Long endTime = (Long)Util.typeChange(request.getParameter("endTime"), Long.class);
-        String realName = request.getParameter("realName");
+        String realName = request.getParameter("realName").trim();
         Integer gender = (Integer)Util.typeChange(request.getParameter("gender"), Integer.class);
-        String contactStat = request.getParameter("contactStat");
+        String contactStat = request.getParameter("contactStat").trim();
         Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
         Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
        
-        logger.info("backUser.deliveryList 请求参数：userName={},comName={},posName={},"
+        logger.info("backDelivery.deliveryList 请求参数：userName={},comName={},posName={},"
             + "startTime={},endTime={},realName={},gender={},contactStat={},currentPage={},showCount={}",
         	userName,comName,posName,startTime,endTime,realName,gender,contactStat,currentPage,showCount);
         DeliveryListMsg ss = this.deliveryService.getDeliverylistPage(userName,comName,posName,startTime,endTime,realName,gender,contactStat,currentPage,showCount);
@@ -81,23 +82,37 @@ public class DeliveryManageController {
     public DeliveryDetail deliveryQueryByUserId(HttpServletRequest request){
     	
         Long hpUserId = (Long)Util.typeChange(request.getParameter("hpUserId"), Long.class);
-        logger.info("backUser.deliveryList 请求参数：hpUserId={}",hpUserId);
+        logger.info("backDelivery.deliveryQueryByUserId 请求参数：hpUserId={}",hpUserId);
         DeliveryDetail deliveryDetail = this.deliveryService.deliveryQueryByUserId(hpUserId);
         
         return deliveryDetail ;
     }
     
     /**
-     * @TODO:    登陆用户
+     * @TODO:    添加联系人联系时间
      */
     @ApiOperation(value="登陆用户查询",notes="登陆用户查询")
     @ApiImplicitParams({
         @ApiImplicitParam(name="userToken",value="登录token",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="hpPositionRefUserId",value="hpPositionRefUserId",dataType="Long",paramType="query",required=false),
     })
-    @PostMapping(value = "/getLoginUser")
-	public LoginUserMsg getLoginUser(HttpServletRequest request){
+    @PostMapping(value = "/addComtact")
+	public BaseMsg addComtact(HttpServletRequest request){
     	Long hpPositionRefUserId = (Long)Util.typeChange(request.getParameter("hpPositionRefUserId"), Long.class);
+    	String comtPerson = request.getParameter("comtPerson").trim();
+    	Long ComTime = (Long)Util.typeChange(request.getParameter("ComTime"), Long.class);
+    	BaseMsg msg = deliveryService.addComtact(hpPositionRefUserId,comtPerson,ComTime);
+    	logger.info("backDelivery.addComtact hpPositionRefUserId={},comtPerson={},hpPositionRefUserId={}",hpPositionRefUserId,comtPerson,ComTime);
+    	return msg ;
+    }
+    
+    
+    /**
+     * @TODO:    登陆用户
+     */
+    @ApiOperation(value="登陆用户查询",notes="登陆用户查询")
+    @PostMapping(value = "/getLoginUserInfo")
+	public LoginUserMsg getLoginUserInfo(HttpServletRequest request){
     	Cookie[] cookiesArr =  request.getCookies();
     	String userToken="";
     	
@@ -108,8 +123,9 @@ public class DeliveryManageController {
                 }
             }
         }
-    	LoginUserMsg loginUserMsg = deliveryService.getLoginUser(hpPositionRefUserId,userToken);
+    	LoginUserMsg loginUserMsg = deliveryService.getLoginUserInfo(userToken);
     	logger.info("backUser.getLoginUser userToken={}",userToken);
     	return loginUserMsg ;
     }
+    
 }

@@ -22,6 +22,7 @@ var listParams = {
 $(document).on("click","#queryUser",function(){
 	pageSearch(1);
 })
+//初始化年份
 $(document).on("click","#bornTime2",function(){
 	var option ;
 	var date=new Date;
@@ -37,8 +38,8 @@ $(document).on("click","#bornTime2",function(){
 function pageSearch(page){
 	listParams.phoneNo = $("#phoneNo").val();
 	listParams.resource = $("#registResource").val();
-	listParams.startTime = dateToTime($("#startTime").val());
-	listParams.endTime = dateToTime($("#endTime").val());
+	listParams.startTime = dateToStartTime($("#startTime").val());
+	listParams.endTime = dateToEndTime($("#endTime").val());
 	listParams.blackOn = $("#blackOn").val();
 	listParams.userType = $("#userType").val();
 	listParams.currentPage = page;
@@ -353,13 +354,22 @@ function timestampToTime(timestamp) {
     return Y + M + D + h + m + s;
 }
 
-function dateToTime(timestamp) {
+function dateToStartTime(timestamp) {
 	if(timestamp != null && timestamp !=""){
-		var formatTimeS = new Date($("#endTime").val()+" 00:00:00").getTime();
+		var formatTimeS = new Date(timestamp+" 00:00:00").getTime();
 		return formatTimeS/1000;
 	}
-	return null;
+	return 0;
 }
+
+function dateToEndTime(timestamp) {
+	if(timestamp != null && timestamp !=""){
+		var formatTimeS = new Date(timestamp+" 23:59:59").getTime();
+		return formatTimeS/1000;
+	}
+	return 0;
+}
+
 
 function change(t) {
     if (t < 10) {

@@ -19,6 +19,21 @@ public class LoginUserMsg extends BaseMsg{
 	//真实姓名
 	@ApiModelProperty(name="realName",value="真实姓名")
 	private String realName;
+	
+	//真实姓名
+	@ApiModelProperty(name="comTime",value="联系时间")
+	private String comTime ;
+
+	
+	
+
+	public String getComTime() {
+		return comTime;
+	}
+
+	public void setComTime(String comTime) {
+		this.comTime = comTime;
+	}
 
 	public java.lang.Long getHpUserId() {
 		return hpUserId;

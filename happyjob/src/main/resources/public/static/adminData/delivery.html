@@ -24,7 +24,13 @@
 <!-- 确认提示框 -->
 <link rel="stylesheet" href="/static/plugins/sweetalert/sweetalert2.min.css">
 <style>
-.idStyle{max-width: 200px;max-height: 200px;}
+/* 	.idStyle{max-width: 200px;max-height: 200px;} */
+/* 	#comtactPersonModal{ */
+/* 		position: absolute; */
+/*         top: 50%; */
+/*         left: 50%; */
+/*         transform: translateX(-50%) translateY(-50%); */
+	}
 </style>
   
 </head>
@@ -237,7 +243,7 @@
 </div>
 
 
-<!-- 查看用户资料 -->
+<!-- 查看资料 -->
 <div class="modal fade" id="browseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -333,6 +339,42 @@
 	</div><!-- /.modal-dialog -->
 </div>
 	
+	
+<!-- 查看联系人资料 -->
+<div class="modal fade" id="comtactPersonModal"   tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" >
+	<div class="modal-dialog" role="document">
+		<div class="modal-content"  style="width:450px;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" align="center">联系信息</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group" style="display:none">
+						<input type="text" class="form-control"  placeholder="" id="positionRefUserId" />
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3 col-sm-offset-1" align="right">联系人</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control"  placeholder="" id="comtPerson" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3 col-sm-offset-1" align="right"> 联系时间</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control datepicker"  placeholder="" id="comTime" />
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal" id="addComtact">确认</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
+
 <!-- jQuery 3 -->
 <script src="/static/adminlet/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->

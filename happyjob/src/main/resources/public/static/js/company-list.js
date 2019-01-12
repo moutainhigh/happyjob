@@ -4,6 +4,43 @@ $(".datepicker").datepicker({
     autoclose: true,//选中之后自动隐藏日期选择框
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
+
+$('#upPicLogo').on('change',function(){                                                 //选中图片后展示在页面
+	   var filePath = $(this)[0].files[0].name //获取到input的value，里面是文件的路径 
+	   console.log(filePath) //1.png 
+	   fileFormat = filePath.split('.')[1].toLowerCase() 
+	   console.log(fileFormat) //png
+	   src = window.URL.createObjectURL(this.files[0]) //转成可以在本地预览的格式 
+	   console.log(src) //blob:null/11ea5a2d-7270-4035-b5c4-4e50c5c061e7
+
+	   // 检查是否是图片 
+	   if( !fileFormat.match(/png|jpg|jpeg/) ) { 
+	      alert('上传错误,文件格式必须为：png/jpg/jpeg')
+	     return 
+	  	} 
+
+	    $('#imgContent').attr('src',src)
+
+})
+
+$('#upPicLis').on('change',function(){                                                 //选中图片后展示在页面
+	   var filePath = $(this)[0].files[0].name //获取到input的value，里面是文件的路径 
+	   console.log(filePath) //1.png 
+	   fileFormat = filePath.split('.')[1].toLowerCase() 
+	   console.log(fileFormat) //png
+	   src = window.URL.createObjectURL(this.files[0]) //转成可以在本地预览的格式 
+	   console.log(src) //blob:null/11ea5a2d-7270-4035-b5c4-4e50c5c061e7
+
+	   // 检查是否是图片 
+	   if( !fileFormat.match(/png|jpg|jpeg/) ) { 
+	      alert('上传错误,文件格式必须为：png/jpg/jpeg')
+	     return 
+	  	} 
+
+	    $('#imgContent2').attr('src',src)
+
+})
+	
 // 查询
 $(document).on("click",".queryCompany",function(){
 	pageSearch(1);
@@ -173,7 +210,7 @@ $(document).on("click","#newCompany",function(){
     saveParams.companyTypeId = $("#companyTypeId").val();
     saveParams.companyScaleId = $("#companyScaleId").val();
     saveParams.comDesc = $("#comDesc").val();
-    saveParams.countyId = $("#countyId").val();
+    saveParams.countryId = $("#county").val();
     saveParams.addrDetail =$("#addrDetail").val();
     saveParams.comtPerson = $("#comtPerson").val();
     saveParams.comPhone = $("#comPhone").val();
@@ -183,8 +220,6 @@ $(document).on("click","#newCompany",function(){
     saveParams.comLogo = comLogo ;
     saveParams.comLicense = comLicense ;
     
-	console.log("=saveParams==",saveParams);
-	
     fetchPost({
         url:"/backCompany/newCompany",
         params: saveParams,
@@ -197,6 +232,7 @@ $(document).on("click","#newCompany",function(){
  
 var comLogo ;
 function uploadLogo(){
+	
 	var url = window.location.origin + "/wxAppletsLogin/imgUpOne" ;
 	var file = $("#upPicLogo").get(0).files[0];
 	if(!file){
@@ -225,6 +261,7 @@ function uploadLogo(){
 
 var comLicense ;
 function upPicLis(){
+    
 	var url = window.location.origin + "/wxAppletsLogin/imgUpOne" ;
 	var file = $("#upPicLis").get(0).files[0];
 	if(!file){

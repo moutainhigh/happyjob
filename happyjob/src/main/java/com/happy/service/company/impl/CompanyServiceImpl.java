@@ -61,7 +61,7 @@ public class CompanyServiceImpl implements CompanyService{
 	}
 
 	@Override
-	public BaseMsg newCompany(String comName, Long companyTypeId, Long companyScaleId, String comDesc, Long countyId,
+	public BaseMsg newCompany(String comName, Long companyTypeId, Long companyScaleId, String comDesc, Long countryId,
 			String addrDetail, String comtPerson, String comPhone, String comEmail,String comLicense,String comLogo) {
 		BaseMsg msg = new BaseMsg();
         if(comName == null || comName == "") {
@@ -79,7 +79,7 @@ public class CompanyServiceImpl implements CompanyService{
             msg.setMessage("公司规模必填");
             return msg;
         }
-        if(countyId == null || countyId == 0) {
+        if(countryId == null || countryId == 0) {
             msg.setErrorCode(1);
             msg.setMessage("公司位置必填");
             return msg;
@@ -105,7 +105,7 @@ public class CompanyServiceImpl implements CompanyService{
         company.setHpCompanyTypeId(companyTypeId);
         company.setHpCompanyScaleId(companyScaleId);
         company.setComDesc(comDesc);
-        company.setCountyId(countyId);
+        company.setCountyId(countryId);
         company.setAddrDetail(addrDetail);
         company.setComtPerson(comtPerson);
         company.setComPhone(comPhone);

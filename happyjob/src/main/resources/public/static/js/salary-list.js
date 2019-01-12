@@ -30,9 +30,16 @@ function pageSearch(page){
 	listParams.payIdNum = $("#payIdNum").val();
 	listParams.workNum = $("#workNum").val();
 	listParams.payComName = $("#payComName").val();
-	listParams.payTime = publicObj.transferTime($("#payTime").val());
+	listParams.payTime = getDayToSecond($("#payTime").val());
 	listParams.currentPage = page;
 	fetchList();
+}
+
+function getDayToSecond(timestamp){
+	if(timestamp !=null && timestamp !=""){
+		timestamp += "-01 00:00:00";
+		return new Date(timestamp).getTime()/1000;
+	}
 }
 
 
@@ -119,7 +126,7 @@ function addTableList(list){
             <th>'+ isNull(item.payComName) +'</th>\
             <th>'+ isNull(item.payIdNum) +'</th>\
             <th>'+ isNull(item.workNum) +'</th>\
-            <th>'+ timestampToMonth(item.createTime) +'</th>\
+            <th>'+ timestampToMonth(item.payTime) +'</th>\
             <th>'+ item.shouldMoney +'</th>\
             <th>'+ item.deductionMoney +'</th>\
             <th>'+ item.realMoney +'</th>\
