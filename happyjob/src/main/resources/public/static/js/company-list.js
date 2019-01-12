@@ -135,8 +135,8 @@ $(document).on("click",".cat",function(){
     $obj.eq(7).html($row.data("com-phone"));
    
     $obj.eq(8).html($row.data("com-email"));
-//    $obj.eq(7).attr("src",comLogo);
-//    $obj.eq(8).attr("src",comLicense);
+    $obj.eq(9).attr("src",comLogo);
+    $obj.eq(10).attr("src",comLicense);
     $('#browseModal').modal('toggle');
 })
 
