@@ -2,6 +2,7 @@
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -250,7 +251,7 @@ import io.swagger.annotations.ApiOperation;
        @ApiImplicitParam(name="phoneNo",value="手机号码",dataType="String",paramType="query",required=true),
    })
    @PostMapping(value="phoneSms")
-   public PhoneCodeMsg phoneSms(HttpServletRequest request) {
+   public PhoneCodeMsg phoneSms(HttpServletRequest request,HttpServletResponse response) {
        
        String oid = request.getHeader("oid");
        String phoneNo = request.getParameter("phoneNo");
@@ -264,16 +265,15 @@ import io.swagger.annotations.ApiOperation;
            msg.setMessage("手机号码格式不正确");
            return msg;
        }
-       Long curTime = Util.getDateSecond(Util.getCurrentDate());
        //发短信
 //       String msgCode = Util.sendPhoneCode(phoneNo, Const.PHONE_MSGCODE_NUM);
        String msgCode = Util.getRandomStringByLength(4, "0");
        if(!Util.isEmpty(msgCode)) { // 发送成功
-           HttpSession session = request.getSession();
-           logger.info("验证码发送 sessionId==={}",session.getId());
-           session.setAttribute(Const.SESSION_ATTR_NAME_PHONE, phoneNo);
-           session.setAttribute(Const.SESSION_ATTR_NAME_MSGCODE, msgCode);
-           session.setAttribute(Const.SESSION_ATTR_NAME_PHONE_AGE, curTime+Const.SESSION_ATTR_AGE_PHONE);
+           String phoneNoMd5 = Util.generateMD5(phoneNo,Util.getRandomStringByLength(4, "a-z"));
+           String msgCodeMd5 = Util.generateMD5(msgCode,Util.getRandomStringByLength(4, "a-z"));
+           BaseController.addCookie(response, Const.SESSION_ATTR_NAME_PHONE, phoneNoMd5, Const.SESSION_ATTR_AGE_PHONE);
+           BaseController.addCookie(response, Const.SESSION_ATTR_NAME_MSGCODE, msgCodeMd5, Const.SESSION_ATTR_AGE_PHONE);
+           logger.info("验证码已加密存入cookie");
            PhoneCodeData data = new PhoneCodeData();
            data.setMsgCode(msgCode);
            msg.setData(data);
@@ -316,7 +316,7 @@ import io.swagger.annotations.ApiOperation;
        @ApiImplicitParam(name="msgCode",value="手机短信验证码",dataType="String",paramType="query",required=true),
    })
    @PostMapping("phone")
-   public OtherLoginMsg phone(HttpServletRequest request) {
+   public OtherLoginMsg phone(HttpServletRequest request,HttpServletResponse response) {
        String sid = request.getHeader("sid");
        String oid = request.getHeader("oid");
        String phoneNo = request.getParameter("phoneNo");
@@ -325,7 +325,7 @@ import io.swagger.annotations.ApiOperation;
        logger.info("phone 参数日志：sid=={},oid=={},phoneNo=={},msgCode=={}",
            sid,oid,phoneNo,msgCode);
        
-       BaseMsg result = BaseController.checkPhoneCode(request, phoneNo, msgCode);
+       BaseMsg result = BaseController.checkPhoneCode(request,response , phoneNo, msgCode);
        if(result.getErrorCode() != 0) {
            OtherLoginMsg msg = new OtherLoginMsg();
            msg.setErrorCode(result.getErrorCode());
@@ -399,7 +399,7 @@ import io.swagger.annotations.ApiOperation;
       @ApiImplicitParam(name="phoneCode",value="手机号短信验证码",dataType="String",paramType="query",required=true),
   })
   @GetMapping(value="payrollId")
-  public UserSimpleDataMsg payrollId(HttpServletRequest request) {
+  public UserSimpleDataMsg payrollId(HttpServletRequest request,HttpServletResponse response) {
       
       String oid = request.getHeader("oid");
       String phoneNo = request.getParameter("phoneNo");
@@ -408,7 +408,7 @@ import io.swagger.annotations.ApiOperation;
       logger.info("payrollId 参数日志：oid=={},phoneNo=={},phoneCode=={}",
           oid,phoneNo,phoneCode);
       
-      BaseMsg result = BaseController.checkPhoneCode(request, phoneNo, phoneCode);
+      BaseMsg result = BaseController.checkPhoneCode(request, response , phoneNo, phoneCode);
       if(result.getErrorCode() !=0) {
           UserSimpleDataMsg msg = new UserSimpleDataMsg();
           msg.setErrorCode(result.getErrorCode());

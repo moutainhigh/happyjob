@@ -41,6 +41,8 @@ import io.swagger.annotations.ApiModelProperty;
     private int comApplyNum;
     @ApiModelProperty(name="groupApplyNum",value="用户正在进行的拼团申请数")
     private int groupApplyNum;
+    @ApiModelProperty(name="hpPositionGroupId",value="用户参与的该职位拼团ID")
+    private Long hpPositionGroupId;
     @ApiModelProperty(name="welfareArr",value="岗位福利名称，逗号分隔")
     private String welfareArr;
     @ApiModelProperty(name="groupSccNum",value="岗位拼团成功人数")
@@ -211,5 +213,10 @@ import io.swagger.annotations.ApiModelProperty;
     public void setGroupPartNum(Integer groupPartNum) {
         this.groupPartNum = groupPartNum;
     }
-    
+    public Long getHpPositionGroupId() {
+        return hpPositionGroupId;
+    }
+    public void setHpPositionGroupId(Long hpPositionGroupId) {
+        this.hpPositionGroupId = hpPositionGroupId;
+    }
 }

@@ -255,37 +255,24 @@ public class BaseController {
         *
         * @TODO:     验证手机号、验证码是否正确
         */
-      public static BaseMsg checkPhoneCode(HttpServletRequest request,String phoneNo,String msgCode) {
+      public static BaseMsg checkPhoneCode(HttpServletRequest request,HttpServletResponse response,String phoneNo,String msgCode) {
            BaseMsg msg = new BaseMsg();
-           HttpSession session = request.getSession(false);
-           if(session == null) {
-               msg.setErrorCode(1);
-               msg.setMessage("验证信息有误，请重新发送验证码");
-               return msg;
-           }
-           logger.info("验证码验证 sessionId==={}",session.getId());
-           Object sessionphoneObj = session.getAttribute(Const.SESSION_ATTR_NAME_PHONE);
-           String sessionphone = sessionphoneObj==null?null:(String)sessionphoneObj;
-           String sessionCodeObj = (String)session.getAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
-           String sessionCode = sessionCodeObj==null?null:(String)sessionCodeObj;
-           Long sessionAgeObj = (Long)session.getAttribute(Const.SESSION_ATTR_NAME_PHONE_AGE);
-           Long sessionAge = sessionAgeObj==null?null:(Long)sessionAgeObj;
-           Long curTime = Util.getDateSecond(Util.getCurrentDate());
+
+           String sessionphone = BaseController.getCookieByName(request, Const.SESSION_ATTR_NAME_PHONE);
+           String sessionCode = BaseController.getCookieByName(request, Const.SESSION_ATTR_NAME_MSGCODE);
            
-           logger.info("sessionphone=={},sessionCode=={},sessionAge=={}",sessionphone,sessionCode,sessionAge);
+           logger.info("sessionphone=={},sessionCode=={}",sessionphone,sessionCode);
            
-           if(!Util.isEmpty(phoneNo) && !Util.isEmpty(msgCode) && phoneNo.equals(sessionphone) 
-               && msgCode.equals(sessionCode) && !Util.isEmpty(sessionAge) && curTime.compareTo(sessionAge)<=0) {
+           if(!Util.isEmpty(phoneNo) && !Util.isEmpty(msgCode) && !Util.isEmpty(sessionphone) && !Util.isEmpty(sessionCode) 
+               && Util.verify(phoneNo, sessionphone) && Util.verify(msgCode, sessionCode) ) {
                
-               session.removeAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
-               session.removeAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
-               session.removeAttribute(Const.SESSION_ATTR_NAME_PHONE_AGE);
+               BaseController.removeCookieByName(response, Const.SESSION_ATTR_NAME_PHONE);
+               BaseController.removeCookieByName(response, Const.SESSION_ATTR_NAME_MSGCODE);
                
                return msg;
            }
-           session.removeAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
-           session.removeAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
-           session.removeAttribute(Const.SESSION_ATTR_NAME_PHONE_AGE);
+           BaseController.removeCookieByName(response, Const.SESSION_ATTR_NAME_PHONE);
+           BaseController.removeCookieByName(response, Const.SESSION_ATTR_NAME_MSGCODE);
            msg.setErrorCode(1);
            msg.setMessage("验证信息有误，请重新发送验证码");
            return msg;

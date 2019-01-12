@@ -458,7 +458,7 @@ public class UserServiceImpl implements UserService {
         }
         String passwMD5 = Util.MD5(password1);
         String salt = Util.getRandomStringByLength(4, "az");
-        String passwSaltMD5 = Util.generate(password1,salt);
+        String passwSaltMD5 = Util.generateMD5(password1,salt);
         logger.info("salt=={},passwMD5=={},passwSaltMD5=={},isEqual=={}",salt,passwMD5,passwSaltMD5,Util.verify(password1, passwSaltMD5));
         Long bornYear = data.getBornTime();
         String realName = data.getRealName();

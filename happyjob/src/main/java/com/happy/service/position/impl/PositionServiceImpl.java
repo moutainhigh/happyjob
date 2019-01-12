@@ -92,7 +92,7 @@ public class PositionServiceImpl implements PositionService {
              msg.setMessage("缺少参数hpPositionId");
              return msg;
          }
-         PositionData data = this.hpPositionExMapper.getFrontPosByKey(hpPositionId);
+         PositionData data = this.hpPositionExMapper.getFrontPosByKey(hpPositionId,sid);
          
          if(data !=null) {
              // 是否正在投递该岗位:普通方式

@@ -81,6 +81,8 @@ $(function(){
 	});
 	$('#urgentOn').change(function(){ // 高薪急聘选择
 		if($(this).val()==1){
+			$("#groupOn").val(0).change();;
+			$("#welfareOn").val(0).change();;
 			$("#urgentMoney").removeAttr("disabled");
 		}else{
 			$("#urgentMoney").attr("disabled",true);
@@ -88,11 +90,22 @@ $(function(){
 	});
 	$('#groupOn').change(function(){ // 拼团选择
 		if($(this).val()==1){
+			$("#urgentOn").val(0).change();;
+			$("#welfareOn").val(0).change();;
 			$("#threeMoney").removeAttr("disabled");
 			$("#fiveMoney").removeAttr("disabled");
 		}else{
 			$("#threeMoney").attr("disabled",true);
 			$("#fiveMoney").attr("disabled",true);
+		}
+	});
+	$('#welfareOn').change(function(){ // 拼团选择
+		if($(this).val()==1){
+			$("#urgentOn").val(0).change();
+			$("#groupOn").val(0).change();;
+			$("#welfareDetail").show();
+		}else{
+			$("#welfareDetail").hide();
 		}
 	});
 })

@@ -49,6 +49,9 @@ import io.swagger.annotations.ApiModelProperty;
     @ApiModelProperty(name="userIsPart",value="当前用户是否参与该拼团")
     private Integer userIsPart;
     
+    @ApiModelProperty(name="comApproveState",value="公司是否认证")
+    private Integer comApproveState;
+    
     public String getLeaderName() {
         return leaderName;
     }
@@ -121,4 +124,11 @@ import io.swagger.annotations.ApiModelProperty;
     public void setLeaderPic(String leaderPic) {
         this.leaderPic = leaderPic;
     }
+    public Integer getComApproveState() {
+        return comApproveState;
+    }
+    public void setComApproveState(Integer comApproveState) {
+        this.comApproveState = comApproveState;
+    }
+    
 }

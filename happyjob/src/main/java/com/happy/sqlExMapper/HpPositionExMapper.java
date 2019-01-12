@@ -17,7 +17,7 @@ public interface HpPositionExMapper{
 
     List<PositionData> getFrontPoslistPage(PositionSearch page);
     
-    PositionData getFrontPosByKey(@Param("hpPositionId") Long hpPositionId);
+    PositionData getFrontPosByKey(@Param("hpPositionId") Long hpPositionId,@Param("sid") String sid);
     /**
      *
      * @TODO:     普通申请数量
