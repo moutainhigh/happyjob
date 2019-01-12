@@ -62,7 +62,7 @@
 					<!-- Menu Toggle Button -->
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 					<!-- hidden-xs hides the username on small devices so only the image appears. -->
-					<span class="hidden-xs">Alexander Pierce</span>
+					<span class="hidden-xs">个人中心</span>
 					</a>
 					<ul class="dropdown-menu">
 					<!-- The user image in the menu -->
@@ -71,7 +71,7 @@
 					<!-- Menu Footer-->
 					<li class="user-footer">
 						<div class="pull-right">
-						<a href="#" class="btn btn-default btn-flat">Sign out</a>
+						<a href="#" class="btn btn-default btn-flat">退出</a>
 						</div>
 					</li>
 					</ul>
@@ -88,7 +88,7 @@
 	
 		<!-- Sidebar Menu -->
 		<ul class="sidebar-menu" data-widget="tree">
-			<li class="header">HEADER</li>
+			<li class="header">管理员功能菜单</li>
 			<li class="treeview active">
 				<a href="#"><i class="fa fa-user"></i> <span>用户管理</span>
 					<span class="pull-right-container">
@@ -135,7 +135,6 @@
 		<section class="content-header">
 		<h1>
 			用户投递
-			<small>Optional description</small>
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> 用户管理</a></li>
@@ -369,6 +368,39 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" data-dismiss="modal" id="addComtact">确认</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="comtactPersonModal2"   tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" >
+	<div class="modal-dialog" role="document">
+		<div class="modal-content"  style="width:450px;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" align="center">联系信息</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group" style="display:none">
+						<input type="text" class="form-control"  placeholder="" id="positionRefUserId2" />
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3 col-sm-offset-1" align="right">联系人</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control"  placeholder="" id="comtPerson2" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-3 col-sm-offset-1" align="right"> 联系时间</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control datepicker"  placeholder="" id="comTime2" />
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal" id="addEntry">确认</button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->

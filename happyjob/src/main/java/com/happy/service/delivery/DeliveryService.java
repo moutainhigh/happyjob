@@ -18,7 +18,7 @@ public interface DeliveryService {
 	
 	DeliveryDetail deliveryQueryByUserId(Long hpUserId);
 	
-	BaseMsg addComtact(Long hpPositionRefUserId,String comtPerson,Long comTime);
+	BaseMsg addComtact(Long hpPositionRefUserId,String comtPerson,Long comTime,Integer workOn);
 	
 	LoginUserMsg getLoginUserInfo(String userToken);
 	
