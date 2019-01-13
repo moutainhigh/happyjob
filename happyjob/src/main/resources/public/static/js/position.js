@@ -1,6 +1,6 @@
 // 日期选择器
 $(".datepicker").datepicker({
-    language: "cn",
+    language: "zh-CN",
     autoclose: true,//选中之后自动隐藏日期选择框
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
@@ -404,7 +404,7 @@ function areaConfig(areaType,areaId){
 	var cityId = null;
 	if(areaType == "province"){ // 省查询市
 		provinceId = areaId;
-		$("#county").html('<option>请选择</option>');
+		$("#county").html('<option>全部</option>');
 	}else if(areaType == "city"){ // 市查询区县
 		cityId = areaId;
 	}else if(areaType == "county"){
@@ -418,7 +418,7 @@ function areaConfig(areaType,areaId){
 		},
 		callback:function(data){
 			if(data){
-				var content = '<option>请选择</option>';
+				var content = '<option>全部</option>';
 				var list = data.list;
 				var length = list.length;
 				for(var i=0;i<length;i++){
