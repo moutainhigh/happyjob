@@ -42,7 +42,7 @@
 			AND (pt.type_name LIKE CONCAT('%',#{keyWord},'%') OR p.pos_name LIKE CONCAT('%',#{keyWord},'%') OR c.com_name LIKE CONCAT('%',#{keyWord},'%') )
 		</if>
 		<if test="sid !=null and sid != ''">
-			AND u1.user_token=#{sid}
+			AND pru1.hp_user_id=<include refid="getIdBySid"></include>
 		</if>
 		ORDER BY p.apply_time desc,p.hp_position_id desc
 	</select>
@@ -156,7 +156,8 @@ AND (SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_i
 	</resultMap>
 	
 	<select id="getGroupDetail" resultMap="GroupDataMap" >
-		SELECT pg.*,c.com_name,p.pos_name,pru.hp_user_id,u.header_pic,ps.lower_num,ps.hight_num,
+		SELECT pg.hp_position_group_id,pg.hp_position_id,pg.start_time,pg.end_time,
+		c.com_name,p.pos_name,pru.hp_user_id,u.header_pic,ps.lower_num,ps.hight_num,
 		p.pos_com_desc,CASE WHEN pg.end_time &lt;#{curTime} THEN 1 ELSE 0 END groupStatus,
 		(pg.end_time-#{curTime}) leftTime,c.approve_state,
 		<choose>

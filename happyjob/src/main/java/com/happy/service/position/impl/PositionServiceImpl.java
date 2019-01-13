@@ -221,6 +221,7 @@ public class PositionServiceImpl implements PositionService {
         json.put("groupOn", groupOn); // 是否拼团职位
         PositionSearch page = new PositionSearch();
         page.setHpPositionId(hpPositionId);
+        json.put("hpPositionId", hpPositionId); // 是否拼团职位
         page.setSid(sid);
         int targetPosNum = this.hpPositionExMapper.getPosNumBySearch(page); // 是否申请过该职位
         if(targetPosNum >0) {
