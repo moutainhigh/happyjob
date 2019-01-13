@@ -337,7 +337,7 @@ function welfareConfig(){
 				var list = data.list;
 				var length = list.length;
 				for(var i=0;i<length;i++){
-					content += '<div class="form-group"><label class="col-sm-3">'+
+					content += '<div class="form-group"><label class="col-sm-6">'+
 						'<input name="hpPositionWelfareId" type="checkbox" value='+list[i].hpPositionWelfareId+' >'+
 						'<i>'+list[i].welfareName+'</i></label></div>';
 				}
