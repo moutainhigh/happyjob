@@ -41,6 +41,9 @@
 		<if test="keyWord !=null and keyWord !=''">
 			AND (pt.type_name LIKE CONCAT('%',#{keyWord},'%') OR p.pos_name LIKE CONCAT('%',#{keyWord},'%') OR c.com_name LIKE CONCAT('%',#{keyWord},'%') )
 		</if>
+		<if test="sid !=null and sid != ''">
+			AND u1.user_token=#{sid}
+		</if>
 		ORDER BY p.apply_time desc,p.hp_position_id desc
 	</select>
 	
@@ -111,13 +114,14 @@
 	
 	<select id="getGroupListBySearch" parameterType="com.happy.service.position.data.GroupSearch" resultType="com.happy.service.position.data.GroupData" >
 		SELECT pg.*,u.user_name leader_name,u.header_pic leader_pic,c.com_name,p.pos_name,ps.lower_num,ps.hight_num,
-@part_num:=(SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_id=pg.hp_position_group_id) partNum,
+(SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_id=pg.hp_position_group_id) partNum,
 (pg.end_time-#{curTime}) leftTime 
 FROM  hp_company c JOIN hp_position p ON c.hp_company_id=p.hp_company_id 
 JOIN hp_position_group pg ON p.hp_position_id=pg.hp_position_id 
 LEFT JOIN hp_user u ON pg.hp_user_id=u.hp_user_id 
 LEFT JOIN hp_position_salary ps ON p.hp_position_salary_id=ps.hp_position_salary_id 
-WHERE p.hp_position_id=#{curTime} AND p.group_on=1 AND pg.end_time>#{curTime} AND @part_num &lt;3 
+WHERE p.hp_position_id=#{hpPositionId} AND p.group_on=1 AND pg.end_time>#{curTime} 
+AND (SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_id=pg.hp_position_group_id) &lt;5 
 ORDER BY pg.end_time,pg.hp_position_group_id desc 
 <if test="isPage == 1">LIMIT #{currentResult},#{showCount}</if>
 	</select>
@@ -125,7 +129,8 @@ ORDER BY pg.end_time,pg.hp_position_group_id desc
 	<select id="getGroupNumBySearch" parameterType="com.happy.service.position.data.GroupSearch" resultType="int" >
 		SELECT COUNT(*) 
 FROM hp_position p JOIN hp_position_group pg ON p.hp_position_id=pg.hp_position_id 
-WHERE p.hp_position_id=#{curTime} AND p.group_on=1 AND pg.end_time>#{curTime} AND @part_num &lt;3 
+WHERE p.hp_position_id=#{hpPositionId} AND p.group_on=1 AND pg.end_time>#{curTime} 
+AND (SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_id=pg.hp_position_group_id) &lt;3 
 	</select>
 	
 	<resultMap type="com.happy.service.position.data.GroupData" id="GroupDataMap">
