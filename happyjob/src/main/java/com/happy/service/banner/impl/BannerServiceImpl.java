@@ -115,6 +115,7 @@ public class BannerServiceImpl implements BannerService {
         hpAdvBanner.setDelOn(EnumConst.advertisementDelOn.DelOnNo.getKey());   
         hpAdvBanner.setUseOn(EnumConst.advertisementUseOn.UseOnNo.getKey());   //关闭状态
         hpAdvBanner.setEndTime(endTime);
+        hpAdvBanner.setCreateTime(System.currentTimeMillis()/1000);
         this.hpAdvBannerMapper.insert(hpAdvBanner);
         if(hpAdvBanner.getHpAdvBannerId() == null) {
             msg.setErrorCode(1);

@@ -139,30 +139,30 @@
 		
 		<!-- Main content -->
 <section class="content">
-	<form autocomplete="off" >
+	<form autocomplete="off"  class="form-horizontal">
 		<div>
-			<div>
-				<label for="posName">*职位名称：</label>
-				<div>
-					<input id="posName" maxlength="" >
+			<div class="form-group">
+				<label for="posName"  class="col-sm-2" align="right">*职位名称：</label>
+				<div class="col-sm-3">
+					<input class=" form-control" id="posName" maxlength="" >
 				</div>
 			</div>
-			<div>
-				<label for="comName" >*公司名称：</label>
+			<div class="form-group">
+				<label for="comName"  class="col-sm-2" align="right" >*公司名称：</label>
 				<input id="comId" type="hidden" autocomplete="off" >
-				<div>
-					<input id="comName" list="comList" maxlength="50" >
+				<div class="col-sm-3">
+					<input class=" form-control" id="comName" list="comList" maxlength="50" >
 					<datalist id="comList" >
 					</datalist>
 				</div>
 			</div>
-			<div id="retItem" style="display:none" >
+			<div class="form-group" id="retItem" style="display:none" >
 				<label >入职返现金额：</label>
 				<div>
 					<div>
 						<i>男</i>
 						<select id="manDayNum" >
-							<option value="0">全部</option>
+							<option value="0">请选择</option>
 							<option value="30">30天返</option>
 							<option value="45">45天返</option>
 							<option value="65">60天返</option>
@@ -172,7 +172,7 @@
 					<div>
 						<i>女</i>
 						<select id="womenDayNum" >
-							<option value="0">全部</option>
+							<option value="0">请选择</option>
 							<option value="30">30天返</option>
 							<option value="45">45天返</option>
 							<option value="65">60天返</option>
@@ -181,161 +181,223 @@
 					</div>
 				</div>
 			</div>
-			<div>
-				<label>福利：</label>
-				<a class="btn btn-primary" data-toggle="modal" id="openWelfare" >点击添加/修改</a>
-			</div>
-			
-			<div>
-				<label for="urgentOn" >高薪急聘：</label>
-				<div>
-					<select id="urgentOn" >
-						<option>全部</option>
-						<option value="1">是</option>
-						<option value="0">否</option>
-					</select>
-					平台补贴<input id="urgentMoney" oninput = "value=value.replace(/[^\d]/g,'')" disabled >元
+			<div class="form-group">
+				<label class="col-sm-2" align="right" >福利：</label>
+				<div class="col-sm-3">
+					<a class="btn btn-primary" data-toggle="modal" id="openWelfare" >点击添加/修改</a>
 				</div>
 			</div>
 			
-			<div>
-				<label for="groupOn" >拼团岗位：</label>
-				<div>
-					<select id="groupOn" >
-						<option>全部</option>
-						<option value="1">是</option>
-						<option value="0">否</option>
-					</select>
-					三人团奖励<input id="threeMoney" oninput = "value=value.replace(/[^\d]/g,'')" disabled >元
-					五人团奖励<input id="fiveMoney" oninput = "value=value.replace(/[^\d]/g,'')" disabled >元
-				</div>
-			</div>
-			
-			<div>
-				<label for="welfareOn" >福利岗位：</label>
-				<div>
-					<select id="welfareOn" >
-						<option>全部</option>
+			<div class="form-group">
+				<label for="urgentOn" class="col-sm-2" align="right" >高薪急聘：</label>
+				<div  class="col-sm-2">
+					<select id="urgentOn" class="form-control col-sm-1">
+						<option>请选择</option>
 						<option value="1">是</option>
 						<option value="0">否</option>
 					</select>
 				</div>
-			</div>
-			<div>
-				<label for="welfareDetail" >福利岗位详情：</label>
-				<div>
-					<textarea id="welfareDetail" rows="5" cols="100"></textarea>
+				<div class="col-sm-4">
+					<label class="col-sm-4 "  align="right">平台补贴：</label>
+					<div  class="col-sm-4 input-group">
+						<input id="urgentMoney" class=" form-control" oninput = "value=value.replace(/[^\d]/g,'')" disabled >
+						 <span class="input-group-addon">元</span>
+					</div>
 				</div>
 			</div>
 			
-			<div>
-				<label for="jobHours" >工作时限：</label>
-				<div>
-					<input id="jobHours" maxlength="20" >
+			<div class="form-group">
+				<label for="groupOn" class="col-sm-2" align="right" >拼团岗位：</label>
+				<div class="col-sm-2">
+					<select id="groupOn" class="form-control" >
+						<option>请选择</option>
+						<option value="1">是</option>
+						<option value="0">否</option>
+					</select>
+				</div>
+				<div class="col-sm-4">
+					<label class="col-sm-4 " align="right" >三人团奖励：</label>
+					<div  class="col-sm-4 input-group">
+						<input id="threeMoney" class=" form-control" oninput = "value=value.replace(/[^\d]/g,'')" disabled />
+						<span class="input-group-addon">元</span>
+					</div>
+				</div>
+				<div class="col-sm-4" style="margin-left:-100px;">
+					<label class="col-sm-4 " align="right" >五人团奖励：</label>
+					<div  class="col-sm-4 input-group">
+						<input id="fiveMoney"  class=" form-control" oninput = "value=value.replace(/[^\d]/g,'')" disabled />
+						<span class="input-group-addon">元</span>
+					</div>
 				</div>
 			</div>
 			
-			<div>
-				<label for="hpPositionOfferId" >招聘形式：</label>
-				<div>
-					<select id="hpPositionOfferId" >
-						<option value="">全部</option>
+			<div class="form-group">
+				<label for="welfareOn" class="col-sm-2" align="right"  >福利岗位：</label>
+				<div class="col-sm-3">
+					<select id="welfareOn" class="form-control" >
+						<option>请选择</option>
+						<option value="1">是</option>
+						<option value="0">否</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="welfareDetail" class="col-sm-2" align="right"   >福利岗位详情：</label>
+				<div class="col-sm-3">
+					<textarea id="welfareDetail" rows="5"  class="form-control" cols="100"></textarea>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="jobHours" class="col-sm-2" align="right" >工作时限：</label>
+				<div class="col-sm-3">
+					<input id="jobHours" maxlength="20" class="form-control" >
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="hpPositionOfferId"  class="col-sm-2" align="right">招聘形式：</label>
+				<div class="col-sm-3">
+					<select id="hpPositionOfferId" class="form-control" >
+						<option value="">请选择</option>
 					</select>
 				</div>
 			</div>
 			
-			<div>
-				<label for="comCustPhone" >公司客服：</label>
-				<div>
-					<input id="comCustPhone" maxlength="11" >
+			<div class="form-group">
+				<label for="comCustPhone"  class="col-sm-2" align="right">公司客服：</label>
+				<div class="col-sm-3" >
+					<input id="comCustPhone" class="form-control" maxlength="11" >
 				</div>
 			</div>
 			
-			<div>
-				<label for="hpPositionTypeId">职位行业：</label>
+			<div class="form-group">
+				<label for="hpPositionTypeId"  class="col-sm-2" align="right">职位行业：</label>
 				<input id="hpPositionTypeId" type="hidden" >
+				<div class="col-sm-3" >
 				<a class="btn btn-primary" data-toggle="modal" id="openPosType" >点击添加/修改</a>
+				</div>
 			</div>
 			
-			<div>
-				<label for="posDetail" >基本信息：</label>
-				<div>
+			<div class="form-group">
+				<label for="posDetail" class="col-sm-2" align="right">基本信息：</label>
+				<div  class="col-sm-8" >
 					<script id="posDetailEditor" type="text/plain" style="width:100%;height:300px;"></script>
 					<!-- <textarea id="posDetail" rows="5" cols="100"></textarea> -->
 				</div>
 			</div>
 			
-			<div>
-				<label >岗位要求：</label>
-				<div>
-					<div>
-						性别要求<input id="reqGender" >
-						年龄要求<input id="reqAge" >
-						学历要求<input id="reqEducation" >
-						专业技能<input id="reqSkill" >
-						工作经验<input id="reqExp" >
-						工作年限<input id="reqWorkYears" >
-						其他要求<input id="reqOther" >
+			<div class="form-group">
+				<label class="col-sm-2" align="right" >岗位要求：</label>
+				<div class="col-sm-4 ">
+					<label class="col-sm-4" align="right" >性别要求：</label>
+					<div  class="col-sm-6 ">
+						<input id="reqGender" class=" form-control" >
+					</div>
+				</div>
+				<div class="col-sm-4 ">
+					<label class="col-sm-4" align="right" >年龄要求：</label>
+					<div  class="col-sm-6 ">
+						<input id="reqAge" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2" align="right" ></label>
+				<div class="col-sm-4 ">
+					<label class="col-sm-4" align="right" >学历要求：</label>
+					<div  class="col-sm-6 ">
+						<input id="reqEducation" class="form-control">
+					</div>
+				</div>
+				<div class="col-sm-4 ">
+					<label class="col-sm-4" align="right" >专业技能：</label>
+					<div  class="col-sm-6 ">
+						<input id="reqSkill" class="form-control" >
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2" align="right" ></label>
+				<div class="col-sm-4 ">
+					<label class="col-sm-4" align="right" >工作经验：</label>
+					<div  class="col-sm-6 ">
+						<input id="reqExp" class="form-control">
+					</div>
+				</div>
+				<div class="col-sm-4 ">
+					<label class="col-sm-4" align="right" >工作年限：</label>
+					<div  class="col-sm-6 ">
+						<input id="reqWorkYears" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2" align="right" ></label>
+				<div class="col-sm-4 ">
+					<label class="col-sm-4" align="right" >其他要求：</label>
+					<div  class="col-sm-6 ">
+						<input id="reqOther" class="form-control" >
 					</div>
 				</div>
 			</div>
 	
-			<div>
-				<label for="otherWelfare" >其他福利：</label>
-				<div>
+			<div class="form-group">
+				<label for="otherWelfare" class="col-sm-2" align="right">其他福利：</label>
+				<div class="col-sm-8">
 					<script id="otherWelfareEditor" type="text/plain" style="width:100%;height:300px;"></script>
 				</div>
 			</div>
 	
-			<div>
-				<label for="carOn" >是否有班车：</label>
-				<div>
-					<select id="carOn" >
-						<option>全部</option>
+			<div  class="form-group">
+				<label for="carOn" class="col-sm-2" align="right" >是否有班车：</label>
+				<div class="col-sm-3">
+					<select id="carOn" class="form-control" >
+						<option>请选择</option>
 						<option value="1">是</option>
 						<option value="0">否</option>
 					</select>
 				</div>
 			</div>
-			<div>
-				<label for="carDesc" >班车信息：</label>
-				<div>
-					<textarea id="carDesc" rows="5" cols="100"></textarea>
+			<div class="form-group">
+				<label for="carDesc"  class="col-sm-2" align="right">班车信息：</label>
+				<div class="col-sm-3">
+					<textarea id="carDesc" class="form-control" rows="5" cols="100"></textarea>
 				</div>
 			</div>
 			
-			<div>
-				<label for="posComDesc" >公司介绍：</label>
-				<div>
+			<div class="form-group">
+				<label for="posComDesc" class="col-sm-2" align="right">公司介绍：</label>
+				<div class="col-sm-8">
 					<script id="posComDescEditor" type="text/plain" style="width:100%;height:300px;"></script>
 				</div>
 			</div>
 			
-			<div>
-				<label for="posNature" >职位性质：</label>
-				<div>
-					<input name='posNature' type="radio" value="1" checked >实习
-					<input name='posNature' type="radio" value="2" >兼职
-					<input name='posNature' type="radio" value="3" >全职
+			<div class="form-group">
+				<label for="posNature" class="col-sm-2" align="right">职位性质：</label>
+				<div class="col-sm-3">
+					<input  name='posNature' type="radio" value="1" checked >实习
+					<input  name='posNature' type="radio" value="2" >兼职
+					<input  name='posNature' type="radio" value="3" >全职
 				</div>
 			</div>
 			
-			<div>
-				<label for="hpPositionSalaryId" >职位月薪：</label>
-				<div>
-					<select id="hpPositionSalaryId" >
-						<option>全部</option>
+			<div class="form-group">
+				<label for="hpPositionSalaryId" class="col-sm-2" align="right" >职位月薪：</label>
+				<div  class="col-sm-3">
+					<select id="hpPositionSalaryId" class="form-control" >
+						<option>请选择</option>
 						<option value="-1">不限</option>
 						<option value="0">面议</option>
 					</select>
 				</div>
 			</div>
 			
-			<div>
-				<label for="posWorkYear" >工作经验：</label>
-				<div>
-					<select id="posWorkYear" >
-						<option value="">全部</option>
+			<div class="form-group">
+				<label for="posWorkYear" class="col-sm-2" align="right" >工作经验：</label>
+				<div  class="col-sm-3">
+					<select id="posWorkYear" class="form-control">
+						<option value="">请选择</option>
 						<option value="不限">不限</option>
 						<option value="无经验">无经验</option>
 						<option value="1年以下">1年以下</option>
@@ -347,46 +409,46 @@
 				</div>
 			</div>
 			
-			<div>
-				<label for="startTime" >开始时间：</label>
-				<div>
-					<input id="startTime" type="text" class="datepicker" autocomplete="false" >
+			<div class="form-group">
+				<label for="startTime" class="col-sm-2" align="right" >开始时间：</label>
+				<div class="col-sm-3">
+					<input id="startTime" class="form-control" type="text" class="datepicker" autocomplete="false" >
 				</div>
 			</div>
-			<div>
-				<label for="endTime" >到期时间：</label>
-				<div>
-					<input id="endTime" type="text" class="datepicker" autocomplete="false" >
-				</div>
-			</div>
-			
-			<div>
-				<label for="posNum" >招聘人数：</label>
-				<div>
-					<input id="posNum" type="text" oninput = "value=value.replace(/[^\d]/g,'')" >
+			<div class="form-group">
+				<label for="endTime" class="col-sm-2" align="right" >到期时间：</label>
+				<div class="col-sm-3">
+					<input id="endTime" type="text" class="form-control" class="datepicker" autocomplete="false" >
 				</div>
 			</div>
 			
-			<div>
-				<label for="area" >工作地点：</label>
-				<div>
-					<select id="province" data-type="area" >
-						<option>全部</option>
+			<div class="form-group">
+				<label for="posNum" class="col-sm-2" align="right">招聘人数：</label>
+				<div class="col-sm-3">
+					<input id="posNum" type="text" class="form-control"  oninput = "value=value.replace(/[^\d]/g,'')" >
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="area"  class="col-sm-2" align="right" >工作地点：</label>
+				<div class="col-sm-3">
+					<select id="province" data-type="area"  >
+						<option>请选择</option>
 					</select>
-					<select id="city" data-type="area" >
-						<option>全部</option>
+					<select id="city" data-type="area"   >
+						<option>请选择</option>
 					</select>
 					<select id="county" data-type="area" >
-						<option>全部</option>
+						<option>请选择</option>
 					</select>
 				</div>
 			</div>
 			
-			<div>
-				<label for="hpEducationId" >学历要求：</label>
-				<div>
-					<select id="hpEducationId" >
-						<option>全部</option>
+			<div class="form-group">
+				<label for="hpEducationId" class="col-sm-2" align="right" >学历要求：</label>
+				<div  class="col-sm-3">
+					<select id="hpEducationId" class="form-control">
+						<option>请选择</option>
 						<option value="-1">不限</option>
 						<option value="0">其他</option>
 						
@@ -394,22 +456,22 @@
 				</div>
 			</div>
 			
-			<div>
-				<label for="posPerson" >联系人：</label>
-				<div>
-					<input id="posPerson" type="text" maxlength="50" >
+			<div class="form-group">
+				<label for="posPerson"  class="col-sm-2" align="right">联系人：</label>
+				<div class="col-sm-3">
+					<input id="posPerson" type="text" maxlength="50"  class="form-control">
 				</div>
 			</div>
-			<div>
-				<label for="posPhone" >联系电话：</label>
-				<div>
-					<input id="posPhone" type="text" oninput = "value=value.replace(/[^\d]/g,'')" maxlength="11" >
+			<div class="form-group">
+				<label for="posPhone" class="col-sm-2" align="right">联系电话：</label>
+				<div class="col-sm-3">
+					<input id="posPhone"  class="form-control" type="text" oninput = "value=value.replace(/[^\d]/g,'')" maxlength="11" >
 				</div>
 			</div>
-			<div>
-				<label for="posEmail" >接收邮箱：</label>
-				<div>
-					<input id="posEmail" type="text" maxlength="50" >
+			<div class="form-group">
+				<label for="posEmail"  class="col-sm-2" align="right">接收邮箱：</label>
+				<div class="col-sm-3">
+					<input id="posEmail" type="text" class="form-control" maxlength="50" >
 				</div>
 			</div>
 			
@@ -502,7 +564,6 @@
 
 <!-- 日期选择器 -->
 <script src="/static/adminlet/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="/static/adminlet/bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <!-- 确认提示框 帮助文档：http://www.cnblogs.com/hulin520/p/5818746.html -->
 <script src="/static/plugins/sweetalert/sweetalert2.min.js"></script>
 
