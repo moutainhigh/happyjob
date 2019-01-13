@@ -84,5 +84,8 @@ public class Const {
     public static final String INTERCEPTOR_PATH_FRONT_USER_REGEX = ".*user.*";
     /**后端路径正则*/
     public static final String INTERCEPTOR_PATH_BACK_REGEX = ".*back.*";
+    
+    // 推荐人奖励金额
+    public static final double MONEY_RECOMMEND_NUM = 5d;
 }
 

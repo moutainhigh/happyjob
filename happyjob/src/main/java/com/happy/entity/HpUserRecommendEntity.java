@@ -23,6 +23,9 @@ public class HpUserRecommendEntity implements  Serializable  {
 	//记录时间
 	@ApiModelProperty(name="recTime",value="记录时间")
 	private java.lang.Long recTime;
+	//推荐人用户ID
+	@ApiModelProperty(name="recommendUserId",value="推荐人用户ID")
+	private java.lang.Long recommendUserId;
 
 	public java.lang.Long getHpUserRecommendId() {
 		return hpUserRecommendId;
@@ -61,6 +64,16 @@ public class HpUserRecommendEntity implements  Serializable  {
 
 	public void setRecTime(java.lang.Long recTime) {
 		this.recTime = recTime;
+	}
+
+
+	public java.lang.Long getRecommendUserId() {
+		return recommendUserId;
+	}
+
+
+	public void setRecommendUserId(java.lang.Long recommendUserId) {
+		this.recommendUserId = recommendUserId;
 	}
 
 }

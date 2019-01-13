@@ -26,6 +26,12 @@ public class HpUserMoneyEntity implements  Serializable  {
 	//操作描述
 	@ApiModelProperty(name="optDesc",value="操作描述")
 	private String optDesc;
+	//操作类型（1、作为推荐人红包）
+	@ApiModelProperty(name="optType",value="操作类型（1、作为推荐人红包）")
+	private java.lang.Integer optType;
+	//交易金额
+	@ApiModelProperty(name="money",value="交易金额")
+	private Double money;
 
 	public java.lang.Long getHpUserMoneyId() {
 		return hpUserMoneyId;
@@ -74,6 +80,26 @@ public class HpUserMoneyEntity implements  Serializable  {
 
 	public void setOptDesc(String optDesc) {
 		this.optDesc = optDesc;
+	}
+
+
+	public java.lang.Integer getOptType() {
+		return optType;
+	}
+
+
+	public void setOptType(java.lang.Integer optType) {
+		this.optType = optType;
+	}
+
+
+	public Double getMoney() {
+		return money;
+	}
+
+
+	public void setMoney(Double money) {
+		this.money = money;
 	}
 
 }

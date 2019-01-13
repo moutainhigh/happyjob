@@ -87,4 +87,9 @@ public interface HpUserExMapper{
    * @TODO:    根据身份证号获取工资条信息
    */
   HpUserPayrollEntity getPayrollByIdNum(@Param("idNum") String idNum,@Param("time")Long time);
+  /**
+   *
+   * @TODO:    更新用户余额
+   */
+  int updateUserMoney(@Param("hpUserId") Long hpUserId,@Param("userMoney") double userMoney);
 }

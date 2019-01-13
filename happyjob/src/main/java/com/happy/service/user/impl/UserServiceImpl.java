@@ -15,6 +15,7 @@ import com.happy.entity.HpUserEducationEntity;
 import com.happy.entity.HpUserEntity;
 import com.happy.entity.HpUserExpEntity;
 import com.happy.entity.HpUserIntentionEntity;
+import com.happy.entity.HpUserMoneyEntity;
 import com.happy.entity.HpUserPayrollEntity;
 import com.happy.entity.HpUserRecommendEntity;
 import com.happy.entity.HpUserResumeEntity;
@@ -43,6 +44,7 @@ import com.happy.sqlMapper.HpUserEducationMapper;
 import com.happy.sqlMapper.HpUserExpMapper;
 import com.happy.sqlMapper.HpUserIntentionMapper;
 import com.happy.sqlMapper.HpUserMapper;
+import com.happy.sqlMapper.HpUserMoneyMapper;
 import com.happy.sqlMapper.HpUserRecommendMapper;
 import com.happy.sqlMapper.HpUserResumeMapper;
 import com.happy.sqlMapper.HpUserSearchMapper;
@@ -78,6 +80,8 @@ public class UserServiceImpl implements UserService {
     private HpUserExpMapper hpUserExpMapper;
     @Autowired
     private HpConfigExMapper hpConfigExMapper;
+    @Autowired
+    private HpUserMoneyMapper hpUserMoneyMapper;
 
     @Override
     public OtherUserData confirmUser(String sid, String oid, int isUser, int isOther) {
@@ -273,6 +277,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public BaseMsg insertShareRecom(String oid, String shareToken, String phone) {
         BaseMsg msg = new BaseMsg();
+        HpUserBoundEntity bound = this.hpUserBoundExMapper.getBoundByToken(oid);
+        if(bound.getHpUserId() !=null) {
+            msg.setErrorCode(2);
+            msg.setMessage("已经注册");
+            return msg;
+        }
         if(Util.isEmpty(shareToken)) {
             msg.setErrorCode(1);
             msg.setMessage("缺少推荐人参数");
@@ -283,22 +293,22 @@ public class UserServiceImpl implements UserService {
             msg.setMessage("手机号格式不正确");
             return msg;
         }
-        Long recommenUserId = this.hpUserExMapper.getIdByShareToken(shareToken);
-        if(recommenUserId == null) {
+        Long recommendUserId = this.hpUserExMapper.getIdByShareToken(shareToken);
+        if(recommendUserId == null) {
             msg.setErrorCode(1);
             msg.setMessage("推荐人识别码错误");
             return msg;
         }
-        HpUserRecommendEntity userRecd = this.hpUserBoundExMapper.getRecdByOid(oid);
+        HpUserRecommendEntity userRecd = this.hpUserBoundExMapper.getRecdByPhoneNo(phone);
         if(userRecd != null) {
-            msg.setErrorCode(1);
+            msg.setErrorCode(2);
             msg.setMessage("您已绑定过推荐人");
             return msg;
         }
-        Long boundId = this.hpUserBoundExMapper.getBoundIdByToken(oid);
+        
         userRecd = new HpUserRecommendEntity();
-        userRecd.setHpUserBoundId(boundId);
-        userRecd.setHpUserRecommendId(recommenUserId);
+        userRecd.setHpUserBoundId(bound.getHpUserBoundId());
+        userRecd.setRecommendUserId(recommendUserId);
         userRecd.setRecPhoneNo(phone);
         userRecd.setRecTime(Util.getDateSecond(Util.getCurrentDate()));
         this.hpUserRecommendMapper.insert(userRecd);
@@ -573,6 +583,8 @@ public class UserServiceImpl implements UserService {
                 return msg;
             }
             this.hpUserResumeMapper.insert(data);
+            // 是否存在推荐人记录，红包奖励
+            
         }else {
             if(hasResumeId == null || !hpUserResumeId.equals(hasResumeId)) {
                 msg.setErrorCode(1);
@@ -585,7 +597,40 @@ public class UserServiceImpl implements UserService {
         return msg;
     }
 
-
+    /**
+     *
+     * @TODO:     根据推荐记录，添加红包发放
+     * @CreateTime:  2019年1月13日下午7:55:32 
+     * @CreateAuthor: chenwei
+     * @param hpUserId
+     */
+    public void insertRecommedRedPack(Long hpUserId) {
+        
+        HpUserRecommendEntity recData = this.hpUserBoundExMapper.getRecdByUserId(hpUserId);
+        if(recData == null) {
+            return ;
+        }
+        Long recommendUserId = recData.getRecommendUserId();
+        String phoneNo = recData.getRecPhoneNo();
+        // 存在推荐人
+        HpUserMoneyEntity record = new HpUserMoneyEntity();
+        record.setHpUserId(recommendUserId);
+        record.setMoney(Const.MONEY_RECOMMEND_NUM);
+        record.setOptType(1);
+        record.setState(1);
+        record.setCreateTime(Util.getDateSecond(Util.getCurrentDate()));
+        record.setOptDesc("被推荐手机号:"+phoneNo+"已成功注册并创建简历");
+        this.hpUserMoneyMapper.insert(record);
+        this.updateUserMoeny(hpUserId, Const.MONEY_RECOMMEND_NUM);
+    }
+    
+    public synchronized void updateUserMoeny(Long hpUserId,double money) {
+        HpUserEntity user = new HpUserEntity();
+        user.setHpUserId(hpUserId);
+        user.setUserMoney(money);
+        this.hpUserExMapper.updateUserMoney(hpUserId, money);
+    }
+    
     @Override
     public UserResumeDataMsg getUserResume(String sid) {
         UserResumeDataMsg msg = new UserResumeDataMsg();

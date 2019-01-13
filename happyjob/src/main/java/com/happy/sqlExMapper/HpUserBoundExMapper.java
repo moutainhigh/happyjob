@@ -48,4 +48,14 @@ public interface HpUserBoundExMapper{
      * @TODO:     描述一下这个方法是干什么的
      */
     HpUserRecommendEntity getRecdByOid(@Param("oid")String oid);
+    /**
+    *
+    * @TODO:     描述一下这个方法是干什么的
+    */
+   HpUserRecommendEntity getRecdByPhoneNo(@Param("phoneNo")String phoneNo);
+   /**
+    *
+    * @TODO:     描述一下这个方法是干什么的
+    */
+   HpUserRecommendEntity getRecdByUserId(@Param("hpUserId")Long hpUserId);
 }

@@ -9,10 +9,12 @@
 		<result column="state" property="state"/>
 		<result column="create_time" property="createTime"/>
 		<result column="opt_desc" property="optDesc"/>
+		<result column="opt_type" property="optType"/>
+		<result column="money" property="money"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserMoneyId" parameterType="com.happy.entity.HpUserMoneyEntity">
-		insert into hp_user_money(hp_user_id,state,create_time,opt_desc)
-		 values (#{hpUserId},#{state},#{createTime},#{optDesc});
+		insert into hp_user_money(hp_user_id,state,create_time,opt_desc,opt_type,money)
+		 values (#{hpUserId},#{state},#{createTime},#{optDesc},#{optType},#{money});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_user_money where hp_user_money_id=#{hpUserMoneyId}
@@ -37,6 +39,12 @@
 			</if>
 			<if test="optDesc!=null">
 				opt_desc=#{optDesc},
+			</if>
+			<if test="optType!=null ">
+				opt_type=#{optType},
+			</if>
+			<if test="money!=null ">
+				money=#{money},
 			</if>
 		</set>
 		 where hp_user_money_id=#{hpUserMoneyId}

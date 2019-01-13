@@ -45,7 +45,21 @@
 	</update>
 	
 	<select id="getRecdByOid" resultType="com.happy.entity.HpUserRecommendEntity" >
-		SELECT ur.* FROM hp_user_recommend ur WHERE ur.hp_user_bound_id=<include refid="getIdByOid"></include>
+		SELECT ur.* FROM hp_user_recommend ur WHERE ur.hp_user_bound_id=<include refid="getIdByOid"></include> limit 1
 	</select>
+	
+	<select id="getRecdByPhoneNo" resultType="com.happy.entity.HpUserRecommendEntity" >
+		SELECT ur.* FROM hp_user_recommend ur WHERE ur.rec_phone_no=#{phoneNo} limit 1
+	</select>
+	
+	<select id="getRecdByUserId" resultType="com.happy.entity.HpUserRecommendEntity" >
+		SELECT ur.* 
+		FROM hp_user u JOIN hp_user_recommend ur 
+		WHERE u.hp_user_id=#{hpUserId} AND ur.rec_phone_no=u.phone_no limit 1
+	</select>
+	
+	<update id="updateUserMoney">
+		UPDATE hp_user u SET u.user_money=u.user_money+#{userMoney} WHEREu.hp_user_id=#{hpUserId}
+	</update>
 	
 </mapper>

@@ -8,10 +8,11 @@
 		<result column="hp_user_bound_id" property="hpUserBoundId"/>
 		<result column="rec_phone_no" property="recPhoneNo"/>
 		<result column="rec_time" property="recTime"/>
+		<result column="recommend_user_id" property="recommendUserId"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserRecommendId" parameterType="com.happy.entity.HpUserRecommendEntity">
-		insert into hp_user_recommend(hp_user_bound_id,rec_phone_no,rec_time)
-		 values (#{hpUserBoundId},#{recPhoneNo},#{recTime});
+		insert into hp_user_recommend(hp_user_bound_id,rec_phone_no,rec_time,recommend_user_id)
+		 values (#{hpUserBoundId},#{recPhoneNo},#{recTime},#{recommendUserId});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_user_recommend where hp_user_recommend_id=#{hpUserRecommendId}
@@ -33,6 +34,9 @@
 			</if>
 			<if test="recTime!=null ">
 				rec_time=#{recTime},
+			</if>
+			<if test="recommendUserId!=null ">
+				recommend_user_id=#{recommendUserId},
 			</if>
 		</set>
 		 where hp_user_recommend_id=#{hpUserRecommendId}
