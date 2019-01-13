@@ -25,6 +25,9 @@
 <link rel="stylesheet" href="/static/plugins/sweetalert/sweetalert2.min.css">
 <style>
 .idStyle{max-width: 200px;max-height: 200px;}
+.requredText{
+ color:red;
+}
 </style>
   
 </head>
@@ -224,9 +227,11 @@
 				<form class="form-horizontal">
 					<div class="form-group col-sm-7">
 						<div class="form-group">
-							<label for="" class="col-sm-3 control-label">公司名称</label>
+						
+							<label for="" class="col-sm-3 control-label">公司名称<span class="requredText">*</span> </label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" id="comName" />
+							
+							<input type="text" class="form-control  required-field" id="comName" placeholder="必填"  required />
 							</div>
 						</div>
 						<div class="form-group">
@@ -239,7 +244,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-3 control-label">公司规模</label>
+							<label for="" class="col-sm-3 control-label">公司规模<span class="requredText">*</span> </label>
 							<div class="col-sm-6">
 								<select class="form-control" id="companyScaleId">
 									<option selected="" value="1">20人以下</option>
@@ -252,13 +257,13 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-3 control-label">公司描述</label>
+							<label for="" class="col-sm-3 control-label">公司描述<span class="requredText">*</span> </label>
 							<div class="col-sm-9">
 								<textarea  class="form-control" rows="3" clos="8" id="comDesc"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="area" class="col-sm-3 control-label">位置</label>
+							<label for="area" class="col-sm-3 control-label">公司位置<span class="requredText">*</span> </label>
 							<div class="col-sm-9">
 								
 								<select id="province" class="col-sm-3 form-control" style="width:90px;" data-type="area" >
@@ -274,27 +279,27 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-3 control-label">详细地址</label>
+							<label for="" class="col-sm-3 control-label">详细地址<span class="requredText">*</span> </label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="addrDetail" />
+								<input type="text" class="form-control" id="addrDetail" placeholder="必填"  required  />
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-3 control-label">联系人</label>
+							<label for="" class="col-sm-3 control-label">联系人<span class="requredText">*</span> </label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="comtPerson" >
+								<input type="text" class="form-control" id="comtPerson" placeholder="必填"  required >
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-3 control-label">联系电话</label>
+							<label for="" class="col-sm-3 control-label">联系电话<span class="requredText">*</span></label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control"  id="comPhone" >
+								<input type="number" class="form-control"  id="comPhone" placeholder="必填"  required >
 							</div>
 						</div>					
 						<div class="form-group">
 							<label for="" class="col-sm-3 control-label">联系Email</label>
 							<div class="col-sm-9">
-								<input type="iphone" class="form-control" id="comEmail">
+								<input type="email" class="form-control" id="comEmail"  >
 							</div>
 						</div>
 					</div>
@@ -428,13 +433,13 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-3 control-label">公司名称</label>
+							<label for="" class="col-sm-3 control-label">公司名称<span class="requredText">*</span> </label>
 							<div class="col-sm-6">
 								<input type="text" class="form-control" id="comName2" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-3 control-label">公司行业</label>
+							<label for="" class="col-sm-3 control-label">公司行业<span class="requredText">*</span> </label>
 							<div class="col-sm-6">
 								<select class="form-control" id="companyTypeId2">
 									<option selected="" value="1">国企</option>
@@ -443,7 +448,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-3 control-label">公司规模</label>
+							<label for="" class="col-sm-3 control-label">公司规模<span class="requredText">*</span> </label>
 							<div class="col-sm-6">
 								<select class="form-control" id="companyScaleId2">
 									<option selected="" value="1">20人以下</option>
@@ -456,13 +461,13 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-3 control-label">公司描述</label>
+							<label for="" class="col-sm-3 control-label">公司描述<span class="requredText">*</span> </label>
 							<div class="col-sm-9">
 								<textarea  class="form-control" rows="3" clos="8" id="comDesc2"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-3 control-label">位置</label>
+							<label for="" class="col-sm-3 control-label">公司位置<span class="requredText">*</span> </label>
 							<div class="col-sm-9">
 								<select id="province2" class="col-sm-3 form-control province" style="width:90px;" data-type="area2" >
 									<option>全部</option>
@@ -476,27 +481,27 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-3 control-label">详细地址</label>
+							<label for="" class="col-sm-3 control-label">详细地址<span class="requredText">*</span> </label>
 							<div class="col-sm-9">
 								<input type="text" class="form-control" id="addrDetail2" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-3 control-label">联系人</label>
+							<label for="" class="col-sm-3 control-label">联系人<span class="requredText">*</span> </label>
 							<div class="col-sm-9">
 								<input type="text" class="form-control" id="comtPerson2" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-3 control-label">联系电话</label>
+							<label for="" class="col-sm-3 control-label">联系电话<span class="requredText">*</span> </label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control"  id="comPhone2" />
+								<input type="number" class="form-control"  id="comPhone2" />
 							</div>
 						</div>					
 						<div class="form-group">
 							<label for="" class="col-sm-3 control-label">联系Email</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="comEmail2" />
+								<input type="email" class="form-control" id="comEmail2" />
 							</div>
 						</div>
 					</div>
