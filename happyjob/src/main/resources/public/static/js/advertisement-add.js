@@ -1,6 +1,6 @@
 // 日期选择器
 $(".datepicker").datepicker({
-    language: "cn",
+    language: "zh-CN",
     autoclose: true,//选中之后自动隐藏日期选择框
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
@@ -91,10 +91,10 @@ $(document).on("click","#saveAdvertisement",function(){
 })
 
 
-// 复用
+// 启用
 $(document).on("click",".restart",function(){
     swal({
-        title: '是否对该用户复用？',
+        title: '是否对该用户启用？',
         text: '',
         type: 'warning',
         showCancelButton: true,
@@ -162,7 +162,7 @@ function fetchList(){
         }
     })    
 }
-// 认证、禁用、复用请求
+// 认证、禁用、启用请求
 //hpUserId approve blackOn
 function postAuth(data){
     fetchPost({

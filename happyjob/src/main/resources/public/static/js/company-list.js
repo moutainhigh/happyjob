@@ -1,6 +1,6 @@
 // 日期选择器
 $(".datepicker").datepicker({
-    language: "cn",
+    language: "zh-CN",
     autoclose: true,//选中之后自动隐藏日期选择框
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
@@ -343,7 +343,7 @@ function areaConfig(areaType,areaId){
 	var cityId = null;
 	if(areaType == "province"){ // 省查询市
 		provinceId = areaId;
-		$("#county").html('<option>请选择</option>');
+		$("#county").html('<option>全部</option>');
 	}else if(areaType == "city"){ // 市查询区县
 		cityId = areaId;
 	}else if(areaType == "county"){
@@ -357,7 +357,7 @@ function areaConfig(areaType,areaId){
 		},
 		callback:function(data){
 			if(data){
-				var content = '<option>请选择</option>';
+				var content = '<option>全部</option>';
 				var list = data.list;
 				var length = list.length;
 				for(var i=0;i<length;i++){
@@ -395,7 +395,7 @@ function areaConfig2(areaType,areaId){
 	var cityId = null;
 	if(areaType == "province2"){ // 省查询市
 		provinceId = areaId;
-		$("#county").html('<option>请选择</option>');
+		$("#county").html('<option>全部</option>');
 	}else if(areaType == "city2"){ // 市查询区县
 		cityId = areaId;
 	}else if(areaType == "county2"){
@@ -409,7 +409,7 @@ function areaConfig2(areaType,areaId){
 		},
 		callback:function(data){
 			if(data){
-				var content = '<option>请选择</option>';
+				var content = '<option>全部</option>';
 				var list = data.list;
 				var length = list.length;
 				for(var i=0;i<length;i++){
@@ -450,7 +450,7 @@ function fetchList(){
 }
 
 
-// 认证、禁用、复用请求
+// 认证、禁用、启用请求
 function postAuth(data){
     fetchPost({
         url:"/backCompany/companyAuth",
@@ -503,7 +503,7 @@ function addTableList(list){
             <button type="button" class="btn btn-danger btn-sm  auth">认证</button>\
             </th>\
         </tr>';
-                // <button type="button" class="btn btn-danger btn-sm restart">复用</button>\
+                // <button type="button" class="btn btn-danger btn-sm restart">启用</button>\
     })
     $tBody.html(templeteTr)    
 }

@@ -1,6 +1,6 @@
 // 日期选择器
 $(".datepicker").datepicker({
-    language: "cn",
+    language: "zh-CN",
     autoclose: true,//选中之后自动隐藏日期选择框
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
@@ -56,12 +56,12 @@ $(document).on("click",".forbidden",function(){
 	data.hpUserId = hpUserId ;
 	
     swal({
-        title: '是否禁用/复用该用户',
+        title: '是否禁用/启用该用户',
         text: '',
         type: 'warning',
         showCancelButton: true,
         confirmButtonText: '禁用',
-        cancelButtonText: '复用',
+        cancelButtonText: '启用',
         }).then(function(isConfirm) {
         if (isConfirm === true) {
         	data.blackOn = 1 ;
@@ -75,8 +75,8 @@ $(document).on("click",".forbidden",function(){
         	data.blackOn = 0 ;
         	postAuth(data);
         	swal(
-            '复用',
-            '复用成功',
+            '启用',
+            '启用成功',
             'success'
             );
         
@@ -124,10 +124,10 @@ $(document).on("click",".auth",function(){
         }
     }); 
 })
-// 复用
+// 启用
 $(document).on("click",".restart",function(){
     swal({
-        title: '是否对该用户复用？',
+        title: '是否对该用户启用？',
         text: '',
         type: 'warning',
         showCancelButton: true,
@@ -274,7 +274,7 @@ function fetchList(){
         }
     })    
 }
-// 认证、禁用、复用请求
+// 认证、禁用、启用请求
 //hpUserId approve blackOn
 function postAuth(data){
     fetchPost({
@@ -326,7 +326,7 @@ function addTableList(list){
         		templeteTr  += '\
             </th>\
         </tr>';
-                // <button type="button" class="btn btn-danger btn-sm restart">复用</button>\
+                // <button type="button" class="btn btn-danger btn-sm restart">启用</button>\
     })
     $tBody.html(templeteTr)    
 }

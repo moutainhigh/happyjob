@@ -1,5 +1,5 @@
 $(".datepicker").datepicker({
-    language: "cn",
+    language: "zh-CN",
     autoclose: true,//选中之后自动隐藏日期选择框
     format: "yyyy-mm"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
