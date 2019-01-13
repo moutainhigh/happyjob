@@ -323,6 +323,9 @@ import io.swagger.annotations.ApiOperation;
        @ApiImplicitParam(name="sessionId",value="用户验证sessionId",dataType="String",paramType="header",required=true),
        @ApiImplicitParam(name="phoneNo",value="手机号码",dataType="String",paramType="query",required=true),
        @ApiImplicitParam(name="msgCode",value="手机短信验证码",dataType="String",paramType="query",required=true),
+       @ApiImplicitParam(name="gender",value="性别",dataType="int",paramType="query",required=false),
+       @ApiImplicitParam(name="bornTime",value="出生时间（s）",dataType="long",paramType="query",required=false),
+       @ApiImplicitParam(name="realName",value="姓名",dataType="String",paramType="query",required=false),
    })
    @PostMapping("phone")
    public OtherLoginMsg phone(HttpServletRequest request,HttpServletResponse response) {
@@ -331,9 +334,12 @@ import io.swagger.annotations.ApiOperation;
        String sessionId = request.getHeader("sessionId");
        String phoneNo = request.getParameter("phoneNo");
        String msgCode = request.getParameter("msgCode");
+       Integer gender = (Integer)Util.typeChange(request.getParameter("gender"), Integer.class);
+       Long bornTime = (Long)Util.typeChange(request.getParameter("bornTime"), Integer.class);
+       String realName = request.getParameter("realName");
        
-       logger.info("phone 参数日志：sid=={},oid=={},phoneNo=={},msgCode=={},sessionId=={}",
-           sid,oid,phoneNo,msgCode,sessionId);
+       logger.info("phone 参数日志：sid=={},oid=={},phoneNo=={},msgCode=={},sessionId=={},gender=={},bornTime=={},realName=={}",
+           sid,oid,phoneNo,msgCode,sessionId,gender,bornTime,realName);
        
        BaseMsg result = BaseController.checkPhoneCode(sessionId , phoneNo, msgCode);
        if(result.getErrorCode() != 0) {
@@ -342,8 +348,8 @@ import io.swagger.annotations.ApiOperation;
            msg.setMessage(result.getMessage());
            return msg;
        }
-       
-       return this.userService.insertOrUpUserByPhone(sid, oid, phoneNo);
+       gender = gender==null||gender!=1?0:1;
+       return this.userService.insertOrUpUserByPhone(sid, oid, phoneNo,gender,realName,bornTime);
    }
    
    /**

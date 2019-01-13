@@ -561,7 +561,11 @@ public class UserServiceImpl implements UserService {
             return msg;
         }
         Long hasResumeId = this.hpUserExMapper.getUserResumeId(sid);
+        Long hpUserId = this.hpUserExMapper.getUserIdBySid(sid);
         Long hpUserResumeId = data.getHpEducationId();
+        long curTime = Util.getDateSecond(Util.getCurrentDate());
+        data.setHpUserId(hpUserId);
+        data.setResTime(curTime);
         if(hpUserResumeId == null) { // 新增
             if(hasResumeId != null) {
                 msg.setErrorCode(1);
@@ -647,7 +651,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public OtherLoginMsg insertOrUpUserByPhone(String sid, String oid, String phoneNo) {
+    public OtherLoginMsg insertOrUpUserByPhone(String sid,String oid,String phoneNo,int gender,String realName,Long bornTime) {
         OtherLoginMsg msg = new OtherLoginMsg();
         OtherUserData userData = this.hpUserExMapper.getUserByParam(phoneNo, null, 2);
         HpUserBoundEntity bound = this.hpUserBoundExMapper.getBoundByToken(oid);
@@ -679,6 +683,14 @@ public class UserServiceImpl implements UserService {
             user.setRegistResource(0);
             user.setUserName(bound.getNickName());
             user.setHeaderPic(bound.getHeaderPic());
+            user.setUserType(2);
+            user.setBlackOn(0);
+            user.setUserMoney(0d);
+            user.setCreateTime(System.currentTimeMillis()/1000);
+            user.setGender(gender);
+            user.setBornYear(bornTime);
+            user.setRealName(realName);
+            
             this.hpUserMapper.insert(user);
             userId = user.getHpUserId();
             OtherLoginData data = new OtherLoginData();
@@ -689,6 +701,7 @@ public class UserServiceImpl implements UserService {
             data.setOid(oid);
             data.setSid(userToken);
             data.setShareToken(shareToken);
+            msg.setData(data);
             return msg;
         }else if(phoneUserId != null && phoneBoundId == null) { // 手机号已被添加为用户，但是未绑定微信：微信用户绑定后台添加用户
             bound = new HpUserBoundEntity();
@@ -699,6 +712,7 @@ public class UserServiceImpl implements UserService {
             data.setOid(oid);
             data.setSid(userData.getUserToken());
             data.setShareToken(userData.getShareToken());
+            msg.setData(data);
             return msg;
         }
             

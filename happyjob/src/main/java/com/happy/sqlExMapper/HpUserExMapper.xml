@@ -50,7 +50,7 @@
 	</select>
 	
 	<select id="getUserByParam" resultType="com.happy.service.user.data.OtherUserData" >
-		SELECT u.hp_user_id,ub.hp_user_bound_id,u.user_token,ub.bound_token,u.password,u.header_pic 
+		SELECT u.hp_user_id,ub.hp_user_bound_id,u.user_token,ub.bound_token,u.password,u.header_pic,u.share_token 
 		FROM hp_user u LEFT JOIN hp_user_bound ub ON u.hp_user_id=ub.hp_user_id 
 		WHERE u.user_type=#{userType} 
 		<if test="phoneNo !=null and phoneNo !=''"> AND u.phone_no=#{phoneNo}</if>
