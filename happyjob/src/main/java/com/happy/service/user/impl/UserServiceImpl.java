@@ -568,7 +568,7 @@ public class UserServiceImpl implements UserService {
         data.setResTime(curTime);
         if(hpUserResumeId == null) { // 新增
             if(hasResumeId != null) {
-                msg.setErrorCode(1);
+                msg.setErrorCode(2);
                 msg.setMessage("已经存在简历，不可继续添加");
                 return msg;
             }
