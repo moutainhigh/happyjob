@@ -5,6 +5,22 @@ $(".datepicker").datepicker({
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
 
+$('#upPic').on('change',function(){                                                 //选中图片后展示在页面
+	   var filePath = $(this)[0].files[0].name //获取到input的value，里面是文件的路径 
+	   console.log(filePath) //1.png 
+	   fileFormat = filePath.split('.')[1].toLowerCase() 
+	   console.log(fileFormat) //png
+	   src = window.URL.createObjectURL(this.files[0]) //转成可以在本地预览的格式 
+	   console.log(src) //blob:null/11ea5a2d-7270-4035-b5c4-4e50c5c061e7
+
+	   // 检查是否是图片 
+	   if( !fileFormat.match(/png|jpg|jpeg/) ) { 
+	      alert('上传错误,文件格式必须为：png/jpg/jpeg')
+	       return 
+	  	} 
+
+	    $('#picUrl').attr('src',src)
+})	    
 function uploadPic(url){
 	var file = $("#upPic").get(0).files[0];
 	if(!file){
@@ -35,15 +51,22 @@ var saveParams ={};
 //修改
 $(document).on("click","#updateAdvertisement",function(){
 	//先保存图片
-	uploadPic(window.location.origin + "/wxAppletsLogin/imgUpOne");
+	var pictureUrl = $("#pictureUrl").val() ;
+	if(pictureUrl !=null && pictureUrl != ""){
+		saveParams.picUrl = pictureUrl;
+	}else{
+		uploadPic(window.location.origin + "/wxAppletsLogin/imgUpOne");
+		if(picUrl !=null && picUrl != ""){
+			saveParams.picUrl = picUrl;
+		}
+	}
 	
 	saveParams.hpAdvBannerId = $("#bannerId").val();
 	saveParams.title = $("#title").val();
-	saveParams.location = $("#location").val();
-	saveParams.type = $("#type").val();
+	saveParams.posType = $("#posType").val();
 	saveParams.endTime = dateToTime($("#endTime").val());
 	saveParams.sortNum = $("#sortNum").val();
-	saveParams.picUrl = picUrl;
+	
 	saveParams.targetUrl = $("#targetUrl").val();
 	
 	fetchPost({
@@ -271,5 +294,6 @@ function change(t) {
 function posType(value){
     switch (value) {
         case 1:return "首页轮播"
+        default: return ""
     }
 }

@@ -125,7 +125,7 @@ public class BannerServiceImpl implements BannerService {
 	}
 
 	@Override
-	public BaseMsg updateAdvertisement(Long hpAdvBannerId, String title, Integer posType, String type, Long sortNum,
+	public BaseMsg updateAdvertisement(Long hpAdvBannerId, String title, Integer posType, Long sortNum,
 			String picUrl, String targetUrl, Long endTime) {
 		BaseMsg msg = new BaseMsg();
         if(hpAdvBannerId == null || hpAdvBannerId ==0) {
@@ -141,7 +141,7 @@ public class BannerServiceImpl implements BannerService {
         	hpAdvBanner.setPicUrl(picUrl);
         }
         
-        hpAdvBanner.setPicUrl(targetUrl);
+        hpAdvBanner.setTargetUrl(targetUrl);
         hpAdvBanner.setEndTime(endTime);
         this.hpAdvBannerMapper.updateByPK(hpAdvBanner);
         
