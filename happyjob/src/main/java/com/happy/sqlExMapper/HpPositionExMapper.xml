@@ -37,7 +37,7 @@
 		<if test="welfareOn != null ">AND p.welfare_on=#{welfareOn}</if>
 		<if test="urgentOn != null ">AND p.urgent_on=#{urgentOn}</if>
 		<if test="groupOn != null ">AND p.group_on=#{groupOn}</if>
-		<if test="cityName != null and cityName != '' ">AND aci.city_name=#{cityName}</if>
+		<if test="cityName != null and cityName != '' ">AND aci.city_name LIKE CONCAT('%',#{cityName},'%')</if>
 		<if test="keyWord !=null and keyWord !=''">
 			AND (pt.type_name LIKE CONCAT('%',#{keyWord},'%') OR p.pos_name LIKE CONCAT('%',#{keyWord},'%') OR c.com_name LIKE CONCAT('%',#{keyWord},'%') )
 		</if>
