@@ -8,6 +8,8 @@ public class PhoneCodeData {
     
     @ApiModelProperty(name="msgCode",value="手机验证码")
     private String msgCode;
+    @ApiModelProperty(name="sessionId",value="sessionId")
+    private String sessionId;
 
     public String getMsgCode() {
         return msgCode;
@@ -16,5 +18,12 @@ public class PhoneCodeData {
     public void setMsgCode(String msgCode) {
         this.msgCode = msgCode;
     }
-    
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
 }

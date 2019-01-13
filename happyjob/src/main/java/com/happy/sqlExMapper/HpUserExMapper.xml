@@ -81,7 +81,7 @@
 	</select>
 	
 	<select id="getUserRealByphone" resultType="com.happy.service.user.data.UserSimpleData" >
-		SELECT u.hp_user_id,u.id_num,u.real_name FROM hp_user u WHERE u.phone_no=#{phoneNo}
+		SELECT u.hp_user_id,u.id_num,u.real_name FROM hp_user u WHERE u.phone_no=#{phoneNo} AND u.user_type=2 limit 1
 	</select>
 	
 	<select id="getPayrollByIdNum" resultType="com.happy.entity.HpUserPayrollEntity" >

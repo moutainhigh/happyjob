@@ -52,9 +52,9 @@ public class Const {
     /**短信验证码*/
     public static final String SESSION_ATTR_NAME_MSGCODE = "msgcode";
     /**短信验证码有效时间*/
-    public static final String SESSION_ATTR_NAME_PHONE_AGE = "codeage";
-    /**短信验证码有效时间五分钟*/
-    public static final int SESSION_ATTR_AGE_PHONE = 300;
+    public static final String SESSION_ATTR_NAME_AGE = "sessionTime";
+    /**短信验证码有效时间10分钟*/
+    public static final int SESSION_AGE = 600;
     /**短信验证码位数*/
     public static final int PHONE_MSGCODE_NUM = 4;
     

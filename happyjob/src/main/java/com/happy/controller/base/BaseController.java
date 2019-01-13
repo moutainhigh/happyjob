@@ -22,6 +22,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.happy.plugin.BaseMsg;
 import com.happy.util.ServiceConfig;
 import com.happy.util.Util;
+import com.happy.util.cookie.MySessionContext;
 import com.happy.util.pubConst.Const;
 /**
  *
@@ -255,26 +256,35 @@ public class BaseController {
         *
         * @TODO:     验证手机号、验证码是否正确
         */
-      public static BaseMsg checkPhoneCode(HttpServletRequest request,HttpServletResponse response,String phoneNo,String msgCode) {
-           BaseMsg msg = new BaseMsg();
-
-           String sessionphone = BaseController.getCookieByName(request, Const.SESSION_ATTR_NAME_PHONE);
-           String sessionCode = BaseController.getCookieByName(request, Const.SESSION_ATTR_NAME_MSGCODE);
-           
-           logger.info("sessionphone=={},sessionCode=={}",sessionphone,sessionCode);
-           
-           if(!Util.isEmpty(phoneNo) && !Util.isEmpty(msgCode) && !Util.isEmpty(sessionphone) && !Util.isEmpty(sessionCode) 
-               && Util.verify(phoneNo, sessionphone) && Util.verify(msgCode, sessionCode) ) {
-               
-               BaseController.removeCookieByName(response, Const.SESSION_ATTR_NAME_PHONE);
-               BaseController.removeCookieByName(response, Const.SESSION_ATTR_NAME_MSGCODE);
-               
-               return msg;
-           }
-           BaseController.removeCookieByName(response, Const.SESSION_ATTR_NAME_PHONE);
-           BaseController.removeCookieByName(response, Const.SESSION_ATTR_NAME_MSGCODE);
-           msg.setErrorCode(1);
-           msg.setMessage("验证信息有误，请重新发送验证码");
-           return msg;
+      public static BaseMsg checkPhoneCode(String sessionId,String phoneNo,String msgCode) {
+          BaseMsg msg = new BaseMsg();
+          HttpSession session = MySessionContext.getSession(sessionId);
+          if(session == null) {
+              msg.setErrorCode(1);
+              msg.setMessage("验证信息有误，请重新发送验证码");
+              return msg;
+          }
+          logger.info("验证码验证 sessionId==={}",session.getId());
+          Object sessionphoneObj = session.getAttribute(Const.SESSION_ATTR_NAME_PHONE);
+          String sessionphone = sessionphoneObj==null?null:(String)sessionphoneObj;
+          String sessionCodeObj = (String)session.getAttribute(Const.SESSION_ATTR_NAME_MSGCODE);
+          String sessionCode = sessionCodeObj==null?null:(String)sessionCodeObj;
+          Long sessionAgeObj = (Long)session.getAttribute(Const.SESSION_ATTR_NAME_AGE);
+          Long sessionAge = sessionAgeObj==null?null:(Long)sessionAgeObj;
+          Long curTime = Util.getDateSecond(Util.getCurrentDate());
+          
+          logger.info("sessionphone=={},sessionCode=={},sessionAge=={}",sessionphone,sessionCode,sessionAge);
+          
+          if(!Util.isEmpty(phoneNo) && !Util.isEmpty(msgCode) && phoneNo.equals(sessionphone) 
+              && msgCode.equals(sessionCode) && !Util.isEmpty(sessionAge) && curTime.compareTo(sessionAge)<=0) {
+              
+              MySessionContext.DelSession(session);
+              
+              return msg;
+          }
+          MySessionContext.DelSession(session);
+          msg.setErrorCode(1);
+          msg.setMessage("验证信息有误，请重新发送验证码");
+          return msg;
        }
 }

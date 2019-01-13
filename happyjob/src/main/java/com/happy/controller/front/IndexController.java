@@ -20,6 +20,7 @@ import com.happy.service.banner.data.BannerListMsg;
 import com.happy.service.config.ConfigService;
 import com.happy.service.config.data.EduListMsg;
 import com.happy.service.config.data.SalaryListMsg;
+import com.happy.service.config.data.StoreDataMsg;
 import com.happy.service.config.data.StoreListMsg;
 import com.happy.service.position.PositionService;
 import com.happy.service.position.data.GroupDataMsg;
@@ -30,9 +31,11 @@ import com.happy.service.user.UserService;
 import com.happy.service.user.data.OtherLoginMsg;
 import com.happy.service.user.data.PhoneCodeData;
 import com.happy.service.user.data.PhoneCodeMsg;
+import com.happy.service.user.data.UserPayrollDataMsg;
 import com.happy.service.user.data.UserSerachListMsg;
 import com.happy.service.user.data.UserSimpleDataMsg;
 import com.happy.util.Util;
+import com.happy.util.cookie.MySessionContext;
 import com.happy.util.pubConst.Const;
 
 import io.swagger.annotations.Api;
@@ -268,15 +271,20 @@ import io.swagger.annotations.ApiOperation;
        //发短信
 //       String msgCode = Util.sendPhoneCode(phoneNo, Const.PHONE_MSGCODE_NUM);
        String msgCode = Util.getRandomStringByLength(4, "0");
+       
+       Long curTime = Util.getDateSecond(Util.getCurrentDate());
+       //发短信
        if(!Util.isEmpty(msgCode)) { // 发送成功
-           String phoneNoMd5 = Util.generateMD5(phoneNo,Util.getRandomStringByLength(4, "a-z"));
-           String msgCodeMd5 = Util.generateMD5(msgCode,Util.getRandomStringByLength(4, "a-z"));
-           BaseController.addCookie(response, Const.SESSION_ATTR_NAME_PHONE, phoneNoMd5, Const.SESSION_ATTR_AGE_PHONE);
-           BaseController.addCookie(response, Const.SESSION_ATTR_NAME_MSGCODE, msgCodeMd5, Const.SESSION_ATTR_AGE_PHONE);
-           logger.info("验证码已加密存入cookie");
+           HttpSession session = request.getSession();
+           logger.info("验证码发送 sessionId==={}",session.getId());
+           session.setAttribute(Const.SESSION_ATTR_NAME_PHONE, phoneNo);
+           session.setAttribute(Const.SESSION_ATTR_NAME_MSGCODE, msgCode);
+           session.setAttribute(Const.SESSION_ATTR_NAME_AGE, curTime+Const.SESSION_AGE);
            PhoneCodeData data = new PhoneCodeData();
            data.setMsgCode(msgCode);
+           data.setSessionId(session.getId());
            msg.setData(data);
+           MySessionContext.AddSession(session);
        }
        
        return msg;
@@ -312,6 +320,7 @@ import io.swagger.annotations.ApiOperation;
    @ApiImplicitParams({
        @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
        @ApiImplicitParam(name="sid",value="用户登录凭证，存在用户更新手机号码、否则利用手机号新增用户",dataType="String",paramType="header",required=false),
+       @ApiImplicitParam(name="sessionId",value="用户验证sessionId",dataType="String",paramType="header",required=true),
        @ApiImplicitParam(name="phoneNo",value="手机号码",dataType="String",paramType="query",required=true),
        @ApiImplicitParam(name="msgCode",value="手机短信验证码",dataType="String",paramType="query",required=true),
    })
@@ -319,13 +328,14 @@ import io.swagger.annotations.ApiOperation;
    public OtherLoginMsg phone(HttpServletRequest request,HttpServletResponse response) {
        String sid = request.getHeader("sid");
        String oid = request.getHeader("oid");
+       String sessionId = request.getHeader("sessionId");
        String phoneNo = request.getParameter("phoneNo");
        String msgCode = request.getParameter("msgCode");
        
-       logger.info("phone 参数日志：sid=={},oid=={},phoneNo=={},msgCode=={}",
-           sid,oid,phoneNo,msgCode);
+       logger.info("phone 参数日志：sid=={},oid=={},phoneNo=={},msgCode=={},sessionId=={}",
+           sid,oid,phoneNo,msgCode,sessionId);
        
-       BaseMsg result = BaseController.checkPhoneCode(request,response , phoneNo, msgCode);
+       BaseMsg result = BaseController.checkPhoneCode(sessionId , phoneNo, msgCode);
        if(result.getErrorCode() != 0) {
            OtherLoginMsg msg = new OtherLoginMsg();
            msg.setErrorCode(result.getErrorCode());
@@ -395,6 +405,7 @@ import io.swagger.annotations.ApiOperation;
   @ApiOperation(value="工资条：根据手机号查询用户身份证号、姓名",notes="根据手机号查询用户身份证号、姓名")
   @ApiImplicitParams({
       @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
+      @ApiImplicitParam(name="sessionId",value="用户验证sessionId",dataType="String",paramType="header",required=true),
       @ApiImplicitParam(name="phoneNo",value="要查询手机号",dataType="String",paramType="query",required=true),
       @ApiImplicitParam(name="phoneCode",value="手机号短信验证码",dataType="String",paramType="query",required=true),
   })
@@ -402,13 +413,14 @@ import io.swagger.annotations.ApiOperation;
   public UserSimpleDataMsg payrollId(HttpServletRequest request,HttpServletResponse response) {
       
       String oid = request.getHeader("oid");
+      String sessionId = request.getHeader("sessionId");
       String phoneNo = request.getParameter("phoneNo");
       String phoneCode = request.getParameter("phoneCode");
       
-      logger.info("payrollId 参数日志：oid=={},phoneNo=={},phoneCode=={}",
-          oid,phoneNo,phoneCode);
+      logger.info("payrollId 参数日志：oid=={},phoneNo=={},phoneCode=={},sessionId={}",
+          oid,phoneNo,phoneCode,sessionId);
       
-      BaseMsg result = BaseController.checkPhoneCode(request, response , phoneNo, phoneCode);
+      BaseMsg result = BaseController.checkPhoneCode(sessionId, phoneNo, phoneCode);
       if(result.getErrorCode() !=0) {
           UserSimpleDataMsg msg = new UserSimpleDataMsg();
           msg.setErrorCode(result.getErrorCode());
@@ -428,7 +440,7 @@ import io.swagger.annotations.ApiOperation;
       @ApiImplicitParam(name="time",value="查询的月份时间戳（s）",dataType="long",paramType="query",required=true),
   })
   @GetMapping(value="payroll")
-  public BaseMsg payroll(HttpServletRequest request) {
+  public UserPayrollDataMsg payroll(HttpServletRequest request) {
       
       String oid = request.getHeader("oid");
       String idNum = request.getParameter("idNum");
@@ -441,7 +453,7 @@ import io.swagger.annotations.ApiOperation;
   }
   /**
    *
-   * @TODO:     门店列表
+   * @TODO:     门店详情
    */
   @ApiOperation(value="门店：获取门店详情",notes="获取门店详情")
   @ApiImplicitParams({
@@ -449,7 +461,7 @@ import io.swagger.annotations.ApiOperation;
       @ApiImplicitParam(name="hpCompanyStoreId",value="门店ID",dataType="long",paramType="query",required=true),
   })
   @GetMapping(value="store")
-  public BaseMsg store(HttpServletRequest request) {
+  public StoreDataMsg store(HttpServletRequest request) {
       
       String oid = request.getHeader("oid");
       Long hpCompanyStoreId = (Long)Util.typeChange(request.getParameter("hpCompanyStoreId"), Long.class);
