@@ -113,6 +113,7 @@ public class CompanyServiceImpl implements CompanyService{
         company.setApproveState(EnumConst.companyApproveState.WithoutApprove.getKey()); //未认证
         company.setComLicense(comLicense);
         company.setComLogo(comLogo);
+        company.setCreateTime(System.currentTimeMillis()/1000);
         this.hpCompanyMapper.insert(company);
 		return msg;
 	}

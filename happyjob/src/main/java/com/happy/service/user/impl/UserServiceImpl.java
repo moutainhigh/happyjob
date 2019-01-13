@@ -481,6 +481,7 @@ public class UserServiceImpl implements UserService {
         user.setRegistResource(0);
         user.setPassword(passwSaltMD5);
         user.setSalt(salt);
+        user.setCreateTime(System.currentTimeMillis()/1000);
         this.hpUserMapper.insert(user);
         if(user.getHpUserId() == null) {
             msg.setErrorCode(1);

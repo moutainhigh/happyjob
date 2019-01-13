@@ -44,8 +44,8 @@ public class HpUserEntity implements  Serializable  {
 	//是否被禁用
 	@ApiModelProperty(name="blackOn",value="是否被禁用")
 	private java.lang.Integer blackOn;
-	//认证状态（0、未申请认证，1、认证通过，2、认证不通过，3、认证待审核）
-	@ApiModelProperty(name="approveState",value="认证状态（0、未申请认证，1、认证通过，2、认证不通过，3、认证待审核）")
+	//认证状态（0、未认证，1、认证通过，2、认证不通过，3、认证待审核）
+	@ApiModelProperty(name="approveState",value="认证状态（0、未认证，1、认证通过，2、认证不通过，3、认证待审核）")
 	private java.lang.Integer approveState;
 	//头像
 	@ApiModelProperty(name="headerPic",value="头像")
