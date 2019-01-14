@@ -72,6 +72,10 @@ public class Const {
     // 文件类型正则表达式
     /**图片文件上传保存文件夹*/
     public static final String HP_UP_IMG_FORMAT = ".*\\.(jpg|png|jpeg|gif)";
+    // 请求头返回信息contentType图片正则
+    public static final String HP_RESPONSE_CONTENT_TYPE_FORMAT = ".*image.*";
+    // 小程序二维码宽度
+    public static final int HP_QRCODE_IMAGE_WIDTH = 430;
 
     /**岗位拼团有效时间3天*/
     public static final long HP_POSITION_GROUP_MAX_AGE = 3*24*60*60;
@@ -87,5 +91,6 @@ public class Const {
     
     // 推荐人奖励金额
     public static final double MONEY_RECOMMEND_NUM = 5d;
+    
 }
 

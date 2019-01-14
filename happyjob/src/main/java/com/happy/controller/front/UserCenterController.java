@@ -25,6 +25,10 @@ import com.happy.service.user.UserService;
 import com.happy.service.user.data.UserResumeDataMsg;
 import com.happy.service.user.data.UserSimpleDataMsg;
 import com.happy.util.Util;
+import com.happy.util.pubConst.Const;
+import com.happy.util.pubConst.WxAppletsConst;
+import com.happy.util.wxUtil.WxAppParamsEnum;
+import com.happy.util.wxUtil.WxModelConst;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -229,6 +233,29 @@ public class UserCenterController {
        logger.info("positionApply 参数日志：sid=={},groupOn=={},currentPage=={},showCount=={}",sid,groupOn,currentPage,showCount);
        
        return this.positionService.getPostionlistPage(sid, null, null, null, null, null, null, null, groupOn, currentPage, showCount);
+   }
+   
+   /**
+    *
+    * @TODO:     用户岗位申请列表
+    */
+   @ApiOperation(value="用户分享二维码：二维码生成",notes="二维码生成")
+   @PostMapping(value="shareQrCodeA")
+   public PositionListMsg shareQrCode(
+       @RequestHeader(name="oid",defaultValue="微信登录凭证",required=true) String oid,
+       @RequestHeader(name="sid",defaultValue="用户登录凭证",required=true) String sid,
+       @RequestHeader(name="targetUrl",defaultValue="需要生产二维码的页面访问地址",required=true) String targetUrl
+       ) {
+       
+       logger.info("positionApply 参数日志：sid=={},oid=={},targetUrl=={}",sid,oid,targetUrl);
+       
+       
+       JSONObject json = Util.getWXAQRCode(WxModelConst.getAppAccessToken(WxAppParamsEnum.PARAMS_APPLETS_JOB, false), 
+           Const.HP_UP_IMG_USER_PATH, Const.HP_QRCODE_IMAGE_WIDTH);
+       
+       
+       
+       return null;
    }
    
    

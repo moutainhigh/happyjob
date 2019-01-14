@@ -8,9 +8,9 @@ public class ServiceConfig {
     
     private static boolean swaggerEnabled;
     
-    private static String uploadBasePath;
+    private static String uploadBasePath = "D:/apache-tomcat-7.0.40/webapps/uploadFiles";
     
-    private static String uploadBaseUrl;
+    private static String uploadBaseUrl = "http://192.168.0.98/uploadFiles";
     
     private static String ueditorRootPath = "D:/github/repository/happyjob/happyjob/src/main/resources/public/static";
     

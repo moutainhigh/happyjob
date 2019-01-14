@@ -42,8 +42,13 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSONObject;
+import com.happy.controller.base.BaseController;
+import com.happy.service.user.data.UpImgData;
+import com.happy.service.user.data.UpImgMsg;
 import com.happy.util.pubConst.Const;
 import com.happy.util.sms.SmsUtil;
+import com.happy.util.wxUtil.WxModelConst;
 
 /**
  * 
@@ -161,8 +166,7 @@ public class Util {
 
 
     // 发送请求并接受返回的数据
-    public static String sendPost(String baseUrl, String params,
-            final String method) {
+    public static String sendPost(String baseUrl, String params) {
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
@@ -211,6 +215,66 @@ public class Util {
         return result;
     }
 
+ // 发送请求并接受返回文件流
+    public static String sendPostReFile(String baseUrl, String params,String leftPath) {
+        PrintWriter out = null;
+        InputStream in = null;
+        BufferedReader reader = null;
+        String result = "";
+        try {
+            URL realUrl = new URL(baseUrl);
+            // 打开和URL之间的连接
+            URLConnection conn = realUrl.openConnection();
+            // 设置通用的请求属性
+            conn.setRequestProperty("accept", "*/*");
+            conn.setRequestProperty("connection", "Keep-Alive");
+            conn.setRequestProperty("user-agent",
+                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            // 发送POST请求必须设置如下两行
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            // 获取URLConnection对象对应的输出流
+            out = new PrintWriter(conn.getOutputStream());
+            // 发送请求参数
+            out.print(params);
+            // flush输出流的缓冲
+            out.flush();
+            String contentType = conn.getContentType();
+            if(contentType != null && contentType.matches(Const.HP_RESPONSE_CONTENT_TYPE_FORMAT)) { // 图片流
+                in = conn.getInputStream();
+                return BaseController.uploadFileInput(in, leftPath);
+            }
+            // 普通数据流
+            // 定义BufferedReader输入流来读取URL的响应
+            reader = new BufferedReader(new InputStreamReader(
+                conn.getInputStream(), "utf-8"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result += line;
+            }
+            return result;
+        } catch (Exception e) {
+            System.out.println("发送 POST 请求出现异常！" + e);
+            e.printStackTrace();
+        }
+        // 使用finally块来关闭输出流、输入流
+        finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+                if(reader != null) {
+                    reader.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return result;
+    }
     /**
      * 
      * @TODO:base64还原字符串并根据前后位数截取
@@ -1047,10 +1111,120 @@ public class Util {
         return null;
     }
     
+    /**
+    *
+    * @TODO:     获取微信access_token
+    * @param appid
+    * @param secret
+    * @return
+    */
+   public static String getAccessToken(String appid,String secret) {
+       String url = WxModelConst.WX_PUBLIC_ACCESSTOKEN_URL.replace("${appid}", appid).replace("${secret}", secret);
+       String accessStr = Util.sendRequestGet(url);
+       JSONObject accessJson = JSONObject.parseObject(accessStr);
+       if (accessJson.containsKey("access_token")) {
+           return accessJson.getString("access_token");
+       }else {
+           return null;
+       }
+   }
+   /**
+    * @TODO:  获取小程序码接口B，适用于需要的码数量极多的业务场景。
+    */
+   public static JSONObject getWXACodeUnlimit(String accessToken,String scene,String page,int width) {
+       
+       String url = WxModelConst.WX_APPLETS_GETWXACODEUNLIMIT_URL.replace("${access_token}", accessToken);
+       JSONObject json = new JSONObject();
+       json.put("scene", scene);
+       json.put("page", page);
+       json.put("width", width);
+       String result = Util.sendPostReFile(url, json.toString(), Const.HP_UP_IMG_USER_PATH);
+       JSONObject jsonResult = null;
+       if(Util.isEmpty(result)) {
+           jsonResult = new JSONObject();
+           jsonResult.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
+           jsonResult.put(Const.RESUTL_MESSAGE_MESSAGE, "图片存储失败");
+           return jsonResult;
+       }
+       if(result.startsWith("http")) {
+           jsonResult = new JSONObject();
+           jsonResult.put(Const.RESUTL_MESSAGE_ERRORCODE, 0);
+           jsonResult.put(Const.RESUTL_MESSAGE_UP_IMG_URL, result);
+           return jsonResult;
+       }
+       jsonResult = JSONObject.parseObject(result);
+       jsonResult.put(Const.RESUTL_MESSAGE_ERRORCODE, jsonResult.getIntValue("errcode"));
+       jsonResult.put(Const.RESUTL_MESSAGE_MESSAGE, jsonResult.getIntValue("errmsg"));
+       return jsonResult;
+   }
+   /**
+    * @TODO:  获取小程序码接口A，适用于需要的码数量极多的业务场景。
+    */
+   public static JSONObject getWXAQRCode(String accessToken,String path,int width) {
+       
+       String url = WxModelConst.WX_APPLETS_CREATEWXAQRCODE_URL.replace("${access_token}", accessToken);
+       JSONObject json = new JSONObject();
+       json.put("path", path);
+       json.put("width", width);
+       String result = Util.sendPostReFile(url, json.toString(), Const.HP_UP_IMG_USER_PATH);
+       JSONObject jsonResult = null;
+       if(Util.isEmpty(result)) {
+           jsonResult = new JSONObject();
+           jsonResult.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
+           jsonResult.put(Const.RESUTL_MESSAGE_MESSAGE, "图片存储失败");
+           return jsonResult;
+       }
+       if(result.startsWith("http")) {
+           jsonResult = new JSONObject();
+           jsonResult.put(Const.RESUTL_MESSAGE_ERRORCODE, 0);
+           jsonResult.put(Const.RESUTL_MESSAGE_UP_IMG_URL, result);
+           return jsonResult;
+       }
+       jsonResult = JSONObject.parseObject(result);
+       jsonResult.put(Const.RESUTL_MESSAGE_ERRORCODE, jsonResult.getIntValue("errcode"));
+       jsonResult.put(Const.RESUTL_MESSAGE_MESSAGE, jsonResult.getIntValue("errmsg"));
+       return jsonResult;
+   }
+   /**
+    * @TODO:  获取小程序码接口C，适用于需要的码数量极多的业务场景。
+    */
+   public static UpImgMsg getWXACode(String accessToken,String path,int width) {
+       
+       String url = WxModelConst.WX_APPLETS_GETWXACODE_URL.replace("${access_token}", accessToken);
+       JSONObject json = new JSONObject();
+       json.put("path", path);
+       json.put("width", width);
+       String result = Util.sendPostReFile(url, json.toString(), Const.HP_UP_IMG_USER_PATH);
+       UpImgMsg msg = new UpImgMsg();
+       if(Util.isEmpty(result)) {
+           msg.setErrorCode(1);
+           msg.setMessage("图片存储失败");
+           return msg;
+       }
+       if(result.startsWith("http")) {
+           UpImgData data = new UpImgData();
+           data.setImgUrl(result);
+           msg.setData(data);
+           return msg;
+       }
+       JSONObject jsonResult = JSONObject.parseObject(result);
+       msg.setErrorCode(jsonResult.getIntValue("errcode"));
+       msg.setMessage(jsonResult.getString("errmsg"));
+       return msg;
+   }
     
     @Test
     public void test1() {
-//        JSONArray arr = new JSONArray();
+        
+//        String access_token = Util.getAccessToken(WxAppParamsEnum.PARAMS_APPLETS_MALL.getAppId(), WxAppParamsEnum.PARAMS_APPLETS_MALL.getAppSecret());
+//        System.out.println(access_token);
+        String access_token = "17_2DD6CE1BIiO7yvuk1hVgvrVaExUuHSQd4fvuSKWPlHcEI7V4rhNx9dTUBN9tWESeS1GyrtaU1QigmT8YQ5gK--2LLAprM07bcswPxnhysiTPs6zEb1fG29m5Npo-EkLhrZQY1BpQfFFTAVtWKBTdADAQHZ";
+        JSONObject json = new JSONObject();
+        json.put("shareToken", "389a973a54d");
+//        String result = Util.getWXACode(access_token, "pages/home/home?shareToken=773d8ad1ad9540fc804389a973a54d", 430);
+        JSONObject result = Util.getWXACodeUnlimit(access_token,"a=b", "", 430);
+        System.out.println(result);
+        //        JSONArray arr = new JSONArray();
 //        JSONObject temp1 = new JSONObject(true);
 //        temp1.put("name", "");
 //        temp1.put("phoneNos", "18001535861,1800535862");
@@ -1065,9 +1239,5 @@ public class Util {
 //        temp3.put("name", "过中燕");
 //        temp3.put("phoneNos", "18921188621,13861896130");
 //        arr.add(temp3);
-        System.out.println(Util.getUuidRd());
-        System.out.println(Util.getUuidRd());
-        System.out.println(Util.getUuidRd());
-        System.out.println(Util.getUuidRd());
     }
 }

@@ -157,7 +157,7 @@ public class UserServiceImpl implements UserService {
             bound.setUnionid(unionid);
             bound.setCreateTime(curTime);
             
-            if(Util.isEmpty(storeToken)) { // 门店信息非空
+            if(!Util.isEmpty(storeToken)) { // 门店信息非空
                 Long storeId = this.hpConfigExMapper.getStoreIdByToken(storeToken);
                 bound.setHpCompanyStoreId(storeId);
             }
@@ -572,7 +572,7 @@ public class UserServiceImpl implements UserService {
         }
         Long hasResumeId = this.hpUserExMapper.getUserResumeId(sid);
         Long hpUserId = this.hpUserExMapper.getUserIdBySid(sid);
-        Long hpUserResumeId = data.getHpEducationId();
+        Long hpUserResumeId = data.getHpUserResumeId();
         long curTime = Util.getDateSecond(Util.getCurrentDate());
         data.setHpUserId(hpUserId);
         data.setResTime(curTime);

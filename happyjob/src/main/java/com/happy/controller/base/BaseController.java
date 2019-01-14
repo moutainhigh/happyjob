@@ -1,7 +1,12 @@
 package com.happy.controller.base;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -287,4 +293,58 @@ public class BaseController {
           msg.setMessage("验证信息有误，请重新发送验证码");
           return msg;
        }
+      /**
+       *
+       * @TODO:     文件流存入硬盘
+       * @return
+       */
+      public static String uploadFileInput(InputStream in,String leftPath) {
+          OutputStream out = null;
+          String fileName = Util.dateFormat(Util.getCurrentDate(),
+              "yyyyMMddHHmmsss")
+              + Util.getRandomStringByLength(6, "base")
+              + ".jpg";
+          String realPath = ServiceConfig.getUploadBasePath() + leftPath + "/" + fileName;
+          String url = ServiceConfig.getUploadBaseUrl() + leftPath + "/" + fileName;
+          
+          try {
+                File outFile = new File(realPath);
+                if(!outFile.exists()) {
+                    outFile.createNewFile();
+                }
+                out = new FileOutputStream(outFile);
+                int length = 0;
+                byte[] buffer = new byte[1024];
+                while((length=in.read(buffer, 0, 1024))!=-1) {
+                    out.write(buffer, 0, length);
+                }
+                out.flush();
+                return url;
+          } catch (IOException e) {
+                logger.error("图片文件流写入异常==",e);
+          }finally {
+              if(out !=null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                         e.printStackTrace();
+                    }
+              }
+          }
+          return null;
+      }
+      
+      @Test
+      public void test1() {
+          String targetUrl = "D:\\apache-tomcat-7.0.40\\webapps\\uploadFiles\\uploadImgs\\goodsPic\\goodsPic8cc8743ed69f4d89991c9af5c5a842c4.png";
+          File file = new File(targetUrl);
+          try {
+            InputStream in = new FileInputStream(file);
+            String result = BaseController.uploadFileInput(in, Const.HP_UP_IMG_USER_PATH);
+            System.out.println(result);
+        } catch (FileNotFoundException e) {
+             e.printStackTrace();
+        }
+          
+      }
 }
