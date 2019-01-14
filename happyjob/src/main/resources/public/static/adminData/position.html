@@ -193,8 +193,12 @@
 				<div class="col-sm-3">
 					<a class="btn btn-primary" data-toggle="modal" id="openWelfare" >点击添加/修改</a>
 				</div>
+				
 			</div>
 			
+			<div class="form-group" id="fuli">
+				<label class="col-sm-2" align="right" >所选福利：</label>
+			</div>
 			<div class="form-group">
 				<label for="urgentOn" class="col-sm-2" align="right" >高薪急聘：</label>
 				<div  class="col-sm-2">
@@ -278,11 +282,15 @@
 				</div>
 			</div>
 			
+			<!-- 其实可以用下拉框更好 -->
 			<div class="form-group">
 				<label for="hpPositionTypeId"  class="col-sm-2" align="right">职位行业：</label>
+				<div class="col-sm-3" >
+					<input id="hpPositionTypeName" class="form-control" disabled/>
+				</div>
 				<input id="hpPositionTypeId" type="hidden" >
 				<div class="col-sm-3" >
-				<a class="btn btn-primary" data-toggle="modal" id="openPosType" >点击添加/修改</a>
+					<a class="btn btn-primary" data-toggle="modal" id="openPosType" >点击添加/修改</a>
 				</div>
 			</div>
 			
