@@ -114,21 +114,25 @@ $(document).on("change",'input[name="hpPositionWelfareId"]',function(){  // 福�
 	var $this = $(this);
 	if($this.prop("checked")){
 		var content = '<div data-id="'+$this.val()+'" class="showValue col-sm-8">'+$this.next().html()+'</div>';
+		var fuli = '<label class="col-sm-1 showValue" data-id='+$this.val() +'>'+$this.next().html()+'</label>';
 		$("#welfareChoose").append(content);
 		if($this.next().html() == "入职返现"){
 			$("#retItem").show();
 		}
+		$("#fuli").append(fuli);
 	}else{
 		$("#welfareChoose").find('.showValue[data-id="'+$this.val()+'"]').remove();
 		if($this.next().html() == "入职返现"){
 			$("#retItem").hide();
 		}
+		$("#fuli").find('.showValue[data-id="'+$this.val()+'"]').remove();
 	}
 })
 
 $(document).on("click",'*[data-type="posType"]',function(){
 	var $this = $(this);
 	$("#hpPositionTypeId").val($this.data("id"));
+	$("#hpPositionTypeName").val($this.html());
 	$("#posTypeOn").html($this.html());
 })
 
