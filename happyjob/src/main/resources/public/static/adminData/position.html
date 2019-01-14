@@ -157,28 +157,35 @@
 				</div>
 			</div>
 			<div class="form-group" id="retItem" style="display:none" >
-				<label >入职返现金额：</label>
-				<div>
-					<div>
-						<i>男</i>
-						<select id="manDayNum" >
+				<label   class="col-sm-2" align="right">入职返现金额：</label>
+				<div class="col-sm-10">
+					<label  class="col-sm-1" align="right">男：</label>
+					<div class="col-sm-2">
+						<select id="manDayNum" class=" form-control" >
 							<option value="0">请选择</option>
 							<option value="30">30天返</option>
 							<option value="45">45天返</option>
 							<option value="65">60天返</option>
 						</select>
-						<input id="retManMoney" oninput = "value=value.replace(/[^\d]/g,'')" >元
+					</div>	
+					<div  class="col-sm-2 input-group">
+						 <input id="retManMoney"  class=" form-control"  oninput = "value=value.replace(/[^\d]/g,'')" >
+						 <span class="input-group-addon">元</span>
 					</div>
-					<div>
-						<i>女</i>
-						<select id="womenDayNum" >
+					<label  class="col-sm-1" align="right">女：</label>
+					<div  class="col-sm-2">
+						<select id="womenDayNum"  class=" form-control"  >
 							<option value="0">请选择</option>
 							<option value="30">30天返</option>
 							<option value="45">45天返</option>
 							<option value="65">60天返</option>
 						</select>
-						<input id="retWomanMoney" oninput = "value=value.replace(/[^\d]/g,'')">元
 					</div>
+					<div  class="col-sm-2 input-group">
+						<input id="retWomanMoney"  class=" form-control" oninput = "value=value.replace(/[^\d]/g,'')">
+						 <span class="input-group-addon">元</span>
+					</div>
+					
 				</div>
 			</div>
 			<div class="form-group">
@@ -432,13 +439,17 @@
 			<div class="form-group">
 				<label for="area"  class="col-sm-2" align="right" >工作地点：</label>
 				<div class="col-sm-3">
-					<select id="province" data-type="area"  >
+					<select id="province" data-type="area"  class="form-control  col-sm-8">
 						<option>请选择</option>
 					</select>
-					<select id="city" data-type="area"   >
+				</div>
+				<div class="col-sm-3">
+					<select id="city" data-type="area"   class="form-control col-sm-8 col-sm-offset-1">
 						<option>请选择</option>
 					</select>
-					<select id="county" data-type="area" >
+				</div>
+				<div class="col-sm-3">
+					<select id="county" data-type="area" class="form-control col-sm-8 col-sm-offset-1">
 						<option>请选择</option>
 					</select>
 				</div>
@@ -476,7 +487,7 @@
 			</div>
 			
 			
-			<button type="button" id="btnSub" class="btn btn-primary" >提交</button>
+			<center><button type="button" id="btnSub" class="btn btn-primary btn-lg" style="width:250px;">提交</button></center>
 		</div>
 	</form>
 		</section>
@@ -486,7 +497,7 @@
 	
 </div>
 
-<!-- 查看用户资料 -->
+<!-- 福利 -->
 <div class="modal fade" id="bm_welfare" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -499,18 +510,19 @@
 					<div id="welfareChoose" >
 						<div class="form-group" >
 							<label for="" class="col-sm-3">已选：</label>
-							<div class="showValue col-sm-8">哈哈</div>
+							<div class="showValue col-sm-8"></div>
 						</div>
 					</div>
 						
 					<div id="welfareBox" >
 						<div class="form-group">
 							<label class="col-sm-3">
-							<input name="hpPositionWelfareId" type="checkbox" value="1" >
-							头像</label>
+								<input name="hpPositionWelfareId" type="checkbox" value="1" >
+								头像
+							</label>
 						</div>	
 					</div>
-				</form>	
+		   </form>	
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
@@ -519,18 +531,23 @@
 	</div><!-- /.modal-dialog -->
 </div>
 
-<!-- 查看用户资料 -->
+<!-- 职业类型 -->
 <div class="modal fade" id="bm_posType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-<!-- 		<div class="modal-header"> -->
-<!-- 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-<!-- 			<h4 class="modal-title">用户资料</h4> -->
-<!-- 		</div> -->
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title">职业类型</h4>
+		</div>
 		<div class="modal-body">
+			<form   class="form-horizontal">
 				<div>
-					<div>已选：<div id="posTypeOn">我擦</div></div>
-					<div id="posTypeBox" >
+					<div>
+						<label  align="right" >已选：</label>
+						<div id="posTypeOn">
+						</div>
+					</div>
+					<div id="posTypeBox" class=" col-sm-5 col-sm-offset-2" >
 						<div>
 							IT|互联网|通信|电子
 						</div>
@@ -541,6 +558,7 @@
 						</div>
 					</div>
 				</div>
+			</form>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>

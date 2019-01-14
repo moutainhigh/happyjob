@@ -19,7 +19,31 @@ $('#upPicLogo').on('change',function(){                                         
 	     return 
 	  	} 
 
-	    $('#imgContent').attr('src',src)
+	    $('#imgContent').attr('src',src);
+	    
+	    var url = window.location.origin + "/wxAppletsLogin/imgUpOne" ;
+		var file = $("#upPicLogo").get(0).files[0];
+		if(!file){
+			return;
+		}
+		var formData = new FormData();
+		formData.append("file",file);
+		formData.append("code","company");
+		$.ajax({
+			url:url,
+			dataType:"json",
+			type:"post",
+			data:formData,
+	        processData: false,  // 不处理数据
+	        contentType: false,   // 不设置内容类型
+			header:{
+				oid:"fad7bd3d01f04950b1d906584afc9253",
+			},
+			success:function(data){
+				console.log("=data.data.imgUrl==",data.data.imgUrl);
+				comLogo = data.data.imgUrl ;
+			}
+		});
 
 })
 
@@ -38,6 +62,31 @@ $('#upPicLis').on('change',function(){                                          
 	  	} 
 
 	    $('#imgContent2').attr('src',src)
+	    
+		var url = window.location.origin + "/wxAppletsLogin/imgUpOne" ;
+		var file = $("#upPicLis").get(0).files[0];
+		if(!file){
+			return;
+		}
+		var formData = new FormData();
+		formData.append("file",file);
+		formData.append("code","company");
+		$.ajax({
+			url:url,
+			dataType:"json",
+			type:"post",
+			data:formData,
+	        processData: false,  // 不处理数据
+	        contentType: false,   // 不设置内容类型
+			header:{
+				oid:"fad7bd3d01f04950b1d906584afc9253",
+			},
+			success:function(data){
+				console.log("==data.data.imgUrl=",data.data.imgUrl);
+				comLicense = data.data.imgUrl ;
+			}
+		});
+		
 
 })
 	
@@ -260,61 +309,61 @@ $(document).on("click","#newCompany",function(){
 })
  
 var comLogo ;
-function uploadLogo(){
-	
-	var url = window.location.origin + "/wxAppletsLogin/imgUpOne" ;
-	var file = $("#upPicLogo").get(0).files[0];
-	if(!file){
-		return;
-	}
-	var formData = new FormData();
-	formData.append("file",file);
-	formData.append("code","company");
-	$.ajax({
-		url:url,
-		dataType:"json",
-		type:"post",
-		data:formData,
-        processData: false,  // 不处理数据
-        contentType: false,   // 不设置内容类型
-		header:{
-			oid:"fad7bd3d01f04950b1d906584afc9253",
-		},
-		success:function(data){
-			console.log("=data.data.imgUrl==",data.data.imgUrl);
-			comLogo = data.data.imgUrl ;
-		}
-	});
-}
+//function uploadLogo(){
+//	
+//	var url = window.location.origin + "/wxAppletsLogin/imgUpOne" ;
+//	var file = $("#upPicLogo").get(0).files[0];
+//	if(!file){
+//		return;
+//	}
+//	var formData = new FormData();
+//	formData.append("file",file);
+//	formData.append("code","company");
+//	$.ajax({
+//		url:url,
+//		dataType:"json",
+//		type:"post",
+//		data:formData,
+//        processData: false,  // 不处理数据
+//        contentType: false,   // 不设置内容类型
+//		header:{
+//			oid:"fad7bd3d01f04950b1d906584afc9253",
+//		},
+//		success:function(data){
+//			console.log("=data.data.imgUrl==",data.data.imgUrl);
+//			comLogo = data.data.imgUrl ;
+//		}
+//	});
+//}
 
 
 var comLicense ;
-function upPicLis(){
-    
-	var url = window.location.origin + "/wxAppletsLogin/imgUpOne" ;
-	var file = $("#upPicLis").get(0).files[0];
-	if(!file){
-		return;
-	}
-	var formData = new FormData();
-	formData.append("file",file);
-	formData.append("code","company");
-	$.ajax({
-		url:url,
-		dataType:"json",
-		type:"post",
-		data:formData,
-        processData: false,  // 不处理数据
-        contentType: false,   // 不设置内容类型
-		header:{
-			oid:"fad7bd3d01f04950b1d906584afc9253",
-		},
-		success:function(data){
-			console.log("==data.data.imgUrl=",data.data.imgUrl);
-			comLicense = data.data.imgUrl ;
-		}
-	});
-}
+//function upPicLise(){
+//    
+//	var url = window.location.origin + "/wxAppletsLogin/imgUpOne" ;
+//	var file = $("#upPicLis").get(0).files[0];
+//	if(!file){
+//		return;
+//	}
+//	var formData = new FormData();
+//	formData.append("file",file);
+//	formData.append("code","company");
+//	$.ajax({
+//		url:url,
+//		dataType:"json",
+//		type:"post",
+//		data:formData,
+//        processData: false,  // 不处理数据
+//        contentType: false,   // 不设置内容类型
+//		header:{
+//			oid:"fad7bd3d01f04950b1d906584afc9253",
+//		},
+//		success:function(data){
+//			console.log("==data.data.imgUrl=",data.data.imgUrl);
+//			comLicense = data.data.imgUrl ;
+//		}
+//	});
+//}
 
 
 
@@ -490,7 +539,6 @@ function addTableList(list){
             data-com-license="'+ item.comLicense +'" >\
             <th>'+ item.comName +'</th>\
             <th>'+ item.typeName +'</th>\
-            <th>'+ "没有字段" +'</th>\
             <th>'+ item.lowerNum+"-"+item.hightNum +'</th>\
             <th>'+ isNull(item.comtPerson) +'</th>\
             <th>'+ isNull(item.comPhone) +'</th>\

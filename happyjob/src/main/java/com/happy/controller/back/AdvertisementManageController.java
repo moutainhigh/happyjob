@@ -98,7 +98,6 @@ public class AdvertisementManageController {
 	        Long hpAdvBannerId = (Long)Util.typeChange(request.getParameter("hpAdvBannerId"), Long.class);
 
 	        String title = request.getParameter("title");
-	    	String type = request.getParameter("type");
 	    	String picUrl = request.getParameter("picUrl");
 	    	String targetUrl = request.getParameter("targetUrl");
 	    	Integer posType = (Integer)Util.typeChange(request.getParameter("posType"), Integer.class);
@@ -107,10 +106,10 @@ public class AdvertisementManageController {
 	        Long sortNum = (Long)Util.typeChange(request.getParameter("sortNum"), Long.class);
 	        
 	        
-	        logger.info("backAdvertisement.saveAdvertisement 请求参数：hpAdvBannerId={},title={},location={},type={},sort={},picUrl={},endTime={},targetUrl={}",hpAdvBannerId,title
-	        		,posType,type,sortNum,picUrl,endTime,targetUrl);
+	        logger.info("backAdvertisement.saveAdvertisement 请求参数：hpAdvBannerId={},title={},location={},sort={},picUrl={},endTime={},targetUrl={}",hpAdvBannerId,title
+	        		,posType,sortNum,picUrl,endTime,targetUrl);
 	        
-	        BaseMsg ss = this.bannerService.updateAdvertisement(hpAdvBannerId,title,posType,type,sortNum,picUrl,targetUrl,endTime);
+	        BaseMsg ss = this.bannerService.updateAdvertisement(hpAdvBannerId,title,posType,sortNum,picUrl,targetUrl,endTime);
 	        return ss;
 	    }
 	    

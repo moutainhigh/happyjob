@@ -200,7 +200,7 @@
 		</div>
 		<div class="modal-body">
 			<form class="form-horizontal" id="formModal">
-					<div class="form-group ">
+					<div class="form-group " style="display:none">
 						<label for="" class="col-sm-3 " >id</label>
 						<div class="col-sm-5 ">
 							<input type="text" class="form-control"  id="bannerId">
@@ -237,21 +237,29 @@
 					<div class="form-group">
 						<label for="" class="col-sm-3">上传图片</label>
 						<div class="col-sm-5 ">
-						     <input type="file" class="form-control" id="upPic" >
+							 <img src="" alt="" id='picUrl' class="idStyle">
+						     <input type="file" id="upPic" >
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="" class="col-sm-3">或图片地址</label>
 						<div class="col-sm-5 ">
-							<input  type="text" class="form-control" id="targetUrl"/>
+							<input  type="text" class="form-control" id="pictureUrl"/>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="" class="col-sm-3">原图片</label>
-					    <div class="col-sm-4 ">
-      						<img src="" alt="" id='picUrl' class="idStyle">
-					    </div>
+						<label for="" class="col-sm-3">图片详情链接</label>
+						<div class="col-sm-5 ">
+							<input  type="text" class="form-control" id="targetUrl"/>
+						</div>
 					</div>
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="" class="col-sm-3">原图片</label> -->
+<!-- 					    <div class="col-sm-4 "> -->
+<!--       						<img src="" alt="" id='picUrl' class="idStyle"> -->
+<!-- 					    </div> -->
+<!-- 					</div> -->
+
 									
 			</form>
 		</div>
