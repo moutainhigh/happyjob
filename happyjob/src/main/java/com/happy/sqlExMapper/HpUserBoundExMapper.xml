@@ -58,8 +58,4 @@
 		WHERE u.hp_user_id=#{hpUserId} AND ur.rec_phone_no=u.phone_no limit 1
 	</select>
 	
-	<update id="updateUserMoney">
-		UPDATE hp_user u SET u.user_money=u.user_money+#{userMoney} WHEREu.hp_user_id=#{hpUserId}
-	</update>
-	
 </mapper>

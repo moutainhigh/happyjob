@@ -584,7 +584,7 @@ public class UserServiceImpl implements UserService {
             }
             this.hpUserResumeMapper.insert(data);
             // 是否存在推荐人记录，红包奖励
-            
+            insertRecommedRedPack(hpUserId);
         }else {
             if(hasResumeId == null || !hpUserResumeId.equals(hasResumeId)) {
                 msg.setErrorCode(1);
@@ -621,7 +621,7 @@ public class UserServiceImpl implements UserService {
         record.setCreateTime(Util.getDateSecond(Util.getCurrentDate()));
         record.setOptDesc("被推荐手机号:"+phoneNo+"已成功注册并创建简历");
         this.hpUserMoneyMapper.insert(record);
-        this.updateUserMoeny(hpUserId, Const.MONEY_RECOMMEND_NUM);
+        this.updateUserMoeny(recommendUserId, Const.MONEY_RECOMMEND_NUM);
     }
     
     public synchronized void updateUserMoeny(Long hpUserId,double money) {
