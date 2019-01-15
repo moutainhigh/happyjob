@@ -25,6 +25,9 @@
 <link rel="stylesheet" href="/static/plugins/sweetalert/sweetalert2.min.css">
 <style>
 .idStyle{max-width: 200px;max-height: 200px;}
+.requredText{
+ color:red;
+}
 </style>
   
 </head>
@@ -142,16 +145,16 @@
 	<form autocomplete="off"  class="form-horizontal">
 		<div>
 			<div class="form-group">
-				<label for="posName"  class="col-sm-2" align="right">*职位名称：</label>
+				<label for="posName"  class="col-sm-2" align="right"><span class="requredText">*</span>职位名称：</label>
 				<div class="col-sm-3">
-					<input class=" form-control" id="posName" maxlength="" >
+					<input class=" form-control" id="posName" maxlength=""  placeholder="必填"  required >
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="comName"  class="col-sm-2" align="right" >*公司名称：</label>
+				<label for="comName"  class="col-sm-2" align="right" ><span class="requredText">*</span>公司名称：</label>
 				<input id="comId" type="hidden" autocomplete="off" >
 				<div class="col-sm-3">
-					<input class=" form-control" id="comName" list="comList" maxlength="50" >
+					<input class=" form-control" id="comName" list="comList" maxlength="50" placeholder="必填"  required >
 					<datalist id="comList" >
 					</datalist>
 				</div>
