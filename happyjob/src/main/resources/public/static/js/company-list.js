@@ -161,17 +161,9 @@ $(document).on("click",".auth",function(){
 // 查看
 $(document).on("click",".cat",function(){
     var $row = $(this).parents("tr");
-    var comName = $row.data("com-name");
-    var typeName = $row.data("type-name");
-    var location = $row.data("location");
-    var scale = $row.data("scale");
-    var comDesc = $row.data("com-desc");
-    var addrDetail = $row.data("add-detail");
-    var comtPerson = $row.data("com-person");
-    var comPhone = $row.data("com-phone");
+    
     var comLogo = $row.data("com-logo");
     var comLicense = $row.data("com-license");
-    var comEmail = $row.data("com-email");
     
     var $obj = $("#browseModal").find(".showValue");
     $obj.eq(0).html($row.data("com-name"));
@@ -527,7 +519,7 @@ function addTableList(list){
             data-com-name="'+ item.comName +'" \
             data-company-type-id="'+ item.hpCompanyTypeId +'" \
             data-type-name="'+ item.typeName +'" \
-            data-scale="'+ item.lowerNum+"-"+item.hightNum +'" \
+            data-scale="'+scale(item.hpCompanyScaleId) +'" \
             data-county-id="'+ item.countyId +'" \
             data-city-id="'+ item.cityId +'" \
             data-province-id="'+ item.provinceId +'" \
@@ -545,7 +537,7 @@ function addTableList(list){
             data-com-license="'+ item.comLicense +'" >\
             <th>'+ item.comName +'</th>\
             <th>'+ item.typeName +'</th>\
-            <th>'+ item.lowerNum+"-"+item.hightNum +'</th>\
+            <th>'+ scale(item.hpCompanyScaleId) +'</th>\
             <th>'+ isNull(item.comtPerson) +'</th>\
             <th>'+ isNull(item.comPhone) +'</th>\
             <th>'+ isNull(item.comEmail) +'</th>\
@@ -589,6 +581,19 @@ function approveState(value){
         case 1:return "认证通过"
         case 2:return "认证不通过"
         case 3:return "认证待审核"
+    }
+}
+
+//判断是否认证
+function scale(value){
+    switch (value) {
+        case 1:return "20人以下"
+        case 2:return "20-99人"
+        case 3:return "100-499人"
+        case 4:return "500-999人"
+        case 4:return "1000-9999人"
+        case 4:return "10000人以上"
+        default: return "20人以下"
     }
 }
 

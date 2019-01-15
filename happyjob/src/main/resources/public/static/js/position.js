@@ -359,11 +359,56 @@ function posTypeConfig(){
 		},
 		callback:function(data){
 			if(data){
-				var content = '';
+				var list = data.list;
+				var length = list.length;
+				var content ='';
+				var parentNum = 0;
+				for(var i=0;i<length;i++){
+					
+					if(!list[i].parentId){ // 父类
+						++parentNum  ;
+						if( parentNum%2 ==1){
+							content  += '<div class="form-group" style="height:40px;"><label class="col-sm-3" align="center">'+list[i].typeName+ '</label>';
+							for(var j=0;j<length;j++){
+								if(list[i].hpPositionTypeId == list[j].parentId){
+									content += '<div data-type="posType" class="col-sm-3" data-id="'+list[j].hpPositionTypeId+'">';
+									content +='<font  size="2" class="fontCol">'+list[j].typeName+'</font></div>';
+								}
+							}
+						}
+						else{
+							content  += '<div class="form-group" style=" height:40px;background:#BCD2EE"  ><label class="col-sm-3" align="center">'+list[i].typeName+ '</label>';
+							for(var j=0;j<length;j++){
+								if(list[i].hpPositionTypeId == list[j].parentId){
+									content += '<div data-type="posType" class="col-sm-3" data-id="'+list[j].hpPositionTypeId+'">';
+									content +='<font  size="2" class="fontCol">'+list[j].typeName+'</font></div>';
+								}
+							}
+						}
+						content += '</div>';
+						console.log(content);
+					}
+				}
+				if(content !=''){
+					$("#posTypeBox").html(content);
+				}
+			}
+		}
+	});
+}
+
+function posTypeConfig2(){
+	fetchGet({
+		url:apiData.posTypeList,
+		params:{
+		},
+		callback:function(data){
+			if(data){
 				var list = data.list;
 				var length = list.length;
 				for(var i=0;i<length;i++){
 					if(!list[i].parentId){ // 父类
+						console.log("ppp:"+list[i].parentId);
 						content += '<div>'+list[i].typeName+'</div><div>';
 						for(var j=0;j<length;j++){
 							if(list[i].hpPositionTypeId == list[j].parentId){

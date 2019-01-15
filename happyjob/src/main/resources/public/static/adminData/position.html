@@ -28,6 +28,8 @@
 .requredText{
  color:red;
 }
+.fontCol{
+	color:	#4169E1;
 </style>
   
 </head>
@@ -546,35 +548,53 @@
 <!-- 职业类型 -->
 <div class="modal fade" id="bm_posType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
-		<div class="modal-content">
+		<div class="modal-content" style="width:800px;">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title">职业类型</h4>
+<!-- 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+<!-- 			<h4 class="modal-title">职业类型</h4> -->
+			<div>
+						<label  class="col-sm-3">已选：</label>
+						<div id="posTypeOn" class="col-sm-4">
+						</div>
+						<button type="button" class="btn btn-primary  btn-sm col-sm-1 col-sm-offset-3" style="background:#F27036" data-dismiss="modal">确认</button>
+						<button type="button" class="btn btn-primary   btn-sm col-sm-1 " style="background:#F27036" data-dismiss="modal">关闭</button>
+			</div>
 		</div>
 		<div class="modal-body">
 			<form   class="form-horizontal">
 				<div>
-					<div>
-						<label  align="right" >已选：</label>
-						<div id="posTypeOn">
-						</div>
-					</div>
-					<div id="posTypeBox" class=" col-sm-5 col-sm-offset-2" >
-						<div>
-							IT|互联网|通信|电子
-						</div>
-						<div>
-							<div data-type="posType" data-id="">计算机硬件及网络设备</div>
-							<div data-type="posType" data-id="">计算机硬件及网络设备</div>
-							<div data-type="posType" data-id="">计算机硬件及网络设备</div>
+					
+					<div id="posTypeBox" class="" >
+						<div class="form-group" >
+<!-- 							<div  class="col-sm-3" align="center"> -->
+								<label class="col-sm-3" align="center" >IT|互联网|通信|电子</label>
+<!-- 							</div> -->
+							<div data-type="posType" class="col-sm-3" data-id="2">
+								<font size="2" class="fontCol">计算机硬件及网络设备</font>
+							</div>
+							<div data-type="posType" class="col-sm-3" data-id="3">
+								<font size="2">计算机软件</font>
+							</div>
+							<div data-type="posType" class="col-sm-3" data-id="4">
+								<font size="2">IT服务（系统/数据/维护）</font>
+							</div>
+							<div data-type="posType" class="col-sm-3" data-id="5">
+								<font size="2">互联网|电子商务</font>
+							</div>
+							<div data-type="posType" class="col-sm-3" data-id="6">
+								<font size="2">网络游戏</font>
+							</div>
+							<div data-type="posType" class="col-sm-3" data-id="7">
+								<font size="2">通信(设备/运营/增值服务)</font>
+							</div>
 						</div>
 					</div>
 				</div>
 			</form>
 		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
-		</div>
+<!-- 		<div class="modal-footer"> -->
+<!-- 			<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button> -->
+<!-- 		</div> -->
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div>
