@@ -392,8 +392,9 @@ function registResource(value){
 //判断是否认证
 function approveState(value){
     switch (value) {
-        case 0:return "未认证"
+        case 0:return "未申请认证"
         case 1:return "认证通过"
         case 2:return "认证不通过"
+        case 3:return "认证待审核"
     }
 }
