@@ -671,7 +671,7 @@ public class UserServiceImpl implements UserService {
     public BaseMsg insertOrUpUserEdu(String sid, HpUserEducationEntity data) {
         BaseMsg msg = new BaseMsg();
         // TODO 安全验证
-        Long eduId = data.getHpEducationId();
+        Long eduId = data.getHpUserEducationId();
         if(eduId == null || eduId.compareTo(1L)<0) { // 新增 
             this.hpUserEducationMapper.insert(data);
         }else {
