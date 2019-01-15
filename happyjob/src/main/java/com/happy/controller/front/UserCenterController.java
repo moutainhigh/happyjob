@@ -22,6 +22,7 @@ import com.happy.service.position.PositionService;
 import com.happy.service.position.data.GroupDataMsg;
 import com.happy.service.position.data.PositionListMsg;
 import com.happy.service.user.UserService;
+import com.happy.service.user.data.UpImgMsg;
 import com.happy.service.user.data.UserResumeDataMsg;
 import com.happy.service.user.data.UserSimpleDataMsg;
 import com.happy.util.Util;
@@ -237,25 +238,64 @@ public class UserCenterController {
    
    /**
     *
-    * @TODO:     用户岗位申请列表
+    * @TODO:     小程序二维码生成
     */
-   @ApiOperation(value="用户分享二维码：二维码生成",notes="二维码生成")
+   @ApiOperation(value="用户分享二维码：二维码生成",notes="二维码生成接口B")
    @PostMapping(value="shareQrCodeA")
-   public PositionListMsg shareQrCode(
+   public UpImgMsg shareQrCodeA(
        @RequestHeader(name="oid",defaultValue="微信登录凭证",required=true) String oid,
        @RequestHeader(name="sid",defaultValue="用户登录凭证",required=true) String sid,
-       @RequestHeader(name="targetUrl",defaultValue="需要生产二维码的页面访问地址",required=true) String targetUrl
+       @RequestHeader(name="targetUrl",defaultValue="需要生产二维码的页面访问地址,根路径前不要填加 /",required=true) String targetUrl
        ) {
        
        logger.info("positionApply 参数日志：sid=={},oid=={},targetUrl=={}",sid,oid,targetUrl);
        
        
-       JSONObject json = Util.getWXAQRCode(WxModelConst.getAppAccessToken(WxAppParamsEnum.PARAMS_APPLETS_JOB, false), 
-           Const.HP_UP_IMG_USER_PATH, Const.HP_QRCODE_IMAGE_WIDTH);
+       UpImgMsg msg = Util.getWXAQRCode(WxModelConst.getAppAccessToken(WxAppParamsEnum.PARAMS_APPLETS_JOB, false), 
+           targetUrl, Const.HP_QRCODE_IMAGE_WIDTH);
+       
+       return msg;
+   }
+   /**
+    *
+    * @TODO:     小程序二维码生成
+    */
+   @ApiOperation(value="用户分享二维码：二维码生成",notes="二维码生成接口B")
+   @PostMapping(value="shareQrCodeB")
+   public UpImgMsg shareQrCodeB(
+       @RequestHeader(name="oid",defaultValue="微信登录凭证",required=true) String oid,
+       @RequestHeader(name="sid",defaultValue="用户登录凭证",required=true) String sid,
+       @RequestHeader(name="targetUrl",defaultValue="需要生产二维码的页面访问地址,根路径前不要填加 /",required=true) String targetUrl
+       ) {
+       
+       logger.info("positionApply 参数日志：sid=={},oid=={},targetUrl=={}",sid,oid,targetUrl);
        
        
+       UpImgMsg msg = Util.getWXACode(WxModelConst.getAppAccessToken(WxAppParamsEnum.PARAMS_APPLETS_JOB, false), 
+           targetUrl, Const.HP_QRCODE_IMAGE_WIDTH);
        
-       return null;
+       return msg;
+   }
+   /**
+    *
+    * @TODO:     小程序二维码生成
+    */
+   @ApiOperation(value="用户分享二维码：二维码生成",notes="二维码生成接口C")
+   @PostMapping(value="shareQrCodeC")
+   public UpImgMsg shareQrCodeC(
+       @RequestHeader(name="oid",defaultValue="微信登录凭证",required=true) String oid,
+       @RequestHeader(name="sid",defaultValue="用户登录凭证",required=true) String sid,
+       @RequestHeader(name="scene",defaultValue="最大32个可见字符，只支持数字，大小写英文以及部分特殊字符",required=true) String scene,
+       @RequestHeader(name="page",defaultValue="必须是已经发布的小程序存在的页面（否则报错），根路径前不要填加斜杠,不能携带参数（参数请放在scene字段里）",required=true) String page
+       ) {
+       
+       logger.info("positionApply 参数日志：sid=={},oid=={},scene,page=={}",sid,oid,scene,page);
+       
+       
+       UpImgMsg msg = Util.getWXACodeUnlimit(WxModelConst.getAppAccessToken(WxAppParamsEnum.PARAMS_APPLETS_JOB, false),scene, 
+           page, Const.HP_QRCODE_IMAGE_WIDTH);
+       
+       return msg;
    }
    
    

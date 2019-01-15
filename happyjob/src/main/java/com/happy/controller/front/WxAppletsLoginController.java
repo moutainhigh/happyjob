@@ -1,10 +1,29 @@
  package com.happy.controller.front;
 
+import java.io.UnsupportedEncodingException;
+import java.security.AlgorithmParameters;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.Security;
+import java.security.spec.InvalidParameterSpecException;
+
 import javax.annotation.Resource;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.codec.binary.Base64;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -171,4 +190,74 @@ public class WxAppletsLoginController {
       return this.userService.insertCompanyApply(name, comName, contactNo, position);
   }
   
+  /**
+  *
+  * @TODO:     小程序解密用户敏感数据
+  * @CreateTime:  2018年12月4日下午3:05:24 
+  * @CreateAuthor: chenwei
+  * @param request
+  * @return
+  */
+ @ApiOperation(value="解密数据：小程序解密用户敏感数据",notes="小程序解密用户敏感数据")
+ @ApiImplicitParams({
+     @ApiImplicitParam(name="encryptedData",value="消息",paramType="query",required = true,dataType="String"),
+     @ApiImplicitParam(name="iv",value="向量",paramType="query",required = true,dataType="String"),
+     @ApiImplicitParam(name="sessionKey",value="那个ID",paramType="query",required = true,dataType="String"),
+ })
+ @GetMapping(value="decodeUserInfo")
+ public JSONObject decodeUserInfo(HttpServletRequest request) {
+     String encryptedData = request.getParameter("encryptedData");
+     String iv = request.getParameter("iv");
+     String sessionKey = request.getParameter("sessionKey");
+  // 被加密的数据
+     byte[] dataByte = Base64.decodeBase64(encryptedData);
+     // 加密秘钥
+     byte[] keyByte = Base64.decodeBase64(sessionKey);
+     // 偏移量
+     byte[] ivByte = Base64.decodeBase64(iv);
+     try {
+         // 如果密钥不足16位，那么就补足.  这个if 中的内容很重要
+         int base = 16;
+         if (keyByte.length % base != 0) {
+             int groups = keyByte.length / base + (keyByte.length % base != 0 ? 1 : 0);
+             byte[] temp = new byte[groups * base];
+             Arrays.fill(temp, (byte) 0);
+             System.arraycopy(keyByte, 0, temp, 0, keyByte.length);
+             keyByte = temp;
+         }
+         // 初始化
+         Security.addProvider(new BouncyCastleProvider());
+         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding","BC");
+         SecretKeySpec spec = new SecretKeySpec(keyByte, "AES");
+         AlgorithmParameters parameters = AlgorithmParameters.getInstance("AES");
+         parameters.init(new IvParameterSpec(ivByte));
+         cipher.init(Cipher.DECRYPT_MODE, spec, parameters);// 初始化
+         byte[] resultByte = cipher.doFinal(dataByte);
+         if (null != resultByte && resultByte.length > 0) {
+             String result = new String(resultByte, "UTF-8");
+             return JSONObject.parseObject(result);
+         }
+     }catch (NoSuchProviderException e) {
+         logger.error("here is exception", e);
+     } catch (UnsupportedEncodingException e) {
+         logger.error("here is exception", e);
+     } catch (NoSuchAlgorithmException e) {
+         logger.error("here is exception", e);
+     } catch (NoSuchPaddingException e) {
+         logger.error("here is exception", e);
+     } catch (InvalidKeyException e) {
+         logger.error("here is exception", e);
+     } catch (InvalidAlgorithmParameterException e) {
+         logger.error("here is exception", e);
+     } catch (InvalidParameterSpecException e) {
+         logger.error("here is exception", e);
+     } catch (IllegalBlockSizeException e) {
+         logger.error("here is exception", e);
+     } catch (BadPaddingException e) {
+         logger.error("here is exception", e);
+     }
+     return null;
+
+     
+ }
 }

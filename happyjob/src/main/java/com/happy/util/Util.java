@@ -1131,7 +1131,7 @@ public class Util {
    /**
     * @TODO:  获取小程序码接口B，适用于需要的码数量极多的业务场景。
     */
-   public static JSONObject getWXACodeUnlimit(String accessToken,String scene,String page,int width) {
+   public static UpImgMsg getWXACodeUnlimit(String accessToken,String scene,String page,int width) {
        
        String url = WxModelConst.WX_APPLETS_GETWXACODEUNLIMIT_URL.replace("${access_token}", accessToken);
        JSONObject json = new JSONObject();
@@ -1139,51 +1139,49 @@ public class Util {
        json.put("page", page);
        json.put("width", width);
        String result = Util.sendPostReFile(url, json.toString(), Const.HP_UP_IMG_USER_PATH);
-       JSONObject jsonResult = null;
+       UpImgMsg msg = new UpImgMsg();
        if(Util.isEmpty(result)) {
-           jsonResult = new JSONObject();
-           jsonResult.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
-           jsonResult.put(Const.RESUTL_MESSAGE_MESSAGE, "图片存储失败");
-           return jsonResult;
+           msg.setErrorCode(1);
+           msg.setMessage("图片存储失败");
+           return msg;
        }
        if(result.startsWith("http")) {
-           jsonResult = new JSONObject();
-           jsonResult.put(Const.RESUTL_MESSAGE_ERRORCODE, 0);
-           jsonResult.put(Const.RESUTL_MESSAGE_UP_IMG_URL, result);
-           return jsonResult;
+           UpImgData data = new UpImgData();
+           data.setImgUrl(result);
+           msg.setData(data);
+           return msg;
        }
-       jsonResult = JSONObject.parseObject(result);
-       jsonResult.put(Const.RESUTL_MESSAGE_ERRORCODE, jsonResult.getIntValue("errcode"));
-       jsonResult.put(Const.RESUTL_MESSAGE_MESSAGE, jsonResult.getIntValue("errmsg"));
-       return jsonResult;
+       JSONObject jsonResult = JSONObject.parseObject(result);
+       msg.setErrorCode(jsonResult.getIntValue("errcode"));
+       msg.setMessage(jsonResult.getString("errmsg"));
+       return msg;
    }
    /**
     * @TODO:  获取小程序码接口A，适用于需要的码数量极多的业务场景。
     */
-   public static JSONObject getWXAQRCode(String accessToken,String path,int width) {
+   public static UpImgMsg getWXAQRCode(String accessToken,String path,int width) {
        
        String url = WxModelConst.WX_APPLETS_CREATEWXAQRCODE_URL.replace("${access_token}", accessToken);
        JSONObject json = new JSONObject();
        json.put("path", path);
        json.put("width", width);
        String result = Util.sendPostReFile(url, json.toString(), Const.HP_UP_IMG_USER_PATH);
-       JSONObject jsonResult = null;
+       UpImgMsg msg = new UpImgMsg();
        if(Util.isEmpty(result)) {
-           jsonResult = new JSONObject();
-           jsonResult.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
-           jsonResult.put(Const.RESUTL_MESSAGE_MESSAGE, "图片存储失败");
-           return jsonResult;
+           msg.setErrorCode(1);
+           msg.setMessage("图片存储失败");
+           return msg;
        }
        if(result.startsWith("http")) {
-           jsonResult = new JSONObject();
-           jsonResult.put(Const.RESUTL_MESSAGE_ERRORCODE, 0);
-           jsonResult.put(Const.RESUTL_MESSAGE_UP_IMG_URL, result);
-           return jsonResult;
+           UpImgData data = new UpImgData();
+           data.setImgUrl(result);
+           msg.setData(data);
+           return msg;
        }
-       jsonResult = JSONObject.parseObject(result);
-       jsonResult.put(Const.RESUTL_MESSAGE_ERRORCODE, jsonResult.getIntValue("errcode"));
-       jsonResult.put(Const.RESUTL_MESSAGE_MESSAGE, jsonResult.getIntValue("errmsg"));
-       return jsonResult;
+       JSONObject jsonResult = JSONObject.parseObject(result);
+       msg.setErrorCode(jsonResult.getIntValue("errcode"));
+       msg.setMessage(jsonResult.getString("errmsg"));
+       return msg;
    }
    /**
     * @TODO:  获取小程序码接口C，适用于需要的码数量极多的业务场景。
@@ -1222,8 +1220,8 @@ public class Util {
         JSONObject json = new JSONObject();
         json.put("shareToken", "389a973a54d");
 //        String result = Util.getWXACode(access_token, "pages/home/home?shareToken=773d8ad1ad9540fc804389a973a54d", 430);
-        JSONObject result = Util.getWXACodeUnlimit(access_token,"a=b", "", 430);
-        System.out.println(result);
+        UpImgMsg result = Util.getWXACodeUnlimit(access_token,"a=b", "", 430);
+        System.out.println(JSONObject.toJSONString(result));
         //        JSONArray arr = new JSONArray();
 //        JSONObject temp1 = new JSONObject(true);
 //        temp1.put("name", "");
