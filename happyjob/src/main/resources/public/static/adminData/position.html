@@ -428,26 +428,6 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="startTime" class="col-sm-2" align="right" >开始时间：</label>
-				<div class="col-sm-3">
-					<input id="startTime" class="form-control" type="text" class="datepicker" autocomplete="false" >
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="endTime" class="col-sm-2" align="right" >到期时间：</label>
-				<div class="col-sm-3">
-					<input id="endTime" type="text" class="form-control" class="datepicker" autocomplete="false" >
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label for="posNum" class="col-sm-2" align="right">招聘人数：</label>
-				<div class="col-sm-3">
-					<input id="posNum" type="text" class="form-control"  oninput = "value=value.replace(/[^\d]/g,'')" >
-				</div>
-			</div>
-			
-			<div class="form-group">
 				<label for="area"  class="col-sm-2" align="right" ><span class="requredText">*</span>工作地点：</label>
 				<div class="col-sm-3">
 					<select id="province" data-type="area"  class="form-control  col-sm-8">
@@ -465,6 +445,27 @@
 					</select>
 				</div>
 			</div>
+			
+			<div class="form-group">
+				<label for="posNum" class="col-sm-2" align="right">招聘人数：</label>
+				<div class="col-sm-3">
+					<input id="posNum" type="text" class="form-control"  oninput = "value=value.replace(/[^\d]/g,'')" >
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="startTime" class="col-sm-2" align="right" >开始时间：</label>
+				<div class="col-sm-3">
+					<input id="startTime" class="form-control datepicker" type="text" autocomplete="off" >
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="endTime" class="col-sm-2" align="right" >到期时间：</label>
+				<div class="col-sm-3">
+					<input id="endTime" type="text" class="form-control datepicker" autocomplete="off" >
+				</div>
+			</div>
+			
 			
 			<div class="form-group">
 				<label for="hpEducationId" class="col-sm-2" align="right" ><span class="requredText">*</span>学历要求：</label>
