@@ -1,10 +1,4 @@
-/** 
- *  @Copyright:  http://www.yugyg.com 无锡愚公网络科技有限公司 Inc. All rights reserved.
- *  @CreateTime: 2019年1月3日下午2:35:34
- *  @CreateUser: chenwei 
- *  
- *
-*/
+
  package com.happy.util.wxUtil;
 
 
@@ -14,7 +8,7 @@
  *
  *  @CreateTime  : 2019年1月3日下午2:35:34
  *  @CreateAuthor: chenwei
- *  @Email       : yg_chenwei@yugyg.com
+ *  @Email       : 
  *
  */
 public enum WxAppParamsEnum {

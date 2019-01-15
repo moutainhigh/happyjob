@@ -1,12 +1,4 @@
-/** 
 
-·+
- *  @Copyright:  http://www.yugyg.com 无锡愚公网络科技有限公司 Inc. All rights reserved.
- *  @CreateTime: 2018年12月29日下午5:05:11
- *  @CreateUser: chenwei 
- *  
- *
-*/
  package com.happy.util.wxUtil;
 
 import com.happy.util.Util;
@@ -17,7 +9,7 @@ import com.happy.util.Util;
  *
  *  @CreateTime  : 2018年12月29日下午5:05:11
  *  @CreateAuthor: chenwei
- *  @Email       : yg_chenwei@yugyg.com
+ *  @Email       : 
  *
  */
 public class WxModelConst {

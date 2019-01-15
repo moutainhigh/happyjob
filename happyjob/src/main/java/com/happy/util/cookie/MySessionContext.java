@@ -1,10 +1,4 @@
-/** 
- *  @Copyright:  http://www.yugyg.com 无锡愚公网络科技有限公司 Inc. All rights reserved.
- *  @CreateTime: 2019年1月13日上午10:47:58
- *  @CreateUser: chenwei 
- *  
- *
-*/
+
  package com.happy.util.cookie;
 
 import java.util.HashMap;
@@ -21,7 +15,7 @@ import com.happy.util.pubConst.Const;
  *
  *  @CreateTime  : 2019年1月13日上午10:47:58
  *  @CreateAuthor: chenwei
- *  @Email       : yg_chenwei@yugyg.com
+ *  @Email       : 
  *
  */
 public class MySessionContext {

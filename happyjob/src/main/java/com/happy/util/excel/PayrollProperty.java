@@ -1,8 +1,3 @@
-/**
-@CreateTime: sunning2018年12月31日
-@CreateUser: sunning 
-@Copyright: http://www.yugyg.com 无锡愚公网络科技有限公司 Inc. All rights reserved.
-*/
 
  package com.happy.util.excel;
 
