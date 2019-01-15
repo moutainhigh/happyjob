@@ -191,7 +191,6 @@ $(document).on("click",".cat",function(){
 
 // 打开 修改modal
 $(document).on("click",".openUpdateModal",function(){
-	positionConfig2();
 	$('select[data-type="area2"]').change(function(){ // 地区选择
 		areaConfig2($(this).attr("id"),$(this).val()); // 地区
 	});
@@ -212,15 +211,19 @@ $(document).on("click",".openUpdateModal",function(){
     var countyId = $row.data("county-id");
     var cityId = $row.data("city-id");
     var provinceId = $row.data("province-id");
+    var provinceName = $row.data("province-name");
+    var cityName = $row.data("city-name");
+    var countyName = $row.data("county-name");
     
     $("#hpCompanyId2").val(hpCompanyId);
     $("#comName2").val(comName);
     $("#companyTypeId2").val(companyTypeId);
     $("#companyScaleId2").val(scaleId);
     $("#comDesc2").val(comDesc);
-    $("#countyId2").val(countyId);
-    $("#cityId2").val(cityId);
-    $("#provinceId2").val(provinceId);
+    $("#province2").val(provinceId);
+	$("#city2").append('<option value="'+cityId+'" selected >'+cityName+'</option>');
+	$("#county2").append('<option value="'+countyId+'" selected >'+countyName+'</option>');
+	
     $("#addrDetail2").val(addrDetail);
     $("#comtPerson2").val(comtPerson);
     $("#comPhone2").val(comPhone);
@@ -241,7 +244,7 @@ $(document).on("click","#updateComfirm",function(){
     var companyTypeId = $("#companyTypeId2").val();
     var companyScaleId = $("#companyScaleId2").val();
     var comDesc = $("#comDesc2").val();
-    var countyId = $("#countyId2").val();
+    var countyId = $("#county2").val();
     var addrDetail = $("#addrDetail2").val();
     var comtPerson = $("#comtPerson2").val();
     var comPhone = $("#comPhone2").val();
@@ -444,7 +447,7 @@ function areaConfig2(areaType,areaId){
 	var cityId = null;
 	if(areaType == "province2"){ // 省查询市
 		provinceId = areaId;
-		$("#county").html('<option>全部</option>');
+		$("#county2").html('<option>全部</option>');
 	}else if(areaType == "city2"){ // 市查询区县
 		cityId = areaId;
 	}else if(areaType == "county2"){
@@ -528,6 +531,9 @@ function addTableList(list){
             data-county-id="'+ item.countyId +'" \
             data-city-id="'+ item.cityId +'" \
             data-province-id="'+ item.provinceId +'" \
+            data-province-name="'+ item.provinceName +'" \
+            data-city-name="'+ item.cityName +'" \
+            data-county-name="'+ item.countyName +'" \
             data-location="'+item.provinceName+item.cityName+item.countyName +'"\
             data-scale-id="'+ item.hpCompanyScaleId +'" \
             data-com-desc="'+ item.comDesc +'" \
