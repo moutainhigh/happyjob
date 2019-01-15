@@ -16,7 +16,7 @@
 	
 	<select id="getSimpleUserByKey" resultType="com.happy.service.user.data.UserSimpleData" >
 		SELECT u.hp_user_id,u.user_token,u.share_token,u.phone_no,u.approve_state,u.black_on,
-		u.user_name,u.header_pic,u.gender,u.approve_num,ur.hp_user_resume_id 
+		u.user_name,u.header_pic,u.gender,u.approve_num,ur.hp_user_resume_id,u.real_name  
 		FROM hp_user u 
 		LEFT JOIN hp_user_resume ur ON u.hp_user_id=ur.hp_user_id
 		WHERE 1=1 
@@ -76,8 +76,10 @@
 	<select id="getUserExpByResumeId" resultType="com.happy.entity.HpUserExpEntity" >
 		SELECT ue.* FROM hp_user_exp ue WHERE ue.hp_user_resume_id=#{hpResumeId}
 	</select>
-	<select id="getUserResumBySid" resultType="com.happy.entity.HpUserResumeEntity" >
-		SELECT ur.* FROM hp_user_resume ur WHERE ur.hp_user_id=<include refid="getIdBySid"></include>
+	<select id="getUserResumBySid" resultType="com.happy.service.user.data.UserResume" >
+		SELECT ur.*,e.edu_name FROM hp_user_resume ur 
+		LEFT JOIN hp_education e ON ur.hp_education_id=e.hp_education_id 
+		WHERE ur.hp_user_id=<include refid="getIdBySid"></include>
 	</select>
 	
 	<select id="getUserRealByphone" resultType="com.happy.service.user.data.UserSimpleData" >

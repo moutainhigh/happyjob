@@ -3,7 +3,6 @@
 import java.util.List;
 
 import com.happy.entity.HpUserExpEntity;
-import com.happy.entity.HpUserResumeEntity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -12,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class UserResumeData {
 
     @ApiModelProperty(name="resumeBase",value="用户简历基本信息对象")
-    private HpUserResumeEntity resumeBase;
+    private UserResume resumeBase;
     
     @ApiModelProperty(name="intentionList",value="用户简历求职意向集合")
     private List<UserIntentionData> intentionList ;
@@ -23,11 +22,11 @@ public class UserResumeData {
     @ApiModelProperty(name="eduList",value="用户简历求职意向集合")
     private List<UserEduDate> eduList ;
 
-    public HpUserResumeEntity getResumeBase() {
+    public UserResume getResumeBase() {
         return resumeBase;
     }
 
-    public void setResumeBase(HpUserResumeEntity resumeBase) {
+    public void setResumeBase(UserResume resumeBase) {
         this.resumeBase = resumeBase;
     }
 

@@ -7,11 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import com.happy.entity.HpUserExpEntity;
 import com.happy.entity.HpUserPayrollEntity;
-import com.happy.entity.HpUserResumeEntity;
 import com.happy.service.user.data.OtherUserData;
 import com.happy.service.user.data.UserEduDate;
 import com.happy.service.user.data.UserIntentionData;
 import com.happy.service.user.data.UserManageSearch;
+import com.happy.service.user.data.UserResume;
 import com.happy.service.user.data.UserSimpleData;
 
 @Repository("hpUserExMapper")
@@ -61,7 +61,7 @@ public interface HpUserExMapper{
   *
   * @TODO:     描述一下这个方法是干什么的
   */
-  HpUserResumeEntity getUserResumBySid(@Param("sid") String sid);
+  UserResume getUserResumBySid(@Param("sid") String sid);
   /**
   *
   * @TODO:     描述一下这个方法是干什么的

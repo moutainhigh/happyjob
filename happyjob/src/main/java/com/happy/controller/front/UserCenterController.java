@@ -27,7 +27,6 @@ import com.happy.service.user.data.UserResumeDataMsg;
 import com.happy.service.user.data.UserSimpleDataMsg;
 import com.happy.util.Util;
 import com.happy.util.pubConst.Const;
-import com.happy.util.pubConst.WxAppletsConst;
 import com.happy.util.wxUtil.WxAppParamsEnum;
 import com.happy.util.wxUtil.WxModelConst;
 

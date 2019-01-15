@@ -28,6 +28,7 @@ import com.happy.service.user.data.OtherUserData;
 import com.happy.service.user.data.UserAddData;
 import com.happy.service.user.data.UserManageSearch;
 import com.happy.service.user.data.UserPayrollDataMsg;
+import com.happy.service.user.data.UserResume;
 import com.happy.service.user.data.UserResumeData;
 import com.happy.service.user.data.UserResumeDataMsg;
 import com.happy.service.user.data.UserSearch;
@@ -636,7 +637,7 @@ public class UserServiceImpl implements UserService {
         UserResumeDataMsg msg = new UserResumeDataMsg();
         UserResumeData data = new UserResumeData();
         
-        HpUserResumeEntity base = this.hpUserExMapper.getUserResumBySid(sid);
+        UserResume base = this.hpUserExMapper.getUserResumBySid(sid);
         if(base == null) {
             msg.setErrorCode(1);
             msg.setMessage("没有创建简历信息");
