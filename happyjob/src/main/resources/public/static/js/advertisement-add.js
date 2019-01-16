@@ -19,7 +19,11 @@ $('#upPic').on('change',function(){                                             
      return 
   	} 
    $("#imgContent").css("display", "block");
-    $('#imgContent').attr('src',src)
+   $('#imgContent').attr('src',src)
+   
+   //上传图片
+   uploadPic(window.location.origin + "/wxAppletsLogin/imgUpOne");
+   
 })
 
 	
@@ -61,8 +65,7 @@ var listParams = {
 
 // 保存广告
 $(document).on("click","#saveAdvertisement",function(){
-	//先保存图片
-	uploadPic(window.location.origin + "/wxAppletsLogin/imgUpOne");
+	
 	
 	listParams.title = $("#title").val();
 	listParams.location = $("#posType").val();
