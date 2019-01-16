@@ -40,7 +40,7 @@ import com.happy.service.user.data.UpImgData;
 import com.happy.service.user.data.UpImgMsg;
 import com.happy.util.Util;
 import com.happy.util.pubConst.Const;
-import com.happy.util.pubConst.WxAppletsConst;
+import com.happy.util.wxUtil.WxAppParamsEnum;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -81,7 +81,7 @@ public class WxAppletsLoginController {
         
         logger.info("wxVoteLogin 参数信息：code=={},storeToken=={}",code,storeToken);
         
-        JSONObject wxJson = this.userService.getSessionKeyAndOropenid(code, WxAppletsConst.XCX_JOB_APPID, WxAppletsConst.XCX_JOB_SECRET);
+        JSONObject wxJson = this.userService.getSessionKeyAndOropenid(code, WxAppParamsEnum.PARAMS_APPLETS_JOB.getAppId(), WxAppParamsEnum.PARAMS_APPLETS_JOB.getAppSecret());
         if(Util.isEmpty(wxJson)) { // 未获取到微信信息
             msg.setErrorCode(1);
             msg.setMessage("未获取到用户微信信息");
