@@ -193,7 +193,7 @@ AND (SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_i
          aco.county_id,aco.county_name,aci.city_id,aci.city_name,ap.province_id,ap.province_name  
          
 		FROM hp_position p JOIN hp_company c ON p.hp_company_id=c.hp_company_id 
-		JOIN hp_position_salary ps ON p.hp_position_salary_id=ps.hp_position_salary_id 
+		LEFT JOIN hp_position_salary ps ON p.hp_position_salary_id=ps.hp_position_salary_id 
 		LEFT JOIN hp_area_county aco ON p.county_id=aco.county_id 
 		LEFT JOIN hp_area_city aci ON aco.city_id=aci.city_id 
 		LEFT JOIN hp_area_province ap ON aci.province_id=ap.province_id 

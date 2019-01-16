@@ -171,7 +171,6 @@ function formSub(){ // 提交验证
 	if(welFareIds != ""){
 		welFareIds = welFareIds.substring(0,welFareIds.length-1);
 	}
-	console.log(welFareIds);
 	var urgentOn = $("#urgentOn").val();
 	var urgentMoney = $("#urgentMoney").val();
 	
@@ -191,6 +190,10 @@ function formSub(){ // 提交验证
 	
 	var jobHours = $("#jobHours").val();
 	var hpPositionOfferId = $("#hpPositionOfferId").val();
+	if(!hpPositionOfferId){
+		swal('字段缺失', '招聘形式必填', 'error');
+		return;
+	}
 	var comCustPhone = $("#comCustPhone").val();
 	
 	var hpPositionTypeId = $("#hpPositionTypeId").val();
@@ -207,18 +210,33 @@ function formSub(){ // 提交验证
 	
 	var otherWelfare = UE.getEditor('otherWelfareEditor').getContent();
 	var carOn = $("#carOn").val();
+	if(!carOn){
+		swal('字段缺失', '是否有班车必填', 'error');
+		return;
+	}
 	var carDesc = $("#carDesc").val();
 	var posComDesc = UE.getEditor('posComDescEditor').getContent();
 	var posNature = $('input[name="posNature"]:checked').val();
 	
 	var hpPositionSalaryId = $('#hpPositionSalaryId').val();
+	if(!hpPositionSalaryId){
+		swal('字段缺失', '职位月薪必填', 'error');
+		return;
+	}
 	var posWorkYear = $('#posWorkYear').val();
-	
+	if(!posWorkYear){
+		swal('字段缺失', '工作经验', 'error');
+		return;
+	}
 	var startTime = publicObj.transferTime($("#startTime").val());
 	var endTime = publicObj.transferTime($("#endTime").val());
 	
 	var posNum = $('#posNum').val();
 	var county = $('#county').val();
+	if(!county){
+		swal('字段缺失', '工作地点必须选定到区县级', 'error');
+		return;
+	}
 	var hpEducationId = $('#hpEducationId').val();
 	var posPerson = $('#posPerson').val();
 	var posPhone = $('#posPhone').val();
@@ -337,7 +355,6 @@ function welfareConfig(){
 		},
 		callback:function(data){
 			if(data){
-				console.log(data);
 				var content = '';
 				var list = data.list;
 				var length = list.length;
@@ -382,7 +399,6 @@ function posTypeConfig(){
 						}
 						
 						content += '</div>';
-						console.log(content);
 					}
 				}
 				if(content !=''){
@@ -404,7 +420,6 @@ function posTypeConfig2(){
 				var length = list.length;
 				for(var i=0;i<length;i++){
 					if(!list[i].parentId){ // 父类
-						console.log("ppp:"+list[i].parentId);
 						content += '<div>'+list[i].typeName+'</div><div>';
 						for(var j=0;j<length;j++){
 							if(list[i].hpPositionTypeId == list[j].parentId){
@@ -449,7 +464,7 @@ function areaConfig(areaType,areaId){
 	var cityId = null;
 	if(areaType == "province"){ // 省查询市
 		provinceId = areaId;
-		$("#county").html('<option>全部</option>');
+		$("#county").html('<option value="">全部</option>');
 	}else if(areaType == "city"){ // 市查询区县
 		cityId = areaId;
 	}else if(areaType == "county"){
@@ -463,7 +478,7 @@ function areaConfig(areaType,areaId){
 		},
 		callback:function(data){
 			if(data){
-				var content = '<option>全部</option>';
+				var content = '<option value="">全部</option>';
 				var list = data.list;
 				var length = list.length;
 				for(var i=0;i<length;i++){
@@ -527,7 +542,6 @@ function editorPosition(){
 			$("#womenDayNum").val(positionData.womenDayNum);
 			$("#retWomanMoney").val(positionData.retWomanMoney);
 			var welFareIds = positionData.welfareArr;
-			console.log(welFareIds);
 			if(welFareIds){
 				var welFareIdArr = welFareIds.split(",");
 				$('input[name="hpPositionWelfareId"]').each(function(){
