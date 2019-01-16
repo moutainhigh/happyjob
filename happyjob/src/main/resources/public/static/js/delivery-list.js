@@ -193,7 +193,7 @@ var listParams = {
 		gender:"",
 		contactStat:"",
 		currentPage:1,
-		showCount:5
+		showCount:15
 }
 var list= [];
 var totalPage=1;
@@ -263,18 +263,17 @@ function addTableList(list){
 	            <button type="button" class="btn btn-default btn-sm cat">查看</button>\ '
             
             if(item.optionId == "" || item.optionId ==null){ //未联系
-	        	templeteTr += '<button type="button" class="btn btn-primary btn-sm contact">联系</button> '
+	        	templeteTr += '<button type="button" class="btn btn-primary btn-sm contact">联系</button>\ '
 	        }else{
 	        	if(item.workOn == 0){
-	        		templeteTr += '<button type="button" class="btn btn-primary btn-sm entry">入职</button> '
+	        		templeteTr += '<button type="button" class="btn btn-primary btn-sm entry">入职</button>\ '
 	        	}else{
-	        		templeteTr += '<button type="button" class="btn btn-primary btn-sm entered">已入职</button>'
+	        		templeteTr += '<button type="button" class="btn btn-primary btn-sm entered">已入职</button>\ '
 	        	}
 	        }
             
 	            templeteTr +='</th>\
-	        <th class="comPer"></th>\ 
-	        <th class="comPho"></th>\
+				        <th class="comPer"></th>\ <th class="comPho"></th>\
 	        </tr>';
     })
     $tBody.html(templeteTr)    

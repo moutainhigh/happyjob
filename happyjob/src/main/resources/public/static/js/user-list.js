@@ -15,7 +15,7 @@ var listParams = {
 	    blackOn:"",
 	    userType:"",
 	    currentPage:1,
-	    showCount:5
+	    showCount:15
 }
 
 //查询

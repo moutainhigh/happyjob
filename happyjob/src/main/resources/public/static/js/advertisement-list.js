@@ -169,7 +169,7 @@ $(document).on("click",".updateAdv",function(){
 
 var listParams = {
     currentPage:1,
-    showCount:5
+    showCount:15
 }
 var list= [];
 var totalPage=1;
