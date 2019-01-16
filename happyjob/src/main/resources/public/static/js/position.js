@@ -132,8 +132,9 @@ $(document).on("change",'input[name="hpPositionWelfareId"]',function(){  // 福�
 $(document).on("click",'*[data-type="posType"]',function(){
 	var $this = $(this);
 	$("#hpPositionTypeId").val($this.data("id"));
-	$("#hpPositionTypeName").val($this.html());
 	$("#posTypeOn").html($this.html());
+	
+	$("#hpPositionTypeName").val($this.html());
 })
 
 function formSub(){ // 提交验证
@@ -369,22 +370,17 @@ function posTypeConfig(){
 						++parentNum  ;
 						if( parentNum%2 ==1){
 							content  += '<div class="form-group" style="height:40px;"><label class="col-sm-3" align="center">'+list[i].typeName+ '</label>';
-							for(var j=0;j<length;j++){
-								if(list[i].hpPositionTypeId == list[j].parentId){
-									content += '<div data-type="posType" class="col-sm-3" data-id="'+list[j].hpPositionTypeId+'">';
-									content +='<font  size="2" class="fontCol">'+list[j].typeName+'</font></div>';
-								}
-							}
-						}
-						else{
+						}else{
 							content  += '<div class="form-group" style=" height:40px;background:#BCD2EE"  ><label class="col-sm-3" align="center">'+list[i].typeName+ '</label>';
-							for(var j=0;j<length;j++){
-								if(list[i].hpPositionTypeId == list[j].parentId){
-									content += '<div data-type="posType" class="col-sm-3" data-id="'+list[j].hpPositionTypeId+'">';
-									content +='<font  size="2" class="fontCol">'+list[j].typeName+'</font></div>';
-								}
+						}	
+						
+						for(var j=0;j<length;j++){
+							if(list[i].hpPositionTypeId == list[j].parentId){
+								content += '<div  class="col-sm-3" >';
+								content +='<font data-type="posType" size="2" class="fontCol" data-id="'+list[j].hpPositionTypeId+'" >'+list[j].typeName+'</font></div>';
 							}
 						}
+						
 						content += '</div>';
 						console.log(content);
 					}
@@ -396,7 +392,7 @@ function posTypeConfig(){
 		}
 	});
 }
-
+//原来的方法
 function posTypeConfig2(){
 	fetchGet({
 		url:apiData.posTypeList,
