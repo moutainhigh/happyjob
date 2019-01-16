@@ -52,7 +52,7 @@ import com.happy.sqlMapper.HpUserSearchMapper;
 import com.happy.util.Util;
 import com.happy.util.pubConst.Const;
 import com.happy.util.pubConst.ResultMsg;
-import com.happy.util.pubConst.WxAppletsConst;
+import com.happy.util.wxUtil.WxModelConst;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -199,7 +199,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public JSONObject getSessionKeyAndOropenid(String wxCode, String appId, String secretKey) {
          
-        String url = WxAppletsConst.XCX_JSCODE_SEESION_URL.replace("${appid}", appId).
+        String url = WxModelConst.XCX_JSCODE_SEESION_URL.replace("${appid}", appId).
             replace("${secret}", secretKey).replace("${js_code}", wxCode);
         String result = Util.sendRequestGet(url);
         logger.info("微信code获取openId请求返回信息===={}",result);

@@ -41,6 +41,16 @@ public class WxModelConst {
     private static String applets_mall_access_token = null;
     /** 商城小程序access_token有效期截止 */
     private static long applets_mall_access_token_endTime = 0;
+    
+    
+    /**微信小程序根据code获取openId、unionId接口*/
+    public static final String XCX_JSCODE_SEESION_URL = "https://api.weixin.qq.com/sns/jscode2session?appid=${appid}"
+        + "&secret=${secret}&js_code=${js_code}&grant_type=authorization_code";
+    
+    /**微信小程序订单body*/
+    public static final String XCX_ORDER_BODY = "待定";
+    /**微信小程序统一下单支付类型*/
+    public static final String XCX_ORDER_TRADE_TYPE = "JSAPI";
    
     /**
      *
