@@ -83,7 +83,7 @@ $(document).on("click","#addComtact",function(){
 		        
 	        }
 	})
-    $('#comtactPersonModal').modal('toggle')
+    $('#comtactPersonModal').modal('hide')
     
 })
 
@@ -262,7 +262,7 @@ function addTableList(list){
             <th>\
 	            <button type="button" class="btn btn-default btn-sm cat">查看</button>\ '
             
-            if(item.optionId == "" || item.optionId ==null){ //未联系
+            if(item.optionPerson == "" || item.optionPerson == null){ //未联系
 	        	templeteTr += '<button type="button" class="btn btn-primary btn-sm contact">联系</button>\ '
 	        }else{
 	        	if(item.workOn == 0){
@@ -273,7 +273,7 @@ function addTableList(list){
 	        }
             
 	            templeteTr +='</th>\
-				        <th class="comPer"></th>\ <th class="comPho"></th>\
+				        <th class="comPer">'+isNull(item.optionPerson)+'</th>\ <th class="comPho">'+isNull(timestampToTime(item.optionTime))+'</th>\
 	        </tr>';
     })
     $tBody.html(templeteTr)    
@@ -294,11 +294,9 @@ function timestampToTime(timestamp) {
     var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
     var Y = date.getFullYear() + '-';
     var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-    var D = change(date.getDate()) + ' ';
-    var h = change(date.getHours()) + ':';
-    var m = change(date.getMinutes()) + ':';
-    var s = change(date.getSeconds());
-    return Y + M + D + h + m + s;
+    var D = change(date.getDate()) ;
+   
+    return Y + M + D ;
 }
 
 function timestampToDay(timestamp) {

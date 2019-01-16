@@ -100,9 +100,9 @@ public class DeliveryManageController {
     })
     @PostMapping(value = "/addComtact")
 	public BaseMsg addComtact(HttpServletRequest request){
-    	Long hpPositionRefUserId = (Long)Util.typeChange(request.getParameter("hpPositionRefUserId"), Long.class);
+    	Long hpPositionRefUserId = (Long)Util.typeChange(request.getParameter("positionRefUserId"), Long.class);
     	String comtPerson = request.getParameter("comtPerson").trim();
-    	Long comTime = (Long)Util.typeChange(request.getParameter("ComTime"), Long.class);
+    	Long comTime = (Long)Util.typeChange(request.getParameter("comTime"), Long.class);
     	Integer workOn = (Integer)Util.typeChange(request.getParameter("workOn"), Integer.class);
     	BaseMsg msg = deliveryService.addComtact(hpPositionRefUserId,comtPerson,comTime,workOn);
     	logger.info("backDelivery.addComtact hpPositionRefUserId={},comtPerson={},hpPositionRefUserId={}",hpPositionRefUserId,comtPerson,comTime);

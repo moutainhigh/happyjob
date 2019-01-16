@@ -12,7 +12,7 @@
 	           		ELSE 
 	           			p.ret_woman_money
 	        END reMoney,
-			pu.part_time,u.phone_no,u.hp_user_id,u.header_pic,pu.hp_position_ref_user_id
+			pu.part_time,u.phone_no,u.hp_user_id,u.header_pic,pu.hp_position_ref_user_id,pu.option_person,pu.option_time,pu.work_on
 		from hp_position_ref_user pu
 		left join hp_user u on pu.hp_user_id =u.hp_user_id
 		left join hp_position p on	pu.hp_position_id =p.hp_position_id
