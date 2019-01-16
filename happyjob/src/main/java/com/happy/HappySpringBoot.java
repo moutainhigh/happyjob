@@ -3,7 +3,6 @@ package com.happy;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.happy.util.ServiceConfig;
 import com.happy.util.Util;
-import com.happy.util.sms.SmsUtil;
 
 @SpringBootApplication
 @MapperScan({"com.happy.sqlMapper", "com.happy.sqlExMapper"})
