@@ -157,6 +157,7 @@ public class UserServiceImpl implements UserService {
             bound.setOpenid(openId);
             bound.setUnionid(unionid);
             bound.setCreateTime(curTime);
+            bound.setGender(1);
             
             if(!Util.isEmpty(storeToken)) { // 门店信息非空
                 Long storeId = this.hpConfigExMapper.getStoreIdByToken(storeToken);

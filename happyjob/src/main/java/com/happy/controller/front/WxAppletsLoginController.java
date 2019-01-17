@@ -95,11 +95,11 @@ public class WxAppletsLoginController {
             msg.setMessage("未获取到openid");
             return msg;
         }
-        if(Util.isEmpty(unionid)) {
-            msg.setErrorCode(1);
-            msg.setMessage("未获取到unionid");
-            return msg;
-        }
+//        if(Util.isEmpty(unionid)) {
+//            msg.setErrorCode(1);
+//            msg.setMessage("未获取到unionid");
+//            return msg;
+//        }
         if(Util.isEmpty(sessionKey)) {
             msg.setErrorCode(1);
             msg.setMessage("未获取到sessionKey");
