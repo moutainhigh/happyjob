@@ -53,7 +53,7 @@
 	
 	
 	<select id="getLoginUser" parameterType="String"  resultType = "com.happy.service.salary.data.LoginUserMsg">
-		select hp_user_id ,user_name, phone_no 
+		select hp_user_id ,user_name, phone_no ,real_name
 		from hp_user 
 		where 1 =1 
 		 	and user_token = #{userToken}

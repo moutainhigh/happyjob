@@ -96,7 +96,7 @@ public class DeliveryManageController {
         @ApiImplicitParam(name="hpPositionRefUserId",value="hpPositionRefUserId",dataType="Long",paramType="query",required=false),
         @ApiImplicitParam(name="comtPerson",value="联系人",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="comTime",value="联系时间",dataType="String",paramType="query",required=false),
-        @ApiImplicitParam(name="workOn",value="是否入职",dataType="Integer",paramType="query",required=false),
+        @ApiImplicitParam(name="workOn",value="是否入职 0未入职 1已入职",dataType="Integer",paramType="query",required=false),
     })
     @PostMapping(value = "/addComtact")
 	public BaseMsg addComtact(HttpServletRequest request){

@@ -42,11 +42,8 @@ var $object ;
 // 点击联系 出现modal
 $(document).on("click",".contact",function(){
 	var $row = $(this).parents("tr");
-    var hpPositionRefUserId = $row.data("position_ref_user_id");
-	var $contact = $(this).parents("tr").find(".contact");
-	var $comPer = $(this).parents("tr").find(".comPer");
-	var $comPon = $(this).parents("tr").find(".comPon");
 	$object = $row ;
+    var hpPositionRefUserId = $row.data("position_ref_user_id");
 	fetchPost({
 	        url:"/backDelivery/getLoginUserInfo",
 	        params: {},
@@ -68,18 +65,19 @@ $(document).on("click","#addComtact",function(){
     params.comtPerson = $("#comtPerson").val();
 	params.comTime = getDayToSecond($("#comTime").val());
 	params.positionRefUserId =  $("#positionRefUserId").val();
+	
 	var $contact = $object.find(".contact");
 	var $comPer = $object.find(".comPer");
-	var $comPon = $object.find(".comPon");
-	
+	var $comTime = $object.find(".comTime");
 	fetchPost({
 	        url:"/backDelivery/addComtact",
 	        params: params,
 	        callback:function(data){
 	            console.log(data);
 	            $contact.eq(0).html("入职");
-		        $comPer.eq(0).html(data.userName);
-		        $comPon.eq(0).html(data.phoneNo);
+	            $contact.eq(0).attr('class',"btn btn-primary btn-sm entry");
+		        $comPer.eq(0).html($("#comtPerson").val());
+		        $comTime.eq(0).html($("#comTime").val());
 		        
 	        }
 	})
@@ -90,19 +88,16 @@ $(document).on("click","#addComtact",function(){
 // 点击入职  出现modal
 $(document).on("click",".entry",function(){
 	var $row = $(this).parents("tr");
-    var hpPositionRefUserId = $row.data("position_ref_user_id");
-	var $contact = $(this).parents("tr").find(".contact");
-	var $comPer = $(this).parents("tr").find(".comPer");
-	var $comPon = $(this).parents("tr").find(".comPon");
 	$object = $row ;
+    var hpPositionRefUserId = $row.data("position_ref_user_id");
 	fetchPost({
 	        url:"/backDelivery/getLoginUserInfo",
 	        params: {},
 	        callback:function(data){
 	            console.log(data);
-	            $("#comtPerson").val(data.realName);
-	            $("#comTime").val(data.comTime);
-	            $("#positionRefUserId").val(hpPositionRefUserId);
+	            $("#comtPerson2").val(data.realName);
+	            $("#comTime2").val(data.comTime);
+	            $("#positionRefUserId2").val(hpPositionRefUserId);
 	        	$('#comtactPersonModal2').modal('toggle');
 	        }
 	})
@@ -112,24 +107,25 @@ $(document).on("click",".entry",function(){
 // 入职联系人 联系时间
 $(document).on("click","#addEntry",function(){
 	var params ={}
-    params.comtPerson = $("#comtPerson").val();
-	params.comTime = getDayToSecond($("#comTime").val());
-	params.positionRefUserId =  $("#positionRefUserId").val();
-	var $contact = $object.find(".contact");
+    params.comtPerson = $("#comtPerson2").val();
+	params.comTime = getDayToSecond($("#comTime2").val());
+	params.positionRefUserId =  $("#positionRefUserId2").val();
+	params.workOn = 1;
+	var $contact = $object.find(".entry");
 	var $comPer = $object.find(".comPer");
-	var $comPon = $object.find(".comPon");
+	var $comTime = $object.find(".comTime");
 	fetchPost({
 	        url:"/backDelivery/addComtact",
-	        params: {},
+	        params: params,
 	        callback:function(data){
 	        	console.log(data);
 	        	$contact.eq(0).html("已入职");
-		        $comPer.eq(0).html(data.userName);
-		        $comPon.eq(0).html(data.phoneNo);
-		            
+	        	$contact.eq(0).attr('class',"btn btn-primary btn-sm entered");
+		        $comPer.eq(0).html($("#comtPerson2").val());
+		        $comTime.eq(0).html($("#comTime2").val());
 	        }
 	})
-    $('#comtactPersonModal2').modal('toggle')
+    $('#comtactPersonModal2').modal('hide');
     
 })
 
@@ -273,7 +269,7 @@ function addTableList(list){
 	        }
             
 	            templeteTr +='</th>\
-				        <th class="comPer">'+isNull(item.optionPerson)+'</th>\ <th class="comPho">'+isNull(timestampToTime(item.optionTime))+'</th>\
+				        <th class="comPer">'+isNull(item.optionPerson)+'</th>\ <th class="comTime">'+isNull(timestampToTime(item.optionTime))+'</th>\
 	        </tr>';
     })
     $tBody.html(templeteTr)    
@@ -291,12 +287,16 @@ function bornYear(value){
 }
 //时间戳转date
 function timestampToTime(timestamp) {
-    var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-    var Y = date.getFullYear() + '-';
-    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-    var D = change(date.getDate()) ;
-   
-    return Y + M + D ;
+	if(timestamp ==null || timestamp ==""){
+		return "";
+	}else{
+		var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+	    var Y = date.getFullYear() + '-';
+	    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+	    var D = change(date.getDate()) ;
+	    return Y + M + D ;
+	}
+  
 }
 
 function timestampToDay(timestamp) {
