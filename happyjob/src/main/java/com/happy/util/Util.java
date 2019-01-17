@@ -14,10 +14,17 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
+import java.security.AlgorithmParameters;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.Security;
+import java.security.spec.InvalidParameterSpecException;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -34,10 +41,18 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.util.Arrays;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1211,11 +1226,86 @@ public class Util {
        return msg;
    }
     
+   /**
+    *
+    * @TODO:     解密微信加密信息
+    * @CreateTime:  2019年1月17日下午11:10:13 
+    * @CreateAuthor: chenwei
+    * @param encryptedData
+    * @param iv
+    * @param sessionKey
+    * @return
+    */
+   public static JSONObject decodeWxData(String encryptedData,String iv,String sessionKey) {
+       try {
+           encryptedData = URLDecoder.decode(encryptedData, Const.CODE_TYPE_STR);
+           iv = URLDecoder.decode(iv, Const.CODE_TYPE_STR);
+           sessionKey = URLDecoder.decode(sessionKey, Const.CODE_TYPE_STR);
+       } catch (UnsupportedEncodingException e1) {
+            logger.error("解码异常===");
+       }
+        encryptedData.replace(" ", "+");
+        iv.replace(" ", "+");
+        sessionKey.replace(" ", "+");
+        System.out.println(encryptedData);
+        System.out.println(iv);
+        System.out.println(sessionKey);
+       
+     // 被加密的数据
+        byte[] dataByte = Base64.decodeBase64(encryptedData);
+        // 加密秘钥
+        byte[] keyByte = Base64.decodeBase64(sessionKey);
+        // 偏移量
+        byte[] ivByte = Base64.decodeBase64(iv);
+        try {
+            // 如果密钥不足16位，那么就补足.  这个if 中的内容很重要
+            int base = 16;
+            if (keyByte.length % base != 0) {
+                int groups = keyByte.length / base + (keyByte.length % base != 0 ? 1 : 0);
+                byte[] temp = new byte[groups * base];
+                Arrays.fill(temp, (byte) 0);
+                System.arraycopy(keyByte, 0, temp, 0, keyByte.length);
+                keyByte = temp;
+            }
+            // 初始化
+            Security.addProvider(new BouncyCastleProvider());
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding","BC");
+            SecretKeySpec spec = new SecretKeySpec(keyByte, "AES");
+            AlgorithmParameters parameters = AlgorithmParameters.getInstance("AES");
+            parameters.init(new IvParameterSpec(ivByte));
+            cipher.init(Cipher.DECRYPT_MODE, spec, parameters);// 初始化
+            byte[] resultByte = cipher.doFinal(dataByte);
+            if (null != resultByte && resultByte.length > 0) {
+                String result = new String(resultByte, "UTF-8");
+                logger.info("解密返回参数==result=={}",result);
+                return JSONObject.parseObject(result);
+            }
+        }catch (NoSuchProviderException e) {
+            logger.error("here is exception", e);
+        } catch (UnsupportedEncodingException e) {
+            logger.error("here is exception", e);
+        } catch (NoSuchAlgorithmException e) {
+            logger.error("here is exception", e);
+        } catch (NoSuchPaddingException e) {
+            logger.error("here is exception", e);
+        } catch (InvalidKeyException e) {
+            logger.error("here is exception", e);
+        } catch (InvalidAlgorithmParameterException e) {
+            logger.error("here is exception", e);
+        } catch (InvalidParameterSpecException e) {
+            logger.error("here is exception", e);
+        } catch (IllegalBlockSizeException e) {
+            logger.error("here is exception", e);
+        } catch (BadPaddingException e) {
+            logger.error("here is exception", e);
+        }
+        return null;
+   }
     @Test
     public void test1() {
         
-        String a = "";
-        System.out.println(a=="");
+        String a = "0zDHJ+x3GaHxf2i xVq4usrbq6Dg==+";
+        System.out.println(a.replace(" ", "+"));
         
 //        String access_token = Util.getAccessToken(WxAppParamsEnum.PARAMS_APPLETS_MALL.getAppId(), WxAppParamsEnum.PARAMS_APPLETS_MALL.getAppSecret());
 //        System.out.println(access_token);

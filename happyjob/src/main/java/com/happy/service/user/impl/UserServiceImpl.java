@@ -146,7 +146,7 @@ public class UserServiceImpl implements UserService {
     public OtherLoginData insertWxLogin(String openId,String unionid,String storeToken) {
         OtherLoginData data = new OtherLoginData();
         
-        HpUserBoundEntity bound = this.hpUserBoundExMapper.getBoundByToken(openId);
+        HpUserBoundEntity bound = this.hpUserBoundExMapper.getBoundByOpenId(openId);
         Date curDate = Util.getCurrentDate();
         long curTime = Util.getDateSecond(curDate);
         if(bound == null) { // 未写入过
@@ -165,9 +165,10 @@ public class UserServiceImpl implements UserService {
             }
             
             this.hpUserBoundMapper.insert(bound);
-            data.setOid(openId);
+            
         }
         Long userId = bound.getHpUserId();
+        data.setOid(bound.getBoundToken());
         if(userId != null) {
             UserSimpleData user = this.hpUserExMapper.getSimpleUserByKey(userId,null);
             data.setSid(user.getUserToken());
@@ -698,7 +699,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public OtherLoginMsg insertOrUpUserByPhone(String sid,String oid,String phoneNo,int gender,String realName,Long bornTime) {
+    public OtherLoginMsg insertOrUpUserByPhone(String sid,String oid,String phoneNo,Integer gender,String realName,Long bornTime) {
         OtherLoginMsg msg = new OtherLoginMsg();
         OtherUserData userData = this.hpUserExMapper.getUserByParam(phoneNo, null, 2);
         HpUserBoundEntity bound = this.hpUserBoundExMapper.getBoundByToken(oid);
@@ -715,6 +716,7 @@ public class UserServiceImpl implements UserService {
             msg.setMessage("手机号已被其他用户绑定，请更换手机号");
             return msg;
         }
+        gender = gender==null?bound.getGender():gender;
         if(phoneUserId == null) { // 手机号未注册，新增用户
             HpUserEntity user = new HpUserEntity();
             user.setHpUserId(userId);

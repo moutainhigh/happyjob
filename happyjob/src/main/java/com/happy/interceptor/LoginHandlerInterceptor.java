@@ -48,6 +48,7 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter {
 			int isOther = 0;
 			BaseMsg msg = null;
 			if (path.matches(Const.INTERCEPTOR_PATH_FRONT_REGEX)) { // 前端需要拦截的请求
+			    isOther = 1;
 			    if(path.matches(Const.INTERCEPTOR_PATH_FRONT_USER_REGEX)) { // 用户拦截
 			        isUser = 2;
 			        isOther = 1;

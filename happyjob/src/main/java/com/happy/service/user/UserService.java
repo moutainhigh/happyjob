@@ -97,7 +97,7 @@ public interface UserService {
     *
     * @TODO:     新增或更新用户简历工作经验
     */
-   OtherLoginMsg insertOrUpUserByPhone(String sid,String oid,String phoneNo,int gender,String realName,Long bornTime);
+   OtherLoginMsg insertOrUpUserByPhone(String sid,String oid,String phoneNo,Integer gender,String realName,Long bornTime);
    /**
     *
     * @TODO:     根据手机号查询用户工资条身份证、姓名

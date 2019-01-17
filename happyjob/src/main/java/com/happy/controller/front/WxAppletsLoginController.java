@@ -1,6 +1,7 @@
  package com.happy.controller.front;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.security.AlgorithmParameters;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -204,11 +205,27 @@ public class WxAppletsLoginController {
      @ApiImplicitParam(name="iv",value="向量",paramType="query",required = true,dataType="String"),
      @ApiImplicitParam(name="sessionKey",value="那个ID",paramType="query",required = true,dataType="String"),
  })
- @GetMapping(value="decodeUserInfo")
+ @PostMapping(value="decodeUserInfo")
  public JSONObject decodeUserInfo(HttpServletRequest request) {
+     JSONObject json = new JSONObject();
      String encryptedData = request.getParameter("encryptedData");
      String iv = request.getParameter("iv");
      String sessionKey = request.getParameter("sessionKey");
+     try {
+        encryptedData = URLDecoder.decode(encryptedData, Const.CODE_TYPE_STR);
+        iv = URLDecoder.decode(iv, Const.CODE_TYPE_STR);
+        sessionKey = URLDecoder.decode(sessionKey, Const.CODE_TYPE_STR);
+    } catch (UnsupportedEncodingException e1) {
+         logger.error("解码异常===");
+    }
+//     encryptedData.replace("+", " ");
+     encryptedData.replace(" ", "+");
+     iv.replace(" ", "+");
+     sessionKey.replace(" ", "+");
+     System.out.println(encryptedData);
+     System.out.println(iv);
+     System.out.println(sessionKey);
+    
   // 被加密的数据
      byte[] dataByte = Base64.decodeBase64(encryptedData);
      // 加密秘钥
@@ -235,7 +252,14 @@ public class WxAppletsLoginController {
          byte[] resultByte = cipher.doFinal(dataByte);
          if (null != resultByte && resultByte.length > 0) {
              String result = new String(resultByte, "UTF-8");
-             return JSONObject.parseObject(result);
+             JSONObject resultJson = JSONObject.parseObject(result);
+             json.put("data", resultJson);
+             if(resultJson.getIntValue("errcode") != 0) {
+                 json.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
+             }else {
+                 json.put(Const.RESUTL_MESSAGE_ERRORCODE, 0);
+             }
+             return json;
          }
      }catch (NoSuchProviderException e) {
          logger.error("here is exception", e);

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.happy.controller.base.BaseController;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.banner.BannerService;
@@ -501,6 +502,47 @@ import io.swagger.annotations.ApiOperation;
           oid,currentPage,showCount);
       
       return this.configService.getStoreListPage(isPage, currentPage, showCount);
+  }
+  
+  /**
+   *
+   * @TODO:     手机号：微信手机号获取后自动绑定
+   */
+  @ApiOperation(value="门店：获取门店列表",notes="门店：获取门店列表")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
+      @ApiImplicitParam(name="encryptedData",value="消息",paramType="query",required = true,dataType="String"),
+      @ApiImplicitParam(name="iv",value="向量",paramType="query",required = true,dataType="String"),
+      @ApiImplicitParam(name="sessionKey",value="那个ID",paramType="query",required = true,dataType="String"),
+  })
+  @PostMapping(value="wxPhoneBound")
+  public OtherLoginMsg wxPhoneBound(HttpServletRequest request) {
+      
+      String encryptedData = request.getParameter("encryptedData");
+      String iv = request.getParameter("iv");
+      String sessionKey = request.getParameter("sessionKey");
+      String oid = request.getHeader("oid");
+      if(Util.isEmpty(encryptedData) || Util.isEmpty(iv) || Util.isEmpty(oid)) {
+          OtherLoginMsg msg = new OtherLoginMsg();
+          msg.setErrorCode(3);
+          msg.setMessage("缺少参数！");
+          return msg;
+      }
+      JSONObject json = Util.decodeWxData(encryptedData, iv, sessionKey);
+      if(json == null) {
+          OtherLoginMsg msg = new OtherLoginMsg();
+          msg.setErrorCode(1);
+          msg.setMessage("后台解密出现异常！");
+          return msg;
+      }else if(json.getIntValue("errcode") !=0){
+          OtherLoginMsg msg = new OtherLoginMsg();
+          msg.setErrorCode(2);
+          msg.setMessage(json.toString());
+          return msg;
+      }
+      String phoneNo = json.getString("phoneNumber");
+      
+      return this.userService.insertOrUpUserByPhone(null, oid, phoneNo, null, null, null);
   }
   
   
