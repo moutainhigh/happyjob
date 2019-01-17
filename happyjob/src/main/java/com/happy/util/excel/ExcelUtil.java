@@ -22,11 +22,6 @@ public class ExcelUtil {
 
     private static Logger logger = LoggerFactory.getLogger(ExcelUtil.class);
 
-    public static void main(String[] args) throws ExcelParseException {
-
-        File file = new File("F:/安普瑞斯.xlsx");
-//        parseExcelToPayrollPojoList(file);
-    }
 
     /**
      * 解析工资单
