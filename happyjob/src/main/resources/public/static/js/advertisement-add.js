@@ -68,7 +68,7 @@ $(document).on("click","#saveAdvertisement",function(){
 	
 	
 	listParams.title = $("#title").val();
-	listParams.location = $("#posType").val();
+	listParams.posType = $("#posType").val();
 	listParams.endTime = dateToTime($("#endTime").val());
 	listParams.sort = $("#sort").val();
 	var picAddress = $("#picAddress").val();
