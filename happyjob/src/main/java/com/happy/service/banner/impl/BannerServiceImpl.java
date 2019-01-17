@@ -77,7 +77,7 @@ public class BannerServiceImpl implements BannerService {
         
         HpAdvBannerEntity adv = new HpAdvBannerEntity();
         adv.setHpAdvBannerId(hpAdvBannerId);
-        adv.setUseOn(useOn == EnumConst.advertisementUseOn.UseOnYse.getKey()?EnumConst.advertisementUseOn.UseOnNo.getKey():EnumConst.advertisementUseOn.UseOnYse.getKey());
+        adv.setUseOn(useOn.equals(EnumConst.advertisementUseOn.UseOnYse.getKey())?EnumConst.advertisementUseOn.UseOnNo.getKey():EnumConst.advertisementUseOn.UseOnYse.getKey());
 	    this.hpAdvBannerMapper.updateByPK(adv);
         return msg;
 	}
@@ -137,7 +137,7 @@ public class BannerServiceImpl implements BannerService {
         hpAdvBanner.setHpAdvBannerId(hpAdvBannerId);
         hpAdvBanner.setTitle(title);
         hpAdvBanner.setSortNum(sortNum);
-        if(picUrl != null && picUrl != "") {
+        if(Util.isEmpty(picUrl)) {
         	hpAdvBanner.setPicUrl(picUrl);
         }
         

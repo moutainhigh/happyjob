@@ -13,6 +13,7 @@ import com.happy.service.company.data.CompanySearch;
 import com.happy.service.company.data.HpCompanyExt;
 import com.happy.sqlExMapper.HpCompanyExMapper;
 import com.happy.sqlMapper.HpCompanyMapper;
+import com.happy.util.Util;
 import com.happy.util.pubConst.EnumConst;
 
 @Service
@@ -64,12 +65,12 @@ public class CompanyServiceImpl implements CompanyService{
 	public BaseMsg newCompany(String comName, Long companyTypeId, Long companyScaleId, String comDesc, Long countryId,
 			String addrDetail, String comtPerson, String comPhone, String comEmail,String comLicense,String comLogo) {
 		BaseMsg msg = new BaseMsg();
-        if(comName == null || comName == "") {
+        if(Util.isEmpty(comName)) {
             msg.setErrorCode(1);
             msg.setMessage("公司名称必填");
             return msg;
         }
-        if(comDesc == null || comDesc == "") {
+        if(Util.isEmpty(comDesc)) {
             msg.setErrorCode(1);
             msg.setMessage("公司描述必填");
             return msg;
@@ -84,17 +85,17 @@ public class CompanyServiceImpl implements CompanyService{
             msg.setMessage("公司位置必填");
             return msg;
         }
-        if(addrDetail == null || addrDetail == "") {
+        if(Util.isEmpty(addrDetail)) {
         	msg.setErrorCode(1);
         	msg.setMessage("公司详细地址必填");
         	return msg;
         }
-        if(comtPerson == null || comtPerson == "") {
+        if(Util.isEmpty(comtPerson)) {
         	msg.setErrorCode(1);
         	msg.setMessage("联系人必填");
         	return msg;
         }
-        if(comPhone == null || comPhone =="") {
+        if(Util.isEmpty(comPhone)) {
         	msg.setErrorCode(1);
         	msg.setMessage("联系电话必填");
         	return msg;

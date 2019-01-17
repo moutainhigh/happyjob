@@ -33,6 +33,7 @@ public class EnumConst {
 		UseOnNo(0, "关闭"), UseOnYse(1, "开启");
 
 		private Integer key;
+		
 		private String value;
 
 		private advertisementUseOn(Integer key, String value) {
