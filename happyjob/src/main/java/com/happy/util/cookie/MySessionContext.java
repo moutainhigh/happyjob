@@ -6,6 +6,9 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.happy.util.Util;
 import com.happy.util.pubConst.Const;
 
@@ -19,6 +22,9 @@ import com.happy.util.pubConst.Const;
  *
  */
 public class MySessionContext {
+    
+    private static final Logger logger = LoggerFactory.getLogger(MySessionContext.class);
+    
     private static HashMap<String,HttpSession> mymap = new HashMap<String,HttpSession>();
 
     public static synchronized void AddSession(HttpSession session) {
@@ -29,8 +35,14 @@ public class MySessionContext {
             long curTime = Util.getDateSecond(Util.getCurrentDate());
             for(Entry<String, HttpSession> entry:mymap.entrySet()) {
                 HttpSession item = entry.getValue();
-                Object sessionTimeObj = item.getAttribute(Const.SESSION_ATTR_NAME_AGE);
-                Long sessionTime = sessionTimeObj==null||!(sessionTimeObj instanceof Long)?0:(Long)sessionTimeObj;
+                Long sessionTime = 0l;
+                try {
+                    Object sessionTimeObj = item.getAttribute(Const.SESSION_ATTR_NAME_AGE);
+                    sessionTime = (long)sessionTimeObj;
+                } catch (Exception e) {
+                    logger.error("内部session类出现异常",e);
+                }    
+                    
                 if(curTime>sessionTime) {
                     DelSession(item);
                 }
