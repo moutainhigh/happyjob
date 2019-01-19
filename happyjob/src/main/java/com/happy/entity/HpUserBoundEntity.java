@@ -50,6 +50,9 @@ public class HpUserBoundEntity implements  Serializable  {
 	//微信解密数据key
 	@ApiModelProperty(name="sessionKey",value="微信解密数据key")
 	private String sessionKey;
+	//小程序消息推送formId
+	@ApiModelProperty(name="formId",value="小程序消息推送formId")
+	private String formId;
 
 	public java.lang.Long getHpUserBoundId() {
 		return hpUserBoundId;
@@ -178,6 +181,16 @@ public class HpUserBoundEntity implements  Serializable  {
 
 	public void setSessionKey(String sessionKey) {
 		this.sessionKey = sessionKey;
+	}
+
+
+	public String getFormId() {
+		return formId;
+	}
+
+
+	public void setFormId(String formId) {
+		this.formId = formId;
 	}
 
 }

@@ -53,7 +53,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.Arrays;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1334,7 +1333,7 @@ public class Util {
     * @param remark
     * @return
     */
-   public static String createApproveMsg(String posName,String openId,String remark,String form_id) {
+   public static String createApproveMsg(String openId,String remark,String form_id) {
        
        JSONObject json = new JSONObject();
        json.put(WxAppParamsEnum.WxMsgKeyModel.TEMP_TOUSER.getKeyName(), openId);
@@ -1351,34 +1350,5 @@ public class Util {
        json.put(WxAppParamsEnum.WxMsgKeyModel.TEMP_DATA.getKeyName(), data);
        return json.toString();
    }
-    @Test
-    public void test1() {
-        
-        String a = "0zDHJ+x3GaHxf2i xVq4usrbq6Dg==+";
-        System.out.println(a.replace(" ", "+"));
-        
-//        String access_token = Util.getAccessToken(WxAppParamsEnum.PARAMS_APPLETS_MALL.getAppId(), WxAppParamsEnum.PARAMS_APPLETS_MALL.getAppSecret());
-//        System.out.println(access_token);
-//        String access_token = "17_2DD6CE1BIiO7yvuk1hVgvrVaExUuHSQd4fvuSKWPlHcEI7V4rhNx9dTUBN9tWESeS1GyrtaU1QigmT8YQ5gK--2LLAprM07bcswPxnhysiTPs6zEb1fG29m5Npo-EkLhrZQY1BpQfFFTAVtWKBTdADAQHZ";
-//        JSONObject json = new JSONObject();
-//        json.put("shareToken", "389a973a54d");
-//        String result = Util.getWXACode(access_token, "pages/home/home?shareToken=773d8ad1ad9540fc804389a973a54d", 430);
-//        UpImgMsg result = Util.getWXACodeUnlimit(access_token,"a=b", "", 430);
-//        System.out.println(JSONObject.toJSONString(result));
-        //        JSONArray arr = new JSONArray();
-//        JSONObject temp1 = new JSONObject(true);
-//        temp1.put("name", "");
-//        temp1.put("phoneNos", "18001535861,1800535862");
-//        arr.add(temp1);
-        
-//        JSONObject temp2 = new JSONObject(true);
-//        temp2.put("name", "杜燕文");
-//        temp2.put("phoneNos", "18906179369,13511653915");
-//        arr.add(temp2);
-        
-//        JSONObject temp3 = new JSONObject(true);
-//        temp3.put("name", "过中燕");
-//        temp3.put("phoneNos", "18921188621,13861896130");
-//        arr.add(temp3);
-    }
+
 }

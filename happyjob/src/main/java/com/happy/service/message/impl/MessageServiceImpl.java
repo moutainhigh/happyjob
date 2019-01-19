@@ -2,11 +2,16 @@
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.happy.entity.HpUserBoundEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.message.MessageService;
+import com.happy.service.message.data.UserApprove;
+import com.happy.sqlExMapper.HpPositionExMapper;
+import com.happy.sqlExMapper.HpUserBoundExMapper;
 import com.happy.util.Util;
 import com.happy.util.wxUtil.WxAppParamsEnum;
 import com.happy.util.wxUtil.WxModelConst;
@@ -16,6 +21,11 @@ public class MessageServiceImpl implements MessageService {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
 
+    @Autowired
+    private HpUserBoundExMapper hpUserBoundExMapper;
+    @Autowired
+    private HpPositionExMapper hpPositionExMapper;
+    
     @Override
     public BaseMsg pushWxMsg(String content) {
         BaseMsg msg = new BaseMsg();
@@ -77,6 +87,42 @@ public class MessageServiceImpl implements MessageService {
         }
         msg.setWxMsg(jsonObj);
         return msg;
+    }
+
+    @Override
+    public void sendPositionMsg(String oid, Long hpPositionGroupId) {
+        
+        HpUserBoundEntity bound = this.hpUserBoundExMapper.getBoundByToken(oid);
+        String form_id = bound.getFormId();
+        String openId = bound.getOpenid();
+        if(Util.isEmpty(form_id)) {
+            logger.info("消息推送失败====无formId==oid=={}",oid);
+            return;
+        }
+        String posName = this.hpPositionExMapper.getPosNameByGroupKey(hpPositionGroupId);
+        String remark = "恭喜您拼团上班成功";
+        this.pushWxMsg(Util.createPositionMsg(posName, openId, remark, form_id));
+    }
+
+    @Override
+    public void sendUserApproveMsg(Long hpUserId) {
+        
+        UserApprove data = this.hpUserBoundExMapper.getSendDataByUserKey(hpUserId);
+        
+        String form_id = data.getFormId();
+        String openId = data.getOpenId();
+        String realName = data.getRealName();
+        if(Util.isEmpty(form_id)) {
+            logger.info("消息推送失败====无formId==hpUserId=={}",hpUserId);
+            return;
+        }
+        if(Util.isEmpty(openId)) {
+            logger.info("消息推送失败====无openId==hpUserId=={}",hpUserId);
+            return;
+        }
+        String remark = "尊敬的{{realName}}您好，您的身份认证已经通过审核，可通过详情查看。";
+        remark = remark.replace("{{realName}}", realName);
+        this.pushWxMsg(Util.createApproveMsg(openId, remark, form_id));
     }
 
    

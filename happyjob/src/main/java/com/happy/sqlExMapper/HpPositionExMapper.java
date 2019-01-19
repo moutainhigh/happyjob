@@ -79,5 +79,10 @@ public interface HpPositionExMapper{
     * @TODO:     后台：获取岗位要求ID
     */
     Long getPositionRequireId(@Param("hpPositionId") Long hpPositionId);
+    /**
+     *
+     * @TODO:     消息推送：获取岗位名称
+     */
+    String getPosNameByGroupKey(@Param("hpPositionGroupId") Long hpPositionGroupId);
 }
 

@@ -8,8 +8,6 @@ public interface MessageService {
      * @TODO-推送微信消息
      */
     BaseMsg pushWxMsg(String content);
-    
-    
     /**
      * -活动所有模板信息
      * Description:  
@@ -18,5 +16,19 @@ public interface MessageService {
      * @version 1.0
      */
     BaseMsg getAllWxTemplateIds(Integer currentPage,Integer showCount);
+    /**
+     *
+     * @TODO:     发送
+     * @CreateTime:  2019年1月19日下午9:01:34 
+     * @param oid
+     * @param hpPositionGroupId
+     */
+    void sendPositionMsg(String oid,Long hpPositionGroupId);
+    /**
+     *
+     * @TODO:     发送
+     * @CreateTime:  2019年1月19日下午9:01:34 
+     */
+    void sendUserApproveMsg(Long hpUserId);
     
 }

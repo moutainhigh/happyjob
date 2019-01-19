@@ -17,6 +17,8 @@ import io.swagger.annotations.ApiModelProperty;
      private String message = "success";
      @ApiModelProperty(name="wxMsg",value="微信返回原始错误信息")
      private JSONObject wxMsg;
+     @ApiModelProperty(name="sendOn",value="是否发送消息")
+     private int sendOn;
 
     public int getErrorCode() {
         return errorCode;
@@ -41,5 +43,12 @@ import io.swagger.annotations.ApiModelProperty;
     public void setWxMsg(JSONObject wxMsg) {
         this.wxMsg = wxMsg;
     }
-     
+
+    public int getSendOn() {
+        return sendOn;
+    }
+
+    public void setSendOn(int sendOn) {
+        this.sendOn = sendOn;
+    }
 }

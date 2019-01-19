@@ -80,7 +80,7 @@
 		JOIN hp_area_county aco ON p.county_id=aco.county_id 
 		JOIN hp_area_city aci ON aco.city_id=aci.city_id 
 		LEFT JOIN hp_position_require pr ON p.hp_position_id=pr.hp_position_id 
-		LEFT JOIN hp_company_type ct ON p.hp_company_type_id=ct.hp_company_type_id 
+		LEFT JOIN hp_company_type ct ON c.hp_company_type_id=ct.hp_company_type_id 
 		WHERE p.hp_position_id=#{hpPositionId} 
 	</select>
 	
@@ -151,6 +151,7 @@ AND (SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_i
 		<result column="leftTime" property="leftTime"/>
 		<result column="userIsPart" property="userIsPart"/>
 		<result column="approve_state" property="comApproveState"/>
+		<result column="com_logo" property="comLogo"/>
 		<collection property="userList" javaType="java.util.List" ofType="com.happy.entity.HpUserEntity" >
 			<id column="hp_user_id" property="hpUserId"/>
 			<result column="header_pic" property="headerPic"/>
@@ -160,7 +161,7 @@ AND (SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_i
 	
 	<select id="getGroupDetail" resultMap="GroupDataMap" >
 		SELECT pg.hp_position_group_id,pg.hp_position_id,pg.start_time,pg.end_time,
-		c.com_name,p.pos_name,pru.hp_user_id,u.header_pic,ps.lower_num,ps.hight_num,
+		c.com_name,p.pos_name,c.com_logo,pru.hp_user_id,u.header_pic,ps.lower_num,ps.hight_num,
 		p.pos_com_desc,CASE WHEN pg.end_time &lt;#{curTime} THEN 1 ELSE 0 END groupStatus,
 		(pg.end_time-#{curTime}) leftTime,c.approve_state,
 		<choose>
@@ -218,6 +219,12 @@ AND (SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_i
 	
 	<select id="getPositionRequireId" resultType="Long" >
 		SELECT pr.hp_position_require_id FROM hp_position_require pr WHERE pr.hp_position_id=#{hpPositionId} LIMIT 1
+	</select>
+	
+	<select id="getPosNameByGroupKey" resultType="String" >
+		SELECT p.pos_name 
+		FROM hp_position_group gp JOIN hp_position p ON gp.hp_position_id=p.hp_position_id 
+		WHERE pr.hp_position_group_id=#{hpPositionGroupId}
 	</select>
 	
 </mapper>

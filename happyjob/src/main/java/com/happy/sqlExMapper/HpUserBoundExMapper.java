@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.happy.entity.HpUserBoundEntity;
 import com.happy.entity.HpUserRecommendEntity;
 import com.happy.entity.HpUserSearchEntity;
+import com.happy.service.message.data.UserApprove;
 import com.happy.service.user.data.UserSearch;
 
 @Repository("hpUserBoundExMapper")
@@ -63,4 +64,14 @@ public interface HpUserBoundExMapper{
     * @TODO:     描述一下这个方法是干什么的
     */
    String getSessionKey(@Param("oid")String oid);
+   /**
+    *
+    * @TODO:     描述一下这个方法是干什么的
+    */
+   String getFormIdByToken(@Param("oid")String oid);
+   /**
+    *
+    * @TODO:     描述一下这个方法是干什么的
+    */
+   UserApprove getSendDataByUserKey(@Param("hpUserId")Long hpUserId);
 }

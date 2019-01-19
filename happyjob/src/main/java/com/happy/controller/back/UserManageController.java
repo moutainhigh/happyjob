@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.happy.plugin.BaseMsg;
+import com.happy.service.message.MessageService;
 import com.happy.service.user.UserService;
 import com.happy.service.user.data.UserAddData;
 import com.happy.service.user.data.UserSimpleListMsg;
@@ -34,6 +35,8 @@ public class UserManageController {
     
     @Resource
     private UserService userService;
+    @Resource
+    private MessageService messageService;
     
     /**
      * @TODO:     用户列表查询
@@ -93,6 +96,14 @@ public class UserManageController {
         Integer blackOn = (Integer)Util.typeChange(request.getParameter("blackOn"), Integer.class);
         
         logger.info("backUser.userInfoUp 请求参数：hpUserId={},approve={},blackOn={}",hpUserId,approve,blackOn);
-        return this.userService.updateUserState(hpUserId, approve, blackOn);
+        BaseMsg msg = this.userService.updateUserState(hpUserId, approve, blackOn);
+        if(msg.getErrorCode() == 0 && msg.getSendOn() == 1) { // 认证通过后消息推送
+            try {
+                this.messageService.sendUserApproveMsg(hpUserId);
+            } catch (Exception e) {
+                logger.error("拼团成功消息推送异常===",e);
+            }
+        }
+        return msg;
     }
 }

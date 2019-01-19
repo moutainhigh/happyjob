@@ -14,8 +14,8 @@ public class HpCompanyTypeEntity implements  Serializable  {
 	//公司行业类型表id
 	@ApiModelProperty(name="hpCompanyTypeId",value="公司行业类型表id")
 	private java.lang.Long hpCompanyTypeId;
-	//公司名称
-	@ApiModelProperty(name="typeName",value="公司名称")
+	//公司类型名称
+	@ApiModelProperty(name="typeName",value="公司类型名称")
 	private String typeName;
 	//是否启用
 	@ApiModelProperty(name="useOn",value="是否启用")

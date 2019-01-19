@@ -18,6 +18,7 @@ import com.happy.entity.HpUserExpEntity;
 import com.happy.entity.HpUserIntentionEntity;
 import com.happy.entity.HpUserResumeEntity;
 import com.happy.plugin.BaseMsg;
+import com.happy.service.message.MessageService;
 import com.happy.service.position.PositionService;
 import com.happy.service.position.data.GroupDataMsg;
 import com.happy.service.position.data.PositionListMsg;
@@ -46,6 +47,8 @@ public class UserCenterController {
     private UserService userService;
     @Resource
     private PositionService positionService;
+    @Resource
+    private MessageService messageService;
     
     /**
     *
@@ -203,10 +206,17 @@ public class UserCenterController {
    public GroupDataMsg groupApply(HttpServletRequest request) {
        
        String sid = request.getHeader("sid");
+       String oid = request.getHeader("oid");
        Long hpPositionGroupId = (Long)Util.typeChange(request.getParameter("hpPositionGroupId"), Long.class);
        logger.info("positionApply 参数日志：sid=={},hpPositionGroupId=={}",sid,hpPositionGroupId);
+       GroupDataMsg msg = this.positionService.insertUserGroupApply(sid, hpPositionGroupId);
+       try {
+           this.messageService.sendPositionMsg(oid, hpPositionGroupId);
+       } catch (Exception e) {
+            logger.error("拼团成功消息推送异常===",e);
+       }
        
-       return this.positionService.insertUserGroupApply(sid, hpPositionGroupId);
+       return msg;
    }
    
    /**

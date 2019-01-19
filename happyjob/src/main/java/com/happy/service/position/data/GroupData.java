@@ -52,6 +52,9 @@ import io.swagger.annotations.ApiModelProperty;
     @ApiModelProperty(name="comApproveState",value="公司是否认证")
     private Integer comApproveState;
     
+    @ApiModelProperty(name="comLogo",value="公司是否认证")
+    private String comLogo;
+    
     public String getLeaderName() {
         return leaderName;
     }
@@ -130,5 +133,10 @@ import io.swagger.annotations.ApiModelProperty;
     public void setComApproveState(Integer comApproveState) {
         this.comApproveState = comApproveState;
     }
-    
+    public String getComLogo() {
+        return comLogo;
+    }
+    public void setComLogo(String comLogo) {
+        this.comLogo = comLogo;
+    }
 }
