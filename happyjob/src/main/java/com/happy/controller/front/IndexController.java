@@ -270,8 +270,8 @@ import io.swagger.annotations.ApiOperation;
            return msg;
        }
        //发短信
-//       String msgCode = Util.sendPhoneCode(phoneNo, Const.PHONE_MSGCODE_NUM);
-       String msgCode = Util.getRandomStringByLength(4, "0");
+       String msgCode = Util.sendPhoneCode(phoneNo, Const.PHONE_MSGCODE_NUM);
+//       String msgCode = Util.getRandomStringByLength(4, "0");
        
        Long curTime = Util.getDateSecond(Util.getCurrentDate());
        //发短信

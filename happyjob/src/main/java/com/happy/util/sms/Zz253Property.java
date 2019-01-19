@@ -2,9 +2,12 @@
 package com.happy.util.sms;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+
+import com.happy.util.pubConst.Const;
 
 /**
  * https://zz.253.com/v5.html#/api_doc https://www.253.com 短信平台参数
@@ -46,7 +49,7 @@ public class Zz253Property {
         
        // *.properties文件中的中文默认以ISO-8859-1方式编码，因此需要对中文内容进行重新编码
         try {
-            return new String(smsSign.getBytes("ISO-8859-1"), "UTF-8");
+            return URLDecoder.decode(smsSign, Const.CODE_TYPE_STR);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
