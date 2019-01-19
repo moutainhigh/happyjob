@@ -91,5 +91,5 @@ public interface HpUserExMapper{
    *
    * @TODO:    更新用户余额
    */
-  int updateUserMoney(@Param("hpUserId") Long hpUserId,@Param("userMoney") double userMoney);
+  void updateUserMoney(@Param("hpUserId") Long hpUserId,@Param("userMoney") double userMoney);
 }

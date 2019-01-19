@@ -61,6 +61,12 @@ import io.swagger.annotations.ApiModelProperty;
     private String leaderPic;
     @ApiModelProperty(name="groupPartNum",value="拼团参与人数")
     private Integer groupPartNum;
+    @ApiModelProperty(name="scaleLower",value="公司人数规模最小值")
+    private Integer scaleLower;
+    @ApiModelProperty(name="scaleHigh",value="公司人数规模最大值")
+    private Integer scaleHigh;
+    @ApiModelProperty(name="typeName",value="公司类型名称")
+    private String typeName;
     
     
     public String getComName() {
@@ -218,5 +224,23 @@ import io.swagger.annotations.ApiModelProperty;
     }
     public void setHpPositionGroupId(Long hpPositionGroupId) {
         this.hpPositionGroupId = hpPositionGroupId;
+    }
+    public Integer getScaleLower() {
+        return scaleLower;
+    }
+    public void setScaleLower(Integer scaleLower) {
+        this.scaleLower = scaleLower;
+    }
+    public Integer getScaleHigh() {
+        return scaleHigh;
+    }
+    public void setScaleHigh(Integer scaleHigh) {
+        this.scaleHigh = scaleHigh;
+    }
+    public String getTypeName() {
+        return typeName;
+    }
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

@@ -43,7 +43,7 @@ public interface HpUserBoundExMapper{
      *
      * @TODO:     描述一下这个方法是干什么的
      */
-    int updateUserSearchDel(@Param("oid")String oid, @Param("hpUserSearchId")Long hpUserSearchId);
+    void updateUserSearchDel(@Param("oid")String oid, @Param("hpUserSearchId")Long hpUserSearchId);
     /**
      *
      * @TODO:     描述一下这个方法是干什么的
@@ -78,5 +78,5 @@ public interface HpUserBoundExMapper{
     *
     * @TODO:     描述一下这个方法是干什么的
     */
-   int updateBoundFormId(@Param("oid")String oid,@Param("formId")String formId);
+   void updateBoundFormId(@Param("oid")String oid,@Param("formId")String formId);
 }

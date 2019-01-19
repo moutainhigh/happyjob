@@ -68,12 +68,12 @@ public interface HpPositionExMapper{
     *
     * @TODO:     后台：删除岗位福利关联关系
     */
-    int deleteGroupWelfare(@Param("hpPositionId") Long hpPositionId);
+    void deleteGroupWelfare(@Param("hpPositionId") Long hpPositionId);
     /**
      *
      * @TODO:     后台：新增岗位福利关联关系
      */
-    int insertGroupWelfare(@Param("hpPositionId") Long hpPositionId,@Param("list")List<Long> idArr);
+    void insertGroupWelfare(@Param("hpPositionId") Long hpPositionId,@Param("list")List<Long> idArr);
     /**
     *
     * @TODO:     后台：获取岗位要求ID
