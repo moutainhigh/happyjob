@@ -1,6 +1,8 @@
 
 package com.happy.util.sms;
 
+import java.io.UnsupportedEncodingException;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -41,6 +43,13 @@ public class Zz253Property {
     }
 
     public String getSmsSign() {
+        
+       // *.properties文件中的中文默认以ISO-8859-1方式编码，因此需要对中文内容进行重新编码
+        try {
+            return new String(smsSign.getBytes("ISO-8859-1"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return smsSign;
     }
 
