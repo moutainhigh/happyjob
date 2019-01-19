@@ -27,12 +27,12 @@ public interface UserService {
     *
     * @TODO:     微信登录信息验证存贮
     */
-   OtherLoginData insertWxLogin(String openId,String unionid,String storeToken);
+   OtherLoginData insertWxLogin(String openId,String unionid,String storeToken,String sessionKey);
     /**
     *
     * @TODO:     更新微信用户信息
     */
-   BaseMsg updateLoginBound(String oid,String headerUrl,String nickName,int gender);
+   BaseMsg updateLoginBound(String oid,String headerUrl,String nickName,int gender,String unionid);
    /**
     * @TODO:     小程序获取微信openID、unionID、sessionKey
     */
@@ -140,4 +140,9 @@ public interface UserService {
     * @TODO:     后台用户登录、更新登录状态
     */ 
    void UpdateUserLogin(Long hpUserId,String ip);
+   /**
+    *
+    * @TODO:     微信加密信息：解密
+    */ 
+   JSONObject decodeWxData(String oid,String encryptedData,String iv );
 }

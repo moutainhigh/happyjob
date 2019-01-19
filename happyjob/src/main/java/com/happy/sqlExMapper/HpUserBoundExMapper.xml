@@ -58,4 +58,7 @@
 		WHERE u.hp_user_id=#{hpUserId} AND ur.rec_phone_no=u.phone_no limit 1
 	</select>
 	
+	<select id="getSessionKey" resultType="String" >
+		SELECT ub.session_key FROM hp_user_bound ub WHERE ub.bound_token=#{oid};
+	</select>
 </mapper>

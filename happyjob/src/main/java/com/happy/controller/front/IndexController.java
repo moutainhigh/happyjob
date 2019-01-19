@@ -220,30 +220,30 @@ import io.swagger.annotations.ApiOperation;
     
     
     
-    /**
-    *
-    * @TODO:     前台微信小程序，微信头像、昵称、性别信息存入数据库
-    */
-   @ApiOperation(value="用户登录：用户微信信息存入",notes="用户微信信息存入")
-   @ApiImplicitParams({
-       @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
-       @ApiImplicitParam(name="headerUrl",value="用户微信头像地址",dataType="String",paramType="query",required=true),
-       @ApiImplicitParam(name="nickName",value="用户微信昵称",dataType="String",paramType="query",required=true),
-       @ApiImplicitParam(name="gender",value="用户微信性别,1、男，2、女，3、保密",dataType="int",paramType="query",required=true),
-   })
-   @PostMapping(value="wxInfo")
-    public BaseMsg wxUserInfo(HttpServletRequest request) {
-        String oid = request.getHeader("oid");
-        String headerUrl = request.getParameter("headerUrl");
-        String nickName = request.getParameter("nickName");
-        Integer gender = (Integer)Util.typeChange(request.getParameter("gender"), Integer.class);
-        gender = gender == null?3:gender;
-        
-        logger.info("wxUserInfo 参数日志：oid=={},headerUrl=={},nickName=={},gender=={}",
-            oid,headerUrl,nickName,gender);
-        
-        return this.userService.updateLoginBound(oid, headerUrl, nickName, gender);
-    }
+//    /**
+//    *
+//    * @TODO:     前台微信小程序，微信头像、昵称、性别信息存入数据库
+//    */
+//   @ApiOperation(value="用户登录：用户微信信息存入",notes="用户微信信息存入")
+//   @ApiImplicitParams({
+//       @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
+//       @ApiImplicitParam(name="headerUrl",value="用户微信头像地址",dataType="String",paramType="query",required=true),
+//       @ApiImplicitParam(name="nickName",value="用户微信昵称",dataType="String",paramType="query",required=true),
+//       @ApiImplicitParam(name="gender",value="用户微信性别,1、男，2、女，3、保密",dataType="int",paramType="query",required=true),
+//   })
+//   @PostMapping(value="wxInfo")
+//    public BaseMsg wxUserInfo(HttpServletRequest request) {
+//        String oid = request.getHeader("oid");
+//        String headerUrl = request.getParameter("headerUrl");
+//        String nickName = request.getParameter("nickName");
+//        Integer gender = (Integer)Util.typeChange(request.getParameter("gender"), Integer.class);
+//        gender = gender == null?3:gender;
+//        
+//        logger.info("wxUserInfo 参数日志：oid=={},headerUrl=={},nickName=={},gender=={}",
+//            oid,headerUrl,nickName,gender);
+//        
+//        return this.userService.updateLoginBound(oid, headerUrl, nickName, gender,null);
+//    }
    
    /**
     *
@@ -505,6 +505,49 @@ import io.swagger.annotations.ApiOperation;
   }
   
   /**
+  *
+  * @TODO:     手机号：微信手机号获取后自动绑定
+  */
+ @ApiOperation(value="门店：获取门店列表",notes="门店：获取门店列表")
+ @ApiImplicitParams({
+     @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
+     @ApiImplicitParam(name="encryptedData",value="加密消息体",paramType="query",required = true,dataType="String"),
+     @ApiImplicitParam(name="iv",value="向量",paramType="query",required = true,dataType="String"),
+ })
+ @PostMapping(value="wxInfo")
+ public BaseMsg wxInfo(HttpServletRequest request) {
+     String encryptedData = request.getParameter("encryptedData");
+     String iv = request.getParameter("iv");
+     String oid = request.getHeader("oid");
+     if(Util.isEmpty(encryptedData) || Util.isEmpty(iv) || Util.isEmpty(oid)) {
+         OtherLoginMsg msg = new OtherLoginMsg();
+         msg.setErrorCode(3);
+         msg.setMessage("缺少参数！");
+         return msg;
+     }
+     JSONObject json = this.userService.decodeWxData(oid, encryptedData, iv);
+     if(json == null) {
+         OtherLoginMsg msg = new OtherLoginMsg();
+         msg.setErrorCode(1);
+         msg.setMessage("后台解密出现异常！");
+         return msg;
+     }else if(json.getIntValue("errcode") !=0){
+         OtherLoginMsg msg = new OtherLoginMsg();
+         msg.setErrorCode(2);
+         msg.setMessage(json.toString());
+         return msg;
+     }
+     String nickName = json.getString("nickName");
+     int gender = json.getIntValue("gender");
+     String avatarUrl = json.getString("avatarUrl");
+     String unionId = json.getString("unionId");
+     
+     return this.userService.updateLoginBound(oid, avatarUrl, nickName, gender,unionId);
+ }
+ 
+  
+  
+  /**
    *
    * @TODO:     手机号：微信手机号获取后自动绑定
    */
@@ -513,14 +556,12 @@ import io.swagger.annotations.ApiOperation;
       @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
       @ApiImplicitParam(name="encryptedData",value="消息",paramType="query",required = true,dataType="String"),
       @ApiImplicitParam(name="iv",value="向量",paramType="query",required = true,dataType="String"),
-      @ApiImplicitParam(name="sessionKey",value="那个ID",paramType="query",required = true,dataType="String"),
   })
   @PostMapping(value="wxPhoneBound")
   public OtherLoginMsg wxPhoneBound(HttpServletRequest request) {
       
       String encryptedData = request.getParameter("encryptedData");
       String iv = request.getParameter("iv");
-      String sessionKey = request.getParameter("sessionKey");
       String oid = request.getHeader("oid");
       if(Util.isEmpty(encryptedData) || Util.isEmpty(iv) || Util.isEmpty(oid)) {
           OtherLoginMsg msg = new OtherLoginMsg();
@@ -528,7 +569,7 @@ import io.swagger.annotations.ApiOperation;
           msg.setMessage("缺少参数！");
           return msg;
       }
-      JSONObject json = Util.decodeWxData(encryptedData, iv, sessionKey);
+      JSONObject json = this.userService.decodeWxData(oid, encryptedData, iv);
       if(json == null) {
           OtherLoginMsg msg = new OtherLoginMsg();
           msg.setErrorCode(1);

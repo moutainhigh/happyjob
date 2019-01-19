@@ -47,6 +47,9 @@ public class HpUserBoundEntity implements  Serializable  {
 	//公司门店表ID（代表扫码注册门店来源）
 	@ApiModelProperty(name="hpCompanyStoreId",value="公司门店表ID（代表扫码注册门店来源）")
 	private java.lang.Long hpCompanyStoreId;
+	//微信解密数据key
+	@ApiModelProperty(name="sessionKey",value="微信解密数据key")
+	private String sessionKey;
 
 	public java.lang.Long getHpUserBoundId() {
 		return hpUserBoundId;
@@ -165,6 +168,16 @@ public class HpUserBoundEntity implements  Serializable  {
 
 	public void setHpCompanyStoreId(java.lang.Long hpCompanyStoreId) {
 		this.hpCompanyStoreId = hpCompanyStoreId;
+	}
+
+
+	public String getSessionKey() {
+		return sessionKey;
+	}
+
+
+	public void setSessionKey(String sessionKey) {
+		this.sessionKey = sessionKey;
 	}
 
 }

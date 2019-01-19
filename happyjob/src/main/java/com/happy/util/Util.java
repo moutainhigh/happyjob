@@ -1092,7 +1092,7 @@ public class Util {
     public static String urlDecodeStr(String str,String enc) {
         if(!Util.isEmpty(str)) {
             try {
-               return URLEncoder.encode(str, enc);
+               return URLDecoder.decode(str, enc);
            } catch (UnsupportedEncodingException e) {
                 logger.error("urlDecodeStr解码异常==",e);
            }
@@ -1237,19 +1237,16 @@ public class Util {
     * @return
     */
    public static JSONObject decodeWxData(String encryptedData,String iv,String sessionKey) {
-       try {
-           encryptedData = URLDecoder.decode(encryptedData, Const.CODE_TYPE_STR);
-           iv = URLDecoder.decode(iv, Const.CODE_TYPE_STR);
-           sessionKey = URLDecoder.decode(sessionKey, Const.CODE_TYPE_STR);
-       } catch (UnsupportedEncodingException e1) {
-            logger.error("解码异常===");
-       }
-        encryptedData.replace(" ", "+");
-        iv.replace(" ", "+");
-        sessionKey.replace(" ", "+");
-        System.out.println(encryptedData);
-        System.out.println(iv);
-        System.out.println(sessionKey);
+       encryptedData = Util.urlDecodeStr(encryptedData, Const.CODE_TYPE_STR);
+       iv = Util.urlDecodeStr(iv, Const.CODE_TYPE_STR);
+       sessionKey = Util.urlDecodeStr(sessionKey, Const.CODE_TYPE_STR);
+       
+       encryptedData = encryptedData.replace(' ', '+');
+       iv = iv.replace(' ', '+');
+       sessionKey = sessionKey.replace(' ', '+');
+       System.out.println(encryptedData);
+       System.out.println(iv);
+       System.out.println(sessionKey);
        
      // 被加密的数据
         byte[] dataByte = Base64.decodeBase64(encryptedData);

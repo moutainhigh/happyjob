@@ -58,4 +58,9 @@ public interface HpUserBoundExMapper{
     * @TODO:     描述一下这个方法是干什么的
     */
    HpUserRecommendEntity getRecdByUserId(@Param("hpUserId")Long hpUserId);
+   /**
+    *
+    * @TODO:     描述一下这个方法是干什么的
+    */
+   String getSessionKey(@Param("oid")String oid);
 }

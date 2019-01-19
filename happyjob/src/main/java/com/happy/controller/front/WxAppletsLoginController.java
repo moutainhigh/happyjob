@@ -24,7 +24,6 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -107,8 +106,7 @@ public class WxAppletsLoginController {
             return msg;
         }
         
-        data = this.userService.insertWxLogin(openid, unionid,storeToken);
-        data.setSessionKey(sessionKey);
+        data = this.userService.insertWxLogin(openid, unionid,storeToken,sessionKey);
         msg.setData(data);
         return msg;
     }

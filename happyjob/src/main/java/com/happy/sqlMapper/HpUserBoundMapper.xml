@@ -16,10 +16,11 @@
 		<result column="token_time" property="tokenTime"/>
 		<result column="bound_phone" property="boundPhone"/>
 		<result column="hp_company_store_id" property="hpCompanyStoreId"/>
+		<result column="session_key" property="sessionKey"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpUserBoundId" parameterType="com.happy.entity.HpUserBoundEntity">
-		insert into hp_user_bound(hp_user_id,nick_name,header_pic,openid,unionid,gender,create_time,bound_token,token_time,bound_phone,hp_company_store_id)
-		 values (#{hpUserId},#{nickName},#{headerPic},#{openid},#{unionid},#{gender},#{createTime},#{boundToken},#{tokenTime},#{boundPhone},#{hpCompanyStoreId});
+		insert into hp_user_bound(hp_user_id,nick_name,header_pic,openid,unionid,gender,create_time,bound_token,token_time,bound_phone,hp_company_store_id,session_key)
+		 values (#{hpUserId},#{nickName},#{headerPic},#{openid},#{unionid},#{gender},#{createTime},#{boundToken},#{tokenTime},#{boundPhone},#{hpCompanyStoreId},#{sessionKey});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_user_bound where hp_user_bound_id=#{hpUserBoundId}
@@ -65,6 +66,9 @@
 			</if>
 			<if test="hpCompanyStoreId!=null ">
 				hp_company_store_id=#{hpCompanyStoreId},
+			</if>
+			<if test="sessionKey!=null">
+				session_key=#{sessionKey},
 			</if>
 		</set>
 		 where hp_user_bound_id=#{hpUserBoundId}

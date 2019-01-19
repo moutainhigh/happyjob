@@ -143,7 +143,7 @@ public class UserServiceImpl implements UserService {
 
     
     @Override
-    public OtherLoginData insertWxLogin(String openId,String unionid,String storeToken) {
+    public OtherLoginData insertWxLogin(String openId,String unionid,String storeToken,String sessionKey) {
         OtherLoginData data = new OtherLoginData();
         
         HpUserBoundEntity bound = this.hpUserBoundExMapper.getBoundByOpenId(openId);
@@ -158,6 +158,7 @@ public class UserServiceImpl implements UserService {
             bound.setUnionid(unionid);
             bound.setCreateTime(curTime);
             bound.setGender(1);
+            bound.setSessionKey(sessionKey);
             
             if(!Util.isEmpty(storeToken)) { // 门店信息非空
                 Long storeId = this.hpConfigExMapper.getStoreIdByToken(storeToken);
@@ -166,6 +167,14 @@ public class UserServiceImpl implements UserService {
             
             this.hpUserBoundMapper.insert(bound);
             
+        }else {
+            HpUserBoundEntity newBound = new HpUserBoundEntity();
+            newBound.setHpUserBoundId(bound.getHpUserBoundId());
+            if(!Util.isEmpty(unionid)) {
+                newBound.setUnionid(unionid);
+            }
+            newBound.setSessionKey(sessionKey);
+            this.hpUserBoundMapper.updateByPK(newBound);
         }
         Long userId = bound.getHpUserId();
         data.setOid(bound.getBoundToken());
@@ -178,7 +187,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BaseMsg updateLoginBound(String oid, String headerUrl, String nickName, int gender) {
+    public BaseMsg updateLoginBound(String oid, String headerUrl, String nickName, int gender, String unionid) {
          BaseMsg msg = new BaseMsg();
          HpUserBoundEntity userBound = this.hpUserBoundExMapper.getBoundByToken(oid);
          if(userBound == null) {
@@ -193,6 +202,7 @@ public class UserServiceImpl implements UserService {
          userBound.setNickName(nickName);
          userBound.setHpUserBoundId(boundId);
          userBound.setGender(gender);
+         userBound.setUnionid(unionid);
          this.hpUserBoundMapper.updateByPK(userBound);
          return msg;
     }
@@ -847,6 +857,21 @@ public class UserServiceImpl implements UserService {
         this.hpUserMapper.updateByPK(user);
     }
 
+
+    @Override
+    public JSONObject decodeWxData(String oid, String encryptedData, String iv) {
+        
+        String sessionKey = this.hpUserBoundExMapper.getSessionKey(oid);
+        if(Util.isEmpty(sessionKey)) {
+            JSONObject json = new JSONObject();
+            json.put("errcode", 3);
+            json.put("message", "重新登录获取sessionKey");
+            return json;
+        }
+        
+        return Util.decodeWxData(encryptedData, iv, sessionKey);
+         
+    }
 
 
     
