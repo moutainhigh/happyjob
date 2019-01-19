@@ -113,7 +113,7 @@ $(function(){
 $(document).on("change",'input[name="hpPositionWelfareId"]',function(){  // 福利选项点击事假
 	var $this = $(this);
 	if($this.prop("checked")){
-		var content = '<div data-id="'+$this.val()+'" class="showValue col-sm-8">'+$this.next().html()+'</div>';
+		var content = '<div data-id="'+$this.val()+'" class="showValue col-sm-3 col-sm-offset-1">'+$this.next().html()+'</div>';
 		var fuli = '<label class="col-sm-1 showValue" data-id='+$this.val() +'>'+$this.next().html()+'</label>';
 		$("#welfareChoose").append(content);
 		if($this.next().html() == "入职返现"){
@@ -359,6 +359,29 @@ function welfareConfig(){
 				var list = data.list;
 				var length = list.length;
 				for(var i=0;i<length;i++){
+					content += '<label class="col-sm-3 col-sm-offset-1" align="left" >'+
+						'<input name="hpPositionWelfareId" type="checkbox" value='+list[i].hpPositionWelfareId+' >'+
+						'<i>'+list[i].welfareName+'</i></label>';
+				}
+				if(content !=''){
+					$("#welfareBox").html(content);
+				}
+			}
+		}
+	});
+}
+//原来的显示 福利
+function welfareConfig2(){
+	fetchGet({
+		url:apiData.posWelfare,
+		params:{
+		},
+		callback:function(data){
+			if(data){
+				var content = '';
+				var list = data.list;
+				var length = list.length;
+				for(var i=0;i<length;i++){
 					content += '<div class="form-group col-sm-4"><label>'+
 						'<input name="hpPositionWelfareId" type="checkbox" value='+list[i].hpPositionWelfareId+' >'+
 						'<i>'+list[i].welfareName+'</i></label></div>';
@@ -408,34 +431,7 @@ function posTypeConfig(){
 		}
 	});
 }
-//原来的方法
-function posTypeConfig2(){
-	fetchGet({
-		url:apiData.posTypeList,
-		params:{
-		},
-		callback:function(data){
-			if(data){
-				var list = data.list;
-				var length = list.length;
-				for(var i=0;i<length;i++){
-					if(!list[i].parentId){ // 父类
-						content += '<div>'+list[i].typeName+'</div><div>';
-						for(var j=0;j<length;j++){
-							if(list[i].hpPositionTypeId == list[j].parentId){
-								content += '<div data-type="posType" data-id="'+list[j].hpPositionTypeId+'">'+list[j].typeName+'</div>';
-							}
-						}
-						content += '</div>';
-					}
-				}
-				if(content !=''){
-					$("#posTypeBox").html(content);
-				}
-			}
-		}
-	});
-}
+
 
 function salaryConfig(){
 	fetchGet({
