@@ -877,5 +877,12 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public void updateBoundFormId(String oid,String formId) {
+        
+         this.hpUserBoundExMapper.updateBoundFormId(oid, formId);
+    }
+
+
     
 }

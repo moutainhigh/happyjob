@@ -84,22 +84,26 @@ public class UserCenterController {
        @ApiImplicitParam(name="idFrontPic",value="身份证正面图片地址",dataType="String",paramType="query",required=true),
        @ApiImplicitParam(name="idBackPic",value="身份证反面图片地址",dataType="String",paramType="query",required=true),
        @ApiImplicitParam(name="idPersonPic",value="身份证手持图片地址",dataType="String",paramType="query",required=true),
+       @ApiImplicitParam(name="formId",value="消图推送必须formId",dataType="String",paramType="query",required=true),
    })
    @PostMapping(value="approve")
    public BaseMsg approve(HttpServletRequest request) {
        
        // TODO 是否需要验证用户
        String sid = request.getHeader("sid");
+       String oid = request.getHeader("oid");
        String realName = request.getParameter("realName");
        String idNum = request.getParameter("idNum");
        String idFrontPic = request.getParameter("idFrontPic");
        String idBackPic = request.getParameter("idBackPic");
        String idPersonPic = request.getParameter("idPersonPic");
+       String formId = request.getParameter("formId");
        
-       logger.info("resume 参数日志：sid=={},realName=={},idNum=={},idFrontPic=={},idBackPic=={},idPersonPic=={}",
-           sid,realName,idNum,idFrontPic,idBackPic,idPersonPic);
-       
-       return this.userService.updateUserIdApply(sid, realName, idNum, idFrontPic, idBackPic, idPersonPic);
+       logger.info("resume 参数日志：sid=={},realName=={},idNum=={},idFrontPic=={},idBackPic=={},idPersonPic=={},formId=={}",
+           sid,realName,idNum,idFrontPic,idBackPic,idPersonPic,formId);
+       BaseMsg msg = this.userService.updateUserIdApply(sid, realName, idNum, idFrontPic, idBackPic, idPersonPic);
+       this.userService.updateBoundFormId(oid, formId);
+       return msg;
    }
    
    /**
@@ -181,15 +185,19 @@ public class UserCenterController {
        @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
        @ApiImplicitParam(name="sid",value="用户登录凭证",dataType="String",paramType="header",required=true),
        @ApiImplicitParam(name="hpPositionId",value="岗位ID",dataType="long",paramType="query",required=true),
+       @ApiImplicitParam(name="formId",value="消息推送formID",dataType="String",paramType="query",required=true),
    })
    @PostMapping(value="positionApply")
    public GroupDataMsg positionApply(HttpServletRequest request) {
        
        String sid = request.getHeader("sid");
+       String oid = request.getHeader("oid");
        Long hpPositionId = (Long)Util.typeChange(request.getParameter("hpPositionId"), Long.class);
-       logger.info("positionApply 参数日志：sid=={},hpPositionId=={}",sid,hpPositionId);
-       
-       return this.positionService.insertUserPositionApply(sid, hpPositionId);
+       String formId = request.getParameter("formId");
+       logger.info("positionApply 参数日志：sid=={},hpPositionId=={},formId=={}",sid,hpPositionId,formId);
+       GroupDataMsg msg = this.positionService.insertUserPositionApply(sid, hpPositionId);
+       this.userService.updateBoundFormId(oid, formId);
+       return msg;
    }
    
    /**
@@ -201,21 +209,23 @@ public class UserCenterController {
        @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
        @ApiImplicitParam(name="sid",value="用户登录凭证",dataType="String",paramType="header",required=true),
        @ApiImplicitParam(name="hpPositionGroupId",value="岗位拼团ID",dataType="long",paramType="query",required=true),
+       @ApiImplicitParam(name="formId",value="消息推送formID",dataType="String",paramType="query",required=true),
    })
    @PostMapping(value="groupApply")
    public GroupDataMsg groupApply(HttpServletRequest request) {
        
        String sid = request.getHeader("sid");
        String oid = request.getHeader("oid");
+       String formId = request.getParameter("formId");
        Long hpPositionGroupId = (Long)Util.typeChange(request.getParameter("hpPositionGroupId"), Long.class);
-       logger.info("positionApply 参数日志：sid=={},hpPositionGroupId=={}",sid,hpPositionGroupId);
+       logger.info("positionApply 参数日志：sid=={},hpPositionGroupId=={},formId=={}",sid,hpPositionGroupId,formId);
        GroupDataMsg msg = this.positionService.insertUserGroupApply(sid, hpPositionGroupId);
+       this.userService.updateBoundFormId(oid, formId);
        try {
            this.messageService.sendPositionMsg(oid, hpPositionGroupId);
        } catch (Exception e) {
             logger.error("拼团成功消息推送异常===",e);
        }
-       
        return msg;
    }
    

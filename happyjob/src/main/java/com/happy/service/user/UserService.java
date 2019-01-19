@@ -108,6 +108,16 @@ public interface UserService {
     * @TODO:     根据手机号查询用户工资条
     */
    UserPayrollDataMsg getPayrollByIdNum(String idNum,Long time);
+   /**
+   *
+   * @TODO:     微信加密信息：解密
+   */ 
+  JSONObject decodeWxData(String oid,String encryptedData,String iv );
+   /**
+    *
+    * @TODO:     更新微信绑定表中formId
+    */
+   void updateBoundFormId(String oid,String formId);
    
    
    
@@ -140,9 +150,4 @@ public interface UserService {
     * @TODO:     后台用户登录、更新登录状态
     */ 
    void UpdateUserLogin(Long hpUserId,String ip);
-   /**
-    *
-    * @TODO:     微信加密信息：解密
-    */ 
-   JSONObject decodeWxData(String oid,String encryptedData,String iv );
 }

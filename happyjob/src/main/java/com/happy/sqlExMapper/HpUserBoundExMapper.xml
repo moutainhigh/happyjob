@@ -71,4 +71,8 @@
 		FROM hp_user u LEFT JOIN hp_user_bound ub ON u.hp_user_id=ub.hp_user_id 
 		WHERE u.hp_user_id=#{hpUserId}
 	</select>
+	
+	<select id="updateBoundFormId" >
+		UPDATE hp_user_bound ub SET ub.form_id=#{formId} WHERE ub.bound_token=#{oid}
+	</select>
 </mapper>

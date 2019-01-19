@@ -74,4 +74,9 @@ public interface HpUserBoundExMapper{
     * @TODO:     描述一下这个方法是干什么的
     */
    UserApprove getSendDataByUserKey(@Param("hpUserId")Long hpUserId);
+   /**
+    *
+    * @TODO:     描述一下这个方法是干什么的
+    */
+   int updateBoundFormId(@Param("oid")String oid,@Param("formId")String formId);
 }
