@@ -10,6 +10,7 @@
 		SELECT p.hp_position_id,p.hp_company_id,c.com_name,p.pos_name,ps.lower_num,ps.hight_num,aco.county_name,aci.city_name,
 		p.group_on,p.start_time,p.end_time,p.hot_on,p.car_on,p.pos_nature,p.welfare_on,
 		p.ret_on,p.ret_man_money,p.ret_woman_money,p.urgent_on,p.urgent_money,<include refid="selectRequireCol"></include>,
+		p.three_money,p.five_money,
 		(SELECT GROUP_CONCAT(pw.welfare_name) FROM hp_position_ref_welfare prw JOIN hp_position_welfare pw 
          WHERE prw.hp_position_id=p.hp_position_id AND prw.hp_position_welfare_id=pw.hp_position_welfare_id) welfareArr,
          (SELECT COUNT(pru.hp_position_ref_user_id) FROM hp_position_group pg JOIN hp_position_ref_user pru 
@@ -66,6 +67,7 @@
 	
 	<select id="getFrontPosByKey" resultType="com.happy.service.position.data.PositionData" >
 		SELECT p.*,c.com_name,ps.lower_num,ps.hight_num,aco.county_name,aci.city_name,c.com_logo,<include refid="selectRequireCol"></include>,
+		c.approve_state approveState,
 		(SELECT GROUP_CONCAT(pw.welfare_name) FROM hp_position_ref_welfare prw JOIN hp_position_welfare pw 
          WHERE prw.hp_position_id=p.hp_position_id AND prw.hp_position_welfare_id=pw.hp_position_welfare_id) welfareArr
          <if test="sid !=null and sid != ''">
@@ -162,7 +164,7 @@ AND (SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_i
 		(pg.end_time-#{curTime}) leftTime,c.approve_state,
 		<choose>
 			<when test="sid != null and sid !=''">
-		IF((SELECT COUNT(*) FROM hp_position_ref_user pru1 WHERE pru1.hp_user_id=<include refid="getIdBySid"></include>)>0,1,0) userIsPart    
+		IF((SELECT COUNT(*) FROM hp_position_ref_user pru1 WHERE pru1.hp_user_id=<include refid="getIdBySid"></include> AND pru1.hp_position_group_id=pg.hp_position_group_id )>0,1,0) userIsPart    
 			</when>
 			<otherwise>
 				0 userIsPart

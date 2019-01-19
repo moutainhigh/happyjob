@@ -51,6 +51,12 @@ public class WxModelConst {
     public static final String XCX_ORDER_BODY = "待定";
     /**微信小程序统一下单支付类型*/
     public static final String XCX_ORDER_TRADE_TYPE = "JSAPI";
+    
+    /** 小程序模板消息发送接口 */
+    public static final String WX_APPLETS_MSG_TEMP_URL = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=${access_token}";
+    /** 公众号消息已添加模板列表获取接口 */
+    public static final String WX_PUBLIC_MSG_TEMP_LIST_URL = "https://api.weixin.qq.com/cgi-bin/template/get_all_private_template?access_token=${access_token}";
+
    
     /**
      *
