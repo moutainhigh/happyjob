@@ -531,6 +531,9 @@ public class UserServiceImpl implements UserService {
         user.setHpUserId(hpUserId);
         if(approve !=null) {
         	user.setApproveState(approve == 1?1:2);
+        	if(approve == 1) {
+        	    msg.setSendOn(1);
+        	}
         }
         if(blackOn != null) {
         	user.setBlackOn(blackOn==1?1:0);
