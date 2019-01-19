@@ -127,25 +127,6 @@ public class PositionManageController {
     
     
     /**
-     * @TODO:     招聘详情获取
-     */
-    @ApiOperation(value="测试：招聘福利",notes="招聘福利")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name="hpPositionId",value="职位Id",dataType="long",paramType="query",required=true),
-        @ApiImplicitParam(name="welfareIds",value="职位Id",dataType="long",paramType="query",required=true),
-    })
-    @PostMapping(value="positionWelfare")
-    public BaseMsg positionWelfare(HttpServletRequest request){
-        
-        Long hpPositionId = (Long)Util.typeChange(request.getParameter("hpPositionId"), Long.class);
-        String welfareIds = request.getParameter("welfareIds");
-        
-        logger.info("position---参数信息----hpPositionId=={},welfareIds=={}",hpPositionId,welfareIds);
-        
-        return this.positionService.insertOrUpPositionTest(hpPositionId, welfareIds);
-    }
-    
-    /**
      * @TODO:     招聘福利选项获取
      */
     @ApiOperation(value="配置：招聘福利选项",notes="招聘福利选项")

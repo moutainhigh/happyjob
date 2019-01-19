@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -231,6 +230,8 @@ public class PositionServiceImpl implements PositionService {
         }
         if(groupOn == 1) { // 拼团岗位每天一个求职者只能参加一次，拼团失效时间为三天（原型图有误需要修改
             page.setCurTime(curTime);
+            page.setState(5);
+            page.setHpPositionId(null);
             int groupPosNum = this.hpPositionExMapper.getGroupPosNumBySearch(page); // 获取当天已经申请的拼团岗位数量
             if(groupPosNum >0) {
                 json.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
@@ -457,23 +458,17 @@ public class PositionServiceImpl implements PositionService {
          return new BaseMsg();
     }
 
-    @Test
-    public void test1() {
-        String a = "1,2,3";
-        System.out.println(a.split(",").length);
-    }
-
-    @Override
-    public BaseMsg insertOrUpPositionTest(Long hpPositionId, String ids) {
-        if(!Util.isEmpty(ids) && ids.matches(REGEX_NUMBER_STR_ARR)) { // 新增福利关联表信息
-            String[] welfareIdArr = ids.split(",");
-            List<Long> list = new ArrayList<Long>();
-            for(String str : welfareIdArr) {
-                list.add((Long)Util.typeChange(str, Long.class));
-            }
-            this.hpPositionExMapper.insertGroupWelfare(hpPositionId, list);
-        }
-        return new BaseMsg();
-    }
+//    @Override
+//    public BaseMsg insertOrUpPositionTest(Long hpPositionId, String ids) {
+//        if(!Util.isEmpty(ids) && ids.matches(REGEX_NUMBER_STR_ARR)) { // 新增福利关联表信息
+//            String[] welfareIdArr = ids.split(",");
+//            List<Long> list = new ArrayList<Long>();
+//            for(String str : welfareIdArr) {
+//                list.add((Long)Util.typeChange(str, Long.class));
+//            }
+//            this.hpPositionExMapper.insertGroupWelfare(hpPositionId, list);
+//        }
+//        return new BaseMsg();
+//    }
 
 }

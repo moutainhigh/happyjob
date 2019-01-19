@@ -66,9 +66,5 @@ public interface PositionService {
     * @TODO:   招聘新增、更新
     */
    BaseMsg insertOrUpPosition(PositionDetail data);
-   /**
-    *
-    * @TODO:   招聘新增、更新
-    */
-   BaseMsg insertOrUpPositionTest(Long hpPositionId,String ids);
+//   BaseMsg insertOrUpPositionTest(Long hpPositionId,String ids);
 }
