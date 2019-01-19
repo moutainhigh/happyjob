@@ -32,15 +32,17 @@ public class MessageServiceImpl implements MessageService {
         logger.info("第一次=postResult:{}",postResult);
         JSONObject data = JSONObject.parseObject(postResult);
         if (data.getIntValue("errcode") != 0) {//invalid credential, access_token is invalid or not latest hint
-            if(data.getIntValue("errcode") == 40001) { // access_token is invalid
                 
-                access_token = WxModelConst.getAppAccessToken(WxAppParamsEnum.PARAMS_APPLETS_JOB, false);
-                postResult = Util.sendPost(WxModelConst.WX_APPLETS_MSG_TEMP_URL
-                    .replace("${access_token}",access_token), content);
-                logger.info("第二次=postResult:{}",postResult);
-            }else {
-                msg.setErrorCode(2);
-                msg.setMessage("消息发放失败");
+            access_token = WxModelConst.getAppAccessToken(WxAppParamsEnum.PARAMS_APPLETS_JOB, false);
+            postResult = Util.sendPost(WxModelConst.WX_APPLETS_MSG_TEMP_URL
+                .replace("${access_token}",access_token), content);
+            logger.info("第二次=postResult:{}",postResult);
+            if(data.containsKey("errcode") && data.getIntValue("errcode") != 0) {
+                msg.setErrorCode(1);
+                msg.setMessage("微信请求接口返回错误");
+            }{
+            msg.setErrorCode(2);
+            msg.setMessage("消息发放失败");
             }
         }
         msg.setWxMsg(data);
@@ -51,7 +53,7 @@ public class MessageServiceImpl implements MessageService {
     public BaseMsg getAllWxTemplateIds(Integer currentPage, Integer showCount) {
         BaseMsg msg = new BaseMsg();
         String access_token = WxModelConst.getAppAccessToken(WxAppParamsEnum.PARAMS_APPLETS_JOB, false);
-        String url = WxModelConst.WX_PUBLIC_MSG_TEMP_LIST_URL;
+        String url = WxModelConst.WX_APPLETS_MSG_TEMP_LIST_URL;
         String params = "";
         if(currentPage != null && showCount != null) {
             JSONObject json = new JSONObject();
@@ -62,15 +64,13 @@ public class MessageServiceImpl implements MessageService {
         String postResult = Util.sendPost(url.replace("${access_token}",access_token), params);
         logger.info("第一次=postResult:{}",postResult);
         JSONObject jsonObj = JSONObject.parseObject(postResult);
-        String template_list = "";
         if(jsonObj.containsKey("errcode") && jsonObj.getIntValue("errcode") != 0) {
-            if(jsonObj.getIntValue("errcode") == 40001) { // access_token is invalid
-                access_token = WxModelConst.getAppAccessToken(WxAppParamsEnum.PARAMS_APPLETS_JOB, false);
-                
-                postResult = Util.sendPost(url.replace("${access_token}",access_token), params);
-                logger.info("第二次=postResult:{}",postResult);
-                jsonObj = JSONObject.parseObject(postResult);
-            }else {
+            access_token = WxModelConst.getAppAccessToken(WxAppParamsEnum.PARAMS_APPLETS_JOB, false);
+            
+            postResult = Util.sendPost(url.replace("${access_token}",access_token), params);
+            logger.info("第二次=postResult:{}",postResult);
+            jsonObj = JSONObject.parseObject(postResult);
+            if(jsonObj.containsKey("errcode") && jsonObj.getIntValue("errcode") != 0) {
                 msg.setErrorCode(1);
                 msg.setMessage("微信请求接口返回错误");
             }

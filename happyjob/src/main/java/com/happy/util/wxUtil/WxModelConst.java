@@ -33,12 +33,12 @@ public class WxModelConst {
     public static final String WX_APPLETS_GETWXACODEUNLIMIT_URL = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=${access_token}";
     
     /** 开心工作小程序access_token */
-    private static String applets_job_access_token = null;
+    private static String applets_job_access_token = "acb";
    /** 开心工作小程序access_token有效期截止 */
     private static long applets_job_access_token_endTime = 0;
     
     /** 商城小程序access_token */
-    private static String applets_mall_access_token = null;
+    private static String applets_mall_access_token = "acb";
     /** 商城小程序access_token有效期截止 */
     private static long applets_mall_access_token_endTime = 0;
     
@@ -54,9 +54,9 @@ public class WxModelConst {
     
     /** 小程序模板消息发送接口 */
     public static final String WX_APPLETS_MSG_TEMP_URL = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=${access_token}";
-    /** 公众号消息已添加模板列表获取接口 */
-    public static final String WX_PUBLIC_MSG_TEMP_LIST_URL = "https://api.weixin.qq.com/cgi-bin/template/get_all_private_template?access_token=${access_token}";
-
+    /** 小程序已添加模板列表获取接口 */
+    public static final String WX_APPLETS_MSG_TEMP_LIST_URL = "https://api.weixin.qq.com/cgi-bin/wxopen/template/list?access_token=${access_token}";
+   
    
     /**
      *

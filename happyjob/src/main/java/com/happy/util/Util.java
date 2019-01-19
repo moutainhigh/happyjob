@@ -63,6 +63,7 @@ import com.happy.service.user.data.UpImgData;
 import com.happy.service.user.data.UpImgMsg;
 import com.happy.util.pubConst.Const;
 import com.happy.util.sms.SmsUtil;
+import com.happy.util.wxUtil.WxAppParamsEnum;
 import com.happy.util.wxUtil.WxModelConst;
 
 /**
@@ -1297,6 +1298,58 @@ public class Util {
             logger.error("here is exception", e);
         }
         return null;
+   }
+   /**
+    *
+    * @TODO:     生成拼团成功提醒消息
+    * @CreateTime:  2019年1月19日下午8:13:41 
+    * @param posName
+    * @param openId
+    * @param remark
+    * @return
+    */
+   public static String createPositionMsg(String posName,String openId,String remark,String form_id) {
+       
+       JSONObject json = new JSONObject();
+       json.put(WxAppParamsEnum.WxMsgKeyModel.TEMP_TOUSER.getKeyName(), openId);
+       json.put(WxAppParamsEnum.WxMsgKeyModel.TEMP_TEMPLATE_ID.getKeyName(), WxAppParamsEnum.WxMsgModel.TEMP_POSITION.getModelId());
+       json.put(WxAppParamsEnum.WxMsgKeyModel.TEMP_PAGE.getKeyName(), "/pages/index/index");
+       json.put(WxAppParamsEnum.WxMsgKeyModel.TEMP_FORM_ID.getKeyName(), form_id);
+       JSONObject data = new JSONObject();
+       JSONObject item1 = new JSONObject();
+       item1.put("value", remark);
+       data.put("keyword1", item1);
+       JSONObject item2 = new JSONObject();
+       item2.put("value", posName);
+       data.put("keyword2", item2);
+       json.put(WxAppParamsEnum.WxMsgKeyModel.TEMP_DATA.getKeyName(), data);
+       return json.toString();
+   }
+   /**
+    *
+    * @TODO:     身份认证成功提醒消息
+    * @CreateTime:  2019年1月19日下午8:13:41 
+    * @param posName
+    * @param openId
+    * @param remark
+    * @return
+    */
+   public static String createApproveMsg(String posName,String openId,String remark,String form_id) {
+       
+       JSONObject json = new JSONObject();
+       json.put(WxAppParamsEnum.WxMsgKeyModel.TEMP_TOUSER.getKeyName(), openId);
+       json.put(WxAppParamsEnum.WxMsgKeyModel.TEMP_TEMPLATE_ID.getKeyName(), WxAppParamsEnum.WxMsgModel.TEMP_APPROVE.getModelId());
+       json.put(WxAppParamsEnum.WxMsgKeyModel.TEMP_PAGE.getKeyName(), "/pages/check-iphone/index");
+       json.put(WxAppParamsEnum.WxMsgKeyModel.TEMP_FORM_ID.getKeyName(), form_id);
+       JSONObject data = new JSONObject();
+       JSONObject item1 = new JSONObject();
+       item1.put("value", remark);
+       data.put("keyword1", item1);
+       JSONObject item2 = new JSONObject();
+       item2.put("value", Util.dateFormat(Util.getCurrentDate(), Const.DATE_FORMAT_STR_7));
+       data.put("keyword2", item2);
+       json.put(WxAppParamsEnum.WxMsgKeyModel.TEMP_DATA.getKeyName(), data);
+       return json.toString();
    }
     @Test
     public void test1() {

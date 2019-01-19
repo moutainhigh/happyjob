@@ -80,7 +80,7 @@
 		JOIN hp_area_county aco ON p.county_id=aco.county_id 
 		JOIN hp_area_city aci ON aco.city_id=aci.city_id 
 		LEFT JOIN hp_position_require pr ON p.hp_position_id=pr.hp_position_id 
-		LEFT JOIN hp_company_type ct ON p.hp_company_type=ct.hp_company_type 
+		LEFT JOIN hp_company_type ct ON p.hp_company_type_id=ct.hp_company_type_id 
 		WHERE p.hp_position_id=#{hpPositionId} 
 	</select>
 	
