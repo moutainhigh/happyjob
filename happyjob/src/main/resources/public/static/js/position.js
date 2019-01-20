@@ -292,7 +292,7 @@ function formSub(){ // 提交验证
 		url:apiData.positionAdd,
 		params:positionData,
 		callback:function(data){
-			swal('请求完成', data.message, 'error');
+			swal('请求完成', data.message, 'success');
 		}
 	});
 }
