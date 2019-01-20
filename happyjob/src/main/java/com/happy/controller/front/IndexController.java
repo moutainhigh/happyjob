@@ -276,7 +276,7 @@ import io.swagger.annotations.ApiOperation;
        Long curTime = Util.getDateSecond(Util.getCurrentDate());
        //发短信
        if(!Util.isEmpty(msgCode)) { // 发送成功
-           HttpSession session = request.getSession();
+           HttpSession session = request.getSession(true);
            logger.info("验证码发送 sessionId==={}",session.getId());
            session.setAttribute(Const.SESSION_ATTR_NAME_PHONE, phoneNo);
            session.setAttribute(Const.SESSION_ATTR_NAME_MSGCODE, msgCode);
