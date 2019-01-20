@@ -67,6 +67,10 @@ import io.swagger.annotations.ApiModelProperty;
     private Integer scaleHigh;
     @ApiModelProperty(name="typeName",value="公司类型名称")
     private String typeName;
+    @ApiModelProperty(name="comLocation",value="公司地理位置经纬度值")
+    private String comLocation;
+    @ApiModelProperty(name="addrDetail",value="公司详细地址")
+    private String addrDetail;
     
     
     public String getComName() {
@@ -242,5 +246,17 @@ import io.swagger.annotations.ApiModelProperty;
     }
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+    public String getComLocation() {
+        return comLocation;
+    }
+    public void setComLocation(String comLocation) {
+        this.comLocation = comLocation;
+    }
+    public String getAddrDetail() {
+        return addrDetail;
+    }
+    public void setAddrDetail(String addrDetail) {
+        this.addrDetail = addrDetail;
     }
 }

@@ -32,11 +32,16 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
+import java.util.SortedMap;
 import java.util.TimeZone;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,6 +61,7 @@ import org.bouncycastle.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.happy.controller.base.BaseController;
 import com.happy.service.user.data.UpImgData;
@@ -1350,5 +1356,89 @@ public class Util {
        json.put(WxAppParamsEnum.WxMsgKeyModel.TEMP_DATA.getKeyName(), data);
        return json.toString();
    }
+   /**
+    *
+    * @TODO:     根据身份证号获取出生年月日
+    * @CreateTime:  2019年1月20日下午2:25:48 
+    * @param number
+    * @return
+    */
+   public static Long getBornIDcard(String number){
+       if(Util.isEmpty(number)) {
+           return null;
+       }
+       String birth = number.substring(6, 14);
+       String year = birth.substring(0, 4);
+       String month = birth.substring(4, 6);
+       String day = birth.substring(6, 8);
+       
+       String birthday = year+"-"+month+"-"+day;
+       logger.info("出生年月=={}",birthday);
+       return (Long)Util.typeChange(year, Long.class);
+   }
 
+   
+   /**
+    *
+    * @TODO:     描述一下这个方法是干什么的
+    * @CreateTime:  2019年1月20日下午2:51:31 
+    * @param addr
+    * @param city
+    * @return
+    */
+   public static JSONObject getAddtrGdDetail(String addr,String city) {
+       String api = "https://restapi.amap.com/v3/geocode/geo?parameters";
+       String key = "b6a7f5b5e8bb76a100f3964056810a53";
+       
+       SortedMap<String, String> signMap = new TreeMap<String, String>();
+       addr = Util.urlEncodeStr(addr, Const.CODE_TYPE_STR);
+       city = Util.urlEncodeStr(city, Const.CODE_TYPE_STR);
+       signMap.put("address",addr );
+       signMap.put("key", key);
+       signMap.put("city", city);
+       String signStr = Util.createGdSign(signMap, "ede61604ff69e93875eb1aedc9e87c36");
+       String url = "key="+key+"&address="+addr+"&city="+city+"&sig="+signStr;
+       logger.info("参数信息=={}",url);
+       String result = Util.sendPost(api, url);
+       logger.info("地理编码接口返回信息==={}",result);
+       return JSONObject.parseObject(result);
+   }
+   /**
+   *
+   * @TODO:     根据高德地址编码接口返回信息获取location
+   * @CreateTime:  2019年1月20日下午2:51:31 
+   * @return
+   */
+   public static String getLocationFromGd(JSONObject gdResult) {
+       if(gdResult !=null && gdResult.getIntValue("status")==1 && gdResult.getIntValue("infocode")==10000) {
+           JSONArray geocodes = gdResult.getJSONArray("geocodes");
+           if(geocodes !=null && geocodes.size()>0) {
+               JSONObject jsonItem = geocodes.getJSONObject(0);
+               return jsonItem.getString("location");
+           }
+       }
+       return null;
+   }
+   
+   public static String createGdSign(SortedMap<String, String> packageParams, String API_KEY) {
+   StringBuffer sb = new StringBuffer();
+   Set<Entry<String, String>> es = packageParams.entrySet();
+   Iterator<Entry<String, String>> it = es.iterator();
+   while (it.hasNext()) {
+       Entry<String, String> entry = it.next();
+       String k = (String) entry.getKey();
+       String v = (String) entry.getValue();
+       if ((v != null) && (!("".equals(v))) && (!("sign".equals(k)))
+               && (!("key".equals(k)))) {
+           if(!Util.isEmpty(sb.toString())) {
+               sb.append("&");
+           }
+           sb.append(k + "=" + v);
+       }
+   }
+   sb.append(API_KEY);
+   System.out.println(sb);
+   String sign = Util.MD5(sb.toString());
+   return sign;
+}
 }

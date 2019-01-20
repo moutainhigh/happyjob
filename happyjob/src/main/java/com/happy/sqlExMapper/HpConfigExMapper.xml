@@ -39,4 +39,10 @@
 	<select id="getCompanyList" resultType="com.happy.service.company.data.HpCompanyExt" >
 		SELECT c.hp_company_id,c.com_name FROM hp_company c
 	</select>
+	
+	<select id="getCityNameByCountyId" resultType="String" >
+		SELECT aci.city_name  
+		FROM hp_area_city aci JOIN hp_area_county aco ON aci.city_id=aco.city_id 
+		WHERE aco.county_id=#{countyId}
+	</select>
 </mapper>

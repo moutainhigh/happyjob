@@ -38,5 +38,9 @@ public interface HpConfigExMapper{
 	 * @TODO:     描述一下这个方法是干什么的
 	 */
 	List<HpCompanyExt> getCompanyList();
+	/**
+	 * @TODO:     描述一下这个方法是干什么的
+	 */
+	String getCityNameByCountyId(@Param("countyId") Long countyId);
 }
 

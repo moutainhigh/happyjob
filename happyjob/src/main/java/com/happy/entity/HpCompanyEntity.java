@@ -53,6 +53,9 @@ public class HpCompanyEntity implements  Serializable  {
 	//认证状态（0、未认证，1、已认证）
 	@ApiModelProperty(name="approveState",value="认证状态（0、未认证，1、已认证）")
 	private java.lang.Integer approveState;
+	//公司地理位置经纬度值
+	@ApiModelProperty(name="comLocation",value="公司地理位置经纬度值")
+	private String comLocation;
 
 	public java.lang.Long getHpCompanyId() {
 		return hpCompanyId;
@@ -191,6 +194,16 @@ public class HpCompanyEntity implements  Serializable  {
 
 	public void setApproveState(java.lang.Integer approveState) {
 		this.approveState = approveState;
+	}
+
+
+	public String getComLocation() {
+		return comLocation;
+	}
+
+
+	public void setComLocation(String comLocation) {
+		this.comLocation = comLocation;
 	}
 
 }

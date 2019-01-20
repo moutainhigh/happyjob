@@ -18,10 +18,11 @@
 		<result column="com_license" property="comLicense"/>
 		<result column="create_time" property="createTime"/>
 		<result column="approve_state" property="approveState"/>
+		<result column="com_location" property="comLocation"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpCompanyId" parameterType="com.happy.entity.HpCompanyEntity">
-		insert into hp_company(com_name,com_desc,county_id,hp_company_type_id,hp_company_scale_id,addr_detail,comt_person,com_phone,com_email,com_logo,com_license,create_time,approve_state)
-		 values (#{comName},#{comDesc},#{countyId},#{hpCompanyTypeId},#{hpCompanyScaleId},#{addrDetail},#{comtPerson},#{comPhone},#{comEmail},#{comLogo},#{comLicense},#{createTime},#{approveState});
+		insert into hp_company(com_name,com_desc,county_id,hp_company_type_id,hp_company_scale_id,addr_detail,comt_person,com_phone,com_email,com_logo,com_license,create_time,approve_state,com_location)
+		 values (#{comName},#{comDesc},#{countyId},#{hpCompanyTypeId},#{hpCompanyScaleId},#{addrDetail},#{comtPerson},#{comPhone},#{comEmail},#{comLogo},#{comLicense},#{createTime},#{approveState},#{comLocation});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_company where hp_company_id=#{hpCompanyId}
@@ -73,6 +74,9 @@
 			</if>
 			<if test="approveState!=null ">
 				approve_state=#{approveState},
+			</if>
+			<if test="comLocation!=null">
+				com_location=#{comLocation},
 			</if>
 		</set>
 		 where hp_company_id=#{hpCompanyId}

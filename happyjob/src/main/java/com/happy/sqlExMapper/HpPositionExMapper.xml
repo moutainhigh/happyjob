@@ -67,7 +67,7 @@
 	
 	<select id="getFrontPosByKey" resultType="com.happy.service.position.data.PositionData" >
 		SELECT p.*,c.com_name,ps.lower_num,ps.hight_num,aco.county_name,aci.city_name,c.com_logo,<include refid="selectRequireCol"></include>,
-		c.approve_state approveState,ct.type_name,cs.lower_num scale_lower,cs.hight_num scale_high,
+		c.approve_state approveState,ct.type_name,cs.lower_num scale_lower,cs.hight_num scale_high,c.addr_detail,c.com_location,
 		(SELECT GROUP_CONCAT(pw.welfare_name) FROM hp_position_ref_welfare prw JOIN hp_position_welfare pw 
          WHERE prw.hp_position_id=p.hp_position_id AND prw.hp_position_welfare_id=pw.hp_position_welfare_id) welfareArr
          <if test="sid !=null and sid != ''">

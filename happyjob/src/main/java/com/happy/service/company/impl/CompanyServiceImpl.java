@@ -12,6 +12,7 @@ import com.happy.service.company.data.CompanyListMsg;
 import com.happy.service.company.data.CompanySearch;
 import com.happy.service.company.data.HpCompanyExt;
 import com.happy.sqlExMapper.HpCompanyExMapper;
+import com.happy.sqlExMapper.HpConfigExMapper;
 import com.happy.sqlMapper.HpCompanyMapper;
 import com.happy.util.Util;
 import com.happy.util.pubConst.EnumConst;
@@ -24,6 +25,9 @@ public class CompanyServiceImpl implements CompanyService{
 	
 	@Autowired
 	private HpCompanyMapper hpCompanyMapper ;
+	
+	@Autowired
+	private HpConfigExMapper hpConfigExMapper ;
 	
 	@Override
 	public CompanyListMsg companyListPage(String comName, Long startTime, Long endTime,Integer currentPage, Integer showCount) {
@@ -100,9 +104,11 @@ public class CompanyServiceImpl implements CompanyService{
         	msg.setMessage("联系电话必填");
         	return msg;
         }
-        
+        String cityName = this.hpConfigExMapper.getCityNameByCountyId(countryId);
+        String location = Util.getLocationFromGd(Util.getAddtrGdDetail(addrDetail, cityName));
         HpCompanyEntity company = new HpCompanyEntity();
         company.setComName(comName);
+        company.setComLocation(location);
         company.setHpCompanyTypeId(companyTypeId);
         company.setHpCompanyScaleId(companyScaleId);
         company.setComDesc(comDesc);
@@ -128,8 +134,12 @@ public class CompanyServiceImpl implements CompanyService{
             msg.setMessage("参数有问题 companyId:" +companyId);
             return msg;
         }
+        String cityName = this.hpConfigExMapper.getCityNameByCountyId(countyId);
+        String location = Util.getLocationFromGd(Util.getAddtrGdDetail(addrDetail, cityName));
+        
         
         HpCompanyEntity company = new HpCompanyEntity();
+        company.setComLocation(location);
         company.setComName(comName);
         company.setHpCompanyTypeId(companyTypeId);
         company.setHpCompanyScaleId(companyScaleId);

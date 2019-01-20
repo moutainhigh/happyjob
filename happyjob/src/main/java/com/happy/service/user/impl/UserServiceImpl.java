@@ -384,6 +384,7 @@ public class UserServiceImpl implements UserService {
          newUser.setIdFrontPic(idFrontPic);
          newUser.setIdNum(idNum);
          newUser.setIdPersonPic(idPersonPic);
+         newUser.setBornYear(Util.getBornIDcard(idNum));
          this.hpUserMapper.updateByPK(newUser);
          return msg;
     }
@@ -654,7 +655,7 @@ public class UserServiceImpl implements UserService {
         
         UserResume base = this.hpUserExMapper.getUserResumBySid(sid);
         if(base == null) {
-            msg.setErrorCode(1);
+            msg.setErrorCode(ResultMsg.LOGIN_FILTER_RESULT_CODE_6);
             msg.setMessage("没有创建简历信息");
             return msg;
         }
