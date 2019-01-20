@@ -340,7 +340,7 @@ function userType(userType){
 }
 //判断出生年份
 function bornYear(value){
-    return  new Date().getFullYear()- Number(value)+"岁"
+    return  new Date().getFullYear()- Number(value)
 }
 //时间戳转date
 function timestampToTime(timestamp) {
