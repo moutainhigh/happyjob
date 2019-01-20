@@ -10,6 +10,7 @@ var hpPositionId = null;
 var posDetailUe = UE.getEditor('posDetailEditor');
 var otherWelfareUe = UE.getEditor('otherWelfareEditor');
 var posComDescUe = UE.getEditor('posComDescEditor');
+var carDescUe = UE.getEditor('carDescEditor');
 var positionData = {
   "applyTime": null,
   "carDesc": "",
@@ -214,7 +215,7 @@ function formSub(){ // 提交验证
 		swal('字段缺失', '是否有班车必填', 'error');
 		return;
 	}
-	var carDesc = $("#carDesc").val();
+	var carDesc = UE.getEditor('carDescEditor').getContent();
 	var posComDesc = UE.getEditor('posComDescEditor').getContent();
 	var posNature = $('input[name="posNature"]:checked').val();
 	
@@ -593,7 +594,11 @@ function editorPosition(){
     			}
 	    	});
 			$("#carOn").val(positionData.carOn); // 下拉框
-			$("#carDesc").val(positionData.carDesc);
+			carDescUe.ready(function(){
+    			if(positionData.posComDesc){
+    				UE.getEditor('carDescEditor').execCommand('insertHtml',positionData.carDesc);
+    			}
+	    	});
 			posComDescUe.ready(function(){
     			if(positionData.posComDesc){
     				UE.getEditor('posComDescEditor').execCommand('insertHtml',positionData.posComDesc);
