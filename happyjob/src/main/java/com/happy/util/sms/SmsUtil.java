@@ -49,7 +49,7 @@ public class SmsUtil {
 
     public static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
-    public static final String MSG_MODEL = "尊敬的用户： 您的验证码为${msgCode}，如非本人操作，请忽略此短信。";
+    public static final String MSG_MODEL = "验证码:${msgCode},如非本人操作，请忽略此短信.尊敬的客户,感谢您对开心工作的支持!";
 
     /**
      * @param msg 短信内容
