@@ -260,7 +260,7 @@ import io.swagger.annotations.ApiOperation;
        String oid = request.getHeader("oid");
        String phoneNo = request.getParameter("phoneNo");
        
-       logger.info("phoneSms 参数日志：oid=={},phoneNo",
+       logger.info("phoneSms 参数日志：oid=={},phoneNo=={}",
            oid,phoneNo);
        
        PhoneCodeMsg msg = new PhoneCodeMsg();
@@ -506,9 +506,9 @@ import io.swagger.annotations.ApiOperation;
   
   /**
   *
-  * @TODO:     手机号：微信手机号获取后自动绑定
+  * @TODO:     微信信息：微信信息存入
   */
- @ApiOperation(value="门店：获取门店列表",notes="门店：获取门店列表")
+ @ApiOperation(value="微信信息：微信信息存入",notes="微信信息存入")
  @ApiImplicitParams({
      @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
      @ApiImplicitParam(name="encryptedData",value="加密消息体",paramType="query",required = true,dataType="String"),
@@ -551,7 +551,7 @@ import io.swagger.annotations.ApiOperation;
    *
    * @TODO:     手机号：微信手机号获取后自动绑定
    */
-  @ApiOperation(value="门店：获取门店列表",notes="门店：获取门店列表")
+  @ApiOperation(value="手机号：微信手机号获取后自动绑定",notes="微信手机号获取后自动绑定")
   @ApiImplicitParams({
       @ApiImplicitParam(name="oid",value="微信登录凭证",dataType="String",paramType="header",required=true),
       @ApiImplicitParam(name="encryptedData",value="消息",paramType="query",required = true,dataType="String"),

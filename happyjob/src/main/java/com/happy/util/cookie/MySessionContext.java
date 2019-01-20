@@ -30,21 +30,26 @@ public class MySessionContext {
     public static synchronized void AddSession(HttpSession session) {
         if (session != null) {
             mymap.put(session.getId(), session);
-        }
-        if(mymap !=null && mymap.size()>0) {
-            long curTime = Util.getDateSecond(Util.getCurrentDate());
-            for(Entry<String, HttpSession> entry:mymap.entrySet()) {
-                HttpSession item = entry.getValue();
-                Long sessionTime = 0l;
-                try {
-                    Object sessionTimeObj = item.getAttribute(Const.SESSION_ATTR_NAME_AGE);
-                    sessionTime = (long)sessionTimeObj;
-                } catch (Exception e) {
-                    logger.error("内部session类出现异常",e);
-                }    
-                    
-                if(curTime>sessionTime) {
-                    DelSession(item);
+            int i=0;
+            if(mymap !=null && mymap.size()>0) {
+                long curTime = Util.getDateSecond(Util.getCurrentDate());
+                for(Entry<String, HttpSession> entry:mymap.entrySet()) {
+                    HttpSession item = entry.getValue();
+                    Long sessionTime = 0l;
+                    try {
+                        Object sessionTimeObj = item.getAttribute(Const.SESSION_ATTR_NAME_AGE);
+                        sessionTime = (long)sessionTimeObj;
+                    } catch (Exception e) {
+                        logger.error("内部session类出现异常",e);
+                    }    
+                    i++;
+                    if(curTime>sessionTime) {
+                        DelSession(item);
+                        return;
+                    }
+                    if(i>10) {
+                        return;
+                    }
                 }
             }
         }

@@ -16,7 +16,7 @@
 	
 	<select id="getSimpleUserByKey" resultType="com.happy.service.user.data.UserSimpleData" >
 		SELECT u.hp_user_id,u.user_token,u.share_token,u.phone_no,u.approve_state,u.black_on,
-		u.user_name,u.header_pic,u.gender,u.approve_num,ur.hp_user_resume_id,u.real_name  
+		u.user_name,u.header_pic,u.gender,u.approve_num,ur.hp_user_resume_id,u.real_name,u.born_year  
 		FROM hp_user u 
 		LEFT JOIN hp_user_resume ur ON u.hp_user_id=ur.hp_user_id
 		WHERE 1=1 

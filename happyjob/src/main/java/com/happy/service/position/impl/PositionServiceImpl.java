@@ -93,7 +93,7 @@ public class PositionServiceImpl implements PositionService {
          }
          PositionData data = this.hpPositionExMapper.getFrontPosByKey(hpPositionId,sid);
          
-         if(data !=null) {
+         if(data !=null && !Util.isEmpty(sid)) {
              // 是否正在投递该岗位:普通方式
              PositionSearch search = new PositionSearch();
              search.setSid(sid);
