@@ -296,8 +296,8 @@ function addTableList(list){
         <tr \
             data-user-id="'+ item.hpUserId +'" \
             data-iphone="'+ item.phoneNo +'" \
-            data-name="'+ item.realName +'" \
-            data-born-year="'+ item.bornYear +'" \
+            data-name="'+ getUserName(item.realName) +'" \
+            data-born-year="'+ bornYear(item.bornYear) +'" \
             data-id-num="'+ item.idNum +'" \
             data-create-time="'+ timestampToTime(item.createTime) +'" \
             data-comname="'+ (item.comName || "") +'" \
@@ -305,7 +305,7 @@ function addTableList(list){
             data-id-front-pic="'+ item.idFrontPic +'" \
             data-id-back-pic="'+ item.idBackPic +'" >\
             <th>'+ item.phoneNo +'</th>\
-            <th>'+ item.realName +'</th>\
+            <th>'+ getUserName(item.realName) +'</th>\
             <th>'+ gender(item.gender) +'</th>\
             <th>'+ bornYear(item.bornYear) +'</th>\
             <th>'+ userType(item.userType) +'</th>\
@@ -340,7 +340,12 @@ function userType(userType){
 }
 //判断出生年份
 function bornYear(value){
-    return  new Date().getFullYear()- Number(value)
+	if(value){
+		
+		return  new Date().getFullYear()- Number(value)
+	}else{
+		return '无';
+	}
 }
 //时间戳转date
 function timestampToTime(timestamp) {
@@ -397,4 +402,10 @@ function approveState(value){
         case 2:return "认证不通过"
         case 3:return "认证待审核"
     }
+}
+function getUserName(userName){
+	if(userName){
+		return decodeURIComponent(userName);
+	}
+	return '无';
 }
