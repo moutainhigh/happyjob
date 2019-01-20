@@ -110,6 +110,7 @@ public class SalaryServiceImpl implements SalaryService {
 			logger.error("backUser.importSalary ----出错--------------");
 			msg.setErrorCode(1);
 			msg.setMessage("导入出错");
+			return msg ;
 		}
 		msg.setErrorCode(0);
 		msg.setMessage("导入成功");

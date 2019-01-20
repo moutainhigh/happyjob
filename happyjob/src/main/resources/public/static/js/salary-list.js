@@ -14,7 +14,12 @@ $(document).on("click","#upload",function(){
         processData: false,  // 不处理数据
         contentType: false,   // 不设置内容类型
 		success:function(data){
-			swal('请求成功', data.message, 'success');
+			console.log(data);
+			if(data.errorCode == 1){
+				swal('请求失败', data.message, 'error');
+			}else{
+				swal('请求成功', data.message, 'success');
+			}
 		}
 	});
 });
