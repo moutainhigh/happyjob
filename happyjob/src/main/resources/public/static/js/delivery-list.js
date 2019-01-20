@@ -236,8 +236,8 @@ function addTableList(list){
         <tr \
         	data-position_ref_user_id="'+item.hpPositionRefUserId+'" \
         	data-hp-user-id="'+ item.hpUserId +'" \
-            data-user-name="'+ item.userName +'" \
-            data-real-name="'+ item.realName +'" \
+            data-user-name="'+ getUserName(item.userName) +'" \
+            data-real-name="'+ isNull(item.realName) +'" \
             data-gender="'+ item.gender +'" \
             data-born-year="'+ item.bornYear +'" \
             data-com-name="'+ item.comName +'" \
@@ -246,15 +246,15 @@ function addTableList(list){
             data-part-time="'+ item.partTime +'" \
             data-header-pic="'+ item.headerPic +'" \
             data-phone-no="'+ item.phoneNo +'" >\
-            <th>'+ item.userName +'</th>\
-            <th>'+ item.realName +'</th>\
+            <th>'+ getUserName(item.userName) +'</th>\
+            <th>'+ isNull(item.realName) +'</th>\
             <th>'+ gender(item.gender) +'</th>\
             <th>'+ bornYear(item.bornYear) +'</th>\
             <th>'+ item.comName +'</th>\
             <th>'+ item.posName +'</th>\
             <th>'+ item.reMoney +'</th>\
             <th>'+ timestampToTime(item.partTime) +'</th>\
-            <th>'+ item.phoneNo +'</th>\
+            <th>'+ isNull(item.phoneNo) +'</th>\
             <th>\
 	            <button type="button" class="btn btn-default btn-sm cat">查看</button>\ '
             
@@ -319,5 +319,12 @@ function getDayToSecond(timestamp){
 		timestamp += " 00:00:00";
 		return new Date(timestamp).getTime()/1000;
 	}
+}
+
+function getUserName(userName){
+	if(userName){
+		return decodeURIComponent(userName);
+	}
+	return '无';
 }
 

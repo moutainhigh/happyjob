@@ -300,7 +300,7 @@ function addTableList(list){
             data-born-year="'+ bornYear(item.bornYear) +'" \
             data-id-num="'+ item.idNum +'" \
             data-create-time="'+ timestampToTime(item.createTime) +'" \
-            data-comname="'+ (item.comName || "") +'" \
+            data-comname="'+ (item.comName) +'" \
             data-approve-state="'+ approveState(item.approveState)  +'" \
             data-id-front-pic="'+ item.idFrontPic +'" \
             data-id-back-pic="'+ item.idBackPic +'" >\
