@@ -7,7 +7,7 @@ $(".datepicker").datepicker({
 
 $(document).on("click",".queryDelivery",function(){
 	
-	fetchList(1);
+	pageSearch(1);
 })
 
 //分页查询
@@ -15,8 +15,8 @@ function pageSearch(page){
 	listParams.userName = $("#userName").val();
 	listParams.comName = $("#comName").val();
 	listParams.posName = $("#posName").val();
-	listParams.startTime = $("#startTime").val();
-	listParams.endTime = $("#endTime").val();
+	listParams.startTime = dateToStartTime($("#startTime").val());
+	listParams.endTime = dateToEndTime($("#endTime").val());
 	listParams.realName = $("#realName").val();
 	listParams.gender = $("#gender").val();
 	listParams.contactStat = $("#contactStat").val();
@@ -146,20 +146,21 @@ $(document).on("click",".cat",function(){
         url:"/backDelivery/deliveryQueryByUserId",
         params:params,
         callback:function(data){
+        	console.log(data);
             var $obj = $("#browseModal").find(".showValue");
-            if(data.educationList.length >0){
-            	$obj.eq(6).html(data.educationList[0].eduName);
-            }
-            if(data.intentionList.length >0){
-            	$obj.eq(8).html(data.intentionList[0].workArea);
-            	$obj.eq(10).html(data.intentionList[0].posType);
-            }
-            if(data.experienceList.length >0){
-            	$obj.eq(11).html(data.experienceList[0].comName);
-            	$obj.eq(12).html(timestampToDay(data.experienceList[0].startTime)+"--"+timestampToDay(data.experienceList[0].endTime));
-            	
-            	$obj.eq(13).html(data.experienceList[0].posType);
-            }
+//            if(data.educationList.length >0){
+//            	$obj.eq(6).html(data.educationList[0].eduName);
+//            }
+//            if(data.intentionList.length >0){
+//            	$obj.eq(8).html(data.intentionList[0].workArea);
+//            	$obj.eq(10).html(data.intentionList[0].posType);
+//            }
+//            if(data.experienceList.length >0){
+//            	$obj.eq(11).html(data.experienceList[0].comName);
+//            	$obj.eq(12).html(timestampToDay(data.experienceList[0].startTime)+"--"+timestampToDay(data.experienceList[0].endTime));
+//            	
+//            	$obj.eq(13).html(data.experienceList[0].posType);
+//            }
             
 
           $obj.eq(0).attr("src",headerPic)
@@ -202,6 +203,7 @@ function fetchList(){
         url:"/backDelivery/deliveryList",
         params:listParams,
         callback:function(data){
+        	console.log(data);
             list = data.list;
             listParams.currentPage = data.page.currentPage;
             totalPage= data.page.totalPage;

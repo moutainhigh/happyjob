@@ -176,14 +176,18 @@
 									<label for="">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
 									<input id="realName"  type="text"  class="form-control "  placeholder="">
 								</div>
-								<div class="form-group " style="margin-top:20px;">
+								<div class="form-group " style="margin-top:20px;margin-left:40px">
 									<label for="">联系状态：</label>
-									<input id="contactStat"  type="text"  class="form-control"  placeholder="">
+									<select class="form-control" id="contactStat">
+										<option selected="" value="">全部</option>
+										<option value="1">已联系</option>
+										<option value="2">未联系</option>
+									</select>
 								</div>
-								<div class="form-group" style="margin-top:20px;">
+								<div class="form-group" style="margin-top:20px;margin-left:40px">
 									<label for="">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：  </label>
-									<select class="form-control">
-										<option selected="" value="全部">全部</option>
+									<select class="form-control" id="gender">
+										<option selected="" value="">全部</option>
 										<option value="1">男</option>
 										<option value="2">女</option>
 									</select>
