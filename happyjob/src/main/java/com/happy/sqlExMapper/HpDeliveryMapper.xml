@@ -5,14 +5,19 @@
 <mapper namespace="com.happy.sqlExMapper.HpDeliveryMapper">
     
 	<select id="getDeliverylistPage" parameterType="com.happy.service.delivery.data.DeliverySearch" resultType="com.happy.service.delivery.data.DeliveryData" >
-		SELECT u.user_name userName,u.real_name realName ,u.gender gender ,u.born_year,c.com_name,p.pos_name,
+		SELECT u.user_name userName,u.real_name realName ,u.gender gender ,u.born_year,c.com_name,c.hp_company_id,p.pos_name,
 			CASE WHEN u.gender = 1
 	           		THEN 
 		             	p.ret_man_money
 	           		ELSE 
 	           			p.ret_woman_money
 	        END reMoney,
-			pu.part_time,u.phone_no,u.hp_user_id,u.header_pic,pu.hp_position_ref_user_id,pu.option_person,pu.option_time,pu.work_on
+			pu.part_time,u.phone_no,u.hp_user_id,u.header_pic,pu.hp_position_ref_user_id,pu.option_person,pu.option_time,pu.work_on,
+			CASE WHEN pu.option_person != null 
+					THEN 1
+					ELSE 0
+			END contactStat
+			
 		from hp_position_ref_user pu
 		left join hp_user u on pu.hp_user_id =u.hp_user_id
 		left join hp_position p on	pu.hp_position_id =p.hp_position_id
@@ -26,9 +31,8 @@
 		<if test="endTime !=null and endTime !=0 ">AND pu.part_time &lt;=#{endTime}</if>
 		<if test="realName !=null and realName !='' ">AND u.real_name LIKE CONCAT('%',#{realName},'%')</if>
 		<if test="gender !=null and gender !='' ">AND u.gender = #{gender} </if>
-		
-<!-- 		<if test="contactStat !=null and contactStat !='' ">AND contactStat = #{contactStat}</if> -->
-		
+		<if test="contactStat !=null and contactStat =='1'.toString() ">AND pu.option_person is not NULL  </if>
+		<if test="contactStat !=null and contactStat =='2'.toString() ">AND pu.option_person is NULL  </if>
 		ORDER BY part_time desc
 		
 	</select>	
@@ -42,13 +46,19 @@
 	</select>
 	
 	<select id="getEducationByUserId" parameterType="long" resultType="com.happy.service.delivery.data.HpUserEducationExt" >
-		select ue.*,e.edu_name from hp_user_education  ue
-		left join hp_education e on ue.hp_education_id =e.hp_education_id
-		where hp_user_resume_id = #{hpUserID}
+		select u.*,e.edu_name 
+		from  hp_user_resume  r
+		left join hp_user_education u on u.hp_user_resume_id = r.hp_user_resume_id
+		left join hp_education e on r.hp_education_id =e.hp_education_id
+		where r.hp_user_id = #{hpUserID}
 	</select>
 	
-	<select id="getIntentionByUserId" parameterType="long" resultType="com.happy.entity.HpUserIntentionEntity" >
-		select * from hp_user_intention where hp_user_resume_id = #{hpUserID}
+	<select id="getIntentionByUserId" parameterType="long" resultType="com.happy.service.delivery.data.IntentionExt" >
+		select i.* ,s.lower_num,s.hight_num
+		from hp_user_resume r
+		left join hp_user_intention i on i.hp_user_resume_id = r.hp_user_resume_id
+		left join hp_position_salary s on s.hp_position_salary_id = i.hp_position_salary_id
+		where r.hp_user_id = #{hpUserID}
 	</select>
 	
 	

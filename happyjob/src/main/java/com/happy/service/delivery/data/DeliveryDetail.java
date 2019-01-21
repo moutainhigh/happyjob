@@ -20,7 +20,7 @@ public class DeliveryDetail extends BaseMsg{
     private List<HpUserEducationExt> educationList;
 	
 	@ApiModelProperty(name="intentionList",value="求职意向")
-    private List<HpUserIntentionEntity> intentionList;
+    private List<IntentionExt> intentionList;
 
 	public List<HpUserExpEntity> getExperienceList() {
 		return experienceList;
@@ -38,17 +38,15 @@ public class DeliveryDetail extends BaseMsg{
 		this.educationList = educationList;
 	}
 
-	public List<HpUserIntentionEntity> getIntentionList() {
+	public List<IntentionExt> getIntentionList() {
 		return intentionList;
 	}
 
-	public void setIntentionList(List<HpUserIntentionEntity> intentionList) {
+	public void setIntentionList(List<IntentionExt> intentionList) {
 		this.intentionList = intentionList;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+
 	
 	
 	

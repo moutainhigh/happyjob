@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.happy.entity.HpPositionRefUserEntity;
+import com.happy.entity.HpUserEntity;
 import com.happy.entity.HpUserExpEntity;
-import com.happy.entity.HpUserIntentionEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.delivery.DeliveryService;
 import com.happy.service.delivery.data.DeliveryData;
@@ -18,10 +18,12 @@ import com.happy.service.delivery.data.DeliveryDetail;
 import com.happy.service.delivery.data.DeliveryListMsg;
 import com.happy.service.delivery.data.DeliverySearch;
 import com.happy.service.delivery.data.HpUserEducationExt;
+import com.happy.service.delivery.data.IntentionExt;
 import com.happy.service.salary.data.LoginUserMsg;
 import com.happy.service.salary.impl.SalaryServiceImpl;
 import com.happy.sqlExMapper.HpDeliveryMapper;
 import com.happy.sqlMapper.HpPositionRefUserMapper;
+import com.happy.sqlMapper.HpUserMapper;
 import com.happy.util.Util;
 import com.happy.util.pubConst.Const;
 
@@ -35,6 +37,9 @@ public class DeliveryServiceImpl implements DeliveryService{
 	
 	@Autowired
 	private HpPositionRefUserMapper hpPositionRefUserMapper;
+	
+	@Autowired
+	private HpUserMapper hpUserMapper ;
 	
 	@Override
 	public DeliveryListMsg getDeliverylistPage(String userName, String comName, String posName, Long startTime,
@@ -68,10 +73,14 @@ public class DeliveryServiceImpl implements DeliveryService{
 	@Override
 	public DeliveryDetail deliveryQueryByUserId(Long hpUserId) {
 		DeliveryDetail deliveryDetail = new DeliveryDetail();
-		
+		if(hpUserId == null ) {
+			deliveryDetail.setErrorCode(1);
+			deliveryDetail.setMessage("传递参数有误");
+			return deliveryDetail;
+		}
 		List<HpUserExpEntity> experienceList = this.hpDeliveryMapper.getExperienceByUserId(hpUserId);
 	    List<HpUserEducationExt> educationList =  this.hpDeliveryMapper.getEducationByUserId(hpUserId);
-	    List<HpUserIntentionEntity> intentionList = this.hpDeliveryMapper.getIntentionByUserId(hpUserId);
+	    List<IntentionExt> intentionList = this.hpDeliveryMapper.getIntentionByUserId(hpUserId);
 	    
 	    deliveryDetail.setExperienceList(experienceList);
 	    deliveryDetail.setEducationList(educationList);
@@ -81,7 +90,7 @@ public class DeliveryServiceImpl implements DeliveryService{
 	}
 
 	@Override
-	public BaseMsg addComtact(Long hpPositionRefUserId,String comtPerson,Long comTime ,Integer workOn) {
+	public BaseMsg addComtact(Long hpPositionRefUserId,String comtPerson,Long comTime ,Integer workOn,Long hpCompanyId,Long hpUserId) {
 		BaseMsg msg = new BaseMsg();
 		//更新
 		if(hpPositionRefUserId != null &&  hpPositionRefUserId !=0 ) {
@@ -93,6 +102,13 @@ public class DeliveryServiceImpl implements DeliveryService{
 				positionRefUserEntity.setWorkOn(workOn); //入职
 			}
 			hpPositionRefUserMapper.updateByPK(positionRefUserEntity);
+			
+			if(hpUserId != null && hpCompanyId != null &&  !hpUserId.equals(0) && !hpPositionRefUserId.equals(0)) {
+				HpUserEntity hpUser = new HpUserEntity();
+				hpUser.setHpUserId(hpUserId);
+				hpUser.setHpCompanyId(hpCompanyId);
+				hpUserMapper.updateByPK(hpUser);
+			}
 		}else {
 			msg.setErrorCode(1);
 			msg.setMessage("参数有误：hpPositionRefUserId");
