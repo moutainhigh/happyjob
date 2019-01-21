@@ -97,14 +97,18 @@ public class DeliveryManageController {
         @ApiImplicitParam(name="comtPerson",value="联系人",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="comTime",value="联系时间",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="workOn",value="是否入职 0未入职 1已入职",dataType="Integer",paramType="query",required=false),
+        @ApiImplicitParam(name="hpCompanyId",value="投递的公司id",dataType="Long",paramType="query",required=false),
+        @ApiImplicitParam(name="hpUserId",value="用户id",dataType="Long",paramType="query",required=false),
     })
     @PostMapping(value = "/addComtact")
 	public BaseMsg addComtact(HttpServletRequest request){
     	Long hpPositionRefUserId = (Long)Util.typeChange(request.getParameter("positionRefUserId"), Long.class);
     	String comtPerson = request.getParameter("comtPerson").trim();
     	Long comTime = (Long)Util.typeChange(request.getParameter("comTime"), Long.class);
+    	Long hpCompanyId = (Long)Util.typeChange(request.getParameter("hpCompanyId"), Long.class);
+    	Long hpUserId = (Long)Util.typeChange(request.getParameter("hpUserId"), Long.class);
     	Integer workOn = (Integer)Util.typeChange(request.getParameter("workOn"), Integer.class);
-    	BaseMsg msg = deliveryService.addComtact(hpPositionRefUserId,comtPerson,comTime,workOn);
+    	BaseMsg msg = deliveryService.addComtact(hpPositionRefUserId,comtPerson,comTime,workOn,hpCompanyId , hpUserId);
     	logger.info("backDelivery.addComtact hpPositionRefUserId={},comtPerson={},hpPositionRefUserId={}",hpPositionRefUserId,comtPerson,comTime);
     	return msg ;
     }

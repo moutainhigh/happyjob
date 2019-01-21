@@ -21,6 +21,9 @@ public class DeliveryData extends HpPositionRefUserEntity {
     
     @ApiModelProperty(name="comName",value="公司名称")
     private String comName;
+  	@ApiModelProperty(name="hpCompanyId",value="企业id")
+  	private java.lang.Long hpCompanyId;
+    
     @ApiModelProperty(name="posName",value="职位名称")
     private String posName;
     @ApiModelProperty(name="reMoney",value="入职返现")
@@ -35,6 +38,16 @@ public class DeliveryData extends HpPositionRefUserEntity {
     private String headerPic;
    
     
+	public java.lang.Long getHpCompanyId() {
+		return hpCompanyId;
+	}
+
+
+	public void setHpCompanyId(java.lang.Long hpCompanyId) {
+		this.hpCompanyId = hpCompanyId;
+	}
+
+
 	public String getHeaderPic() {
 		return headerPic;
 	}

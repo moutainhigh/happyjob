@@ -6,14 +6,14 @@ public class HpUserEducationExt extends HpUserEducationEntity{
 
 	
 	private static final long serialVersionUID = 1L;
-	private String edu_name;
+	private String eduName;
 
-	public String getEdu_name() {
-		return edu_name;
+	public String getEduName() {
+		return eduName;
 	}
 
-	public void setEdu_name(String edu_name) {
-		this.edu_name = edu_name;
+	public void setEduName(String eduName) {
+		this.eduName = eduName;
 	}
 	
 }

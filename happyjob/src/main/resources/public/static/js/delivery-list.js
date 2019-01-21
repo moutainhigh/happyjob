@@ -6,7 +6,6 @@ $(".datepicker").datepicker({
 });
 
 $(document).on("click",".queryDelivery",function(){
-	
 	pageSearch(1);
 })
 
@@ -39,7 +38,7 @@ function dateToEndTime(timestamp) {
 	return 0;
 }
 var $object ;
-// 点击联系 出现modal
+// 点击联系按钮    出现modal
 $(document).on("click",".contact",function(){
 	var $row = $(this).parents("tr");
 	$object = $row ;
@@ -90,6 +89,9 @@ $(document).on("click",".entry",function(){
 	var $row = $(this).parents("tr");
 	$object = $row ;
     var hpPositionRefUserId = $row.data("position_ref_user_id");
+    var hpCompanyId = $row.data("company-id");
+    var hpUserId = $row.data("hp-user-id");
+    
 	fetchPost({
 	        url:"/backDelivery/getLoginUserInfo",
 	        params: {},
@@ -98,6 +100,8 @@ $(document).on("click",".entry",function(){
 	            $("#comtPerson2").val(data.realName);
 	            $("#comTime2").val(data.comTime);
 	            $("#positionRefUserId2").val(hpPositionRefUserId);
+	            $("#hpCompanyId2").val(hpCompanyId);
+	            $("#hpUserId2").val(hpUserId);
 	        	$('#comtactPersonModal2').modal('toggle');
 	        }
 	})
@@ -110,7 +114,10 @@ $(document).on("click","#addEntry",function(){
     params.comtPerson = $("#comtPerson2").val();
 	params.comTime = getDayToSecond($("#comTime2").val());
 	params.positionRefUserId =  $("#positionRefUserId2").val();
+	params.hpCompanyId = $("#hpCompanyId2").val();
+	params.hpUserId = $("#hpUserId2").val();
 	params.workOn = 1;
+	
 	var $contact = $object.find(".entry");
 	var $comPer = $object.find(".comPer");
 	var $comTime = $object.find(".comTime");
@@ -137,7 +144,7 @@ $(document).on("click",".cat",function(){
     var hpUserId=$row.data("hp-user-id");
     var realName=$row.data("real-name");
     var gender2 = gender($row.data("gender"));
-    var bornYear2=bornYear($row.data("born-year"));
+    var bornYear2=$row.data("born-year");
     var phoneNo=$row.data("phone-no");
     var headerPic=$row.data("header-pic");
     
@@ -146,33 +153,29 @@ $(document).on("click",".cat",function(){
         url:"/backDelivery/deliveryQueryByUserId",
         params:params,
         callback:function(data){
-        	console.log(data);
-            var $obj = $("#browseModal").find(".showValue");
-//            if(data.educationList.length >0){
-//            	$obj.eq(6).html(data.educationList[0].eduName);
-//            }
-//            if(data.intentionList.length >0){
-//            	$obj.eq(8).html(data.intentionList[0].workArea);
-//            	$obj.eq(10).html(data.intentionList[0].posType);
-//            }
-//            if(data.experienceList.length >0){
-//            	$obj.eq(11).html(data.experienceList[0].comName);
-//            	$obj.eq(12).html(timestampToDay(data.experienceList[0].startTime)+"--"+timestampToDay(data.experienceList[0].endTime));
-//            	
-//            	$obj.eq(13).html(data.experienceList[0].posType);
-//            }
-            
+        	  console.log(data);
+              var $obj = $("#browseModal").find(".showValue");
 
-          $obj.eq(0).attr("src",headerPic)
-          $obj.eq(1).html(realName);
-          $obj.eq(2).html(gender2);
-          $obj.eq(3).html(bornYear2);
-//          $obj.eq(4).html(createTime)
-          $obj.eq(5).html(phoneNo);
-//          
-//          $obj.eq(7).attr("src",idFrontPic)
-//          $obj.eq(8).attr("src",idBackPic)
-          $('#browseModal').modal('toggle')
+	          $obj.eq(0).attr("src",headerPic) //头像
+	          $obj.eq(1).html(realName);       //姓名
+	          $obj.eq(2).html(gender2);        //性别
+	          $obj.eq(3).html(bornYear2);      //出生年份
+	          $obj.eq(4).html(phoneNo);        //联系电话
+	          if(data.educationList.length >0  && data.educationList[0] != null){
+	          	$obj.eq(5).html(data.educationList[0].eduName); //最高学历
+	          }
+	          if(data.intentionList.length >0 && data.intentionList[0] != null){
+	          	$obj.eq(6).html(data.intentionList[0].workArea);  //期望工作区域
+	          	$obj.eq(7).html(data.intentionList[0].lowerNum + "-" + data.intentionList[0].hightNum);  //期望工资
+	          	$obj.eq(8).html(data.intentionList[0].posType);
+	          }
+	          if(data.experienceList.length >0 && data.experienceList[0] != null){
+	          	$obj.eq(9).html(data.experienceList[0].comName);
+	          	$obj.eq(10).html(timestampToDay(data.experienceList[0].startTime)+ "&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;"+timestampToDay(data.experienceList[0].endTime));
+	          	
+	          	$obj.eq(11).html(data.experienceList[0].posType);
+	          }
+	          $('#browseModal').modal('toggle')
           
         }
     }) 
@@ -243,6 +246,7 @@ function addTableList(list){
             data-gender="'+ item.gender +'" \
             data-born-year="'+ item.bornYear +'" \
             data-com-name="'+ item.comName +'" \
+            data-company-id="'+ item.hpCompanyId +'" \
             data-pos-name="'+ item.posName +'" \
             data-re-money="'+ item.reMoney +'" \
             data-part-time="'+ item.partTime +'" \
@@ -255,7 +259,7 @@ function addTableList(list){
             <th>'+ item.comName +'</th>\
             <th>'+ item.posName +'</th>\
             <th>'+ item.reMoney +'</th>\
-            <th>'+ timestampToTime(item.partTime) +'</th>\
+            <th>'+ timestampToDay(item.partTime) +'</th>\
             <th>'+ isNull(item.phoneNo) +'</th>\
             <th>\
 	            <button type="button" class="btn btn-default btn-sm cat">查看</button>\ '
@@ -271,7 +275,7 @@ function addTableList(list){
 	        }
             
 	            templeteTr +='</th>\
-				        <th class="comPer">'+isNull(item.optionPerson)+'</th>\ <th class="comTime">'+isNull(timestampToTime(item.optionTime))+'</th>\
+				        <th class="comPer">'+isNull(item.optionPerson)+'</th>\ <th class="comTime">'+isNull(timestampToDay(item.optionTime))+'</th>\
 	        </tr>';
     })
     $tBody.html(templeteTr)    
@@ -285,10 +289,13 @@ function gender(gender){
 
 //判断出生年份
 function bornYear(value){
-    return  new Date().getFullYear()- Number(value)
+	if(value !=null){
+		return  new Date().getFullYear()- Number(value)
+	}
+	return "" ;
 }
 //时间戳转date
-function timestampToTime(timestamp) {
+function timestampToDay(timestamp) {
 	if(timestamp ==null || timestamp ==""){
 		return "";
 	}else{
@@ -301,14 +308,7 @@ function timestampToTime(timestamp) {
   
 }
 
-function timestampToDay(timestamp) {
-    var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-    var Y = date.getFullYear() + '-';
-    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-    var D = change(date.getDate()) ;
-   
-    return Y + M + D ;
-}
+
 function change(t) {
     if (t < 10) {
         return "0" + t;

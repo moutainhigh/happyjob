@@ -5,7 +5,7 @@
 <mapper namespace="com.happy.sqlExMapper.HpDeliveryMapper">
     
 	<select id="getDeliverylistPage" parameterType="com.happy.service.delivery.data.DeliverySearch" resultType="com.happy.service.delivery.data.DeliveryData" >
-		SELECT u.user_name userName,u.real_name realName ,u.gender gender ,u.born_year,c.com_name,p.pos_name,
+		SELECT u.user_name userName,u.real_name realName ,u.gender gender ,u.born_year,c.com_name,c.hp_company_id,p.pos_name,
 			CASE WHEN u.gender = 1
 	           		THEN 
 		             	p.ret_man_money
@@ -17,15 +17,11 @@
 					THEN 1
 					ELSE 0
 			END contactStat
-<!-- 			exp.com_name expComName,exp.pos_type expPosType ,exp.start_time expStartTime ,exp.end_Time expEndTime, -->
 			
 		from hp_position_ref_user pu
 		left join hp_user u on pu.hp_user_id =u.hp_user_id
 		left join hp_position p on	pu.hp_position_id =p.hp_position_id
 		left join hp_company c on  p.hp_company_id =c.hp_company_id
-<!-- 		left join hp_user_resume r r.hp_user_id = u.hp_user_id  -->
-<!-- 		left join hp_user_exp exp on exp.hp_user_resume_id = r.hp_user_resume_id -->
-		
 		
 		WHERE 1=1 
 		<if test="userName !=null and userName !='' ">AND u.user_name LIKE CONCAT('%',#{userName},'%')</if>
@@ -35,29 +31,13 @@
 		<if test="endTime !=null and endTime !=0 ">AND pu.part_time &lt;=#{endTime}</if>
 		<if test="realName !=null and realName !='' ">AND u.real_name LIKE CONCAT('%',#{realName},'%')</if>
 		<if test="gender !=null and gender !='' ">AND u.gender = #{gender} </if>
-		<if test="contactStat == '1'  ">AND pu.option_person != NULL </if>
-		<if test="contactStat == '2'  ">AND pu.option_person == NULL </if>
-		
+		<if test="contactStat !=null and contactStat =='1'.toString() ">AND pu.option_person is not NULL  </if>
+		<if test="contactStat !=null and contactStat =='2'.toString() ">AND pu.option_person is NULL  </if>
 		ORDER BY part_time desc
 	</select>	
 	
 	<select id="deliveryQueryUser" parameterType="long" resultType="com.happy.service.delivery.data.DeliveryDetail" >
 		select u.* from hp_user u where u.hp_user_id = #{hpUserID}
-	</select>
-	
-	<select id="getDeliveryDetailByUserId" parameterType="long" resultType="com.happy.service.delivery.data.DeliveryDetail2" >
-		select u.real_name,u.gender,u.born_year,u.phone_no,u.header_pic,
-			   e.edu_name,
-			   i.work_area,s.lower_num,s.hight_num,i.pos_type,
-			   exp.com_name expComName ,exp.pos_type expPosType ,exp.start_time expStartTime , exp.end_time expEndTime
-		from  hp_user_resume r
-		left join hp_education e on e.hp_education_id = r.hp_education_id
-		left join hp_user_intention i on i.hp_user_resume_id = r.hp_user_resume_id
-		left join hp_position_salary_id s on s.hp_position_salary_id = i.hp_position_salary_id
-		left join hp_user_exp exp  on exp.hp_user_resume_id = r.hp_user_resume_id
-		left join hp_user u on u.hp_user_id = r.hp_user_id
-		
-		where r.hp_user_id = #{hpUserID}
 	</select>
 	
 	<select id="getExperienceByUserId" parameterType="long" resultType="com.happy.entity.HpUserExpEntity" >
@@ -68,17 +48,18 @@
 	</select>
 	
 	<select id="getEducationByUserId" parameterType="long" resultType="com.happy.service.delivery.data.HpUserEducationExt" >
-		select ue.*,e.edu_name 
+		select u.*,e.edu_name 
 		from  hp_user_resume  r
-		left join hp_user_education ue on ue.hp_user_resume_id = r.hp_user_resume_id
+		left join hp_user_education u on u.hp_user_resume_id = r.hp_user_resume_id
 		left join hp_education e on r.hp_education_id =e.hp_education_id
 		where r.hp_user_id = #{hpUserID}
 	</select>
 	
-	<select id="getIntentionByUserId" parameterType="long" resultType="com.happy.entity.HpUserIntentionEntity" >
-		select inte.* 
+	<select id="getIntentionByUserId" parameterType="long" resultType="com.happy.service.delivery.data.IntentionExt" >
+		select i.* ,s.lower_num,s.hight_num
 		from hp_user_resume r
-		left join hp_user_intention inte on inte.hp_user_resume_id = r.hp_user_resume_id
+		left join hp_user_intention i on i.hp_user_resume_id = r.hp_user_resume_id
+		left join hp_position_salary s on s.hp_position_salary_id = i.hp_position_salary_id
 		where r.hp_user_id = #{hpUserID}
 	</select>
 	
