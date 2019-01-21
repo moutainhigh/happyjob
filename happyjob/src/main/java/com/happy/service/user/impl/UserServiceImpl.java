@@ -771,6 +771,12 @@ public class UserServiceImpl implements UserService {
             bound.setHpUserBoundId(boundId);
             bound.setHpUserId(phoneUserId);
             this.hpUserBoundMapper.updateByPK(bound);
+            
+            HpUserEntity user = new HpUserEntity();
+            user.setHpUserId(phoneUserId);
+            user.setHeaderPic(bound.getHeaderPic());
+            
+            this.hpUserMapper.updateByPK(user);
             OtherLoginData data = new OtherLoginData();
             data.setOid(oid);
             data.setSid(userData.getUserToken());
