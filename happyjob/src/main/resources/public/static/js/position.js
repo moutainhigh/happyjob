@@ -200,7 +200,7 @@ function formSub(){ // 提交验证
 	var hpPositionTypeId = $("#hpPositionTypeId").val();
 	
 	var posDetail = UE.getEditor('posDetailEditor').getContent();
-	
+	posDetail = publicObj.ueditorFormat(posDetail);
 	var reqGender = $("#reqGender").val();
 	var reqAge = $("#reqAge").val();
 	var reqEducation = $("#reqEducation").val();
@@ -210,13 +210,16 @@ function formSub(){ // 提交验证
 	var reqOther = $("#reqOther").val();
 	
 	var otherWelfare = UE.getEditor('otherWelfareEditor').getContent();
+	otherWelfare = publicObj.ueditorFormat(otherWelfare);
 	var carOn = $("#carOn").val();
 	if(!carOn){
 		swal('字段缺失', '是否有班车必填', 'error');
 		return;
 	}
 	var carDesc = UE.getEditor('carDescEditor').getContent();
+	carDesc = publicObj.ueditorFormat(carDesc);
 	var posComDesc = UE.getEditor('posComDescEditor').getContent();
+	posComDesc = publicObj.ueditorFormat(posComDesc);
 	var posNature = $('input[name="posNature"]:checked').val();
 	
 	var hpPositionSalaryId = $('#hpPositionSalaryId').val();

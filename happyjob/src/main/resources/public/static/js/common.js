@@ -172,7 +172,14 @@ var publicObj = {
 	    }else{
 	        $("#logs-pager").hide()
 	    }
+	},
+	"ueditorFormat":function ueditorFormat(content){ // ueditor富文本内容格式化
+		if(content){
+			return content.replace('\<p\>\<br\/\><\/p\>','');
+		}
+		return null;
 	}
+	
 }
 
 var routingData = {
