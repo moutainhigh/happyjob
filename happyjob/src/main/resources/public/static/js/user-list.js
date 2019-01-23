@@ -205,7 +205,9 @@ $(document).on("click","#newUser",function(){
 	
 })
 
-
+$('#addUserModal').on('hidden.bs.modal', function (){
+	document.getElementById("contentForm").reset();
+});
 
 
 fetchList();
@@ -296,7 +298,7 @@ function addTableList(list){
         <tr \
             data-user-id="'+ item.hpUserId +'" \
             data-iphone="'+ item.phoneNo +'" \
-            data-name="'+ getUserName(item.realName) +'" \
+            data-name="'+ getUserName(item.userName,item.realName) +'" \
             data-born-year="'+ bornYear(item.bornYear) +'" \
             data-id-num="'+ item.idNum +'" \
             data-create-time="'+ timestampToTime(item.createTime) +'" \
@@ -305,7 +307,7 @@ function addTableList(list){
             data-id-front-pic="'+ item.idFrontPic +'" \
             data-id-back-pic="'+ item.idBackPic +'" >\
             <th>'+ item.phoneNo +'</th>\
-            <th>'+ getUserName(item.realName) +'</th>\
+            <th>'+ getUserName(item.userName,item.realName) +'</th>\
             <th>'+ gender(item.gender) +'</th>\
             <th>'+ bornYear(item.bornYear) +'</th>\
             <th>'+ userType(item.userType) +'</th>\
@@ -403,9 +405,12 @@ function approveState(value){
         case 3:return "认证待审核"
     }
 }
-function getUserName(userName){
+function getUserName(userName,realName){
 	if(userName){
 		return decodeURIComponent(userName);
+	}else if(realName){
+		return decodeURIComponent(realName);
+	}else {
+		return "无";
 	}
-	return '无';
 }

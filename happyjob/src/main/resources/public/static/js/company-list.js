@@ -120,6 +120,9 @@ function dateToEndTime(timestamp) {
 	return 0;
 }
 
+$('#addCompanyModel').on('hidden.bs.modal', function (){
+	document.getElementById("contentForm").reset();
+});
 
 // 认证
 $(document).on("click",".auth",function(){
