@@ -153,4 +153,18 @@ public class CompanyServiceImpl implements CompanyService{
 		return msg;
 	}
 
+	@Override
+	public BaseMsg companyDel(Long companyId) {
+		BaseMsg msg = new BaseMsg();
+        if(companyId == null) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数错误：companyId");
+            return msg;
+        }
+        HpCompanyEntity adv = new HpCompanyExt();
+        adv.setHpCompanyId(companyId);
+        this.hpCompanyMapper.deleteByPK(companyId);
+		return msg;
+	}
+
 }

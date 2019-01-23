@@ -57,6 +57,12 @@ public interface PositionService {
    BaseMsg updatePositionHotOn(Long hpPositionId,Integer hotOn);
    
    /**
+    * @TODO:   删除
+    */
+   
+   BaseMsg positionDel(Long hpPositionId);
+   
+   /**
     * 
     * @TODO:   获取招聘岗位详情
     */

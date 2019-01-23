@@ -69,6 +69,21 @@ public class CompanyManageController {
         return ss;
     }
     
+    /**
+     *  TODO: 删除
+     */
+    @ApiOperation(value="企业删除",notes="企业删除")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name="companyId",value="公司id",dataType="Long",paramType="query",required=false),
+    })
+    @PostMapping(value="companyDel")
+    public BaseMsg companyDel(HttpServletRequest request){
+        Long companyId = (Long)Util.typeChange(request.getParameter("companyId"), Long.class);
+        logger.info("backAdvertisement.companyAuth 请求参数：companyId={},",companyId);
+        BaseMsg ss = this.companyService.companyDel(companyId);
+        return ss;
+    }
+    
     
     /**
      * 新增企业

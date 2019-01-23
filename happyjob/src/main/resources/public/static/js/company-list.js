@@ -158,6 +158,42 @@ $(document).on("click",".auth",function(){
     }); 
 })
 
+// 删除
+$(document).on("click",".del",function(){
+	var $row = $(this).parents("tr");
+	var companyId = $row.data("company-id");
+	var data ={};
+	data.companyId =companyId ;
+    swal({
+    	  title: '删除',
+          text: '请确认是否删除!',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: '删除',
+          cancelButtonText: '不删除',
+          }).then(function(isConfirm) {
+          if (isConfirm === true) {
+          	postDel(data);
+              swal(
+  	            '删除',
+  	            '删除成功',
+  	            'success'
+              );
+          }
+    }); 
+})
+// 删除
+function postDel(param){
+    fetchPost({
+        url:"/backCompany/companyDel",
+        params: param,
+        callback:function(data){
+            console.log(data);
+            fetchList();
+        }
+    })
+}
+
 // 查看
 $(document).on("click",".cat",function(){
     var $row = $(this).parents("tr");
@@ -304,62 +340,9 @@ $(document).on("click","#newCompany",function(){
 })
  
 var comLogo ;
-//function uploadLogo(){
-//	
-//	var url = window.location.origin + "/wxAppletsLogin/imgUpOne" ;
-//	var file = $("#upPicLogo").get(0).files[0];
-//	if(!file){
-//		return;
-//	}
-//	var formData = new FormData();
-//	formData.append("file",file);
-//	formData.append("code","company");
-//	$.ajax({
-//		url:url,
-//		dataType:"json",
-//		type:"post",
-//		data:formData,
-//        processData: false,  // 不处理数据
-//        contentType: false,   // 不设置内容类型
-//		header:{
-//			oid:"fad7bd3d01f04950b1d906584afc9253",
-//		},
-//		success:function(data){
-//			console.log("=data.data.imgUrl==",data.data.imgUrl);
-//			comLogo = data.data.imgUrl ;
-//		}
-//	});
-//}
 
 
 var comLicense ;
-//function upPicLise(){
-//    
-//	var url = window.location.origin + "/wxAppletsLogin/imgUpOne" ;
-//	var file = $("#upPicLis").get(0).files[0];
-//	if(!file){
-//		return;
-//	}
-//	var formData = new FormData();
-//	formData.append("file",file);
-//	formData.append("code","company");
-//	$.ajax({
-//		url:url,
-//		dataType:"json",
-//		type:"post",
-//		data:formData,
-//        processData: false,  // 不处理数据
-//        contentType: false,   // 不设置内容类型
-//		header:{
-//			oid:"fad7bd3d01f04950b1d906584afc9253",
-//		},
-//		success:function(data){
-//			console.log("==data.data.imgUrl=",data.data.imgUrl);
-//			comLicense = data.data.imgUrl ;
-//		}
-//	});
-//}
-
 
 
 var listParams = {
@@ -536,7 +519,7 @@ function addTableList(list){
             data-com-logo="'+ item.comLogo +'" \
             data-com-license="'+ item.comLicense +'" >\
             <th>'+ item.comName +'</th>\
-            <th>'+ item.typeName +'</th>\
+            <th>'+ isNull(item.typeName) +'</th>\
             <th>'+ scale(item.hpCompanyScaleId) +'</th>\
             <th>'+ isNull(item.comtPerson) +'</th>\
             <th>'+ isNull(item.comPhone) +'</th>\
@@ -546,10 +529,10 @@ function addTableList(list){
             <th>\
                 <button type="button" class="btn btn-default btn-sm cat">查看</button>\
                 <button type="button" class="btn btn-primary btn-sm openUpdateModal">编辑</button>\
-            <button type="button" class="btn btn-danger btn-sm  auth">认证</button>\
+            	<button type="button" class="btn btn-success btn-sm  auth">认证</button>\
+            	<button type="button" class="btn btn-danger  btn-sm  del">删除</button>\
             </th>\
         </tr>';
-                // <button type="button" class="btn btn-danger btn-sm restart">启用</button>\
     })
     $tBody.html(templeteTr)    
 }

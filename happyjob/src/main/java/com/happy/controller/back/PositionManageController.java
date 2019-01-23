@@ -97,6 +97,23 @@ public class PositionManageController {
     }
     
     /**
+     * @TODO:  删除
+     */
+    @ApiOperation(value="招聘：招聘岗位 删除",notes="招聘岗位 删除")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name="hpPositionId",value="职位Id",dataType="long",paramType="query",required=true),
+    })
+    @PostMapping(value="positionDel")
+    public BaseMsg positionDel(HttpServletRequest request){
+        
+        Long hpPositionId = (Long)Util.typeChange(request.getParameter("hpPositionId"), Long.class);
+        logger.info("positionHotOn---参数信息----hpPositionId=={}", hpPositionId);
+        
+        return this.positionService.positionDel(hpPositionId);
+    }
+    
+    
+    /**
      * @TODO:     招聘详情获取
      */
     @ApiOperation(value="招聘：招聘详情获取",notes="招聘详情获取")

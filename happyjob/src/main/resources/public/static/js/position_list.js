@@ -47,6 +47,44 @@ $(document).on("click","#hotOn",function(){
 	})    
 })
 
+// 删除
+$(document).on("click",".del",function(){
+	var $row = $(this).parents("tr");
+	var hpPositionId = $row.data("id");
+	var data ={};
+	data.hpPositionId =hpPositionId ;
+    swal({
+        title: '删除',
+        text: '请确认是否删除!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '删除',
+        cancelButtonText: '不删除',
+        }).then(function(isConfirm) {
+        if (isConfirm === true) {
+        	postDel(data);
+            swal(
+	            '删除',
+	            '删除成功',
+	            'success'
+            );
+        } 
+        
+    }); 
+})
+// 删除
+function postDel(data){
+    fetchPost({
+        url:"/backPosition/positionDel",
+        params: data,
+        callback:function(data){
+            console.log(data);
+            fetchList();
+        }
+    })
+}
+
+
 // 获取url数据，填充页面查询数据
 function fetchParamsList(){
 	$("#posName").val(publicObj.getParams(curUrl,"posName"));
@@ -107,8 +145,9 @@ function addTableList(list){
             <th>'+ showPosState(item.endTime) +'</th>\
             <th>\
                 <button type="button" id="hotOn" class="btn btn-default btn-sm cat">'+showHotOn(item.hotOn)+'</button>\
-                <a class="btn btn-primary btn-sm contact" href="/static/adminData/position.html?hpPositionId='+item.hpPositionId+'" >编辑</button>\
-            </th>\
+                <a class="btn btn-primary btn-sm contact" href="/static/adminData/position.html?hpPositionId='+item.hpPositionId+'" >编辑</a>\
+                <button type="button" class="btn btn-danger btn-sm  del">删除</button>\
+             </th>\
         </tr>';
     })
     $tBody.html(templeteTr)    

@@ -9,6 +9,8 @@ public interface CompanyService {
 	 
 	 BaseMsg companyAuth(Long companyId ,Integer approveState);
 	 
+	 BaseMsg companyDel(Long companyId);
+	 
 	 BaseMsg newCompany(String comName,Long companyTypeId,Long companyScaleId,String comDesc,
 			 Long countyId,String addrDetail,String comtPerson,String comPhone,String comEmail,String comLicense,String comLogo);
 	 

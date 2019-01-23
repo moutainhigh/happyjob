@@ -459,6 +459,19 @@ public class PositionServiceImpl implements PositionService {
          return new BaseMsg();
     }
 
+	@Override
+	public BaseMsg positionDel(Long hpPositionId) {
+		BaseMsg msg = new BaseMsg();
+        if(hpPositionId == null ) {
+            msg.setErrorCode(1);
+            msg.setMessage("参数缺失");
+        }
+        HpPositionEntity position = new HpPositionEntity();
+        position.setHpPositionId(hpPositionId);
+        this.hpPositionMapper.deleteByPK(hpPositionId);
+        return msg;
+	}
+
 //    @Override
 //    public BaseMsg insertOrUpPositionTest(Long hpPositionId, String ids) {
 //        if(!Util.isEmpty(ids) && ids.matches(REGEX_NUMBER_STR_ARR)) { // 新增福利关联表信息
