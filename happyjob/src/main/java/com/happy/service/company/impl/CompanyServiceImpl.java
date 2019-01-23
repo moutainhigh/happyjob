@@ -139,6 +139,7 @@ public class CompanyServiceImpl implements CompanyService{
         
         
         HpCompanyEntity company = new HpCompanyEntity();
+        company.setHpCompanyId(companyId);
         company.setComLocation(location);
         company.setComName(comName);
         company.setHpCompanyTypeId(companyTypeId);
