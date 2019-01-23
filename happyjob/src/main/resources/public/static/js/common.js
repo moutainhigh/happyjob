@@ -174,10 +174,14 @@ var publicObj = {
 	    }
 	},
 	"ueditorFormat":function ueditorFormat(content){ // ueditor富文本内容格式化
+		
 		if(content){
-			return content.replace('\<p\>\<br\/\><\/p\>','');
+			var regExp = '<p><br/></p>';
+			regExp = new RegExp(regExp,"gm")
+			content = content.replace(regExp,'');
+			return content;
 		}
-		return null;
+		return '';
 	}
 	
 }

@@ -4,6 +4,8 @@ $(".datepicker").datepicker({
     autoclose: true,//选中之后自动隐藏日期选择框
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
+var posDetailDef = '<p>基本工资：</p><p>薪资结构：<br/></p><p>综合工资：<br/></p><p>发日工资：<br/></p><p>工作时间：<br/></p><p>工作环境：</p>';
+var otherWelfareDef = '<p style="white-space: normal;">工&nbsp; 作&nbsp; 餐：</p><p style="white-space: normal;">住&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;宿：</p><p style="white-space: normal;">社&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;保：<br/></p><p style="white-space: normal;">其他福利：</p>';
 var _curUrl = window.location.href;
 var hpPositionId = null;
 //详情
@@ -65,6 +67,13 @@ $(function(){
 	hpPositionId = publicObj.getParams(_curUrl,"hpPositionId");
 	if(hpPositionId){ // 编辑
 		editorPosition();
+	}else{
+		posDetailUe.ready(function(){
+			UE.getEditor('posDetailEditor').execCommand('insertHtml',posDetailDef);
+		});
+		otherWelfareUe.ready(function(){
+			UE.getEditor('otherWelfareEditor').execCommand('insertHtml',otherWelfareDef);
+		});
 	}
 	$("#btnSub").click(function(){
 		formSub();
@@ -107,6 +116,13 @@ $(function(){
 			$("#welfareDetail").show();
 		}else{
 			$("#welfareDetail").hide();
+		}
+	});
+	$('#carOn').change(function(){ // 拼团选择
+		if($(this).val()==1){
+			$("#carDescItem").show();
+		}else{
+			$("#carDescItem").hide();
 		}
 	});
 })
@@ -153,8 +169,14 @@ function formSub(){ // 提交验证
 	}
 	var manDayNum = $("#manDayNum").val();
 	var retManMoney = $("#retManMoney").val();
+	if(!retManMoney){
+		retManMoney = 0;
+	}
 	var womenDayNum = $("#womenDayNum").val();
 	var retWomanMoney = $("#retWomanMoney").val();
+	if(!retWomanMoney){
+		retWomanMoney = 0;
+	}
 	var welFareIds = "";
 	var retOn = 0;
 	$('input[name="hpPositionWelfareId"]:checked').each(function(){
@@ -174,7 +196,13 @@ function formSub(){ // 提交验证
 	}
 	var urgentOn = $("#urgentOn").val();
 	var urgentMoney = $("#urgentMoney").val();
-	
+	if(!urgentMoney){
+		urgentMoney = 0;
+	}
+	if(urgentOn == 1 && urgentMoney <=0){
+		swal('字段值错误', '开启高薪急聘需要填写平台补贴金额', 'error');
+		return;
+	}
 	var groupOn = $("#groupOn").val();
 	var threeMoney = $("#threeMoney").val();
 	var fiveMoney = $("#fiveMoney").val();
@@ -580,9 +608,10 @@ function editorPosition(){
 			posDetailUe.ready(function(){
     			if(positionData.posDetail){
     				UE.getEditor('posDetailEditor').execCommand('insertHtml',positionData.posDetail);
+    			}else{
+    				UE.getEditor('posDetailEditor').execCommand('insertHtml',posDetailDef);
     			}
 	    	});
-			
 			$("#reqGender").val(positionData.reqGender);
 			$("#reqAge").val(positionData.reqAge);
 			$("#reqEducation").val(positionData.reqEducation);
@@ -594,6 +623,8 @@ function editorPosition(){
 			otherWelfareUe.ready(function(){
     			if(positionData.otherWelfare){
     				UE.getEditor('otherWelfareEditor').execCommand('insertHtml',positionData.otherWelfare);
+    			}else{
+    				UE.getEditor('otherWelfareEditor').execCommand('insertHtml',otherWelfareDef);
     			}
 	    	});
 			$("#carOn").val(positionData.carOn); // 下拉框
