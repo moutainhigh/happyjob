@@ -417,6 +417,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public BaseMsg insertUserBase(UserAddData data) {
         BaseMsg msg = new BaseMsg();
+        HpUserEntity user = new HpUserEntity();
         if(data == null ) {
             msg.setErrorCode(1);
             msg.setMessage("信息为空");
@@ -441,34 +442,43 @@ public class UserServiceImpl implements UserService {
             msg.setMessage("手机号码已经被注册，请更换手机号");
             return msg;
         }
+        
         String userName = data.getUserName();
-        if(userName ==null || !userName.matches(REGEX_USERNAME)) {
-            msg.setErrorCode(1);
-            msg.setMessage("参数格式错误：userName");
-            return msg;
-        }
-        userData = this.hpUserExMapper.getUserByParam(null,userName,userType);
-        if(userData != null && userData.getHpUserId() !=null) {
-            msg.setErrorCode(1);
-            msg.setMessage("用户名已经被注册，请更换用户名");
-            return msg;
-        }
-        String password1 = data.getPassword1();
-        if(password1 ==null || !password1.matches(REGEX_PASSWORD)) {
-            msg.setErrorCode(1);
-            msg.setMessage("参数格式错误：password1");
-            return msg;
-        }
-        String password2 = data.getPassword1();
-        if(password2 ==null || !password2.matches(REGEX_PASSWORD)) {
-            msg.setErrorCode(1);
-            msg.setMessage("参数格式错误：password2");
-            return msg;
-        }
-        if(!password2.equals(password1)) {
-            msg.setErrorCode(1);
-            msg.setMessage("参数错误：password2、password1不等");
-            return msg;
+        if(userType == 1) { //如果是超级管理员 ，用户名，密码必填
+        	if(userName == null || !userName.matches(REGEX_USERNAME)) {
+        		msg.setErrorCode(1);
+        		msg.setMessage("参数格式错误：userName");
+        		return msg;
+        	}
+        	userData = this.hpUserExMapper.getUserByParam(null,userName,userType);
+        	if(userData != null && userData.getHpUserId() !=null) {
+        		msg.setErrorCode(1);
+        		msg.setMessage("用户名已经被注册，请更换用户名");
+        		return msg;
+        	}
+        	String password1 = data.getPassword1();
+        	if(password1 ==null || !password1.matches(REGEX_PASSWORD)) {
+        		msg.setErrorCode(1);
+        		msg.setMessage("参数格式错误：password1");
+        		return msg;
+        	}
+        	String password2 = data.getPassword1();
+        	if(password2 ==null || !password2.matches(REGEX_PASSWORD)) {
+        		msg.setErrorCode(1);
+        		msg.setMessage("参数格式错误：password2");
+        		return msg;
+        	}
+        	if(!password2.equals(password1)) {
+        		msg.setErrorCode(1);
+        		msg.setMessage("参数错误：password2、password1不等");
+        		return msg;
+        	}
+        	 String passwMD5 = Util.MD5(password1);
+        	 String salt = Util.getRandomStringByLength(4, "az");
+        	 String passwSaltMD5 = Util.generateMD5(password1,salt);
+        	 logger.info("salt=={},passwMD5=={},passwSaltMD5=={},isEqual=={}",salt,passwMD5,passwSaltMD5,Util.verify(password1, passwSaltMD5));
+        	 user.setPassword(passwSaltMD5);
+             user.setSalt(salt);
         }
         Integer gender = data.getGender();
         if(gender ==null || (gender!=1 && gender !=2)) {
@@ -480,14 +490,10 @@ public class UserServiceImpl implements UserService {
             msg.setErrorCode(1);
             msg.setMessage("参数错误：blackOn");
         }
-        String passwMD5 = Util.MD5(password1);
-        String salt = Util.getRandomStringByLength(4, "az");
-        String passwSaltMD5 = Util.generateMD5(password1,salt);
-        logger.info("salt=={},passwMD5=={},passwSaltMD5=={},isEqual=={}",salt,passwMD5,passwSaltMD5,Util.verify(password1, passwSaltMD5));
+        
         Long bornYear = data.getBornTime();
         String realName = data.getRealName();
         Long curTime = Util.getDateSecond(Util.getCurrentDate());
-        HpUserEntity user = new HpUserEntity();
         user.setApproveNum(0);
         user.setApproveState(0);
         user.setBlackOn(blackOn);
@@ -503,8 +509,6 @@ public class UserServiceImpl implements UserService {
         user.setUserType(userType);
         user.setVipOn(0);
         user.setRegistResource(0);
-        user.setPassword(passwSaltMD5);
-        user.setSalt(salt);
         user.setCreateTime(System.currentTimeMillis()/1000);
         this.hpUserMapper.insert(user);
         if(user.getHpUserId() == null) {
