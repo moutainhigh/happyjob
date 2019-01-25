@@ -46,12 +46,11 @@ public class DeliveryManageController {
         @ApiImplicitParam(name="endTime",value="结束时间",dataType="int",paramType="query",required=false),
         @ApiImplicitParam(name="realName",value="姓名 模糊查询",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="gender",value="性别",dataType="String",paramType="query",required=false),
-        @ApiImplicitParam(name="contactStat",value="联系状态",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="contactStat",value="联系状态 1已联系；2未联系",dataType="String",paramType="query",required=false),
     })
     @GetMapping(value="deliveryList")
     public DeliveryListMsg deliveryList(HttpServletRequest request){
     	
-        String userName = request.getParameter("userName").trim();
         String comName = request.getParameter("comName").trim();
         String posName = request.getParameter("posName").trim();
         Long startTime = (Long)Util.typeChange(request.getParameter("startTime"), Long.class);
@@ -64,8 +63,8 @@ public class DeliveryManageController {
        
         logger.info("backDelivery.deliveryList 请求参数：userName={},comName={},posName={},"
             + "startTime={},endTime={},realName={},gender={},contactStat={},currentPage={},showCount={}",
-        	userName,comName,posName,startTime,endTime,realName,gender,contactStat,currentPage,showCount);
-        DeliveryListMsg ss = this.deliveryService.getDeliverylistPage(userName,comName,posName,startTime,endTime,realName,gender,contactStat,currentPage,showCount);
+        	comName,posName,startTime,endTime,realName,gender,contactStat,currentPage,showCount);
+        DeliveryListMsg ss = this.deliveryService.getDeliverylistPage(comName,posName,startTime,endTime,realName,gender,contactStat,currentPage,showCount);
         return ss ;
     }
     

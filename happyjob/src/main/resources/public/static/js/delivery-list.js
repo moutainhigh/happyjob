@@ -11,7 +11,6 @@ $(document).on("click",".queryDelivery",function(){
 
 //分页查询
 function pageSearch(page){
-	listParams.userName = $("#userName").val();
 	listParams.comName = $("#comName").val();
 	listParams.posName = $("#posName").val();
 	listParams.startTime = $("#startTime").val();
@@ -184,7 +183,6 @@ $(document).on("click",".cat",function(){
 })
 
 var listParams = {
-		userName:"",
 		comName:"",
 		posName:"",
 		startTime:"",

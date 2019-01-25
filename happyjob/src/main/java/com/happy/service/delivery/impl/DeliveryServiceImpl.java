@@ -42,7 +42,7 @@ public class DeliveryServiceImpl implements DeliveryService{
 	private HpUserMapper hpUserMapper ;
 	
 	@Override
-	public DeliveryListMsg getDeliverylistPage(String userName, String comName, String posName, Long startTime,
+	public DeliveryListMsg getDeliverylistPage(String comName, String posName, Long startTime,
 			Long endTime, String realName, Integer gender, String contactStat,Integer currentPage, Integer showCount) {
 		
 		DeliveryListMsg msg = new DeliveryListMsg();
@@ -54,7 +54,6 @@ public class DeliveryServiceImpl implements DeliveryService{
         page.setCurrentPage(currentPage);
         page.setShowCount(showCount);
         
-        page.setUserName(userName);
         page.setComName(comName);
         page.setPosName(posName);
         page.setStartTime(startTime);

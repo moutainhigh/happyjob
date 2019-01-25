@@ -12,7 +12,7 @@ public interface DeliveryService {
      * 
      * @TODO:   分页获取投递列表
      */
-	DeliveryListMsg getDeliverylistPage(String userName,String comName, String posName,
+	DeliveryListMsg getDeliverylistPage(String comName, String posName,
 			Long startTime, Long endTime,String realName, Integer gender,String contactStat,Integer currentPage,Integer showCount);
     
 	
