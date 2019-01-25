@@ -44,27 +44,37 @@ public class DeliveryManageController {
         @ApiImplicitParam(name="posName",value="职位名称，模糊查询",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="startTime",value="开始时间",dataType="int",paramType="query",required=false),
         @ApiImplicitParam(name="endTime",value="结束时间",dataType="int",paramType="query",required=false),
-        @ApiImplicitParam(name="realName",value="姓名 模糊查询",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="gender",value="性别",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="contactStat",value="联系状态 1已联系；2未联系",dataType="String",paramType="query",required=false),
     })
     @GetMapping(value="deliveryList")
     public DeliveryListMsg deliveryList(HttpServletRequest request){
     	
-        String comName = request.getParameter("comName").trim();
-        String posName = request.getParameter("posName").trim();
+        String comName = request.getParameter("comName");
+        if(comName != null) {
+        	comName = comName.trim();
+        }
+        String posName = request.getParameter("posName");
+        if(posName != null) {
+        	posName = posName.trim();
+        }
         Long startTime = (Long)Util.typeChange(request.getParameter("startTime"), Long.class);
         Long endTime = (Long)Util.typeChange(request.getParameter("endTime"), Long.class);
-        String realName = request.getParameter("realName").trim();
+        
+        String userName = request.getParameter("userName");
+        if(userName != null) {
+        	userName = userName.trim();
+        }
+        
         Integer gender = (Integer)Util.typeChange(request.getParameter("gender"), Integer.class);
-        String contactStat = request.getParameter("contactStat").trim();
+        String contactStat =  request.getParameter("contactStat");
         Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
         Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
        
         logger.info("backDelivery.deliveryList 请求参数：userName={},comName={},posName={},"
             + "startTime={},endTime={},realName={},gender={},contactStat={},currentPage={},showCount={}",
-        	comName,posName,startTime,endTime,realName,gender,contactStat,currentPage,showCount);
-        DeliveryListMsg ss = this.deliveryService.getDeliverylistPage(comName,posName,startTime,endTime,realName,gender,contactStat,currentPage,showCount);
+        	comName,posName,startTime,endTime,userName,gender,contactStat,currentPage,showCount);
+        DeliveryListMsg ss = this.deliveryService.getDeliverylistPage(comName,posName,startTime,endTime,userName,gender,contactStat,currentPage,showCount);
         return ss ;
     }
     

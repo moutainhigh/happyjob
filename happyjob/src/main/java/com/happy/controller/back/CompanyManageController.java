@@ -43,7 +43,10 @@ public class CompanyManageController {
     public CompanyListMsg companyListPage(HttpServletRequest request){
     	Long startTime = (Long)Util.typeChange(request.getParameter("startTime"), Long.class);
         Long endTime = (Long)Util.typeChange(request.getParameter("endTime"), Long.class);
-        String comName = request.getParameter("comName").trim();
+        String comName = request.getParameter("comName");
+        if(comName != null) {
+        	comName = comName.trim();
+        }
         Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
         Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
        

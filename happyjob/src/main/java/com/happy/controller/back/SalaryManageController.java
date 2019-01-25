@@ -46,10 +46,23 @@ public class SalaryManageController {
     })
     @GetMapping(value="salaryList")
     public SalarySimpleListMsg userList(HttpServletRequest request){
-        String workNum = request.getParameter("workNum").trim();
-        String payName = request.getParameter("payName").trim();
+        String workNum = request.getParameter("workNum");
+        if(workNum !=null) {
+        	workNum =workNum.trim();
+        }
+        String payName = request.getParameter("payName");
+        if(payName !=null) {
+        	payName =payName.trim();
+        }
         String payIdNum = request.getParameter("payIdNum").trim();
+        if(payIdNum !=null) {
+        	payIdNum =payIdNum.trim();
+        }
+        
         String payComName = request.getParameter("payComName").trim();
+        if(payComName !=null) {
+        	payComName =payComName.trim();
+        }
         Integer payTime = (Integer)Util.typeChange(request.getParameter("payTime"), Integer.class);
         Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
         Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);

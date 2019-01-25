@@ -15,7 +15,7 @@ function pageSearch(page){
 	listParams.posName = $("#posName").val();
 	listParams.startTime = $("#startTime").val();
 	listParams.endTime = $("#endTime").val();
-	listParams.realName = $("#realName").val();
+	listParams.userName = $("#userName").val();
 	listParams.gender = $("#gender").val();
 	listParams.contactStat = $("#contactStat").val();
 	listParams.currentPage = page;
@@ -249,7 +249,7 @@ function addTableList(list){
             data-part-time="'+ item.partTime +'" \
             data-header-pic="'+ item.headerPic +'" \
             data-phone-no="'+ item.phoneNo +'" >\
-            <th>'+ isNull(item.realName) +'</th>\
+            <th>'+ getUserName(item.userName) +'</th>\
             <th>'+ gender(item.gender) +'</th>\
             <th>'+ bornYear(item.bornYear) +'</th>\
             <th>'+ item.comName +'</th>\
