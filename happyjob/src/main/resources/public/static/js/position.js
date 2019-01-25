@@ -262,8 +262,19 @@ function formSub(){ // 提交验证
 	}
 	var startTime = publicObj.transferTime($("#startTime").val());
 	var endTime = publicObj.transferTime($("#endTime").val());
+	if(startTime == 0){
+		swal('字段缺失', '职位开始时间必填', 'error');
+		return;
+	}
+	if(endTime == 0){
+		swal('字段缺失', '职位结束时间必填', 'error');
+		return;
+	}
 	
 	var posNum = $('#posNum').val();
+	if(!posNum){
+		posNum == 0;
+	}
 	var county = $('#county').val();
 	if(!county){
 		swal('字段缺失', '工作地点必须选定到区县级', 'error');
