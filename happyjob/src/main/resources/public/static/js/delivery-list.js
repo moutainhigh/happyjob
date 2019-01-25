@@ -13,8 +13,8 @@ $(document).on("click",".queryDelivery",function(){
 function pageSearch(page){
 	listParams.comName = $("#comName").val();
 	listParams.posName = $("#posName").val();
-	listParams.startTime = $("#startTime").val();
-	listParams.endTime = $("#endTime").val();
+	listParams.startTime = dateToStartTime($("#startTime").val());
+	listParams.endTime = dateToEndTime($("#endTime").val());
 	listParams.userName = $("#userName").val();
 	listParams.gender = $("#gender").val();
 	listParams.contactStat = $("#contactStat").val();
