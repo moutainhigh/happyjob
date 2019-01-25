@@ -251,7 +251,6 @@ function addTableList(list){
             data-part-time="'+ item.partTime +'" \
             data-header-pic="'+ item.headerPic +'" \
             data-phone-no="'+ item.phoneNo +'" >\
-            <th>'+ getUserName(item.userName) +'</th>\
             <th>'+ isNull(item.realName) +'</th>\
             <th>'+ gender(item.gender) +'</th>\
             <th>'+ bornYear(item.bornYear) +'</th>\
