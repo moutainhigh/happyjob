@@ -421,6 +421,7 @@ public class PositionServiceImpl implements PositionService {
          if(hpPositionId == null ) { // 新增
              position.setApplyTime(curTime);
              position.setHotOn(position.getHotOn()==null?0:position.getHotOn());
+             position.setDelOn(0);
              this.hpPositionMapper.insert(position);
              hpPositionId = position.getHpPositionId();
          }else {
@@ -468,7 +469,8 @@ public class PositionServiceImpl implements PositionService {
         }
         HpPositionEntity position = new HpPositionEntity();
         position.setHpPositionId(hpPositionId);
-        this.hpPositionMapper.deleteByPK(hpPositionId);
+        position.setDelOn(1);  //删除
+        this.hpPositionMapper.updateByPK(position);
         return msg;
 	}
 

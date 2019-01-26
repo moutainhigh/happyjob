@@ -56,6 +56,9 @@ public class HpCompanyEntity implements  Serializable  {
 	//公司地理位置经纬度值
 	@ApiModelProperty(name="comLocation",value="公司地理位置经纬度值")
 	private String comLocation;
+	//1:已删除，0:未删除
+	@ApiModelProperty(name="delOn",value="1:已删除，0:未删除")
+	private java.lang.Integer delOn;
 
 	public java.lang.Long getHpCompanyId() {
 		return hpCompanyId;
@@ -204,6 +207,16 @@ public class HpCompanyEntity implements  Serializable  {
 
 	public void setComLocation(String comLocation) {
 		this.comLocation = comLocation;
+	}
+
+
+	public java.lang.Integer getDelOn() {
+		return delOn;
+	}
+
+
+	public void setDelOn(java.lang.Integer delOn) {
+		this.delOn = delOn;
 	}
 
 }

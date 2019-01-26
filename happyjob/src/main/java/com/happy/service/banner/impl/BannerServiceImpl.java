@@ -158,7 +158,6 @@ public class BannerServiceImpl implements BannerService {
         
         page.setCurrentPage(currentPage);
         page.setShowCount(showCount);
-        page.setDelOn(EnumConst.advertisementDelOn.DelOnNo.getKey());
         List<HpAdvBannerEntity> list = this.hpAdvBannerExMapper.getBannerlistPage(page);
         msg.setList(list);
         msg.setPage(page);

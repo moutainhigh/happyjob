@@ -125,6 +125,9 @@ public class HpPositionEntity implements  Serializable  {
 	//是否通过认证
 	@ApiModelProperty(name="posState",value="是否通过认证")
 	private java.lang.Integer posState;
+	//1:已删除，0：未删除
+	@ApiModelProperty(name="delOn",value="1:已删除，0：未删除")
+	private java.lang.Integer delOn;
 
 	public java.lang.Long getHpPositionId() {
 		return hpPositionId;
@@ -503,6 +506,16 @@ public class HpPositionEntity implements  Serializable  {
 
 	public void setPosState(java.lang.Integer posState) {
 		this.posState = posState;
+	}
+
+
+	public java.lang.Integer getDelOn() {
+		return delOn;
+	}
+
+
+	public void setDelOn(java.lang.Integer delOn) {
+		this.delOn = delOn;
 	}
 
 }

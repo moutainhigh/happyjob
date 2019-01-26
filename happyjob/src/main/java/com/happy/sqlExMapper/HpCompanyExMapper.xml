@@ -13,7 +13,7 @@
 		left join hp_area_city city on ac.city_id = city.city_id
 		left join hp_area_province province on province.province_id = city.province_id
 		
-		WHERE 1=1 
+		WHERE 1=1  and c.del_on <![CDATA[!= ]]> 1
 		<if test="comName !=null and comName !='' ">AND com_name LIKE CONCAT('%',#{comName},'%')</if>
 		<if test="startTime !=null and startTime !=0 ">AND c.create_time &gt;=#{startTime}</if>
 		<if test="endTime !=null and endTime !=0 ">AND c.create_time &lt;=#{endTime}</if>

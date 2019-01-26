@@ -120,6 +120,7 @@ public class CompanyServiceImpl implements CompanyService{
         company.setApproveState(EnumConst.companyApproveState.WithoutApprove.getKey()); //未认证
         company.setComLicense(comLicense);
         company.setComLogo(comLogo);
+        company.setDelOn(0);
         company.setCreateTime(System.currentTimeMillis()/1000);
         this.hpCompanyMapper.insert(company);
 		return msg;
@@ -164,7 +165,8 @@ public class CompanyServiceImpl implements CompanyService{
         }
         HpCompanyEntity adv = new HpCompanyExt();
         adv.setHpCompanyId(companyId);
-        this.hpCompanyMapper.deleteByPK(companyId);
+        adv.setDelOn(1);
+        this.hpCompanyMapper.updateByPK(adv);
 		return msg;
 	}
 

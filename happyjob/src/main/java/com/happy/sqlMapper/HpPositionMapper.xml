@@ -42,10 +42,11 @@
 		<result column="ret_on" property="retOn"/>
 		<result column="apply_time" property="applyTime"/>
 		<result column="pos_state" property="posState"/>
+		<result column="del_on" property="delOn"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpPositionId" parameterType="com.happy.entity.HpPositionEntity">
-		insert into hp_position(hp_company_id,hp_position_offer_id,county_id,hp_position_salary_id,hp_education_id,pos_name,ret_man_money,man_day_num,ret_woman_money,women_day_num,urgent_on,urgent_money,group_on,three_money,five_money,welfare_on,welfare_detail,job_hours,com_cust_phone,hp_position_type_id,pos_detail,car_on,car_desc,pos_com_desc,other_welfare,pos_nature,pos_work_year,start_time,end_time,pos_num,pos_person,pos_phone,pos_email,hot_on,ret_on,apply_time,pos_state)
-		 values (#{hpCompanyId},#{hpPositionOfferId},#{countyId},#{hpPositionSalaryId},#{hpEducationId},#{posName},#{retManMoney},#{manDayNum},#{retWomanMoney},#{womenDayNum},#{urgentOn},#{urgentMoney},#{groupOn},#{threeMoney},#{fiveMoney},#{welfareOn},#{welfareDetail},#{jobHours},#{comCustPhone},#{hpPositionTypeId},#{posDetail},#{carOn},#{carDesc},#{posComDesc},#{otherWelfare},#{posNature},#{posWorkYear},#{startTime},#{endTime},#{posNum},#{posPerson},#{posPhone},#{posEmail},#{hotOn},#{retOn},#{applyTime},#{posState});
+		insert into hp_position(hp_company_id,hp_position_offer_id,county_id,hp_position_salary_id,hp_education_id,pos_name,ret_man_money,man_day_num,ret_woman_money,women_day_num,urgent_on,urgent_money,group_on,three_money,five_money,welfare_on,welfare_detail,job_hours,com_cust_phone,hp_position_type_id,pos_detail,car_on,car_desc,pos_com_desc,other_welfare,pos_nature,pos_work_year,start_time,end_time,pos_num,pos_person,pos_phone,pos_email,hot_on,ret_on,apply_time,pos_state,del_on)
+		 values (#{hpCompanyId},#{hpPositionOfferId},#{countyId},#{hpPositionSalaryId},#{hpEducationId},#{posName},#{retManMoney},#{manDayNum},#{retWomanMoney},#{womenDayNum},#{urgentOn},#{urgentMoney},#{groupOn},#{threeMoney},#{fiveMoney},#{welfareOn},#{welfareDetail},#{jobHours},#{comCustPhone},#{hpPositionTypeId},#{posDetail},#{carOn},#{carDesc},#{posComDesc},#{otherWelfare},#{posNature},#{posWorkYear},#{startTime},#{endTime},#{posNum},#{posPerson},#{posPhone},#{posEmail},#{hotOn},#{retOn},#{applyTime},#{posState},#{delOn});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_position where hp_position_id=#{hpPositionId}
@@ -169,6 +170,9 @@
 			</if>
 			<if test="posState!=null ">
 				pos_state=#{posState},
+			</if>
+			<if test="delOn!=null ">
+				del_on=#{delOn},
 			</if>
 		</set>
 		 where hp_position_id=#{hpPositionId}
