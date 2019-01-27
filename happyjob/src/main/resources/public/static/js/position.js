@@ -9,6 +9,7 @@ var otherWelfareDef = '<p style="white-space: normal;">工&nbsp; 作&nbsp; 餐�
 var _curUrl = window.location.href;
 var hpPositionId = null;
 //详情
+var welfareDetailUe = UE.getEditor('welfareDetailEditor');
 var posDetailUe = UE.getEditor('posDetailEditor');
 var otherWelfareUe = UE.getEditor('otherWelfareEditor');
 var posComDescUe = UE.getEditor('posComDescEditor');
@@ -113,9 +114,9 @@ $(function(){
 		if($(this).val()==1){
 			$("#urgentOn").val(0).change();
 			$("#groupOn").val(0).change();;
-			$("#welfareDetail").show();
+			$("#welfareDetailEditor").show();
 		}else{
-			$("#welfareDetail").hide();
+			$("#welfareDetailEditor").hide();
 		}
 	});
 	$('#carOn').change(function(){ // 拼团选择
@@ -215,7 +216,8 @@ function formSub(){ // 提交验证
 	}
 	
 	var welfareOn = $("#welfareOn").val();
-	var welfareDetail = $("#welfareDetail").val();
+	var welfareDetail = UE.getEditor('welfareDetailEditor').getContent();
+	welfareDetail = publicObj.ueditorFormat(welfareDetail);
 	
 	var jobHours = $("#jobHours").val();
 	var hpPositionOfferId = $("#hpPositionOfferId").val();
@@ -608,7 +610,14 @@ function editorPosition(){
 				$("#fiveMoney").removeAttr("disabled");
 			}
 			$("#welfareOn").val(positionData.welfareOn);
-			$("#welfareDetail").val(positionData.welfareDetail);
+			if(positionData.welfareOn != 1){
+				$('#welfareDetailEditor').hide();
+			}
+			welfareDetailUe.ready(function(){
+				if(positionData.welfareDetail){
+					UE.getEditor('welfareDetailEditor').execCommand('insertHtml',positionData.welfareDetail);
+				}
+			});
 			
 			$("#jobHours").val(positionData.jobHours);
 			$("#hpPositionOfferId").val(positionData.hpPositionOfferId); // 下拉框
@@ -640,6 +649,9 @@ function editorPosition(){
     			}
 	    	});
 			$("#carOn").val(positionData.carOn); // 下拉框
+			if(positionData.carOn != 1){
+				$('#carDescEditor').hide();
+			}
 			carDescUe.ready(function(){
     			if(positionData.posComDesc){
     				UE.getEditor('carDescEditor').execCommand('insertHtml',positionData.carDesc);

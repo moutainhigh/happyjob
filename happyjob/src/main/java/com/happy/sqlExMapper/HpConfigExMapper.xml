@@ -37,7 +37,7 @@
 	</select>
 
 	<select id="getCompanyList" resultType="com.happy.service.company.data.HpCompanyExt" >
-		SELECT c.hp_company_id,c.com_name FROM hp_company c
+		SELECT c.hp_company_id,c.com_name FROM hp_company c where c.del_on=0
 	</select>
 	
 	<select id="getCityNameByCountyId" resultType="String" >

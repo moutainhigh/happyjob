@@ -267,7 +267,7 @@ public class BaseController {
           HttpSession session = MySessionContext.getSession(sessionId);
           if(session == null) {
               msg.setErrorCode(1);
-              msg.setMessage("验证信息有误，请重新发送验证码");
+              msg.setMessage("验证码信息有误，请重新发送验证码");
               return msg;
           }
           logger.info("验证码验证 sessionId==={}",session.getId());
@@ -290,7 +290,7 @@ public class BaseController {
           }
           MySessionContext.DelSession(session);
           msg.setErrorCode(1);
-          msg.setMessage("验证信息有误，请重新发送验证码");
+          msg.setMessage("验证码信息有误，请重新发送验证码");
           return msg;
        }
       /**

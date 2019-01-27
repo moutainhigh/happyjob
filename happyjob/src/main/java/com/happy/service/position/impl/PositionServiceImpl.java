@@ -192,6 +192,12 @@ public class PositionServiceImpl implements PositionService {
                 return json;
             }
             long posEndTime = postion.getEndTime(); // 活动结束时间
+            int delOn = postion.getDelOn();
+            if(delOn == 1) {
+                json.put(Const.RESUTL_MESSAGE_ERRORCODE, 1);
+                json.put(Const.RESUTL_MESSAGE_MESSAGE, "岗位招聘信息已被删除，请更换岗位");
+                return json;
+            }
             json.put("posEndTime", posEndTime);
             long posStartTime = postion.getStartTime();
             if(posStartTime>curTime || posEndTime < curTime) {

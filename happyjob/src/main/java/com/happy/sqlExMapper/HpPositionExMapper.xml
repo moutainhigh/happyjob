@@ -183,7 +183,7 @@ AND (SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_i
 	</select>
 	
 	<select id="getSimplePosByKey" resultType="com.happy.entity.HpPositionEntity" >
-		SELECT p.hp_position_id,p.start_time,p.end_time,p.group_on 
+		SELECT p.hp_position_id,p.start_time,p.end_time,p.group_on,p.del_on 
 		FROM hp_position p WHERE p.hp_position_id=#{hpPositionId}
 	</select>
 	
