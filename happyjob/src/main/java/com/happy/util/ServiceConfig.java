@@ -12,7 +12,7 @@ public class ServiceConfig {
     
     private static String uploadBaseUrl = "http://192.168.0.98/uploadFiles";
     
-    private static String ueditorRootPath = "D:/github/repository/happyjob/happyjob/src/main/resources/public/static";
+    private static String ueditorRootPath = "/var/www/html/weapp_hapjob_com/client/conf/public/static";
     
     private static String ueditorSavePathPrefix;
     

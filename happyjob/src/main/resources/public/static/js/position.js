@@ -650,7 +650,7 @@ function editorPosition(){
 	    	});
 			$("#carOn").val(positionData.carOn); // 下拉框
 			if(positionData.carOn != 1){
-				$('#carDescEditor').hide();
+				$('#carDescItem').hide();
 			}
 			carDescUe.ready(function(){
     			if(positionData.posComDesc){

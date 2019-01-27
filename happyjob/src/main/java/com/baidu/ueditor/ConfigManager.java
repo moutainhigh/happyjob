@@ -43,16 +43,20 @@ public final class ConfigManager {
         
         logger.info("ueditor init");
         
-        logger.info("rootPath : {}", rootPath);
-        logger.info("savePathPrefix : {}", savePathPrefix);
-        logger.info("urlPrefix : {}", urlPrefix);
+        logger.info("rootPath===={}", rootPath);
+        logger.info("savePathPrefix===={}", savePathPrefix);
+        logger.info("urlPrefix===={}", urlPrefix);
         initEnv();
     }
 
     public static ConfigManager getInstance(String rootPath, String contextPath, String uri) {
+        
+        logger.info("ueditor init");
+        
         try {
             return new ConfigManager(ConfigManager.uRootPath, contextPath, uri);
         } catch (Exception e) {
+            logger.error("加载配置异常ConfigManager=====",e);
             return null;
         }
     }
@@ -155,7 +159,7 @@ public final class ConfigManager {
     }
 
     private void initEnv() {
-        
+        logger.info("加载配置开始=====");
         
         logger.info("read config");
         InputStream is = this.getClass().getClassLoader().getResourceAsStream(configFileName);
@@ -178,15 +182,17 @@ public final class ConfigManager {
             jsonConfig.put("videoUrlPrefix", urlPrefix);
             jsonConfig.put("localSavePathPrefix", savePathPrefix);
             
+            logger.info("加载配置成功=====");
+            logger.info("localSavePathPrefix====={}",savePathPrefix);
             
             
             this.jsonConfig = jsonConfig;
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("加载配置异常initEnv=====",e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("加载配置异常initEnv=====",e);
         } catch (JSONException e) {
-             e.printStackTrace();
+            logger.error("加载配置异常initEnv=====",e);
         }
 
     }
