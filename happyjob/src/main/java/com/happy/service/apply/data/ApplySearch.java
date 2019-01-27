@@ -14,6 +14,24 @@ public class ApplySearch  extends Page {
     
     @ApiModelProperty(name="contactNum",value="联系方式")
     private String contactNum;
+    
+    @ApiModelProperty(name="startTime",value="开始时间")
+    private Long startTime ;
+    @ApiModelProperty(name="endTime",value="结束时间")
+    private Long endTime ;
+    
+	public Long getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(Long startTime) {
+		this.startTime = startTime;
+	}
+	public Long getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Long endTime) {
+		this.endTime = endTime;
+	}
 	public String getName() {
 		return name;
 	}

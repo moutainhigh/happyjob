@@ -5,13 +5,13 @@
 <mapper namespace="com.happy.sqlExMapper.HpCompanyApplyExMapper">
 	
 	<select id="getCompanyApplylistPage" parameterType="com.happy.service.apply.data.ApplySearch" resultType="com.happy.entity.HpCompanyApplyEntity" >
-		SELECT * FROM hp_company_apply  
-		WHERE  del_on <![CDATA[!= ]]> 1
+		SELECT * FROM hp_company_apply  a 
+		WHERE  a.del_on <![CDATA[!= ]]> 1
 		
-		<if test="name !=null and name !='' ">AND name LIKE CONCAT('%',#{name},'%')</if>
-		<if test="comName !=null and comName !='' ">AND com_name LIKE CONCAT('%',#{comName},'%')</if>
-<!-- 		<if test="comtactNum != null and comtactNum != '' ">AND comtact_num LIKE CONCAT('%',#{comtactNum},'%')</if> -->
-		
+		<if test="name !=null and name !='' ">AND a.name LIKE CONCAT('%',#{name},'%')</if>
+		<if test="comName !=null and comName !='' ">AND a.com_name LIKE CONCAT('%',#{comName},'%')</if>
+		<if test="startTime !=null and startTime != 0 ">AND a.create_time &gt;=#{startTime}</if>
+		<if test="endTime !=null and endTime != 0 ">AND a.create_time  &lt;=#{endTime}</if>
 		ORDER BY hp_company_apply_id desc
 		
 	</select>	

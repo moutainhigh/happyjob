@@ -13,11 +13,26 @@ $(document).on("click",".queryApply",function(){
 function pageSearch(page){
 	listParams.name = $("#name").val();
 	listParams.comName = $("#comName").val();
-//	listParams.contactNum = $("#contactNum").val();
+	listParams.startTime = dateToStartTime($("#startTime").val());
+	listParams.endTime = dateToEndTime($("#endTime").val());
 	listParams.currentPage = page;
 	fetchList();
 }
+function dateToStartTime(timestamp) {
+	if(timestamp != null && timestamp !=""){
+		var formatTimeS = new Date(timestamp+" 00:00:00").getTime();
+		return formatTimeS/1000;
+	}
+	return 0;
+}
 
+function dateToEndTime(timestamp) {
+	if(timestamp != null && timestamp !=""){
+		var formatTimeS = new Date(timestamp+" 23:59:59").getTime();
+		return formatTimeS/1000;
+	}
+	return 0;
+}
 
 var $object ;
 // 点击联系按钮    出现modal
@@ -104,7 +119,8 @@ function postDel(param){
 var listParams = {
 		name:"",
 		comName:"",
-//		contactNum:"",
+		startTime:"",
+	    endTime:"",
 		currentPage:1,
 		showCount:15
 }
@@ -149,11 +165,12 @@ function addTableList(list){
             data-contact-on="'+ item.contactOn +'" \
             data-option-person="'+ item.optionPerson +'" \
             data-option-time="'+ item.optionTime +'" \
-            <th>'+ item.name +'</th>\
+            data-create-time="'+ item.createTime +'" >\
             <th>'+ item.name +'</th>\
             <th>'+ item.comName +'</th>\
             <th>'+ item.contactNum  +'</th>\
             <th>'+ item.position +'</th>\
+            <th>'+ timestampToDay(item.createTime) +'</th>\
             <th>\
             	<button type="button" class="btn btn-danger  btn-sm  del">删除</button>\ '
             if(item.contactOn == 1 ){ 
@@ -165,6 +182,9 @@ function addTableList(list){
 	            templeteTr +='</th>\
 				        <th class="optionPerson">'+isNull(item.optionPerson)+'</th>\ <th class="optionTime">'+isNull(timestampToDay(item.optionTime))+'</th>\
 	        </tr>';
+	            
+	            
+	         
     })
     $tBody.html(templeteTr)    
 }

@@ -5,7 +5,7 @@ import com.happy.service.apply.data.ApplyListMsg;
 
 public interface ApplyService {
 
-	ApplyListMsg getApplylistPage(Integer currentPage,Integer showCount,String name ,String comName,String contactNum );
+	ApplyListMsg getApplylistPage(Integer currentPage,Integer showCount,String name ,String comName,String contactNum,Long startTime,Long endTime);
 	
 	 BaseMsg companyApplyDel(Long hpCompanyApplyId);
 	 
