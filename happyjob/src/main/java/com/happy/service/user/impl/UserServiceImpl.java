@@ -583,6 +583,7 @@ public class UserServiceImpl implements UserService {
         data.setComName(comName);
         data.setContactNum(contactNo);
         data.setPosition(position);
+        data.setContactOn(0);
         this.hpCompanyApplyMapper.insert(data);
         return msg;
     }
