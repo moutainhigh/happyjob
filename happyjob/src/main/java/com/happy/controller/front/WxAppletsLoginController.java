@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.alibaba.fastjson.JSONObject;
 import com.happy.controller.base.BaseController;
 import com.happy.plugin.BaseMsg;
+import com.happy.service.config.data.LocationDataMsg;
 import com.happy.service.user.UserService;
 import com.happy.service.user.data.OtherLoginData;
 import com.happy.service.user.data.OtherLoginMsg;
@@ -279,7 +280,26 @@ public class WxAppletsLoginController {
          logger.error("here is exception", e);
      }
      return null;
-
+ }
+ 
+ @ApiOperation(value="地址编码：城市、详细地址查询经纬度值",notes="地址编码：城市、详细地址查询经纬度值")
+ @ApiImplicitParams({
+     @ApiImplicitParam(name="city",value="城市名称",paramType="query",required = true,dataType="String"),
+     @ApiImplicitParam(name="addr",value="详细地址",paramType="query",required = true,dataType="String"),
+ })
+ @PostMapping(value="addrEncode")
+ public BaseMsg addrEncode(HttpServletRequest request) {
+     LocationDataMsg msg = new LocationDataMsg();
+     String city = request.getParameter("city");
+     String addr = request.getParameter("addr");
+     if(Util.isEmpty(city) || Util.isEmpty(addr)) {
+         msg.setErrorCode(1);
+         msg.setMessage("缺少参数");
+         return msg;
+     }
+     String location = Util.getLocationFromGd(Util.getAddtrGdDetail(addr, city));
      
+     msg.setData(location);
+     return msg;
  }
 }

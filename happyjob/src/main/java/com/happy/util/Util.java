@@ -1395,9 +1395,16 @@ public class Util {
        city = Util.urlEncodeStr(city, Const.CODE_TYPE_STR);
        signMap.put("address",addr );
        signMap.put("key", key);
-       signMap.put("city", city);
+       if(!Util.isEmpty(city)) {
+           signMap.put("city", city);
+       }
        String signStr = Util.createGdSign(signMap, "ede61604ff69e93875eb1aedc9e87c36");
-       String url = "key="+key+"&address="+addr+"&city="+city+"&sig="+signStr;
+       String url = "key="+key+"&address="+addr;
+       if(!Util.isEmpty(city)) {
+           url += "&city="+city;
+       }
+       
+       url += "&sig="+signStr;
        logger.info("参数信息=={}",url);
        String result = Util.sendPost(api, url);
        logger.info("地理编码接口返回信息==={}",result);

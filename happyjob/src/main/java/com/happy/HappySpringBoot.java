@@ -43,9 +43,15 @@ public class HappySpringBoot extends SpringBootServletInitializer implements Env
         String upload_base_path = environment.getProperty("serviceConfig.filePath.upload_base_path");// 根据自己定义的获取文件上传地址
         String upload_base_url = environment.getProperty("serviceConfig.filePath.upload_base_url");// 根据自己定义的获取文件上传后访问域名
         String swaggerEnabled = environment.getProperty("serviceConfig.swagger.enabled");// 根据自己定义的获取swagger接口是否开放
+        String rootPath = environment.getProperty("ueditor.rootPath");// 根据自己定义的获取swagger接口是否开放
+        String savePathPrefix = environment.getProperty("ueditor.savePathPrefix");// 根据自己定义的获取swagger接口是否开放
+        String urlPrefix = environment.getProperty("ueditor.urlPrefix");// 根据自己定义的获取swagger接口是否开放
         logger.info("upload_base_path:{}", upload_base_path);
         logger.info("upload_base_url:{}", upload_base_url);
         logger.info("swaggerEnabled:{}", swaggerEnabled);
+        logger.info("rootPath:{}", rootPath);
+        logger.info("savePathPrefix:{}", savePathPrefix);
+        logger.info("urlPrefix:{}", urlPrefix);
         if (!Util.isEmpty(upload_base_path)) {
             ServiceConfig.setUploadBasePath(upload_base_path);
         }
@@ -54,6 +60,15 @@ public class HappySpringBoot extends SpringBootServletInitializer implements Env
         }
         if ("true".equals(swaggerEnabled)) {
             ServiceConfig.setSwaggerEnabled(true);
+        }
+        if (!Util.isEmpty(rootPath)) {
+            ServiceConfig.setUeditorRootPath(rootPath);
+        }
+        if (!Util.isEmpty(savePathPrefix)) {
+            ServiceConfig.setUeditorSavePathPrefix(savePathPrefix);
+        }
+        if (!Util.isEmpty(urlPrefix)) {
+            ServiceConfig.setUeditorUrlPrefix(urlPrefix);;
         }
 
     }

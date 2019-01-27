@@ -286,6 +286,7 @@ import io.swagger.annotations.ApiOperation;
            data.setSessionId(session.getId());
            msg.setData(data);
            MySessionContext.AddSession(session);
+           logger.info("验证码发送 session添加成功");
        }
        
        return msg;

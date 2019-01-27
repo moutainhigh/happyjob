@@ -85,15 +85,17 @@ public class LoginController {
         return new BaseMsg();
     }
     
-    /**
-     * @TODO:     ueditor数据接口
-     */
-    @RequestMapping(value="ueditor")
-    public String ueditor(HttpServletRequest request){
-        
-        
-        String str = new ActionEnter(request, ServiceConfig.getUeditorRootPath() ).exec();
-        
-        return str;
-    }
+//    /**
+//     * @TODO:     ueditor数据接口
+//     */
+//    @RequestMapping(value="ueditor")
+//    public String ueditor(HttpServletRequest request,HttpServletResponse response){
+//        response.setContentType("application/json");
+//        
+//        String str = new ActionEnter(request, ServiceConfig.getUeditorRootPath() ).exec();
+//        
+//        logger.info("ueditor 初始化信息=={}",str);
+//        
+//        return str;
+//    }
 }
