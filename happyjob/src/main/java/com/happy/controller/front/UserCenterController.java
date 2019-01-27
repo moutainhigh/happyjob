@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
@@ -264,7 +265,7 @@ public class UserCenterController {
    public UpImgMsg shareQrCodeA(
        @RequestHeader(name="oid",defaultValue="微信登录凭证",required=true) String oid,
        @RequestHeader(name="sid",defaultValue="用户登录凭证",required=true) String sid,
-       @RequestHeader(name="targetUrl",defaultValue="需要生产二维码的页面访问地址,根路径前不要填加 /",required=true) String targetUrl
+       @RequestParam(name="targetUrl",defaultValue="需要生产二维码的页面访问地址,根路径前不要填加 /",required=true) String targetUrl
        ) {
        
        logger.info("positionApply 参数日志：sid=={},oid=={},targetUrl=={}",sid,oid,targetUrl);
@@ -284,7 +285,7 @@ public class UserCenterController {
    public UpImgMsg shareQrCodeB(
        @RequestHeader(name="oid",defaultValue="微信登录凭证",required=true) String oid,
        @RequestHeader(name="sid",defaultValue="用户登录凭证",required=true) String sid,
-       @RequestHeader(name="targetUrl",defaultValue="需要生产二维码的页面访问地址,根路径前不要填加 /",required=true) String targetUrl
+       @RequestParam(name="targetUrl",defaultValue="需要生产二维码的页面访问地址,根路径前不要填加 /",required=true) String targetUrl
        ) {
        
        logger.info("positionApply 参数日志：sid=={},oid=={},targetUrl=={}",sid,oid,targetUrl);
@@ -304,8 +305,8 @@ public class UserCenterController {
    public UpImgMsg shareQrCodeC(
        @RequestHeader(name="oid",defaultValue="微信登录凭证",required=true) String oid,
        @RequestHeader(name="sid",defaultValue="用户登录凭证",required=true) String sid,
-       @RequestHeader(name="scene",defaultValue="最大32个可见字符，只支持数字，大小写英文以及部分特殊字符",required=true) String scene,
-       @RequestHeader(name="page",defaultValue="必须是已经发布的小程序存在的页面（否则报错），根路径前不要填加斜杠,不能携带参数（参数请放在scene字段里）",required=true) String page
+       @RequestParam(name="scene",defaultValue="最大32个可见字符，只支持数字，大小写英文以及部分特殊字符",required=true) String scene,
+       @RequestParam(name="page",defaultValue="必须是已经发布的小程序存在的页面（否则报错），根路径前不要填加斜杠,不能携带参数（参数请放在scene字段里）",required=true) String page
        ) {
        
        logger.info("positionApply 参数日志：sid=={},oid=={},scene,page=={}",sid,oid,scene,page);

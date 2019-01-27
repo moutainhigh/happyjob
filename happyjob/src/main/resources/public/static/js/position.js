@@ -328,6 +328,7 @@ function formSub(){ // 提交验证
 	positionData.retOn = retOn;
 	positionData.urgentMoney = urgentMoney;
 	positionData.welfareArr = welFareIds;
+	positionData.posNature = posNature;
 	positionData.hpPositionId = publicObj.getParams(_curUrl,"hpPositionId");
 	
 	fetchPostBody({
