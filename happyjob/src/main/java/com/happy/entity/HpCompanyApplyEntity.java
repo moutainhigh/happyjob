@@ -38,6 +38,9 @@ public class HpCompanyApplyEntity implements  Serializable  {
 	//是否删除
 	@ApiModelProperty(name="delOn",value="是否删除")
 	private java.lang.Integer delOn;
+	//记录生成时间
+	@ApiModelProperty(name="createTime",value="记录生成时间")
+	private java.lang.Long createTime;
 
 	public java.lang.Long getHpCompanyApplyId() {
 		return hpCompanyApplyId;
@@ -126,6 +129,16 @@ public class HpCompanyApplyEntity implements  Serializable  {
 
 	public void setDelOn(java.lang.Integer delOn) {
 		this.delOn = delOn;
+	}
+
+
+	public java.lang.Long getCreateTime() {
+		return createTime;
+	}
+
+
+	public void setCreateTime(java.lang.Long createTime) {
+		this.createTime = createTime;
 	}
 
 }

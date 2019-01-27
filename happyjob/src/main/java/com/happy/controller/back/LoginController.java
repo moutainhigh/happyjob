@@ -88,7 +88,7 @@ public class LoginController {
     /**
      * @TODO:     ueditor数据接口
      */
-    @GetMapping(value="ueditor")
+    @RequestMapping(value="ueditor")
     public String ueditor(HttpServletRequest request){
         
         

@@ -584,6 +584,7 @@ public class UserServiceImpl implements UserService {
         data.setContactNum(contactNo);
         data.setPosition(position);
         data.setContactOn(0);
+        data.setCreateTime(Util.getDateSecond(Util.getCurrentDate()));
         this.hpCompanyApplyMapper.insert(data);
         return msg;
     }

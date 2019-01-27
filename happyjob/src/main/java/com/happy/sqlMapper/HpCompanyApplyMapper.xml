@@ -13,10 +13,11 @@
 		<result column="option_person" property="optionPerson"/>
 		<result column="option_time" property="optionTime"/>
 		<result column="del_on" property="delOn"/>
+		<result column="create_time" property="createTime"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpCompanyApplyId" parameterType="com.happy.entity.HpCompanyApplyEntity">
-		insert into hp_company_apply(name,com_name,contact_num,position,contact_on,option_person,option_time,del_on)
-		 values (#{name},#{comName},#{contactNum},#{position},#{contactOn},#{optionPerson},#{optionTime},#{delOn});
+		insert into hp_company_apply(name,com_name,contact_num,position,contact_on,option_person,option_time,del_on,create_time)
+		 values (#{name},#{comName},#{contactNum},#{position},#{contactOn},#{optionPerson},#{optionTime},#{delOn},#{createTime});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_company_apply where hp_company_apply_id=#{hpCompanyApplyId}
@@ -53,6 +54,9 @@
 			</if>
 			<if test="delOn!=null ">
 				del_on=#{delOn},
+			</if>
+			<if test="createTime!=null ">
+				create_time=#{createTime},
 			</if>
 		</set>
 		 where hp_company_apply_id=#{hpCompanyApplyId}
