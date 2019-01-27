@@ -15,6 +15,7 @@ function pageSearch(page){
 	listParams.comName = $("#comName").val();
 	listParams.startTime = dateToStartTime($("#startTime").val());
 	listParams.endTime = dateToEndTime($("#endTime").val());
+	listParams.contactOn = $("#contactOn").val();
 	listParams.currentPage = page;
 	fetchList();
 }

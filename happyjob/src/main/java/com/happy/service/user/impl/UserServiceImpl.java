@@ -579,11 +579,12 @@ public class UserServiceImpl implements UserService {
             return msg;
         }
         HpCompanyApplyEntity data = new HpCompanyApplyEntity();
-        data.setName(comName);
+        data.setName(name);
         data.setComName(comName);
         data.setContactNum(contactNo);
         data.setPosition(position);
         data.setContactOn(0);
+        data.setDelOn(0);
         data.setCreateTime(Util.getDateSecond(Util.getCurrentDate()));
         this.hpCompanyApplyMapper.insert(data);
         return msg;

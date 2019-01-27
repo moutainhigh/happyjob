@@ -44,9 +44,10 @@ public class ApplyController {
         String contactNum = request.getParameter("contactNum");
         Long startTime = (Long)Util.typeChange(request.getParameter("startTime"), Long.class);
         Long endTime = (Long)Util.typeChange(request.getParameter("endTime"), Long.class);
+        Integer contactOn = (Integer)Util.typeChange(request.getParameter("contactOn"), Integer.class);
        
         logger.info("backApply.applyList 请求参数：currentPage={},showCount={},name={},comName={},contactNum={},startTime={},endTime={}",currentPage,showCount,name,comName,contactNum,startTime,endTime);
-        ApplyListMsg result = this.applyService.getApplylistPage(currentPage,showCount, name , comName,contactNum,startTime,endTime );
+        ApplyListMsg result = this.applyService.getApplylistPage(currentPage,showCount, name , comName,contactNum,startTime,endTime,contactOn);
         return  result;
     }
 		    

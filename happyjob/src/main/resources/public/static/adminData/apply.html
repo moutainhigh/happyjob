@@ -81,7 +81,7 @@
 		<!-- Sidebar Menu -->
 		<ul class="sidebar-menu" data-widget="tree">
 			<li class="header">管理员功能菜单</li>
-			<li class="treeview active">
+			<li class="treeview">
 				<a href="#"><i class="fa fa-user"></i> <span>用户管理</span>
 					<span class="pull-right-container">
 					<i class="fa fa-angle-left pull-right"></i>
@@ -90,10 +90,10 @@
 				<ul class="treeview-menu">
 					<li><a href="/home.html"><i class="fa fa-circle-o"></i>用户列表</a></li>
 					<li><a href="/static/adminData/salary.html"><i class="fa fa-circle-o"></i>工资查询</a></li>
-					<li class="active"><a href="/static/adminData/delivery.html"><i class="fa fa-circle-o"></i>用户投递</a></li>
+					<li><a href="/static/adminData/delivery.html"><i class="fa fa-circle-o"></i>用户投递</a></li>
 				</ul>
 			</li>
-			<li class="treeview">
+			<li class="treeview active">
 				<a href="#"><i class="fa fa-laptop"></i> <span>企业管理</span>
 					<span class="pull-right-container">
 						<i class="fa fa-angle-left pull-right"></i>
@@ -102,7 +102,7 @@
 				<ul class="treeview-menu">
 					<li><a href="/static/adminData/company.html"><i class="fa fa-circle-o"></i>企业列表</a></li>
 					<li><a href="/static/adminData/positionList.html"><i class="fa fa-circle-o"></i>招聘列表</a></li>
-					<li><a href="/static/adminData/apply.html"><i class="fa fa-circle-o"></i>我要招聘</a></li>
+					<li class="active"><a href="/static/adminData/apply.html"><i class="fa fa-circle-o"></i>我要招聘</a></li>
 				</ul>
 			</li>
 			<li class="treeview">
@@ -154,10 +154,14 @@
 									<label for="">公司：</label>
 									<input id="comName" type="text" class="form-control"  placeholder="">
 								</div>
-<!-- 								<div class="form-group col-xs-3" > -->
-<!-- 									<label for="">联系方式：</label> -->
-<!-- 									<input id="contactNum"  type="text"  class="form-control"  placeholder=""> -->
-<!-- 								</div> -->
+								<div class="form-group"  >
+									<label for="contactOn">是否联系：</label>
+									<select id="contactOn" >
+										<option value="" >全部</option>
+										<option value="0" >未联系</option>
+										<option value="1" >已联系</option>
+									</select>
+								</div>
 								<div class="form-group">
 									<label for="">申请时间：</label>
 									<input type="text" class="datepicker" placeholder="请选择日期" id="startTime" autocomplete="off" /> - <input type="text" class="datepicker" placeholder="请选择日期" id="endTime" autocomplete="off"/>

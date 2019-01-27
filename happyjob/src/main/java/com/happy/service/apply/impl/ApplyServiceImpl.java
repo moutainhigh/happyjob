@@ -27,7 +27,8 @@ public class ApplyServiceImpl implements ApplyService {
 	private HpCompanyApplyMapper hpCompanyApplyMapper ;
 	
 	@Override
-	public ApplyListMsg getApplylistPage(Integer currentPage,Integer showCount,String name ,String comName,String contactNum,Long startTime,Long endTime ){
+	public ApplyListMsg getApplylistPage(Integer currentPage,Integer showCount,String name ,
+	    String comName,String contactNum,Long startTime,Long endTime,Integer contactOn ){
 		
 		ApplyListMsg msg = new ApplyListMsg();
 		ApplySearch page = new ApplySearch();
@@ -36,6 +37,7 @@ public class ApplyServiceImpl implements ApplyService {
 		page.setContactNum(contactNum);
 		page.setStartTime(startTime);
 		page.setEndTime(endTime);
+		page.setContactOn(contactOn);
 		
 		currentPage = currentPage==null || currentPage<1?1:currentPage;
         showCount = showCount==null||showCount<1?10:showCount;
