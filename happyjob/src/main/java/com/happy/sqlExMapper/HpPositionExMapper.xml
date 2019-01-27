@@ -31,7 +31,7 @@
 			LEFT JOIN hp_user u1 ON pg.hp_user_id=u1.hp_user_id 
 		</if>
 		LEFT JOIN hp_position_require pr ON p.hp_position_id=pr.hp_position_id 
-		WHERE p.start_time &lt;=#{curTime} AND p.end_time &gt;=#{curTime}  AND p.pos_state=1 
+		WHERE p.start_time &lt;=#{curTime} AND p.end_time &gt;=#{curTime}  AND p.pos_state=1 AND p.del_on=0 
 		<if test="hotOn != null ">AND p.hot_on=#{hotOn}</if>
 		<if test="posNature != null ">AND p.pos_nature=#{posNature}</if>
 		<if test="retOn != null ">AND p.ret_on=#{retOn}</if>
@@ -124,7 +124,7 @@ FROM  hp_company c JOIN hp_position p ON c.hp_company_id=p.hp_company_id
 JOIN hp_position_group pg ON p.hp_position_id=pg.hp_position_id 
 LEFT JOIN hp_user u ON pg.hp_user_id=u.hp_user_id 
 LEFT JOIN hp_position_salary ps ON p.hp_position_salary_id=ps.hp_position_salary_id 
-WHERE p.hp_position_id=#{hpPositionId} AND p.group_on=1 AND pg.end_time>#{curTime} 
+WHERE p.hp_position_id=#{hpPositionId} AND p.group_on=1 AND p.del_on=0 AND pg.end_time>#{curTime} 
 AND (SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_id=pg.hp_position_group_id) &lt;5 
 ORDER BY pg.end_time,pg.hp_position_group_id desc 
 <if test="isPage == 1">LIMIT #{currentResult},#{showCount}</if>
@@ -133,7 +133,7 @@ ORDER BY pg.end_time,pg.hp_position_group_id desc
 	<select id="getGroupNumBySearch" parameterType="com.happy.service.position.data.GroupSearch" resultType="int" >
 		SELECT COUNT(*) 
 FROM hp_position p JOIN hp_position_group pg ON p.hp_position_id=pg.hp_position_id 
-WHERE p.hp_position_id=#{hpPositionId} AND p.group_on=1 AND pg.end_time>#{curTime} 
+WHERE p.hp_position_id=#{hpPositionId} AND p.del_on=0 AND p.group_on=1 AND pg.end_time>#{curTime} 
 AND (SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_id=pg.hp_position_group_id) &lt;3 
 	</select>
 	

@@ -9,10 +9,14 @@
 		<result column="com_name" property="comName"/>
 		<result column="contact_num" property="contactNum"/>
 		<result column="position" property="position"/>
+		<result column="contact_on" property="contactOn"/>
+		<result column="option_person" property="optionPerson"/>
+		<result column="option_time" property="optionTime"/>
+		<result column="del_on" property="delOn"/>
 	</resultMap>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="hpCompanyApplyId" parameterType="com.happy.entity.HpCompanyApplyEntity">
-		insert into hp_company_apply(name,com_name,contact_num,position)
-		 values (#{name},#{comName},#{contactNum},#{position});
+		insert into hp_company_apply(name,com_name,contact_num,position,contact_on,option_person,option_time,del_on)
+		 values (#{name},#{comName},#{contactNum},#{position},#{contactOn},#{optionPerson},#{optionTime},#{delOn});
 	</insert>
 	<select id="selectByPK" resultMap="BaseResultMap" parameterType="long">
 		select * from hp_company_apply where hp_company_apply_id=#{hpCompanyApplyId}
@@ -37,6 +41,18 @@
 			</if>
 			<if test="position!=null">
 				position=#{position},
+			</if>
+			<if test="contactOn!=null ">
+				contact_on=#{contactOn},
+			</if>
+			<if test="optionPerson!=null">
+				option_person=#{optionPerson},
+			</if>
+			<if test="optionTime!=null ">
+				option_time=#{optionTime},
+			</if>
+			<if test="delOn!=null ">
+				del_on=#{delOn},
 			</if>
 		</set>
 		 where hp_company_apply_id=#{hpCompanyApplyId}

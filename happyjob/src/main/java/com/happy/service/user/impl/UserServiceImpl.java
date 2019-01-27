@@ -204,6 +204,11 @@ public class UserServiceImpl implements UserService {
          userBound.setGender(gender);
          userBound.setUnionid(unionid);
          this.hpUserBoundMapper.updateByPK(userBound);
+         // 同步头像信息到对应用户
+         if(userBound.getHpUserId() != null) {
+             this.hpUserBoundExMapper.updateUserPicByUserId(userBound.getHpUserId());
+         }
+         
          return msg;
     }
 
@@ -775,13 +780,12 @@ public class UserServiceImpl implements UserService {
             bound.setHpUserBoundId(boundId);
             bound.setHpUserId(phoneUserId);
             this.hpUserBoundMapper.updateByPK(bound);
-            if(!Util.isEmpty(bound.getHeaderPic())) {
-                HpUserEntity user = new HpUserEntity();
-                user.setHpUserId(phoneUserId);
-                user.setHeaderPic(bound.getHeaderPic());
-                
-                this.hpUserMapper.updateByPK(user);
-            }
+            HpUserEntity user = new HpUserEntity();
+            user.setHpUserId(phoneUserId);
+            user.setGender(gender);
+            user.setBornYear(bornTime);
+            user.setRealName(realName);
+            this.hpUserMapper.insert(user);
             OtherLoginData data = new OtherLoginData();
             data.setOid(oid);
             data.setSid(userData.getUserToken());

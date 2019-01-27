@@ -26,6 +26,18 @@ public class HpCompanyApplyEntity implements  Serializable  {
 	//职务
 	@ApiModelProperty(name="position",value="职务")
 	private String position;
+	//是否联系
+	@ApiModelProperty(name="contactOn",value="是否联系")
+	private java.lang.Integer contactOn;
+	//联系人名称
+	@ApiModelProperty(name="optionPerson",value="联系人名称")
+	private String optionPerson;
+	//联系时间
+	@ApiModelProperty(name="optionTime",value="联系时间")
+	private java.lang.Long optionTime;
+	//是否删除
+	@ApiModelProperty(name="delOn",value="是否删除")
+	private java.lang.Integer delOn;
 
 	public java.lang.Long getHpCompanyApplyId() {
 		return hpCompanyApplyId;
@@ -74,6 +86,46 @@ public class HpCompanyApplyEntity implements  Serializable  {
 
 	public void setPosition(String position) {
 		this.position = position;
+	}
+
+
+	public java.lang.Integer getContactOn() {
+		return contactOn;
+	}
+
+
+	public void setContactOn(java.lang.Integer contactOn) {
+		this.contactOn = contactOn;
+	}
+
+
+	public String getOptionPerson() {
+		return optionPerson;
+	}
+
+
+	public void setOptionPerson(String optionPerson) {
+		this.optionPerson = optionPerson;
+	}
+
+
+	public java.lang.Long getOptionTime() {
+		return optionTime;
+	}
+
+
+	public void setOptionTime(java.lang.Long optionTime) {
+		this.optionTime = optionTime;
+	}
+
+
+	public java.lang.Integer getDelOn() {
+		return delOn;
+	}
+
+
+	public void setDelOn(java.lang.Integer delOn) {
+		this.delOn = delOn;
 	}
 
 }

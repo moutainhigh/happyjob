@@ -79,4 +79,6 @@ public interface HpUserBoundExMapper{
     * @TODO:     描述一下这个方法是干什么的
     */
    void updateBoundFormId(@Param("oid")String oid,@Param("formId")String formId);
+   
+   void updateUserPicByUserId(@Param("hpUserId")Long hpUserId);
 }

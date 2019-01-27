@@ -72,7 +72,12 @@
 		WHERE u.hp_user_id=#{hpUserId}
 	</select>
 	
-	<select id="updateBoundFormId" >
+	<update id="updateBoundFormId" >
 		UPDATE hp_user_bound ub SET ub.form_id=#{formId} WHERE ub.bound_token=#{oid}
-	</select>
+	</update>
+	
+	<update id="updateUserPicByUserId">
+		UPDATE hp_user u SET u.header_pic=(SELECT ub.header_pic FROM hp_user_bound ub WHERE ub.hp_user_id=u.hp_user_id) 
+		WHERE u.hp_user_id=#{hpUserId} AND u.header_pic IS NULL
+	</update>
 </mapper>
