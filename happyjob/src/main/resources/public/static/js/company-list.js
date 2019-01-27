@@ -122,6 +122,8 @@ function dateToEndTime(timestamp) {
 
 $('#addCompanyModel').on('hidden.bs.modal', function (){
 	document.getElementById("contentForm").reset();
+	 $('#imgContent').attr('src',"");
+	 $('#imgContent2').attr('src',"");
 });
 
 // 认证

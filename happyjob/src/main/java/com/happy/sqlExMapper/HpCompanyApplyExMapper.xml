@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.happy.sqlExMapper.HpCompanyApplyExMapper">
+	
+	<select id="getCompanyApplylistPage" parameterType="com.happy.service.apply.data.ApplySearch" resultType="com.happy.entity.HpCompanyApplyEntity" >
+		SELECT * FROM hp_company_apply  
+		WHERE  del_on <![CDATA[!= ]]> 1
+		
+		<if test="name !=null and name !='' ">AND name LIKE CONCAT('%',#{name},'%')</if>
+		<if test="comName !=null and comName !='' ">AND com_name LIKE CONCAT('%',#{comName},'%')</if>
+<!-- 		<if test="comtactNum != null and comtactNum != '' ">AND comtact_num LIKE CONCAT('%',#{comtactNum},'%')</if> -->
+		
+		ORDER BY hp_company_apply_id desc
+		
+	</select>	
+	
+	
+</mapper>

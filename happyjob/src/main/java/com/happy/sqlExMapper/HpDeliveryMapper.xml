@@ -6,18 +6,22 @@
     
 	<select id="getDeliverylistPage" parameterType="com.happy.service.delivery.data.DeliverySearch" resultType="com.happy.service.delivery.data.DeliveryData" >
 		SELECT u.user_name userName,u.real_name realName ,u.gender gender ,u.born_year,c.com_name,c.hp_company_id,p.pos_name,
-			CASE WHEN u.gender = 1
-	           		THEN 
-		             	p.ret_man_money
-	           		ELSE 
-	           			p.ret_woman_money
-	        END reMoney,
+			CASE WHEN u.gender = 1 and (select count(*) from hp_position_ref_user where hp_position_group_id = pu.hp_position_group_id) <![CDATA[>= ]]> 5
+	           		THEN ifnull(p.ret_man_money,0) + ifnull(p.five_money,0)  + ifnull(p.urgent_money,0) 
+				 WHEN u.gender = 1 and (select count(*) from hp_position_ref_user where hp_position_group_id = pu.hp_position_group_id) <![CDATA[>= ]]> 3 AND (select count(*) from hp_position_ref_user where hp_position_group_id = pu.hp_position_group_id) <![CDATA[ < ]]> 5 
+					THEN ifnull(p.ret_man_money,0) + ifnull(p.three_money,0)  + ifnull(p.urgent_money,0) 
+				 WHEN u.gender = 1 and (select count(*) from hp_position_ref_user where hp_position_group_id = pu.hp_position_group_id) <![CDATA[ < ]]> 3 
+					THEN ifnull(p.ret_man_money,0) + ifnull(p.urgent_money,0)
+				 WHEN u.gender = 0 and (select count(*) from hp_position_ref_user where hp_position_group_id = pu.hp_position_group_id) <![CDATA[>= ]]> 5
+	           		THEN ifnull(p.ret_woman_money,0) + ifnull(p.five_money,0)  + ifnull(p.urgent_money,0) 
+				 WHEN u.gender = 0 and (select count(*) from hp_position_ref_user where hp_position_group_id = pu.hp_position_group_id) <![CDATA[>= ]]> 3 AND (select count(*) from hp_position_ref_user where hp_position_group_id = pu.hp_position_group_id) <![CDATA[ < ]]> 5 
+					THEN ifnull(p.ret_woman_money,0) + ifnull(p.three_money,0)  + ifnull(p.urgent_money,0) 
+				 WHEN u.gender = 0 and (select count(*) from hp_position_ref_user where hp_position_group_id = pu.hp_position_group_id) <![CDATA[ < ]]> 3 
+					 THEN ifnull(p.ret_woman_money,0) + ifnull(p.urgent_money,0)
+				ELSE 0 END reMoney,
 			pu.part_time,u.phone_no,u.hp_user_id,u.header_pic,pu.hp_position_ref_user_id,pu.option_person,pu.option_time,pu.work_on,
-			CASE WHEN pu.option_person != null 
-					THEN 1
-					ELSE 0
-			END contactStat
-			
+			CASE WHEN pu.option_person != null THEN 1
+				ELSE 0 END contactStat
 		from hp_position_ref_user pu
 		left join hp_user u on pu.hp_user_id =u.hp_user_id
 		left join hp_position p on	pu.hp_position_id =p.hp_position_id
