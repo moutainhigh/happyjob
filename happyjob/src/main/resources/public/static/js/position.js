@@ -4,7 +4,7 @@ $(".datepicker").datepicker({
     autoclose: true,//选中之后自动隐藏日期选择框
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
-var posDetailDef = '<p>基本工资：</p><p>薪资结构：<br/></p><p>综合工资：<br/></p><p>发工资日：<br/></p><p>工作时间：<br/></p><p>工作环境：</p>';
+var posDetailDef = '<p>基本工资：</p><p>薪资结构：</p><p>综合工资：</p><p>发工资日：</p><p>工作时间：</p><p>工作环境：</p>';
 var otherWelfareDef = '<p style="white-space: normal;">工&nbsp; 作&nbsp; 餐：</p><p style="white-space: normal;">住&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;宿：</p><p style="white-space: normal;">社&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;保：<br/></p><p style="white-space: normal;">其他福利：</p>';
 var _curUrl = window.location.href;
 var hpPositionId = null;
