@@ -573,11 +573,6 @@ public class UserServiceImpl implements UserService {
             msg.setMessage("联系方式必填，长度50以内");
             return msg;
         }
-        if(Util.isEmpty(position) || position.length()>50) {
-            msg.setErrorCode(1);
-            msg.setMessage("职位必填，长度50以内");
-            return msg;
-        }
         HpCompanyApplyEntity data = new HpCompanyApplyEntity();
         data.setName(name);
         data.setComName(comName);

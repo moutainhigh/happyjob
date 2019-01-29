@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -588,5 +589,15 @@ import io.swagger.annotations.ApiOperation;
   }
   
   
+  @ApiOperation(value="消息推送：用户操作formId保存",notes="用户操作formId保存")
+  @PostMapping(value="formId")
+  public BaseMsg formId(
+      @RequestHeader(name="oid",required=true)String oid,
+      @RequestHeader(name="formId",required=true)String formId
+      ) {
+      
+      this.userService.updateBoundFormId(oid, formId);
+      return new BaseMsg();
+  }
   
 }
