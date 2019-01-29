@@ -412,7 +412,7 @@ public class PositionServiceImpl implements PositionService {
          position.setPosPerson(data.getPosPerson());
          position.setPosPhone(data.getPosPhone());
          position.setPosState(1);
-         position.setPosWorkYear(data.getPosWorkYear());
+//         position.setPosWorkYear(data.getPosWorkYear());
          position.setRetManMoney(data.getRetManMoney());
          position.setRetOn(data.getRetOn());
          position.setRetWomanMoney(data.getRetWomanMoney());

@@ -4,7 +4,39 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.happy.sqlExMapper.HpDeliveryMapper">
     
-	<select id="getDeliverylistPage" parameterType="com.happy.service.delivery.data.DeliverySearch" resultType="com.happy.service.delivery.data.DeliveryData" >
+    
+    <select id="getDeliverylistPage" parameterType="com.happy.service.delivery.data.DeliverySearch" resultType="com.happy.service.delivery.data.DeliveryData" >
+		SELECT u.user_name userName,u.real_name realName ,u.gender gender ,u.born_year,c.com_name,c.hp_company_id,p.pos_name,
+			(select count(*) from hp_position_ref_user where hp_position_group_id = pu.hp_position_group_id) teamNum,
+			CASE WHEN u.gender = 1 
+						THEN ifnull(p.ret_man_money,0)
+				 ELSE ifnull(p.ret_woman_money,0)
+						 END reMoney,
+			ifnull(p.five_money,0) five_money,
+            ifnull(p.three_money,0) three_money, 
+			urgent_money,
+			pu.part_time,u.phone_no,u.hp_user_id,u.header_pic,pu.hp_position_ref_user_id,pu.option_person,pu.option_time,pu.work_on,
+			CASE WHEN pu.option_person != null THEN 1
+					ELSE 0 END contactStat
+		from hp_position_ref_user pu
+		left join hp_user u on pu.hp_user_id =u.hp_user_id
+		left join hp_position p on	pu.hp_position_id =p.hp_position_id
+		left join hp_company c on  p.hp_company_id =c.hp_company_id
+
+		WHERE 1=1 
+		<if test="comName !=null and comName !='' ">AND c.com_name LIKE CONCAT('%',#{comName},'%')</if>
+		<if test="posName !=null and posName !='' ">AND p.pos_name LIKE CONCAT('%',#{posName},'%')</if>
+		<if test="startTime !=null and startTime !=0 ">AND pu.part_time &gt;=#{startTime}</if>
+		<if test="endTime !=null and endTime !=0 ">AND pu.part_time &lt;=#{endTime}</if>
+		<if test="realName !=null and realName !='' ">AND u.real_name LIKE CONCAT('%',#{realName},'%')</if>
+		<if test="gender !=null and gender !='' ">AND u.gender = #{gender} </if>
+		<if test="contactStat !=null and contactStat =='1'.toString() ">AND pu.option_person is not NULL  </if>
+		<if test="contactStat !=null and contactStat =='2'.toString() ">AND pu.option_person is NULL  </if>
+		ORDER BY part_time desc
+		
+	</select>
+	
+	<select id="getDeliverylistPage2" parameterType="com.happy.service.delivery.data.DeliverySearch" resultType="com.happy.service.delivery.data.DeliveryData" >
 		SELECT u.user_name userName,u.real_name realName ,u.gender gender ,u.born_year,c.com_name,c.hp_company_id,p.pos_name,
 			CASE WHEN u.gender = 1 and (select count(*) from hp_position_ref_user where hp_position_group_id = pu.hp_position_group_id) <![CDATA[>= ]]> 5
 	           		THEN ifnull(p.ret_man_money,0) + ifnull(p.five_money,0)  + ifnull(p.urgent_money,0) 

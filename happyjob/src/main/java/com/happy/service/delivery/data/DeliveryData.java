@@ -26,8 +26,17 @@ public class DeliveryData extends HpPositionRefUserEntity {
     
     @ApiModelProperty(name="posName",value="职位名称")
     private String posName;
-    @ApiModelProperty(name="reMoney",value="入职返现")
+    @ApiModelProperty(name="reMoney",value="入职返现男/女")
     private Integer reMoney;
+    @ApiModelProperty(name="threeMoney",value="三人团")
+    private Integer threeMoney;
+    @ApiModelProperty(name="fiveMoney",value="五人团")
+    private Integer fiveMoney;
+    @ApiModelProperty(name="urgentMoney",value="高薪急聘")
+    private Integer urgentMoney;
+    @ApiModelProperty(name="teamNum",value="团人数")
+    private Integer teamNum;
+    
     @ApiModelProperty(name="partTime",value="投递时间")
     private Long partTime;
     @ApiModelProperty(name="phoneNo",value="联系方式")
@@ -160,6 +169,46 @@ public class DeliveryData extends HpPositionRefUserEntity {
 		this.hpUserId = hpUserId;
 	}
 
+
+	public Integer getThreeMoney() {
+		return threeMoney;
+	}
+
+
+	public void setThreeMoney(Integer threeMoney) {
+		this.threeMoney = threeMoney;
+	}
+
+
+	public Integer getFiveMoney() {
+		return fiveMoney;
+	}
+
+
+	public void setFiveMoney(Integer fiveMoney) {
+		this.fiveMoney = fiveMoney;
+	}
+
+
+	public Integer getUrgentMoney() {
+		return urgentMoney;
+	}
+
+
+	public void setUrgentMoney(Integer urgentMoney) {
+		this.urgentMoney = urgentMoney;
+	}
+
+
+	public Integer getTeamNum() {
+		return teamNum;
+	}
+
+
+	public void setTeamNum(Integer teamNum) {
+		this.teamNum = teamNum;
+	}
+	
 
 	
    

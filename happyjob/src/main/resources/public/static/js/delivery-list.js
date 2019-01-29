@@ -234,6 +234,17 @@ function addTableList(list){
     var $tBody = $table.find("tbody");
     var templeteTr="";
     list.forEach(function(item){
+    	var returnMoney =""+item.reMoney;
+    	if(item.teamNum >= 5){
+        	returnMoney += "+" +item.fiveMoney +"<br>五人团返现" ;
+        }else if(item.teamNum >= 3 && item.teamNum <5){
+        	returnMoney += "+"+item.fiveMoney +"<br>三人团返现" ;
+        }else{
+        	returnMoney += "";
+        }
+    	if(item.urgentMoney != 0){
+    		returnMoney += "+"+item.urgentMoney +"<br>高薪急聘";
+    	}
         templeteTr+='\
         <tr \
         	data-position_ref_user_id="'+item.hpPositionRefUserId+'" \
@@ -245,7 +256,7 @@ function addTableList(list){
             data-com-name="'+ item.comName +'" \
             data-company-id="'+ item.hpCompanyId +'" \
             data-pos-name="'+ item.posName +'" \
-            data-re-money="'+ item.reMoney +'" \
+            data-re-money="'+ returnMoney +'" \
             data-part-time="'+ item.partTime +'" \
             data-header-pic="'+ item.headerPic +'" \
             data-phone-no="'+ item.phoneNo +'" >\
@@ -254,7 +265,7 @@ function addTableList(list){
             <th>'+ bornYear(item.bornYear) +'</th>\
             <th>'+ item.comName +'</th>\
             <th>'+ item.posName +'</th>\
-            <th>'+ item.reMoney +'</th>\
+            <th>'+ returnMoney +'</th>\
             <th>'+ timestampToDay(item.partTime) +'</th>\
             <th>'+ isNull(item.phoneNo) +'</th>\
             <th>\

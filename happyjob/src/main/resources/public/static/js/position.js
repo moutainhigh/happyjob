@@ -42,7 +42,7 @@ var positionData = {
   "posPerson": "",
   "posPhone": "",
   "posState": null,
-  "posWorkYear": "",
+//  "posWorkYear": "",
   "reqAge": "",
   "reqEducation": "",
   "reqExp": "",
@@ -257,11 +257,11 @@ function formSub(){ // 提交验证
 		swal('字段缺失', '职位月薪必填', 'error');
 		return;
 	}
-	var posWorkYear = $('#posWorkYear').val();
-	if(!posWorkYear){
-		swal('字段缺失', '工作经验', 'error');
-		return;
-	}
+//	var posWorkYear = $('#posWorkYear').val();
+//	if(!posWorkYear){
+//		swal('字段缺失', '工作经验', 'error');
+//		return;
+//	}
 	var startTime = publicObj.transferTime($("#startTime").val());
 	var endTime = publicObj.transferTime($("#endTime").val());
 	if(startTime == 0){
@@ -316,7 +316,7 @@ function formSub(){ // 提交验证
 	positionData.carDesc = carDesc;
 	positionData.posComDesc = posComDesc;
 	positionData.hpPositionSalaryId = hpPositionSalaryId;
-	positionData.posWorkYear = posWorkYear;
+//	positionData.posWorkYear = posWorkYear;
 	positionData.startTime = startTime;
 	positionData.endTime = endTime;
 	positionData.posNum = posNum;
@@ -665,7 +665,7 @@ function editorPosition(){
 			$('input[name="posNature"][value="'+positionData.posNature+'"]').prop("checked",true);
 			
 			$('#hpPositionSalaryId').val(positionData.hpPositionSalaryId); // 下拉框
-			$('#posWorkYear').val(positionData.posWorkYear);
+//			$('#posWorkYear').val(positionData.posWorkYear);
 			
 			$("#startTime").val(publicObj.dateFormat(publicObj.secondToDate(positionData.startTime),dateStrData.d1));
 			$("#endTime").val(publicObj.dateFormat(publicObj.secondToDate(positionData.endTime),dateStrData.d1));
