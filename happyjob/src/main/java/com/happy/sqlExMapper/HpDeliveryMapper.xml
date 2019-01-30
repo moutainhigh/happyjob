@@ -77,7 +77,10 @@
 	</select>
 	
 	<select id="getExperienceByUserId" parameterType="long" resultType="com.happy.entity.HpUserExpEntity" >
-		select * from hp_user_exp where hp_user_resume_id = #{hpUserID}
+		select u.* 
+		from  hp_user_resume r
+		left join hp_user_exp u on u.hp_user_resume_id = r.hp_user_resume_id
+		where r.hp_user_id = #{hpUserID}
 	</select>
 	
 	<select id="getEducationByUserId" parameterType="long" resultType="com.happy.service.delivery.data.HpUserEducationExt" >
