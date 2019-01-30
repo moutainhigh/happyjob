@@ -38,6 +38,8 @@ public class CompanyManageController {
         @ApiImplicitParam(name="comName",value="公司名称，模糊查询",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="startTime",value="开始时间",dataType="long",paramType="query",required=false),
         @ApiImplicitParam(name="endTime",value="结束时间",dataType="long",paramType="query",required=false),
+        @ApiImplicitParam(name="currentPage",value="当前页",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="showCount",value="单页展示记录数",dataType="int",paramType="query",required=false),
     })
     @GetMapping(value="companyList")
     public CompanyListMsg companyListPage(HttpServletRequest request){
@@ -49,7 +51,6 @@ public class CompanyManageController {
         }
         Integer currentPage = (Integer)Util.typeChange(request.getParameter("currentPage"), Integer.class);
         Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
-       
         logger.info("backCompany.companyList 请求参数：comName={},startTime={},endTime={},currentPage={},showCount={}",comName,startTime,endTime,currentPage,showCount);
         CompanyListMsg ss = this.companyService.companyListPage(comName,startTime,endTime,currentPage,showCount);
         return ss ;

@@ -34,6 +34,15 @@ public class ApplyController {
        *      我要招聘列表查询
      */
     @ApiOperation(value="我要招聘列表查询",notes="我要招聘列表查询")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name="name",value="姓名",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="comName",value="公司名称，模糊查询",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="startTime",value="开始时间",dataType="long",paramType="query",required=false),
+        @ApiImplicitParam(name="endTime",value="结束时间",dataType="long",paramType="query",required=false),
+        @ApiImplicitParam(name="contactOn",value="是否联系",dataType="Integer",paramType="query",required=false),
+        @ApiImplicitParam(name="currentPage",value="当前页",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="showCount",value="单页展示记录数",dataType="int",paramType="query",required=false),
+    })
     @GetMapping(value="/applyList")
     public ApplyListMsg applyList(HttpServletRequest request){
     	
@@ -41,13 +50,12 @@ public class ApplyController {
         Integer showCount = (Integer)Util.typeChange(request.getParameter("showCount"), Integer.class);
         String name = request.getParameter("name");
         String comName = request.getParameter("comName");
-        String contactNum = request.getParameter("contactNum");
         Long startTime = (Long)Util.typeChange(request.getParameter("startTime"), Long.class);
         Long endTime = (Long)Util.typeChange(request.getParameter("endTime"), Long.class);
         Integer contactOn = (Integer)Util.typeChange(request.getParameter("contactOn"), Integer.class);
        
-        logger.info("backApply.applyList 请求参数：currentPage={},showCount={},name={},comName={},contactNum={},startTime={},endTime={}",currentPage,showCount,name,comName,contactNum,startTime,endTime);
-        ApplyListMsg result = this.applyService.getApplylistPage(currentPage,showCount, name , comName,contactNum,startTime,endTime,contactOn);
+        logger.info("backApply.applyList 请求参数：currentPage={},showCount={},name={},comName={},startTime={},endTime={}",currentPage,showCount,name,comName,startTime,endTime);
+        ApplyListMsg result = this.applyService.getApplylistPage(currentPage,showCount, name , comName,startTime,endTime,contactOn);
         return  result;
     }
 		    
@@ -56,6 +64,9 @@ public class ApplyController {
 	     *   删除
 	     */
 	    @ApiOperation(value="删除我要招聘",notes="删除我要招聘")
+	    @ApiImplicitParams({
+	        @ApiImplicitParam(name="hpCompanyApplyId",value="hpCompanyApplyId",dataType="Long",paramType="query",required=false),
+	    })
 	    @PostMapping(value="deleteApply")
 	    public BaseMsg deleteApply(HttpServletRequest request){
 	        Long hpCompanyApplyId = (Long)Util.typeChange(request.getParameter("hpCompanyApplyId"), Long.class);
@@ -64,10 +75,9 @@ public class ApplyController {
 	        return ss;
 	    }
 		    
-		   
 		    
 	    /**
-	     *  入职，添加联系人，联系时间
+	     *  添加联系人，联系时间
 	     */
 	    @ApiOperation(value="添加联系人",notes="添加联系人")
 	    @ApiImplicitParams({

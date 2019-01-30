@@ -43,6 +43,8 @@ public class SalaryManageController {
         @ApiImplicitParam(name="payIdNum",value="身份证号，模糊查询",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="payComName",value="公司名称，模糊查询",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="payTime",value="工资月份",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="currentPage",value="当前页",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="showCount",value="单页展示记录数",dataType="int",paramType="query",required=false),
     })
     @GetMapping(value="salaryList")
     public SalarySimpleListMsg userList(HttpServletRequest request){
@@ -74,7 +76,10 @@ public class SalaryManageController {
     }
     
     
-	
+    /**
+     * @TODO:    工资列表导入
+     */
+    @ApiOperation(value="工资列表导入",notes="工资列表导入")
     @PostMapping(value = "/importSalary")
 	public BaseMsg importSalary(@RequestParam(value="file",required=false) MultipartFile file ){
     	return salaryService.importSalary(file);

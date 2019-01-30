@@ -46,10 +46,11 @@ public class DeliveryManageController {
         @ApiImplicitParam(name="endTime",value="结束时间",dataType="int",paramType="query",required=false),
         @ApiImplicitParam(name="gender",value="性别",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="contactStat",value="联系状态 1已联系；2未联系",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="currentPage",value="当前页",dataType="int",paramType="query",required=false),
+        @ApiImplicitParam(name="showCount",value="单页展示记录数",dataType="int",paramType="query",required=false),
     })
     @GetMapping(value="deliveryList")
     public DeliveryListMsg deliveryList(HttpServletRequest request){
-    	
         String comName = request.getParameter("comName");
         if(comName != null) {
         	comName = comName.trim();
@@ -83,9 +84,7 @@ public class DeliveryManageController {
      */
     @ApiOperation(value="投递查看",notes="投递查看")
     @ApiImplicitParams({
-        @ApiImplicitParam(name="realName",value="姓名 模糊查询",dataType="String",paramType="query",required=false),
-        @ApiImplicitParam(name="gender",value="性别",dataType="String",paramType="query",required=false),
-        @ApiImplicitParam(name="contactStat",value="联系状态",dataType="String",paramType="query",required=false),
+        @ApiImplicitParam(name="hpUserId",value="用户id",dataType="Long",paramType="query",required=false),
     })
     @GetMapping(value="deliveryQueryByUserId")
     public DeliveryDetail deliveryQueryByUserId(HttpServletRequest request){
@@ -100,14 +99,14 @@ public class DeliveryManageController {
     /**
      *  入职，添加联系人，联系时间
      */
-    @ApiOperation(value="登陆用户查询",notes="登陆用户查询")
+    @ApiOperation(value="添加联系人，联系时间",notes="添加联系人，联系时间")
     @ApiImplicitParams({
-        @ApiImplicitParam(name="hpPositionRefUserId",value="hpPositionRefUserId",dataType="Long",paramType="query",required=false),
+        @ApiImplicitParam(name="hpPositionRefUserId",value="hpPositionRefUserId",dataType="Long",paramType="query",required=true),
         @ApiImplicitParam(name="comtPerson",value="联系人",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="comTime",value="联系时间",dataType="String",paramType="query",required=false),
         @ApiImplicitParam(name="workOn",value="是否入职 0未入职 1已入职",dataType="Integer",paramType="query",required=false),
-        @ApiImplicitParam(name="hpCompanyId",value="投递的公司id",dataType="Long",paramType="query",required=false),
-        @ApiImplicitParam(name="hpUserId",value="用户id",dataType="Long",paramType="query",required=false),
+        @ApiImplicitParam(name="hpCompanyId",value="投递的公司id",dataType="Long",paramType="query",required=true),
+        @ApiImplicitParam(name="hpUserId",value="用户id",dataType="Long",paramType="query",required=true),
     })
     @PostMapping(value = "/addComtact")
 	public BaseMsg addComtact(HttpServletRequest request){
@@ -124,9 +123,9 @@ public class DeliveryManageController {
     
     
     /**
-     * @TODO:    登陆用户
+     * @TODO:    获取登陆用户信息
      */
-    @ApiOperation(value="登陆用户查询",notes="登陆用户查询")
+    @ApiOperation(value="获取登陆用户信息",notes="获取登陆用户信息")
     @PostMapping(value = "/getLoginUserInfo")
 	public LoginUserMsg getLoginUserInfo(HttpServletRequest request){
     	Cookie[] cookiesArr =  request.getCookies();

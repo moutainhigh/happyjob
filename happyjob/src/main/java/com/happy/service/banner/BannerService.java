@@ -46,7 +46,7 @@ public interface BannerService {
      * @param endTime
      * @return
      */
-    BaseMsg saveAdvertisement(String title,Integer posType,String type,Long sort,String picUrl,String targetUrl,Long endTime);
+    BaseMsg saveAdvertisement(String title,Integer posType,Long sort,String picUrl,String targetUrl,Long endTime);
 
     /**
      * 后台管理

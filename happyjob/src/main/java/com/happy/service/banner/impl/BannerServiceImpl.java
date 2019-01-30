@@ -98,7 +98,7 @@ public class BannerServiceImpl implements BannerService {
 	}
 
 	@Override
-	public BaseMsg saveAdvertisement(String title, Integer posType, String type, Long sort, String picUrl,String targetUrl,
+	public BaseMsg saveAdvertisement(String title, Integer posType, Long sort, String picUrl,String targetUrl,
 			Long endTime) {
 		BaseMsg msg = new BaseMsg();
         if(sort == null || sort ==0) {

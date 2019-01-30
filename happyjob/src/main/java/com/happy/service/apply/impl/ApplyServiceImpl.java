@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.happy.entity.HpCompanyApplyEntity;
-import com.happy.entity.HpPositionRefUserEntity;
-import com.happy.entity.HpUserEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.apply.ApplyService;
 import com.happy.service.apply.data.ApplyListMsg;
@@ -28,13 +26,12 @@ public class ApplyServiceImpl implements ApplyService {
 	
 	@Override
 	public ApplyListMsg getApplylistPage(Integer currentPage,Integer showCount,String name ,
-	    String comName,String contactNum,Long startTime,Long endTime,Integer contactOn ){
+	    String comName,Long startTime,Long endTime,Integer contactOn ){
 		
 		ApplyListMsg msg = new ApplyListMsg();
 		ApplySearch page = new ApplySearch();
 		page.setName(name);
 		page.setComName(comName);
-		page.setContactNum(contactNum);
 		page.setStartTime(startTime);
 		page.setEndTime(endTime);
 		page.setContactOn(contactOn);

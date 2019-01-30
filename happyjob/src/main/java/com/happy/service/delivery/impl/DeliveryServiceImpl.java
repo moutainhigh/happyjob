@@ -91,7 +91,6 @@ public class DeliveryServiceImpl implements DeliveryService{
 	@Override
 	public BaseMsg addComtact(Long hpPositionRefUserId,String comtPerson,Long comTime ,Integer workOn,Long hpCompanyId,Long hpUserId) {
 		BaseMsg msg = new BaseMsg();
-		//更新
 		if(hpPositionRefUserId != null &&  hpPositionRefUserId !=0 ) {
 			HpPositionRefUserEntity positionRefUserEntity = new HpPositionRefUserEntity();
 			positionRefUserEntity.setHpPositionRefUserId(hpPositionRefUserId);
