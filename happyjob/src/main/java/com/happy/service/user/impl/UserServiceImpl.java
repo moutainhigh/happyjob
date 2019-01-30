@@ -788,6 +788,7 @@ public class UserServiceImpl implements UserService {
             data.setOid(oid);
             data.setSid(userData.getUserToken());
             data.setShareToken(userData.getShareToken());
+            data.setPhoneNo(phoneNo);
             msg.setData(data);
             return msg;
         }

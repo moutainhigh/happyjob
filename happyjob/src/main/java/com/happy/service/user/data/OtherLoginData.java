@@ -24,6 +24,9 @@ public class OtherLoginData {
     
     @ApiModelProperty(name="headerPic",value="用户头像")
     private String headerPic;
+    
+    @ApiModelProperty(name="phoneNo",value="用户微信绑定手机号码")
+    private String phoneNo;
 
     public String getOid() {
         return oid;
@@ -72,4 +75,13 @@ public class OtherLoginData {
     public void setHeaderPic(String headerPic) {
         this.headerPic = headerPic;
     }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+    
 }
