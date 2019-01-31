@@ -579,8 +579,8 @@ function scale(value){
         case 2:return "20-99人"
         case 3:return "100-499人"
         case 4:return "500-999人"
-        case 4:return "1000-9999人"
-        case 4:return "10000人以上"
+        case 5:return "1000-9999人"
+        case 6:return "10000人以上"
         default: return "20人以下"
     }
 }
