@@ -22,6 +22,16 @@ var listParams = {
 $(document).on("click","#queryUser",function(){
 	pageSearch(1);
 })
+
+ $(function(){  
+     $(".idStyle").click(function(){  
+         var _this = $(this);
+         var src = _this.attr("src");
+         $("#imgInModalID").attr("src", src);
+         $('#imgModal').modal('toggle');
+     });  
+ }); 
+
 //初始化年份
 $(document).on("click","#bornTime2",function(){
 	var option ;
@@ -166,7 +176,8 @@ $(document).on("click",".cat",function(){
     var approveState=$row.data("approve-state");
     var idFrontPic=$row.data("id-front-pic");
     var idBackPic=$row.data("id-back-pic");
-    
+    var idPersonPic=$row.data("id-person-pic");
+ 
     var $obj = $("#browseModal").find(".showValue");
     $obj.eq(0).html(iphone)
     $obj.eq(1).html(name)
@@ -177,6 +188,7 @@ $(document).on("click",".cat",function(){
     $obj.eq(6).html(approveState)
     $obj.eq(7).attr("src",idFrontPic)
     $obj.eq(8).attr("src",idBackPic)
+    $obj.eq(9).attr("src",idPersonPic)
     $('#browseModal').modal('toggle')
 })
 
@@ -306,6 +318,7 @@ function addTableList(list){
             data-approve-state="'+ approveState(item.approveState)  +'" \
             data-id-front-pic="'+ item.idFrontPic +'" \
             data-id-back-pic="'+ item.idBackPic +'" >\
+            data-id-person-pic="'+ item.idPersonPic +'" >\
             <th>'+ item.phoneNo +'</th>\
             <th>'+ getUserName(item.userName,item.realName) +'</th>\
             <th>'+ gender(item.gender) +'</th>\
@@ -360,6 +373,8 @@ function timestampToTime(timestamp) {
     var s = change(date.getSeconds());
     return Y + M + D + h + m + s;
 }
+
+
 
 function dateToStartTime(timestamp) {
 	if(timestamp != null && timestamp !=""){

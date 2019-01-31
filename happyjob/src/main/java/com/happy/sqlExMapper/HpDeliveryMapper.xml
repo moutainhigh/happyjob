@@ -6,7 +6,7 @@
     
     
     <select id="getDeliverylistPage" parameterType="com.happy.service.delivery.data.DeliverySearch" resultType="com.happy.service.delivery.data.DeliveryData" >
-		SELECT u.user_name userName,u.real_name realName ,u.gender gender ,u.born_year,c.com_name,c.hp_company_id,p.pos_name,
+		SELECT r.res_name userName,u.real_name realName ,r.res_gender gender ,r.res_born_time bornYear,c.com_name,c.hp_company_id,p.pos_name,
 			(select count(*) from hp_position_ref_user where hp_position_group_id = pu.hp_position_group_id) teamNum,
 			CASE WHEN u.gender = 1 
 						THEN ifnull(p.ret_man_money,0)
@@ -22,13 +22,14 @@
 		left join hp_user u on pu.hp_user_id =u.hp_user_id
 		left join hp_position p on	pu.hp_position_id =p.hp_position_id
 		left join hp_company c on  p.hp_company_id =c.hp_company_id
+		left join hp_user_resume r on pu.hp_user_id = r.hp_user_id
 
 		WHERE 1=1 
 		<if test="comName !=null and comName !='' ">AND c.com_name LIKE CONCAT('%',#{comName},'%')</if>
 		<if test="posName !=null and posName !='' ">AND p.pos_name LIKE CONCAT('%',#{posName},'%')</if>
 		<if test="startTime !=null and startTime !=0 ">AND pu.part_time &gt;=#{startTime}</if>
 		<if test="endTime !=null and endTime !=0 ">AND pu.part_time &lt;=#{endTime}</if>
-		<if test="realName !=null and realName !='' ">AND u.real_name LIKE CONCAT('%',#{realName},'%')</if>
+		<if test="realName !=null and realName !='' ">AND r.res_name LIKE CONCAT('%',#{realName},'%')</if>
 		<if test="gender !=null and gender !='' ">AND u.gender = #{gender} </if>
 		<if test="contactStat !=null and contactStat =='1'.toString() ">AND pu.option_person is not NULL  </if>
 		<if test="contactStat !=null and contactStat =='2'.toString() ">AND pu.option_person is NULL  </if>

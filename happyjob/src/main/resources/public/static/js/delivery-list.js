@@ -141,7 +141,7 @@ $(document).on("click",".cat",function(){
 	var params = {};
     var $row = $(this).parents("tr");
     var hpUserId=$row.data("hp-user-id");
-    var realName=$row.data("real-name");
+    var realName=$row.data("user-name");
     var gender2 = gender($row.data("gender"));
     var bornYear2=$row.data("born-year");
     var phoneNo=$row.data("phone-no");
@@ -252,7 +252,7 @@ function addTableList(list){
             data-user-name="'+ getUserName(item.userName) +'" \
             data-real-name="'+ isNull(item.realName) +'" \
             data-gender="'+ item.gender +'" \
-            data-born-year="'+ item.bornYear +'" \
+            data-born-year="'+ bornYear(item.bornYear) +'" \
             data-com-name="'+ item.comName +'" \
             data-company-id="'+ item.hpCompanyId +'" \
             data-pos-name="'+ item.posName +'" \
@@ -262,7 +262,7 @@ function addTableList(list){
             data-phone-no="'+ item.phoneNo +'" >\
             <th>'+ getUserName(item.userName) +'</th>\
             <th>'+ gender(item.gender) +'</th>\
-            <th>'+ bornYear(item.bornYear) +'</th>\
+            <th>'+ age(item.bornYear) +'</th>\
             <th>'+ item.comName +'</th>\
             <th>'+ item.posName +'</th>\
             <th>'+ returnMoney +'</th>\
@@ -297,7 +297,31 @@ function gender(gender){
 //判断出生年份
 function bornYear(value){
 	if(value !=null){
-		return  new Date().getFullYear()- Number(value)
+		var len = value.toString().length;
+		var date
+		if(len >10){
+			date = new Date(value);
+		}else{
+			date = new Date(value * 1000); 
+		}
+		var Y = date.getFullYear();
+		return   Y;
+	}
+	return "" ;
+}
+//age
+function age(value){
+	
+	if(value !=null){
+		var len = value.toString().length;
+		var date
+		if(len >10){
+			date = new Date(value);
+		}else{
+			date = new Date(value * 1000); 
+		}
+		var Y = date.getFullYear();
+		return  new Date().getFullYear()- Number(Y) +1;
 	}
 	return "" ;
 }
