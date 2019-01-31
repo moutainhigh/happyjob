@@ -507,7 +507,7 @@ function addTableList(list){
             data-com-name="'+ item.comName +'" \
             data-company-type-id="'+ item.hpCompanyTypeId +'" \
             data-type-name="'+ item.typeName +'" \
-            data-scale="'+scale(item.hpCompanyScaleId) +'" \
+            data-scale="'+ scale(item.lowerNum,item.hightNum) +'" \
             data-county-id="'+ item.countyId +'" \
             data-city-id="'+ item.cityId +'" \
             data-province-id="'+ item.provinceId +'" \
@@ -525,7 +525,7 @@ function addTableList(list){
             data-com-license="'+ item.comLicense +'" >\
             <th>'+ item.comName +'</th>\
             <th>'+ isNull(item.typeName) +'</th>\
-            <th>'+ scale(item.hpCompanyScaleId) +'</th>\
+            <th>'+ scale(item.lowerNum,item.hightNum) +'</th>\
             <th>'+ isNull(item.comtPerson) +'</th>\
             <th>'+ isNull(item.comPhone) +'</th>\
             <th>'+ isNull(item.comEmail) +'</th>\
@@ -541,7 +541,15 @@ function addTableList(list){
     })
     $tBody.html(templeteTr)    
 }
-
+function scale(lowerNum,hightNum){
+	if(lowerNum == 0){
+		return hightNum +"人以下";
+	}else if(hightNum == 0){
+		return lowerNum +"人以上";
+	}else{
+		return lowerNum +"-"+hightNum+"人" ;
+	}
+}
 
 //时间戳转date
 function timestampToTime(timestamp) {
@@ -573,15 +581,15 @@ function approveState(value){
 }
 
 //判断是否认证
-function scale(value){
-    switch (value) {
-        case 1:return "20人以下"
-        case 2:return "20-99人"
-        case 3:return "100-499人"
-        case 4:return "500-999人"
-        case 5:return "1000-9999人"
-        case 6:return "10000人以上"
-        default: return "20人以下"
-    }
-}
+//function scale2(value){
+//    switch (value) {
+//        case 1:return "20人以下"
+//        case 2:return "20-99人"
+//        case 3:return "100-499人"
+//        case 4:return "500-999人"
+//        case 5:return "1000-9999人"
+//        case 6:return "10000人以上"
+//        default: return "20人以下"
+//    }
+//}
 
