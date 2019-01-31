@@ -770,6 +770,7 @@ public class UserServiceImpl implements UserService {
             this.hpUserBoundMapper.updateByPK(bound);
             data.setOid(oid);
             data.setSid(userToken);
+            data.setPhoneNo(phoneNo);
             data.setShareToken(shareToken);
             msg.setData(data);
             return msg;
@@ -787,8 +788,8 @@ public class UserServiceImpl implements UserService {
             OtherLoginData data = new OtherLoginData();
             data.setOid(oid);
             data.setSid(userData.getUserToken());
-            data.setShareToken(userData.getShareToken());
             data.setPhoneNo(phoneNo);
+            data.setShareToken(userData.getShareToken());
             msg.setData(data);
             return msg;
         }
