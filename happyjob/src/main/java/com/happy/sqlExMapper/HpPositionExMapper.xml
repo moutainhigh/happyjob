@@ -226,7 +226,7 @@ AND (SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_i
 	<select id="getPosNameByGroupKey" resultType="String" >
 		SELECT p.pos_name 
 		FROM hp_position_group gp JOIN hp_position p ON gp.hp_position_id=p.hp_position_id 
-		WHERE pr.hp_position_group_id=#{hpPositionGroupId}
+		WHERE gp.hp_position_group_id=#{hpPositionGroupId}
 	</select>
 	
 </mapper>

@@ -66,7 +66,7 @@
 		SELECT ub.form_id FROM hp_user_bound ub WHERE ub.bound_token=#{oid};
 	</select>
 	
-	<select id="getSendDataByUserToken" resultType="com.happy.service.message.data.UserApprove" >
+	<select id="getSendDataByUserKey" resultType="com.happy.service.message.data.UserApprove" >
 		SELECT u.real_name,ub.openid,ub.form_id 
 		FROM hp_user u LEFT JOIN hp_user_bound ub ON u.hp_user_id=ub.hp_user_id 
 		WHERE u.hp_user_id=#{hpUserId}

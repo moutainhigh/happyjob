@@ -101,7 +101,7 @@ public class UserManageController {
             try {
                 this.messageService.sendUserApproveMsg(hpUserId);
             } catch (Exception e) {
-                logger.error("拼团成功消息推送异常===",e);
+                logger.error("用户身份认证成功消息推送异常===",e);
             }
         }
         return msg;

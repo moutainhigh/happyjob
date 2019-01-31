@@ -506,7 +506,7 @@ import io.swagger.annotations.ApiOperation;
       return this.configService.getStoreListPage(isPage, currentPage, showCount);
   }
   
-  /**
+/**
   *
   * @TODO:     微信信息：微信信息存入
   */
