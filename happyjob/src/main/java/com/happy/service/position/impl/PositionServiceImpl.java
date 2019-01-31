@@ -379,7 +379,7 @@ public class PositionServiceImpl implements PositionService {
         return msg;
     }
 
-    private static final String REGEX_NUMBER_STR_ARR = "([1-9],)+[1-9]";
+    private static final String REGEX_NUMBER_STR_ARR = "([1-9],)*[1-9]";
     
     @Override
     public BaseMsg insertOrUpPosition(PositionDetail data) {
