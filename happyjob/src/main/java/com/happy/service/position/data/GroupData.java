@@ -55,6 +55,9 @@ import io.swagger.annotations.ApiModelProperty;
     @ApiModelProperty(name="comLogo",value="公司是否认证")
     private String comLogo;
     
+    @ApiModelProperty(name="hpPositionSalaryId",value="职位薪资ID")
+    private Long hpPositionSalaryId;
+    
     public String getLeaderName() {
         return leaderName;
     }
@@ -138,5 +141,11 @@ import io.swagger.annotations.ApiModelProperty;
     }
     public void setComLogo(String comLogo) {
         this.comLogo = comLogo;
+    }
+    public Long getHpPositionSalaryId() {
+        return hpPositionSalaryId;
+    }
+    public void setHpPositionSalaryId(Long hpPositionSalaryId) {
+        this.hpPositionSalaryId = hpPositionSalaryId;
     }
 }

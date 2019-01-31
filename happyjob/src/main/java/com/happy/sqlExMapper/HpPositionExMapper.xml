@@ -8,7 +8,7 @@
 	
 	<select id="getFrontPoslistPage" parameterType="com.happy.service.position.data.PositionSearch" resultType="com.happy.service.position.data.PositionData" >
 		SELECT p.hp_position_id,p.hp_company_id,c.com_name,p.pos_name,ps.lower_num,ps.hight_num,aco.county_name,aci.city_name,
-		p.group_on,p.start_time,p.end_time,p.hot_on,p.car_on,p.pos_nature,p.welfare_on,
+		p.group_on,p.start_time,p.end_time,p.hot_on,p.car_on,p.pos_nature,p.welfare_on,p.hp_position_salary_id,
 		p.ret_on,p.ret_man_money,p.ret_woman_money,p.urgent_on,p.urgent_money,<include refid="selectRequireCol"></include>,
 		p.three_money,p.five_money,
 		(SELECT GROUP_CONCAT(pw.welfare_name) FROM hp_position_ref_welfare prw JOIN hp_position_welfare pw 
@@ -76,9 +76,9 @@
          </if>
            
 		FROM hp_position p JOIN hp_company c ON p.hp_company_id=c.hp_company_id 
-		JOIN hp_position_salary ps ON p.hp_position_salary_id=ps.hp_position_salary_id 
 		JOIN hp_area_county aco ON p.county_id=aco.county_id 
 		JOIN hp_area_city aci ON aco.city_id=aci.city_id 
+		LEFT JOIN hp_position_salary ps ON p.hp_position_salary_id=ps.hp_position_salary_id 
 		LEFT JOIN hp_position_require pr ON p.hp_position_id=pr.hp_position_id 
 		LEFT JOIN hp_company_type ct ON c.hp_company_type_id=ct.hp_company_type_id 
 		LEFT JOIN hp_company_scale cs ON c.hp_company_scale_id=cs.hp_company_scale_id 
@@ -118,7 +118,7 @@
 	
 	<select id="getGroupListBySearch" parameterType="com.happy.service.position.data.GroupSearch" resultType="com.happy.service.position.data.GroupData" >
 		SELECT pg.*,IFNULL(u.real_name,u.user_name) leader_name,u.header_pic leader_pic,c.com_name,p.pos_name,ps.lower_num,ps.hight_num,
-(SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_id=pg.hp_position_group_id) partNum,
+(SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_id=pg.hp_position_group_id) partNum,p.hp_position_salary_id,
 (pg.end_time-#{curTime}) leftTime 
 FROM  hp_company c JOIN hp_position p ON c.hp_company_id=p.hp_company_id 
 JOIN hp_position_group pg ON p.hp_position_id=pg.hp_position_id 
@@ -153,6 +153,7 @@ AND (SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_i
 		<result column="userIsPart" property="userIsPart"/>
 		<result column="approve_state" property="comApproveState"/>
 		<result column="com_logo" property="comLogo"/>
+		<result column="hp_position_salary_id" property="hpPositionSalaryId"/>
 		<collection property="userList" javaType="java.util.List" ofType="com.happy.entity.HpUserEntity" >
 			<id column="hp_user_id" property="hpUserId"/>
 			<result column="header_pic" property="headerPic"/>
@@ -162,7 +163,7 @@ AND (SELECT COUNT(*) FROM hp_position_ref_user pru WHERE pru.hp_position_group_i
 	
 	<select id="getGroupDetail" resultMap="GroupDataMap" >
 		SELECT pg.hp_position_group_id,pg.hp_position_id,pg.start_time,pg.end_time,
-		c.com_name,p.pos_name,c.com_logo,pru.hp_user_id,u.header_pic,ps.lower_num,ps.hight_num,
+		c.com_name,p.pos_name,c.com_logo,pru.hp_user_id,u.header_pic,ps.lower_num,ps.hight_num,p.hp_position_salary_id,
 		p.pos_com_desc,CASE WHEN pg.end_time &lt;#{curTime} THEN 1 ELSE 0 END groupStatus,
 		(pg.end_time-#{curTime}) leftTime,c.approve_state,
 		<choose>
