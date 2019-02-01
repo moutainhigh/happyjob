@@ -460,6 +460,7 @@ public class PositionServiceImpl implements PositionService {
          require.setReqSkill(data.getReqSkill());
          require.setReqWorkYears(data.getReqWorkYears());
          Long hpPositionRequireId = this.hpPositionExMapper.getPositionRequireId(hpPositionId);
+         require.setHpPositionRequireId(hpPositionRequireId);
          if(hpPositionRequireId == null) { // 新增岗位要求
              this.hpPositionRequireMapper.insert(require);
          }else {// 更新

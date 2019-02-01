@@ -123,8 +123,8 @@ $(document).on("click",".auth",function(){
         	data.approve = 2 ;
         	postAuth(data);
             swal(
-            'Cancelled',
-            'Your imaginary file is safe :)',
+            '认证！',
+            '认证不通过',
             'error'
             );
         
@@ -317,7 +317,7 @@ function addTableList(list){
             data-comname="'+ (item.comName) +'" \
             data-approve-state="'+ approveState(item.approveState)  +'" \
             data-id-front-pic="'+ item.idFrontPic +'" \
-            data-id-back-pic="'+ item.idBackPic +'" >\
+            data-id-back-pic="'+ item.idBackPic +'" \
             data-id-person-pic="'+ item.idPersonPic +'" >\
             <th>'+ item.phoneNo +'</th>\
             <th>'+ getUserName(item.userName,item.realName) +'</th>\
