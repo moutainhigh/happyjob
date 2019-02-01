@@ -328,6 +328,9 @@ public class PositionServiceImpl implements PositionService {
             group.setGroupState(1);
             this.hpPositionGroupMapper.updateByPK(group);
             msg.setSendOn(1);
+            if(partNum + 1==3) {
+                msg.setSendOn(2);
+            }
         }
         return msg;
     }

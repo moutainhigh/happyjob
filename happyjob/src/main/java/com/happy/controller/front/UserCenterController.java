@@ -222,10 +222,13 @@ public class UserCenterController {
        logger.info("positionApply 参数日志：sid=={},hpPositionGroupId=={},formId=={}",sid,hpPositionGroupId,formId);
        GroupDataMsg msg = this.positionService.insertUserGroupApply(sid, hpPositionGroupId);
        this.userService.updateBoundFormId(oid, formId);
-       try {
-           this.messageService.sendPositionMsg(oid, hpPositionGroupId);
-       } catch (Exception e) {
-            logger.error("拼团成功消息推送异常===",e);
+       if(msg.getSendOn() != 0) {
+           
+           try {
+               this.messageService.sendPositionMsg(oid, hpPositionGroupId,msg.getSendOn());
+           } catch (Exception e) {
+               logger.error("拼团成功消息推送异常===",e);
+           }
        }
        return msg;
    }

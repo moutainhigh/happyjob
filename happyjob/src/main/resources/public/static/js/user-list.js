@@ -13,7 +13,7 @@ var listParams = {
 	    startTime:"",
 	    endTime:"",
 	    blackOn:"",
-	    userType:"",
+	    userType:2,
 	    currentPage:1,
 	    showCount:15
 }

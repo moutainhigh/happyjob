@@ -20,10 +20,8 @@ public interface MessageService {
      *
      * @TODO:     发送
      * @CreateTime:  2019年1月19日下午9:01:34 
-     * @param oid
-     * @param hpPositionGroupId
      */
-    void sendPositionMsg(String oid,Long hpPositionGroupId);
+    void sendPositionMsg(String oid,Long hpPositionGroupId,int sendOn);
     /**
      *
      * @TODO:     发送

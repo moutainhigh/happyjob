@@ -9,6 +9,7 @@ import com.happy.entity.HpUserBoundEntity;
 import com.happy.entity.HpUserRecommendEntity;
 import com.happy.entity.HpUserSearchEntity;
 import com.happy.service.message.data.UserApprove;
+import com.happy.service.position.data.PositionSearch;
 import com.happy.service.user.data.UserSearch;
 
 @Repository("hpUserBoundExMapper")
@@ -81,4 +82,6 @@ public interface HpUserBoundExMapper{
    void updateBoundFormId(@Param("oid")String oid,@Param("formId")String formId);
    
    void updateUserPicByUserId(@Param("hpUserId")Long hpUserId);
+   
+   List<HpUserBoundEntity> getGroupBound(PositionSearch page);
 }

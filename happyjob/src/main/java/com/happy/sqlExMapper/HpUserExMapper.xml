@@ -46,7 +46,7 @@
 		<if test="endTime !=null and endTime !=0 ">AND u.create_time &lt;=#{endTime}</if>
 		<if test="blackOn !=null ">AND u.black_on=#{blackOn}</if>
 		<if test="userType !=null ">AND u.user_type=#{userType}</if>
-		ORDER BY create_time desc
+		ORDER BY u.create_time DESC,u.hp_user_id desc
 	</select>
 	
 	<select id="getUserByParam" resultType="com.happy.service.user.data.OtherUserData" >

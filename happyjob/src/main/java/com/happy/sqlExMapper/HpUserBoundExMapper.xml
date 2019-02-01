@@ -80,4 +80,13 @@
 		UPDATE hp_user u SET u.header_pic=(SELECT ub.header_pic FROM hp_user_bound ub WHERE ub.hp_user_id=u.hp_user_id) 
 		WHERE u.hp_user_id=#{hpUserId} AND u.header_pic IS NULL
 	</update>
+	
+	<select id="getGroupBound" parameterType="com.happy.service.position.data.PositionSearch" resultType="com.happy.entity.HpUserBoundEntity" >
+		SELECT ub.hp_user_bound_id,ub.openid,ub.form_id FROM hp_position_ref_user pru 
+		JOIN hp_user_bound ub ON ub.hp_user_id=pru.hp_user_id 
+		WHERE pru.hp_position_group_id=#{hpPositionGroupId} 
+		<if test="isPage ==1 ">
+			LIMIT #{currentResult},#{showCount}
+		</if>
+	</select>
 </mapper>

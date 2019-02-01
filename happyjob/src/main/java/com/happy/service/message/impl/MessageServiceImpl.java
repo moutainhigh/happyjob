@@ -1,5 +1,7 @@
  package com.happy.service.message.impl;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import com.happy.entity.HpUserBoundEntity;
 import com.happy.plugin.BaseMsg;
 import com.happy.service.message.MessageService;
 import com.happy.service.message.data.UserApprove;
+import com.happy.service.position.data.PositionSearch;
 import com.happy.sqlExMapper.HpPositionExMapper;
 import com.happy.sqlExMapper.HpUserBoundExMapper;
 import com.happy.util.Util;
@@ -90,18 +93,39 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void sendPositionMsg(String oid, Long hpPositionGroupId) {
-        
-        HpUserBoundEntity bound = this.hpUserBoundExMapper.getBoundByToken(oid);
-        String form_id = bound.getFormId();
-        String openId = bound.getOpenid();
-        if(Util.isEmpty(form_id)) {
-            logger.info("消息推送失败====无formId==oid=={}",oid);
-            return;
-        }
+    public void sendPositionMsg(String oid, Long hpPositionGroupId,int sendOn) {
         String posName = this.hpPositionExMapper.getPosNameByGroupKey(hpPositionGroupId);
         String remark = "恭喜您拼团上班成功";
-        this.pushWxMsg(Util.createPositionMsg(posName, openId, remark, form_id));
+        if(sendOn == 1) {
+            
+            HpUserBoundEntity bound = this.hpUserBoundExMapper.getBoundByToken(oid);
+            String form_id = bound.getFormId();
+            String openId = bound.getOpenid();
+            if(Util.isEmpty(form_id)) {
+                logger.info("消息推送失败====无formId==oid=={}",oid);
+                return;
+            }
+            this.pushWxMsg(Util.createPositionMsg(posName, openId, remark, form_id));
+        }else if(sendOn == 2) {
+            PositionSearch page = new PositionSearch();
+            page.setIsPage(1);
+            page.setCurrentPage(1);
+            page.setShowCount(3);
+            page.setHpPositionGroupId(hpPositionGroupId);
+            List<HpUserBoundEntity> list = this.hpUserBoundExMapper.getGroupBound(page);
+            if(!Util.isEmptyList(list)) {
+                for(HpUserBoundEntity bound : list) {
+                    String form_id = bound.getFormId();
+                    String openId = bound.getOpenid();
+                    if(Util.isEmpty(form_id)) {
+                        logger.info("消息推送失败====无formId==oid=={}",oid);
+                        continue;
+                    }
+                    this.pushWxMsg(Util.createPositionMsg(posName, openId, remark, form_id));
+                }
+            }
+            
+        }
     }
 
     @Override
