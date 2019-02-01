@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +40,8 @@ import com.happy.util.pubConst.ResultMsg;
 
 @Service
 public class PositionServiceImpl implements PositionService {
+    
+    private static final Logger logger = LoggerFactory.getLogger(PositionServiceImpl.class);
 
     @Autowired
     private HpPositionExMapper hpPositionExMapper;
@@ -382,7 +387,7 @@ public class PositionServiceImpl implements PositionService {
         return msg;
     }
 
-    private static final String REGEX_NUMBER_STR_ARR = "([1-9],)*[1-9]";
+    private static final String REGEX_NUMBER_STR_ARR = "(\\d+,)*\\d*";
     
     @Override
     public BaseMsg insertOrUpPosition(PositionDetail data) {
@@ -440,6 +445,7 @@ public class PositionServiceImpl implements PositionService {
          }
          
          String welfareIds = data.getWelfareArr();
+         logger.info("welfareIds====={}",welfareIds);
          if(!Util.isEmpty(welfareIds) && welfareIds.matches(REGEX_NUMBER_STR_ARR)) { // 新增福利关联表信息
              String[] welfareIdArr = welfareIds.split(",");
              List<Long> list = new ArrayList<Long>();
