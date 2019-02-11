@@ -513,7 +513,7 @@ public class UserServiceImpl implements UserService {
         user.setUserToken(Util.getUuidRd());
         user.setUserType(userType);
         user.setVipOn(0);
-        user.setRegistResource(0);
+        user.setRegistResource(2);
         user.setCreateTime(System.currentTimeMillis()/1000);
         this.hpUserMapper.insert(user);
         if(user.getHpUserId() == null) {
@@ -750,7 +750,7 @@ public class UserServiceImpl implements UserService {
             String userToken = Util.getUuidRd();
             user.setUserToken(userToken);
             user.setVipOn(0);
-            user.setRegistResource(0);
+            user.setRegistResource(2);
             user.setUserName(bound.getNickName());
             user.setHeaderPic(bound.getHeaderPic());
             user.setUserType(2);
@@ -784,7 +784,7 @@ public class UserServiceImpl implements UserService {
             user.setGender(gender);
             user.setBornYear(bornTime);
             user.setRealName(realName);
-            this.hpUserMapper.insert(user);
+            this.hpUserMapper.updateByPK(user);
             OtherLoginData data = new OtherLoginData();
             data.setOid(oid);
             data.setSid(userData.getUserToken());
