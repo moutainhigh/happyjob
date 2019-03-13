@@ -1,9 +1,16 @@
 // 日期选择器
+$(".datetimepicker").datetimepicker({
+    language: "zh-CN",
+    autoclose: true,//选中之后自动隐藏日期选择框
+    format: "yyyy-mm-dd HH:mm:ss"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+});
+
 $(".datepicker").datepicker({
     language: "zh-CN",
     autoclose: true,//选中之后自动隐藏日期选择框
     format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
 });
+
 
 $(document).on("click",".queryDelivery",function(){
 	pageSearch(1);
@@ -327,15 +334,30 @@ function age(value){
 }
 //时间戳转date
 function timestampToDay(timestamp) {
+//	if(timestamp ==null || timestamp ==""){
+//		return "";
+//	}else{
+//		var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+//	    var Y = date.getFullYear() + '-';
+//	    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+//	    var D = change(date.getDate()) ;
+//	    return Y + M + D ;
+//	}
+	
 	if(timestamp ==null || timestamp ==""){
 		return "";
 	}else{
-		var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-	    var Y = date.getFullYear() + '-';
-	    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-	    var D = change(date.getDate()) ;
-	    return Y + M + D ;
+		 var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+		    var Y = date.getFullYear() + '-';
+		    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+		    var D = change(date.getDate()) + ' ';
+		    var h = change(date.getHours()) + ':';
+		    var m = change(date.getMinutes()) + ':';
+		    var s = change(date.getSeconds());
+		    return Y + M + D + h + m + s;
 	}
+	
+	
   
 }
 
@@ -349,7 +371,6 @@ function change(t) {
 }
 function getDayToSecond(timestamp){
 	if(timestamp !=null && timestamp !=""){
-		timestamp += " 00:00:00";
 		return new Date(timestamp).getTime()/1000;
 	}
 }

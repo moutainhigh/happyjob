@@ -126,7 +126,7 @@ public class DeliveryServiceImpl implements DeliveryService{
 			msg.setErrorCode(1);
 			msg.setMessage("获取不到该登陆人信息");
 		}
-		loginUserMsg.setComTime(Util.dateFormat(new Date(),Const.DATE_FORMAT_STR_2));
+		loginUserMsg.setComTime(Util.getStringDate());
 		msg.setErrorCode(0);
 		msg.setMessage("操作成功");
 		return loginUserMsg;
